@@ -124,15 +124,8 @@ const SearchResultsPage = ({ curUser, loggedIn }) => {
       return (
         <div key={index} className="imgGalleryImgCont1">
           <a
-            href={
-              element.secure_url.slice(0, 50) +
-              "q_60/c_scale,w_1600/dpr_auto/" +
-              element.secure_url.slice(
-                50,
-                element.secure_url.lastIndexOf(".")
-              ) +
-              ".jpg"
-            }
+            onClick={() => navigate("/image/navigateTest")}
+            href="http://localhost:3000/image/ok"
           >
             <img
               src={

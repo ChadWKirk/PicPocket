@@ -4,55 +4,61 @@ import NavBar from "../components/NavBar";
 import Logo from "../components/Logo";
 import SearchBar from "../components/SearchBar";
 import DropDown from "../components/DropDown";
+import WhiteNavBar from "../components/WhiteNavBar";
 
 import { AiFillLike } from "react-icons/ai";
 
 const ImageViewPage = ({ curUser, loggedIn }) => {
+  //sticky nav bar
+  const [navPosition, setNavPosition] = useState("gone");
+
+  useEffect(() => {
+    window.addEventListener("scroll", setNavToFixed);
+
+    return () => {
+      window.removeEventListener("scroll", setNavToFixed);
+    };
+  }, []);
+
+  function setNavToFixed() {
+    if (window !== undefined) {
+      let windowHeight = window.scrollY;
+      windowHeight > 425 ? setNavPosition("fixed") : setNavPosition("gone");
+    }
+  }
+
   //on load, pull image using public id in url
 
   return (
     <div>
-      <NavBar curUser={curUser} loggedIn={loggedIn} />
-      <DropDown />
+      <WhiteNavBar curUser={curUser} loggedIn={loggedIn} />
+      <div className={`${navPosition}`}>
+        <WhiteNavBar curUser={curUser} loggedIn={loggedIn} />
+      </div>
+      <div className="subBarCont1">
+        <div className="subBarAuthor1">
+          {/* <img>Profile Pic</img> */}
+          <p>{curUser}</p>
+        </div>
+        <div>Like</div>
+        <div>Download</div>
+      </div>
       <div className="imageViewContainer">
         <div className="imageViewDetailsContainer">
           <img
             alt="broken"
-            src={require("./nature-4k-pc-full-hd-wallpaper-preview.jpg")}
+            src={require("./nature-4k-pc-full-hd-wallpaper-preview.jpg")} //change to pull public id from url
           ></img>
-          <div className="imageViewDetailsContainerTitle">
-            public id of image (without dashes)
-          </div>
+          <div className="imageViewDetailsContainerTitle">Image Title</div>
           <div className="imageViewDetailsContainerLikesContainer">
-            <div className="likebutton">
-              <AiFillLike />
-            </div>
-            <div className="likeCounter">number of likes</div>
+            <div className="likeCounter">RED HEART ICON number of likes</div>
           </div>
           <div className="imageViewDescription">
             description of image inputted by uploader
           </div>
-          <div className="imageViewTags">
-            <ul>
-              <Button>tag 1</Button>
-              <Button>tag 2</Button>
-              <Button>tag 3</Button>
-              <Button>tag 4</Button>
-              <Button>tag 5</Button>
-            </ul>
-          </div>
-        </div>
-        <div className="imageViewPurchaseContainer">
-          <div>Price</div>
-          <div>Add To Cart Button</div>
-          <div>Free Download Button (if price = free)</div>
-          <div>
-            Buy Now Button (if price != free. skip add to cart and go to
-            checkout)
-          </div>
         </div>
       </div>
-      <div className="relatedImagesContainer">
+      {/* <div className="relatedImagesContainer">
         <div className="relatedImagesTitle">Related Images</div>
         <div className="relatedImagesGalleryContainer">
           <img
@@ -76,7 +82,7 @@ const ImageViewPage = ({ curUser, loggedIn }) => {
             src={require("./nature-4k-pc-full-hd-wallpaper-preview.jpg")}
           ></img>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

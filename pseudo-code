@@ -29,7 +29,15 @@ If array.length > 1, show stack of little images and say "Select a single image 
 
 TASKS:
 
-Add "Are you sure you want to remove this image from your likes? Yes No" to likesPage warning when you unlike something
+enable search with tags
+
+make search not work if searchquery is undefined
+
+make navbar and subbar always sticky on image view page
+
+create image view page
+
+create image view modal
 
 Deal with edit success/failure
 
@@ -40,8 +48,6 @@ Create mass delete function (only deletes 2 right now)
 Create download function
 
 Create mass download function
-
-Deal with image view page going to proper URL and using the given title and description etc.
 
 ---
 
