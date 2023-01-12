@@ -15,7 +15,7 @@ const WhiteNavBar = ({ curUser, loggedIn }) => {
   let suButton;
   let cartButton;
   let uploadButton;
-
+  let timer;
   const [isVisibleClass, setIsVisibleClass] = useState("gone");
 
   function setVisibleClassFunc() {
@@ -46,15 +46,16 @@ const WhiteNavBar = ({ curUser, loggedIn }) => {
       <div
         className="navbarDropCont"
         onMouseEnter={() =>
-          setTimeout(() => {
-            setHoverClass(!hoverClass);
-          }, 200)
+          (timer = setTimeout(() => {
+            setHoverClass(true);
+          }, 200))
         }
-        onMouseLeave={() =>
+        onMouseLeave={() => {
+          clearTimeout(timer);
           setTimeout(() => {
-            setHoverClass(!hoverClass);
-          }, 200)
-        }
+            setHoverClass(false);
+          }, 200);
+        }}
       >
         <button
           className="navbarDropButton"

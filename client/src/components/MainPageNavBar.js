@@ -32,12 +32,12 @@ const MainPageNavBar = ({ curUser, loggedIn }) => {
         className="navbarDropCont"
         onMouseEnter={() =>
           setTimeout(() => {
-            setHoverClass(!hoverClass);
+            setHoverClass(true);
           }, 200)
         }
         onMouseLeave={() =>
           setTimeout(() => {
-            setHoverClass(!hoverClass);
+            setHoverClass(false);
           }, 200)
         }
       >

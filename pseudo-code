@@ -29,8 +29,6 @@ If array.length > 1, show stack of little images and say "Select a single image 
 
 TASKS:
 
-get drop down menu not to glitch out when quickly mousing over it
-
 get search to only return relevant things. maybe use regex to only return results
 that contain two matching letters in a row for title and tags like "ca" returns california or cats.
 
