@@ -221,7 +221,9 @@ const SearchResultsPage = ({ curUser, loggedIn }) => {
         <WhiteNavBar curUser={curUser} loggedIn={loggedIn} />
       </div>
       <div className="imgGallerySectionCont1">
-        <h1>{searchQuery} Images</h1>
+        <h1>
+          {searchQuery} Images {searchQuery.length} results
+        </h1>
         <div className="myPicsGallerySortBar-leftContainer">
           <DropdownButton
             className="galleryDropDownButton"

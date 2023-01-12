@@ -374,6 +374,45 @@ button {
 
 /*Search Results and My Likes Gallery CSS*/
 
+.likesModalCont {
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: rgb(233, 233, 233);
+  z-index: 100000000000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.likesModalDiv {
+  background-color: rgb(133, 166, 185);
+  border-radius: 2px;
+  padding: 3rem;
+}
+
+.likesModalButtonCont {
+  display: flex;
+  justify-content: space-around;
+  gap: 1rem;
+  width: 100%;
+}
+
+.likesModalButtonCont button {
+  color: white;
+  background-color: rgb(62, 123, 158);
+  padding: 0.5rem 2rem;
+  border-radius: 3px;
+}
+
+.likesModalButtonCont button:hover {
+  color: white;
+  background-color: rgb(42, 82, 105);
+  padding: 0.5rem 2rem;
+  border-radius: 3px;
+}
+
 .imgGallerySectionCont1 {
   width: 90%;
   margin: auto;

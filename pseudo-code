@@ -29,9 +29,6 @@ If array.length > 1, show stack of little images and say "Select a single image 
 
 TASKS:
 
-get search to only return relevant things. maybe use regex to only return results
-that contain two matching letters in a row for title and tags like "ca" returns california or cats.
-
 Add "Are you sure you want to remove this image from your likes? Yes No" to likesPage warning when you unlike something
 
 Deal with edit success/failure

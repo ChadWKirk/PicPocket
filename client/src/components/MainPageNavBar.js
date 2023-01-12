@@ -13,6 +13,7 @@ const MainPageNavBar = ({ curUser, loggedIn }) => {
   let suButton;
   let cartButton;
   let uploadButton;
+  let timer;
 
   const [isVisibleClass, setIsVisibleClass] = useState("gone");
 
@@ -31,15 +32,16 @@ const MainPageNavBar = ({ curUser, loggedIn }) => {
       <div
         className="navbarDropCont"
         onMouseEnter={() =>
-          setTimeout(() => {
+          (timer = setTimeout(() => {
             setHoverClass(true);
-          }, 200)
+          }, 200))
         }
-        onMouseLeave={() =>
+        onMouseLeave={() => {
+          clearTimeout(timer);
           setTimeout(() => {
             setHoverClass(false);
-          }, 200)
-        }
+          }, 200);
+        }}
       >
         <button
           className="navbarDropButton"

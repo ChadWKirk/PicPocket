@@ -630,7 +630,8 @@ app.get("/search/:searchQuery/:sort/:filter", (req, res) => {
   let filter = req.params.filter;
 
   let db_connect = dbo.getDb();
-
+  //uses regex options i to make it case insensitive and
+  //if title contains any part of search query
   if (sort == "most-recent" && filter == "all-types") {
     db_connect
       .collection("mern-ecommerce-images")

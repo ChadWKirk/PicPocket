@@ -24,6 +24,22 @@ const LikesPage = ({ curUser, loggedIn }) => {
   const [sortTitle, setSortTitle] = useState("Most Recent");
   const [filterTitle, setFilterTitle] = useState("All Types");
 
+  //modal for "are you sure you want to remove this pic from your likes?"
+  let modalResult;
+  let appear = "gone";
+  let modalClasses = `likesModalCont ${appear}`;
+  let modal = (
+    <div className={modalClasses}>
+      <div className="likesModalDiv">
+        <p>Are you sure you would like to remove this pic from your likes?</p>
+        <div className="likesModalButtonCont">
+          <button onClick={(modalResult = true)}>Yes</button>
+          <button onClick={(modalResult = false)}>No</button>
+        </div>
+      </div>
+    </div>
+  );
+
   useEffect(() => {
     navigate(`/Account/${curUser}/Likes/${sort}/${filter}`);
 
@@ -136,6 +152,10 @@ const LikesPage = ({ curUser, loggedIn }) => {
   async function handleLike(e, element, count) {
     var likesArrCopy = likesArr;
 
+    //popup box
+    //if no, return
+    //else continue
+
     if (likesArrCopy[count + 1].likedBy.includes(curUser)) {
       await fetch(
         `http://localhost:5000/removeLikedBy/${element.asset_id}/${curUser}`,
@@ -167,15 +187,22 @@ const LikesPage = ({ curUser, loggedIn }) => {
     }
     setIsLiked(!isLiked);
   }
-
+  let resultsMapLength;
+  if (resultsMap) {
+    resultsMapLength = resultsMap.length;
+  }
   return (
     <div>
+      {modal}
       <NavBar curUser={curUser} loggedIn={loggedIn} />
+
       <div className="galleryContainer">
         <div className="galleryHeadingAndSortContainer">
           <div className="galleryHeading">
             <h2>Your Likes</h2>
-            <p>x images and x videos liked by curUser link</p>
+            <p>
+              {resultsMapLength} images liked by {curUser}
+            </p>
           </div>
         </div>
         <div className="gallerySortBar d-flex">

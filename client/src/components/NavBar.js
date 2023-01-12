@@ -14,7 +14,7 @@ const NavBar = ({ curUser, loggedIn }) => {
   let siButton;
   let suButton;
   let uploadButton;
-
+  let timer;
   //go to /search/whateverYouSearchFor when hitting enter or clicking search button
   var navigate = useNavigate();
   let inputValue;
@@ -45,15 +45,16 @@ const NavBar = ({ curUser, loggedIn }) => {
       <div
         className="navbarDropCont"
         onMouseEnter={() =>
-          setTimeout(() => {
-            setHoverClass(!hoverClass);
-          }, 200)
+          (timer = setTimeout(() => {
+            setHoverClass(true);
+          }, 200))
         }
-        onMouseLeave={() =>
+        onMouseLeave={() => {
+          clearTimeout(timer);
           setTimeout(() => {
-            setHoverClass(!hoverClass);
-          }, 200)
-        }
+            setHoverClass(false);
+          }, 200);
+        }}
       >
         <button
           className="navbarDropButton"
