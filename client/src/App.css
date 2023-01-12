@@ -1037,11 +1037,12 @@ button {
 
 .uploadFormContents input {
   opacity: 0;
+  font-size: 0px;
   cursor: pointer;
   position: absolute;
-  top: 30%;
+  bottom: 48.87%;
   width: 600px;
-  height: 250px;
+  height: 249.5px;
   z-index: 1001;
   background-color: red;
 }

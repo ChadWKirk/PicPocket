@@ -37,7 +37,16 @@ const ImageItem = ({ image, deleteImageFromBackEnd }) => {
     );
     imageBanner = (
       <li className="imageItem" key={image.name}>
-        <img src={image.secure_url} width={100} height={100}></img>
+        <img
+          src={
+            image.secure_url.slice(0, 50) +
+            "q_60/c_scale,w_400/dpr_auto/" +
+            image.secure_url.slice(50, image.secure_url.lastIndexOf(".")) +
+            ".jpg"
+          }
+          width={100}
+          height={100}
+        ></img>
         <div>
           {image.name
             .replace(".jpg", "")

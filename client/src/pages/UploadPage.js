@@ -36,7 +36,9 @@ const UploadPage = ({ curUser, loggedIn }) => {
           />
           <div>
             All done? Edit in{" "}
-            <a href={`/Account/${curUser}/My-Pics`}>My Pics</a>
+            <a href={`/Account/${curUser}/My-Pics/most-recent/all-types`}>
+              My Pics
+            </a>
           </div>
         </div>
       </div>
