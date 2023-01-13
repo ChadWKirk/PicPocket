@@ -5,10 +5,13 @@ import Logo from "../components/Logo";
 import SearchBar from "../components/SearchBar";
 import DropDown from "../components/DropDown";
 import WhiteNavBar from "../components/WhiteNavBar";
+import { useParams } from "react-router-dom";
 
 import { AiFillLike } from "react-icons/ai";
 
 const ImageViewPage = ({ curUser, loggedIn }) => {
+  const { imageTitle } = useParams();
+
   //sticky nav bar
   const [navPosition, setNavPosition] = useState("gone");
 
@@ -26,8 +29,32 @@ const ImageViewPage = ({ curUser, loggedIn }) => {
       windowHeight > 0 ? setNavPosition("fixed") : setNavPosition("gone");
     }
   }
+  let imageSRC;
+  const [imageFetchID, setImageFetchID] = useState();
 
   //on load, pull image using public id in url
+  useEffect(() => {
+    console.log("run");
+    console.log(imageTitle);
+
+    async function getImages() {
+      await fetch(`http://localhost:5000/image/${imageTitle}`, {
+        method: "GET",
+        headers: { "Content-type": "application/json" },
+      }).then((response) =>
+        response
+          .json()
+          .then((resJSON) => JSON.stringify(resJSON))
+          .then((stringJSON) => JSON.parse(stringJSON))
+          .then((parsedJSON) => setImageFetchID(parsedJSON))
+      );
+    }
+    getImages();
+  }, []);
+
+  if (imageFetchID) {
+    let imageSRC = imageFetchID[0].secure_url;
+  }
 
   return (
     <div>
@@ -57,7 +84,7 @@ const ImageViewPage = ({ curUser, loggedIn }) => {
           <img
             className="imageViewPageMainImg"
             alt="broken"
-            src={require("./nature-4k-pc-full-hd-wallpaper-preview.jpg")} //change to pull public id from url
+            src={imageSRC} //change to pull public id from url
           ></img>
           <div className="imgViewPageTitleLikesCont">
             <div className="imgViewPageTitle">Image Title</div>

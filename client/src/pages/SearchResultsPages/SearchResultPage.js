@@ -124,8 +124,10 @@ const SearchResultsPage = ({ curUser, loggedIn }) => {
       return (
         <div key={index} className="imgGalleryImgCont1">
           <a
-            onClick={() => navigate("/image/navigateTest")}
-            href="http://localhost:3000/image/ok"
+            // onClick={() => {
+            //   navigate(`/image/${element.title}`);
+            // }}
+            href={`http://localhost:3000/image/${element.title}`}
           >
             <img
               src={

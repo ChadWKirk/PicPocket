@@ -444,6 +444,25 @@ app.post("/removeLikedBy/:assetID/:username", (req, res) => {
   res.json("remove like");
 });
 
+//Image View Page Gets
+app.get("/image/:title", (req, res) => {
+  console.log("get");
+  let image = req.params.title;
+  let db_connect = dbo.getDb();
+
+  db_connect
+    .collection("mern-ecommerce-images")
+    .find({ title: image })
+    .toArray(function (err, result) {
+      if (err) {
+        res.status(400).send("Error fetching listings!");
+      } else {
+        res.json(result);
+        console.log(result);
+      }
+    });
+});
+
 //MYPICS SORT ROUTES
 //Most Recent Sort
 app.get("/:username/:sort/:filter", (req, res) => {

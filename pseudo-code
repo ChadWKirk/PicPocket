@@ -31,7 +31,7 @@ TASKS:
 
 make search not work if searchquery is undefined
 
-create image view page
+create image view page - get image to show up. need to wait for image to fetch before pulling secure url in src
 
 create image view modal
 
