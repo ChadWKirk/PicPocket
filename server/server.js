@@ -630,17 +630,21 @@ app.get("/search/:searchQuery/:sort/:filter", (req, res) => {
   let filter = req.params.filter;
 
   let db_connect = dbo.getDb();
-  //uses regex options i to make it case insensitive and
-  //if title contains any part of search query
+  //title or tag must match searchQuery. Uses collation strength 2 for case insensitive
   if (sort == "most-recent" && filter == "all-types") {
     db_connect
       .collection("mern-ecommerce-images")
       .find({
-        title: {
-          $regex: `${".*[" + req.params.searchQuery + "].*"}`,
-          $options: "i",
-        },
+        $or: [
+          {
+            title: req.params.searchQuery,
+          },
+          {
+            tags: req.params.searchQuery,
+          },
+        ],
       })
+      .collation({ locale: "en", strength: 2 })
       .sort({ created_at: -1 })
       // .limit(12)
       .toArray(function (err, result) {

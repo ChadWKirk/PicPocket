@@ -29,7 +29,7 @@ If array.length > 1, show stack of little images and say "Select a single image 
 
 TASKS:
 
-enable search with tags
+change results counter in search. it matches searchquery length for some reason. for example ko = 2 cat = 3
 
 make search not work if searchquery is undefined
 

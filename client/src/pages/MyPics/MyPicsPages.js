@@ -117,8 +117,9 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
     if (massArr.current.length > 0) {
       document.querySelector("#titleInputID").value = massArr.current[0].title;
       setTitle(massArr.current[0].title);
-      document.querySelector("#tagsInputID").value = massArr.current[0].tags;
-      setTags(massArr.current[0].tags);
+      document.querySelector("#tagsInputID").value =
+        massArr.current[0].tags.join(", "); //makes the tags array display with ", " separating items instead of just a comma. To play nice with split to create array on submit
+      setTags(massArr.current[0].tags.join(", "));
       document.querySelector("#descriptionInputID").value =
         massArr.current[0].description;
       setDescription(massArr.current[0].description);
@@ -238,7 +239,7 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
     }
     massArr.current[0].title = title;
     massArr.current[0].description = description;
-    massArr.current[0].tags = tags;
+    massArr.current[0].tags = tags.split(", "); //turn string into array
     massArr.current[0].imageType = imageType;
     console.log("submit attempt");
     await fetch(`http://localhost:5000/update/${curUser}`, {
@@ -322,7 +323,7 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
       </div>
     );
   }
-
+  //don't accept special characters
   let titleClass;
   if (/[~`!#$%\^&*+=\\[\]\\;,/{}|\\":<>\?]/g.test(title)) {
     console.log("special");
