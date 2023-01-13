@@ -30,6 +30,9 @@ const ImageViewPage = ({ curUser, loggedIn }) => {
     }
   }
   let imageSRC;
+  let imageTitlee;
+  let imageDescription;
+  let imageLikes;
   const [imageFetchID, setImageFetchID] = useState();
 
   //on load, pull image using public id in url
@@ -51,9 +54,17 @@ const ImageViewPage = ({ curUser, loggedIn }) => {
     }
     getImages();
   }, []);
-
+  //wait for fetch to be true (or complete) before assigning to variable
   if (imageFetchID) {
-    let imageSRC = imageFetchID[0].secure_url;
+    imageSRC = imageFetchID[0].secure_url;
+    imageTitlee = imageFetchID[0].title;
+    if (imageFetchID[0].description == "") {
+      imageDescription = <em>No Description Given</em>;
+    } else {
+      imageDescription = imageFetchID[0].description;
+    }
+
+    imageLikes = imageFetchID[0].likes;
   }
 
   return (
@@ -84,17 +95,15 @@ const ImageViewPage = ({ curUser, loggedIn }) => {
           <img
             className="imageViewPageMainImg"
             alt="broken"
-            src={imageSRC} //change to pull public id from url
+            src={imageSRC}
           ></img>
           <div className="imgViewPageTitleLikesCont">
-            <div className="imgViewPageTitle">Image Title</div>
+            <div className="imgViewPageTitle">{imageTitlee}</div>
             <div className="imgViewPageLikes">
-              <div className="likeCounter">RED HEART ICON number of likes</div>
+              <div className="likeCounter">♥ {imageLikes} Likes</div>
             </div>
           </div>
-          <div className="imgViewPageDescription">
-            description of image inputted by uploader
-          </div>
+          <div className="imgViewPageDescription">{imageDescription}</div>
         </div>
       </div>
       <div className="relatedImagesContainer">

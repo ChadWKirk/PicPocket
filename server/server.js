@@ -18,7 +18,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 const dbo = require("./db/conn");
-const { response } = require("express");
+const { response, json } = require("express");
+const { ObjectID } = require("bson");
+const { ObjectId } = require("mongodb");
 
 app.get("/", (req, res) => {
   res.send("ok");
@@ -648,39 +650,58 @@ app.get("/search/:searchQuery/:sort/:filter", (req, res) => {
   let sort = req.params.sort;
   let filter = req.params.filter;
 
+  const objectId = ObjectId("63c03bab0ea2381b005e565b");
+
+  console.log("search");
+
   let db_connect = dbo.getDb();
   //title or tag must match searchQuery. Uses collation strength 2 for case insensitive
   if (sort == "most-recent" && filter == "all-types") {
     db_connect
       .collection("mern-ecommerce-images")
-      .find({
-        $or: [
-          {
-            title: req.params.searchQuery,
+      .find(
+        // { title: req.params.searchQuery }
+        // $or: [
+        // [
+        // {
+
+        {
+          $search: {
+            index: "searchTitle",
+            text: {
+              query: req.params.searchQuery,
+              path: {
+                wildcard: "*",
+              },
+            },
           },
-          {
-            title: req.params.searchQuery + "s",
-          },
-          {
-            title: req.params.searchQuery + "es",
-          },
-          {
-            tags: req.params.searchQuery,
-          },
-          {
-            tags: req.params.searchQuery + "s",
-          },
-          {
-            tags: req.params.searchQuery + "es",
-          },
-        ],
-      })
-      .collation({ locale: "en", strength: 2 })
+        }
+
+        // }
+        // ]
+        //   {
+        //     title: { $text: { $search: req.params.searchQuery + "s" } },
+        //   },
+        //   {
+        //     title: { $text: { $search: req.params.searchQuery + "es" } },
+        //   },
+        //   {
+        //     tags: req.params.searchQuery,
+        //   },
+        //   {
+        //     tags: req.params.searchQuery + "s",
+        //   },
+        //   {
+        //     tags: req.params.searchQuery + "es",
+        //   },
+        // ],
+      )
+      // .collation({ locale: "en", strength: 2 })
       .sort({ created_at: -1 })
-      // .limit(12)
       .toArray(function (err, result) {
         if (err) {
           res.status(400).send("Error fetching listings!");
+          console.log(err);
         } else {
           res.json(result);
           console.log(result);
