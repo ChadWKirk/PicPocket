@@ -39,6 +39,14 @@ create image view page
 
 create image view modal
 
+create account page for other users
+
+create profile picture upload
+
+edit account settings page
+
+create change password page
+
 Deal with edit success/failure
 
 Make Delete Success alert
@@ -48,6 +56,14 @@ Create mass delete function (only deletes 2 right now)
 Create download function
 
 Create mass download function
+
+create user tokens
+
+create email authentication
+
+create forgot password
+
+make liking a pic send you to sign up page if clicked when signed out
 
 ---
 

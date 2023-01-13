@@ -33,13 +33,10 @@ const AccountPage = ({ curUser, loggedIn }) => {
   return (
     <div>
       <NavBar curUser={curUser} loggedIn={loggedIn} />
-      <h2>Shipping Address:</h2>
-      <p>shipping address</p>
-      <a href="">Edit</a>
-      <h2>Credit Card Number:</h2>
-      <p>cc number</p>
-      <a href="">Edit</a>
-      <h2>-----------------</h2>
+      <h2>Email:</h2>
+      <input></input>
+      <button>Change Email</button>
+      <button>Change Password</button>
       <a href="" onClick={delAcc}>
         <h3>Delete account</h3>
       </a>
