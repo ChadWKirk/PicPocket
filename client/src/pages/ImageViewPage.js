@@ -23,7 +23,7 @@ const ImageViewPage = ({ curUser, loggedIn }) => {
   function setNavToFixed() {
     if (window !== undefined) {
       let windowHeight = window.scrollY;
-      windowHeight > 425 ? setNavPosition("fixed") : setNavPosition("gone");
+      windowHeight > 0 ? setNavPosition("fixed") : setNavPosition("gone");
     }
   }
 
@@ -32,33 +32,45 @@ const ImageViewPage = ({ curUser, loggedIn }) => {
   return (
     <div>
       <WhiteNavBar curUser={curUser} loggedIn={loggedIn} />
-      <div className={`${navPosition}`}>
+      <div className="fixed">
         <WhiteNavBar curUser={curUser} loggedIn={loggedIn} />
       </div>
       <div className="subBarCont1">
         <div className="subBarAuthor1">
-          {/* <img>Profile Pic</img> */}
-          <p>{curUser}</p>
+          <img
+            src={require("./nature-4k-pc-full-hd-wallpaper-preview.jpg")}
+            className="profilePic"
+          ></img>
+          <h5>{curUser}</h5>
         </div>
-        <div>Like</div>
-        <div>Download</div>
+        <div className="subBarLikeDownload1">
+          <button className="imgViewLikeBtn">
+            <div>♥</div>
+            <div>Like</div>
+          </button>
+          <button className="imgViewDLBtn">Download</button>
+        </div>
       </div>
+
       <div className="imageViewContainer">
         <div className="imageViewDetailsContainer">
           <img
+            className="imageViewPageMainImg"
             alt="broken"
             src={require("./nature-4k-pc-full-hd-wallpaper-preview.jpg")} //change to pull public id from url
           ></img>
-          <div className="imageViewDetailsContainerTitle">Image Title</div>
-          <div className="imageViewDetailsContainerLikesContainer">
-            <div className="likeCounter">RED HEART ICON number of likes</div>
+          <div className="imgViewPageTitleLikesCont">
+            <div className="imgViewPageTitle">Image Title</div>
+            <div className="imgViewPageLikes">
+              <div className="likeCounter">RED HEART ICON number of likes</div>
+            </div>
           </div>
-          <div className="imageViewDescription">
+          <div className="imgViewPageDescription">
             description of image inputted by uploader
           </div>
         </div>
       </div>
-      {/* <div className="relatedImagesContainer">
+      <div className="relatedImagesContainer">
         <div className="relatedImagesTitle">Related Images</div>
         <div className="relatedImagesGalleryContainer">
           <img
@@ -82,7 +94,7 @@ const ImageViewPage = ({ curUser, loggedIn }) => {
             src={require("./nature-4k-pc-full-hd-wallpaper-preview.jpg")}
           ></img>
         </div>
-      </div> */}
+      </div>
     </div>
   );
 };

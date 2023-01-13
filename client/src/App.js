@@ -78,7 +78,7 @@ function App() {
             element={<SearchResultPage curUser={curUser} loggedIn={loggedIn} />}
           ></Route>
           <Route
-            path="/image/navigateTest"
+            path="/image/ok"
             element={<ImageViewPage curUser={curUser} loggedIn={loggedIn} />}
           ></Route>
           <Route path="/like-test" element={<LikeTestPage />}></Route>

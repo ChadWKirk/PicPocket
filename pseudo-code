@@ -31,8 +31,6 @@ TASKS:
 
 make search not work if searchquery is undefined
 
-make navbar and subbar always sticky on image view page
-
 create image view page
 
 create image view modal
