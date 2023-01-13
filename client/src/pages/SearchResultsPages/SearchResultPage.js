@@ -215,7 +215,7 @@ const SearchResultsPage = ({ curUser, loggedIn }) => {
       </div>
       <div className="imgGallerySectionCont1">
         <h1>
-          {searchQuery} Images {searchQuery.length} results
+          {searchQuery} Images {searchArr.length} results
         </h1>
         <div className="myPicsGallerySortBar-leftContainer">
           <DropdownButton

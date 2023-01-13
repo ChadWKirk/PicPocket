@@ -29,8 +29,6 @@ If array.length > 1, show stack of little images and say "Select a single image 
 
 TASKS:
 
-change results counter in search. it matches searchquery length for some reason. for example ko = 2 cat = 3
-
 make search not work if searchquery is undefined
 
 make navbar and subbar always sticky on image view page

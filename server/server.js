@@ -640,7 +640,19 @@ app.get("/search/:searchQuery/:sort/:filter", (req, res) => {
             title: req.params.searchQuery,
           },
           {
+            title: req.params.searchQuery + "s",
+          },
+          {
+            title: req.params.searchQuery + "es",
+          },
+          {
             tags: req.params.searchQuery,
+          },
+          {
+            tags: req.params.searchQuery + "s",
+          },
+          {
+            tags: req.params.searchQuery + "es",
           },
         ],
       })
