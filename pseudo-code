@@ -31,9 +31,7 @@ TASKS:
 
 make search not work if searchquery is undefined
 
-make search work for individual words - mongodb search index throwing error for some reason
-
-create image view page - get image to show up. need to wait for image to fetch before pulling secure url in src
+create image view page - get image to show up. need to wait for image to fetch before pulling secure url in src - pull in synonym tags to click to search - pull in related images
 
 create image view modal
 

@@ -655,11 +655,12 @@ app.get("/search/:searchQuery/:sort/:filter", (req, res) => {
   console.log("search");
 
   let db_connect = dbo.getDb();
-  //title or tag must match searchQuery. Uses collation strength 2 for case insensitive
+  //title or tag must match searchQuery. Uses collation strength 2 for case insensitive (OLD)
+  //using search index searchTitle to search for title and tags individual words case insensitive
   if (sort == "most-recent" && filter == "all-types") {
     db_connect
       .collection("mern-ecommerce-images")
-      .find(
+      .aggregate([
         // { title: req.params.searchQuery }
         // $or: [
         // [
@@ -670,12 +671,10 @@ app.get("/search/:searchQuery/:sort/:filter", (req, res) => {
             index: "searchTitle",
             text: {
               query: req.params.searchQuery,
-              path: {
-                wildcard: "*",
-              },
+              path: ["title", "tags"],
             },
           },
-        }
+        },
 
         // }
         // ]
@@ -695,7 +694,7 @@ app.get("/search/:searchQuery/:sort/:filter", (req, res) => {
         //     tags: req.params.searchQuery + "es",
         //   },
         // ],
-      )
+      ])
       // .collation({ locale: "en", strength: 2 })
       .sort({ created_at: -1 })
       .toArray(function (err, result) {
