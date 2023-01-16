@@ -31,13 +31,13 @@ TASKS:
 
 make search not work if searchquery is undefined
 
-create image view page - get image to show up. need to wait for image to fetch before pulling secure url in src - pull in synonym tags to click to search - pull in related images
+create image view page - pull in synonym tags to click to search - get download button to work
 
 create image view modal
 
 create account page for other users
 
-create profile picture upload
+create profile picture upload -- In User Settings page, have a profile pic icon with Change button next to it. Can upload pic and have it automatically be scaled down and centered to best fit circle.
 
 edit account settings page
 

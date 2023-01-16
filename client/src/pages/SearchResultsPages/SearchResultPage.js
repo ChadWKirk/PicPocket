@@ -69,23 +69,6 @@ const SearchResultsPage = ({ curUser, loggedIn }) => {
           .then((stringJSON) => JSON.parse(stringJSON))
           .then((parsedJSON) => setSearchArr(parsedJSON))
       );
-      //make everything lower case to allow case insensitive searching
-      // if (searchArr) {
-      //   for (var i = 0; i < searchArr.length; i++) {
-      //     if (
-      //       searchArr[i].tags
-      //         .toString()
-      //         .toLowerCase()
-      //         .includes(searchQuery.toLowerCase()) ||
-      //       searchArr[i].title
-      //         .toString()
-      //         .toLowerCase()
-      //         .includes(searchQuery.toLowerCase())
-      //     ) {
-      //       resultsArr.push(searchArr[i]);
-      //     }
-      //   }
-      // }
     }
     searchFetch();
   }, [sort, filter]);

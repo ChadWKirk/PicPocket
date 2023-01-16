@@ -551,6 +551,34 @@ button {
   }
 }
 
+.likeButtonHeart2 {
+  border-radius: 10px;
+  pointer-events: none;
+  /* position: absolute; */
+  z-index: 100;
+}
+
+.likeButtonLikedFill2 {
+  color: red;
+  z-index: 105;
+  animation: likeAnimation2 0.4s;
+}
+
+@keyframes likeAnimation2 {
+  from {
+    font-size: 1.45rem;
+    /* top: 11.65px;
+    left: 12.1px; */
+    color: rgb(234, 1, 1);
+  }
+  to {
+    font-size: 1.2rem;
+    /* top: 14px;
+    left: 14px; */
+    color: red;
+  }
+}
+
 .downloadButtonCont1 {
   cursor: pointer;
   position: absolute;
@@ -682,9 +710,10 @@ button {
   display: flex;
   outline: 1px gray solid;
   justify-content: center;
+  align-items: center;
   border-radius: 5px;
   padding: 0.5rem 1rem;
-  gap: 0.2rem;
+  gap: 0.5rem;
   font-size: 1.2rem;
 }
 
