@@ -686,9 +686,19 @@ app.get("/search/:searchQuery/:sort/:filter", (req, res) => {
         {
           $search: {
             index: "searchTitle",
-            text: {
-              query: req.params.searchQuery,
-              path: ["title", "tags"],
+            compound: {
+              must: {
+                text: {
+                  query: req.params.searchQuery,
+                  path: ["title", "tags"],
+                },
+              },
+              filter: {
+                text: {
+                  path: "imageType",
+                  query: filter,
+                },
+              },
             },
           },
         },
@@ -734,9 +744,19 @@ app.get("/search/:searchQuery/:sort/:filter", (req, res) => {
         {
           $search: {
             index: "searchTitle",
-            text: {
-              query: req.params.searchQuery,
-              path: ["title", "tags"],
+            compound: {
+              must: {
+                text: {
+                  query: req.params.searchQuery,
+                  path: ["title", "tags"],
+                },
+              },
+              filter: {
+                text: {
+                  path: "imageType",
+                  query: filter,
+                },
+              },
             },
           },
         },
@@ -782,9 +802,19 @@ app.get("/search/:searchQuery/:sort/:filter", (req, res) => {
         {
           $search: {
             index: "searchTitle",
-            text: {
-              query: req.params.searchQuery,
-              path: ["title", "tags"],
+            compound: {
+              must: {
+                text: {
+                  query: req.params.searchQuery,
+                  path: ["title", "tags"],
+                },
+              },
+              filter: {
+                text: {
+                  path: "imageType",
+                  query: filter,
+                },
+              },
             },
           },
         },
@@ -830,9 +860,19 @@ app.get("/search/:searchQuery/:sort/:filter", (req, res) => {
         {
           $search: {
             index: "searchTitle",
-            text: {
-              query: req.params.searchQuery,
-              path: ["title", "tags"],
+            compound: {
+              must: {
+                text: {
+                  query: req.params.searchQuery,
+                  path: ["title", "tags"],
+                },
+              },
+              filter: {
+                text: {
+                  path: "imageType",
+                  query: filter,
+                },
+              },
             },
           },
         },
@@ -878,9 +918,19 @@ app.get("/search/:searchQuery/:sort/:filter", (req, res) => {
         {
           $search: {
             index: "searchTitle",
-            text: {
-              query: req.params.searchQuery,
-              path: ["title", "tags"],
+            compound: {
+              must: {
+                text: {
+                  query: req.params.searchQuery,
+                  path: ["title", "tags"],
+                },
+              },
+              filter: {
+                text: {
+                  path: "imageType",
+                  query: filter,
+                },
+              },
             },
           },
         },
@@ -926,9 +976,19 @@ app.get("/search/:searchQuery/:sort/:filter", (req, res) => {
         {
           $search: {
             index: "searchTitle",
-            text: {
-              query: req.params.searchQuery,
-              path: ["title", "tags"],
+            compound: {
+              must: {
+                text: {
+                  query: req.params.searchQuery,
+                  path: ["title", "tags"],
+                },
+              },
+              filter: {
+                text: {
+                  path: "imageType",
+                  query: filter,
+                },
+              },
             },
           },
         },

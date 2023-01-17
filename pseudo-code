@@ -29,8 +29,6 @@ If array.length > 1, show stack of little images and say "Select a single image 
 
 TASKS:
 
-fix routes for get with search
-
 copy over mainpage to mainpage most popular
 
 create image view page - pull in synonym tags to click to search
