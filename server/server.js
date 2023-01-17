@@ -330,35 +330,33 @@ app.post("/deleteImage", (req, res) => {
   return res.status(200).json({ result: true, msg: "file deleted" });
 });
 
-//mass delete images
-app.delete(
-  "https://api.cloudinary.com/v1_1/dtyg4ctfr/resources/image/upload",
-  (req, res) => {
-    console.log("massDelete");
-    //delete from cloudinary
-    cloudinary.v2.api
-      .delete_resources(req.body.public_id, { invalidate: true })
-      .then((result) => {
-        console.log(result);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    //delete from mongodb
-    //   let db_connect = dbo.getDb();
-    //   var myQuery = { public_id: req.body.public_id };
-    //   db_connect
-    //     .collection("mern-ecommerce-images")
-    //     .deleteMany(
-    //       { public_id: { $in: req.body.public_id } },
-    //       function (err, obj) {
-    //         if (err) throw err;
-    //         console.log("Documents have been deleted " + req.body.public_id);
-    //       }
-    //     );
-    //   return res.status(200).json({ result: true, msg: "files deleted" });
-  }
-);
+//mass download images
+app.get("/download", (req, res) => {
+  console.log("download");
+  //download from cloudinary
+  cloudinary.api
+    .resources()
+    .then((result) => {
+      console.log(result);
+      res.json(result);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  //delete from mongodb
+  //   let db_connect = dbo.getDb();
+  //   var myQuery = { public_id: req.body.public_id };
+  //   db_connect
+  //     .collection("mern-ecommerce-images")
+  //     .deleteMany(
+  //       { public_id: { $in: req.body.public_id } },
+  //       function (err, obj) {
+  //         if (err) throw err;
+  //         console.log("Documents have been deleted " + req.body.public_id);
+  //       }
+  //     );
+  //   return res.status(200).json({ result: true, msg: "files deleted" });
+});
 
 //update image info
 app.put("/update/:username", async (req, res) => {
