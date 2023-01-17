@@ -36,7 +36,9 @@ const WhiteNavBar = ({ curUser, loggedIn }) => {
   }
 
   function onSubmit() {
-    navigate(`/search/${inputValue}/most-recent/all-types`);
+    if (inputValue.length > 0) {
+      navigate(`/search/${inputValue}/most-recent/all-types`);
+    }
   }
 
   const [hoverClass, setHoverClass] = useState(false);

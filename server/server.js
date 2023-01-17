@@ -659,11 +659,6 @@ app.get("/search/:searchQuery/:sort/:filter", (req, res) => {
     db_connect
       .collection("mern-ecommerce-images")
       .aggregate([
-        // { title: req.params.searchQuery }
-        // $or: [
-        // [
-        // {
-
         {
           $search: {
             index: "searchTitle",
@@ -673,27 +668,7 @@ app.get("/search/:searchQuery/:sort/:filter", (req, res) => {
             },
           },
         },
-
-        // }
-        // ]
-        //   {
-        //     title: { $text: { $search: req.params.searchQuery + "s" } },
-        //   },
-        //   {
-        //     title: { $text: { $search: req.params.searchQuery + "es" } },
-        //   },
-        //   {
-        //     tags: req.params.searchQuery,
-        //   },
-        //   {
-        //     tags: req.params.searchQuery + "s",
-        //   },
-        //   {
-        //     tags: req.params.searchQuery + "es",
-        //   },
-        // ],
       ])
-      // .collation({ locale: "en", strength: 2 })
       .sort({ created_at: -1 })
       .toArray(function (err, result) {
         if (err) {
@@ -707,17 +682,17 @@ app.get("/search/:searchQuery/:sort/:filter", (req, res) => {
   } else if (sort == "most-recent" && filter != "all-types") {
     db_connect
       .collection("mern-ecommerce-images")
-      .find({
-        $and: [
-          {
-            title: {
-              $regex: `${".*[" + req.params.searchQuery + "].*"}`,
-              $options: "i",
+      .aggregate([
+        {
+          $search: {
+            index: "searchTitle",
+            text: {
+              query: req.params.searchQuery,
+              path: ["title", "tags"],
             },
-            imageType: filter,
           },
-        ],
-      })
+        },
+      ])
       .sort({ created_at: -1 })
       // .limit(12)
       .toArray(function (err, result) {
@@ -731,12 +706,17 @@ app.get("/search/:searchQuery/:sort/:filter", (req, res) => {
   } else if (sort == "oldest" && filter == "all-types") {
     db_connect
       .collection("mern-ecommerce-images")
-      .find({
-        title: {
-          $regex: `${".*[" + req.params.searchQuery + "].*"}`,
-          $options: "i",
+      .aggregate([
+        {
+          $search: {
+            index: "searchTitle",
+            text: {
+              query: req.params.searchQuery,
+              path: ["title", "tags"],
+            },
+          },
         },
-      })
+      ])
       .sort({ created_at: 1 })
       // .limit(12)
       .toArray(function (err, result) {
@@ -750,17 +730,17 @@ app.get("/search/:searchQuery/:sort/:filter", (req, res) => {
   } else if (sort == "oldest" && filter != "all-types") {
     db_connect
       .collection("mern-ecommerce-images")
-      .find({
-        $and: [
-          {
-            title: {
-              $regex: `${".*[" + req.params.searchQuery + "].*"}`,
-              $options: "i",
+      .aggregate([
+        {
+          $search: {
+            index: "searchTitle",
+            text: {
+              query: req.params.searchQuery,
+              path: ["title", "tags"],
             },
-            imageType: filter,
           },
-        ],
-      })
+        },
+      ])
       .sort({ created_at: 1 })
       // .limit(12)
       .toArray(function (err, result) {
@@ -774,12 +754,17 @@ app.get("/search/:searchQuery/:sort/:filter", (req, res) => {
   } else if (sort == "aToz" && filter == "all-types") {
     db_connect
       .collection("mern-ecommerce-images")
-      .find({
-        title: {
-          $regex: `${".*[" + req.params.searchQuery + "].*"}`,
-          $options: "i",
+      .aggregate([
+        {
+          $search: {
+            index: "searchTitle",
+            text: {
+              query: req.params.searchQuery,
+              path: ["title", "tags"],
+            },
+          },
         },
-      })
+      ])
       .sort({ title: 1 })
       // .limit(12)
       .toArray(function (err, result) {
@@ -793,17 +778,17 @@ app.get("/search/:searchQuery/:sort/:filter", (req, res) => {
   } else if (sort == "aToz" && filter != "all-types") {
     db_connect
       .collection("mern-ecommerce-images")
-      .find({
-        $and: [
-          {
-            title: {
-              $regex: `${".*[" + req.params.searchQuery + "].*"}`,
-              $options: "i",
+      .aggregate([
+        {
+          $search: {
+            index: "searchTitle",
+            text: {
+              query: req.params.searchQuery,
+              path: ["title", "tags"],
             },
-            imageType: filter,
           },
-        ],
-      })
+        },
+      ])
       .sort({ title: 1 })
       // .limit(12)
       .toArray(function (err, result) {
@@ -817,12 +802,17 @@ app.get("/search/:searchQuery/:sort/:filter", (req, res) => {
   } else if (sort == "zToa" && filter == "all-types") {
     db_connect
       .collection("mern-ecommerce-images")
-      .find({
-        title: {
-          $regex: `${".*[" + req.params.searchQuery + "].*"}`,
-          $options: "i",
+      .aggregate([
+        {
+          $search: {
+            index: "searchTitle",
+            text: {
+              query: req.params.searchQuery,
+              path: ["title", "tags"],
+            },
+          },
         },
-      })
+      ])
       .sort({ title: -1 })
       // .limit(12)
       .toArray(function (err, result) {
@@ -836,17 +826,17 @@ app.get("/search/:searchQuery/:sort/:filter", (req, res) => {
   } else if (sort == "zToa" && filter != "all-types") {
     db_connect
       .collection("mern-ecommerce-images")
-      .find({
-        $and: [
-          {
-            title: {
-              $regex: `${".*[" + req.params.searchQuery + "].*"}`,
-              $options: "i",
+      .aggregate([
+        {
+          $search: {
+            index: "searchTitle",
+            text: {
+              query: req.params.searchQuery,
+              path: ["title", "tags"],
             },
-            imageType: filter,
           },
-        ],
-      })
+        },
+      ])
       .sort({ title: -1 })
       // .limit(12)
       .toArray(function (err, result) {
@@ -860,12 +850,17 @@ app.get("/search/:searchQuery/:sort/:filter", (req, res) => {
   } else if (sort == "leastLikes" && filter == "all-types") {
     db_connect
       .collection("mern-ecommerce-images")
-      .find({
-        title: {
-          $regex: `${".*[" + req.params.searchQuery + "].*"}`,
-          $options: "i",
+      .aggregate([
+        {
+          $search: {
+            index: "searchTitle",
+            text: {
+              query: req.params.searchQuery,
+              path: ["title", "tags"],
+            },
+          },
         },
-      })
+      ])
       .sort({ likes: 1 })
       // .limit(12)
       .toArray(function (err, result) {
@@ -879,17 +874,17 @@ app.get("/search/:searchQuery/:sort/:filter", (req, res) => {
   } else if (sort == "leastLikes" && filter != "all-types") {
     db_connect
       .collection("mern-ecommerce-images")
-      .find({
-        $and: [
-          {
-            title: {
-              $regex: `${".*[" + req.params.searchQuery + "].*"}`,
-              $options: "i",
+      .aggregate([
+        {
+          $search: {
+            index: "searchTitle",
+            text: {
+              query: req.params.searchQuery,
+              path: ["title", "tags"],
             },
-            imageType: filter,
           },
-        ],
-      })
+        },
+      ])
       .sort({ likes: 1 })
       // .limit(12)
       .toArray(function (err, result) {
@@ -903,12 +898,17 @@ app.get("/search/:searchQuery/:sort/:filter", (req, res) => {
   } else if (sort == "mostLikes" && filter == "all-types") {
     db_connect
       .collection("mern-ecommerce-images")
-      .find({
-        title: {
-          $regex: `${".*[" + req.params.searchQuery + "].*"}`,
-          $options: "i",
+      .aggregate([
+        {
+          $search: {
+            index: "searchTitle",
+            text: {
+              query: req.params.searchQuery,
+              path: ["title", "tags"],
+            },
+          },
         },
-      })
+      ])
       .sort({ likes: -1 })
       // .limit(12)
       .toArray(function (err, result) {
@@ -922,17 +922,17 @@ app.get("/search/:searchQuery/:sort/:filter", (req, res) => {
   } else if (sort == "mostLikes" && filter != "all-types") {
     db_connect
       .collection("mern-ecommerce-images")
-      .find({
-        $and: [
-          {
-            title: {
-              $regex: `${".*[" + req.params.searchQuery + "].*"}`,
-              $options: "i",
+      .aggregate([
+        {
+          $search: {
+            index: "searchTitle",
+            text: {
+              query: req.params.searchQuery,
+              path: ["title", "tags"],
             },
-            imageType: filter,
           },
-        ],
-      })
+        },
+      ])
       .sort({ likes: -1 })
       // .limit(12)
       .toArray(function (err, result) {

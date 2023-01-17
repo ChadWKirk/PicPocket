@@ -29,7 +29,9 @@ If array.length > 1, show stack of little images and say "Select a single image 
 
 TASKS:
 
-make search not work if searchquery is undefined
+fix routes for get with search
+
+copy over mainpage to mainpage most popular
 
 create image view page - pull in synonym tags to click to search
 
@@ -48,8 +50,6 @@ Deal with edit success/failure
 Make Delete Success alert
 
 Create mass delete function (only deletes 2 right now)
-
-Create download function
 
 Create mass download function
 
