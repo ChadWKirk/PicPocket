@@ -133,7 +133,17 @@ const LikesPage = ({ curUser, loggedIn }) => {
                 >
                   {likeButton}
                 </a>
-                <a className="downloadButtonCont1">
+                <a
+                  className="downloadButtonCont1"
+                  href={
+                    element.secure_url.slice(0, 50) +
+                    "q_100/fl_attachment/" +
+                    element.secure_url.slice(
+                      50,
+                      element.secure_url.lastIndexOf(".")
+                    )
+                  }
+                >
                   <FontAwesomeIcon
                     icon={faDownload}
                     className="downloadButton1"

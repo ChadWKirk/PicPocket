@@ -29,11 +29,9 @@ If array.length > 1, show stack of little images and say "Select a single image 
 
 TASKS:
 
-download - encode images to base64 on upload then download them that way
-
 make search not work if searchquery is undefined
 
-create image view page - pull in synonym tags to click to search - get download button to work
+create image view page - pull in synonym tags to click to search
 
 create image view modal
 

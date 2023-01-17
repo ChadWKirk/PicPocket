@@ -89,7 +89,13 @@ const ImageViewPage = ({ curUser, loggedIn }) => {
 
     imageLikes = imageFetchID[0].likes;
 
-    imageURL = imageFetchID[0].secure_url;
+    imageURL =
+      imageFetchID[0].secure_url.slice(0, 50) +
+      "q_100/fl_attachment/" +
+      imageFetchID[0].secure_url.slice(
+        50,
+        imageFetchID[0].secure_url.lastIndexOf(".")
+      );
 
     imageTags = imageFetchID[0].tags;
 
@@ -204,7 +210,17 @@ const ImageViewPage = ({ curUser, loggedIn }) => {
             >
               {likeButton}
             </a>
-            <a className="downloadButtonCont1">
+            <a
+              className="downloadButtonCont1"
+              href={
+                element.secure_url.slice(0, 50) +
+                "q_100/fl_attachment/" +
+                element.secure_url.slice(
+                  50,
+                  element.secure_url.lastIndexOf(".")
+                )
+              }
+            >
               <FontAwesomeIcon
                 icon={faDownload}
                 className="downloadButton1"
@@ -281,47 +297,6 @@ const ImageViewPage = ({ curUser, loggedIn }) => {
     setIsLiked(!isLiked);
   }
 
-  //download
-  async function downloadMain() {
-    await fetch("/download", {
-      method: "GET",
-      headers: {
-        "Content-type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET,POST,OPTIONS,DELETE,PUT",
-        "Access-Control-Allow-Headers":
-          "Content-Type, Authorization, X-Requested-With",
-      },
-    }).then((response) =>
-      response.blob().then((resBLOB) => {
-        var a = document.createElement("a");
-        a.href = window.URL.createObjectURL({
-          asset_id: "8c0d0a5315663ca529e71fcd1dd07c66",
-          public_id: "picpocket/Berries",
-          format: "jpg",
-          version: 1673903815,
-          resource_type: "image",
-          type: "upload",
-          created_at: "2023-01-16T21:16:55Z",
-          bytes: 5366988,
-          width: 6000,
-          height: 4000,
-          folder: "picpocket",
-          access_mode: "public",
-          url: "http://res.cloudinary.com/dtyg4ctfr/image/upload/v1673903815/picpocket/Berries.jpg",
-          secure_url:
-            "https://res.cloudinary.com/dtyg4ctfr/image/upload/v1673903815/picpocket/Berries.jpg",
-          last_updated: {
-            public_id_updated_at: "2023-01-16T21:17:50+00:00",
-            updated_at: "2023-01-16T21:17:50+00:00",
-          },
-        });
-        a.download = "FILENAME";
-        a.click();
-      })
-    );
-  }
-
   return (
     <div>
       <WhiteNavBar curUser={curUser} loggedIn={loggedIn} />
@@ -338,9 +313,9 @@ const ImageViewPage = ({ curUser, loggedIn }) => {
         </div>
         <div className="subBarLikeDownload1">
           {mainLikeBtn}
-          {/* <a className="imgViewDLBtn" href={imageURL} download="image"> */}
-          <button onClick={() => downloadMain()}>Download</button>
-          {/* </a> */}
+          <a className="imgViewDLBtn" href={imageURL}>
+            <button>Download</button>
+          </a>
         </div>
       </div>
 
