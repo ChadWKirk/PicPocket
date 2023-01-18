@@ -32,9 +32,18 @@ const UserSettingsPage = ({ curUser, loggedIn }) => {
   return (
     <div>
       <NavBar curUser={curUser} loggedIn={loggedIn} />
-      <h2>Email:</h2>
-      <input></input>
-      <button>Change Email</button>
+      <div>profile pic (click to change)</div>
+      <div>
+        <h2>bio:</h2>
+        <input placeholder="current bio"></input>
+        <button>Change bio</button>
+      </div>
+      <div>
+        <h2>Email:</h2>
+        <input placeholder="current Email"></input>
+        <button>Change Email</button>
+      </div>
+
       <button>Change Password</button>
       <a href="" onClick={delAcc}>
         <h3>Delete account</h3>

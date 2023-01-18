@@ -41,6 +41,25 @@ const UserPage = ({ curUser, loggedIn }) => {
     </div>
   );
 
+  const [userInfo, setUserInfo] = useState();
+
+  useEffect(() => {
+    async function userInfoFetch() {
+      await fetch(`http://localhost:5000/${username}/info`, {
+        method: "GET",
+        headers: { "Content-type": "application/json" },
+      }).then((response) =>
+        response
+          .json()
+          .then((resJSON) => JSON.stringify(resJSON))
+          .then((stringJSON) => JSON.parse(stringJSON))
+          .then((parsedJSON) => setUserInfo(parsedJSON[0]))
+      );
+    }
+
+    userInfoFetch();
+  }, []);
+
   useEffect(() => {
     async function searchFetch() {
       await fetch(`http://localhost:5000/${username}/${sort}/${filter}`, {
@@ -198,6 +217,13 @@ const UserPage = ({ curUser, loggedIn }) => {
   if (resultsMap) {
     resultsMapLength = resultsMap.length;
   }
+  let pfp;
+  let bio;
+  if (userInfo) {
+    pfp = userInfo.pfp;
+    bio = userInfo.bio;
+  }
+
   return (
     <div>
       <NavBar curUser={curUser} loggedIn={loggedIn} />
@@ -205,9 +231,9 @@ const UserPage = ({ curUser, loggedIn }) => {
       <div className="galleryContainer">
         <div className="galleryHeadingAndSortContainer">
           <div className="galleryHeading">
-            <div>Profile Pic</div>
+            <img src={pfp} className="profilePicBig" />
             <h2>{username}</h2>
-            <p>description</p>
+            <p>{bio}</p>
             <p>Images by {username}</p>
           </div>
         </div>

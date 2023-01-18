@@ -10,12 +10,14 @@ const SignUpPage = ({ curUser, loggedIn }) => {
   const [form, setForm] = useState({
     username: "",
     password: "",
+    email: "",
     signedIn: false,
   });
 
   let newUser = {
     username: form.username,
     password: form.password,
+    email: form.email,
     signedIn: false,
   }; //blank newUser
 
@@ -26,6 +28,10 @@ const SignUpPage = ({ curUser, loggedIn }) => {
 
   function onChangePW(event) {
     newUser.password = event.target.value;
+  }
+
+  function onChangeEmail(event) {
+    newUser.email = event.target.value;
   }
 
   async function onSubmit(e) {
@@ -97,7 +103,11 @@ const SignUpPage = ({ curUser, loggedIn }) => {
             onChange={onChangeName}
             placeholder="Username"
           ></input>
-          <input id="email" onChange={onChangeName} placeholder="Email"></input>
+          <input
+            id="email"
+            onChange={onChangeEmail}
+            placeholder="Email"
+          ></input>
           <input
             id="password"
             // type="password"

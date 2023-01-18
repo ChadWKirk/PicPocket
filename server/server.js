@@ -84,6 +84,9 @@ app.post("/users", (req, response) => {
   let newUser = {
     username: req.body.username,
     password: req.body.password,
+    email: req.body.email,
+    bio: "",
+    pfp: "https://res.cloudinary.com/dtyg4ctfr/image/upload/v1674071860/PicPocket/default_pfp_purple_mb2egd.jpg",
     signedIn: false,
   };
   //find any users already signed in and push them to another array to access it
@@ -128,6 +131,9 @@ app.post("/users", (req, response) => {
             {
               username: req.body.username,
               password: req.body.password,
+              email: req.body.email,
+              bio: "",
+              pfp: "https://res.cloudinary.com/dtyg4ctfr/image/upload/v1674071860/PicPocket/default_pfp_purple_mb2egd.jpg",
               signedIn: true,
             },
             function (err, res) {
@@ -146,6 +152,9 @@ app.post("/users", (req, response) => {
             {
               username: req.body.username,
               password: req.body.password,
+              email: req.body.email,
+              bio: "",
+              pfp: "https://res.cloudinary.com/dtyg4ctfr/image/upload/v1674071860/PicPocket/default_pfp_purple_mb2egd.jpg",
               signedIn: true,
             },
             function (err, res) {
@@ -229,6 +238,23 @@ app.delete("/Account/:username/delUser", (req, res) => {
   res.json("deleted");
 
   console.log("account deleted " + req.params.username); //req.params.username is whatever is in the URL at the position of :username
+});
+
+//get user info (pfp, description)
+app.get("/:username/info", (req, res) => {
+  let db_connect = dbo.getDb();
+
+  db_connect
+    .collection("mern-ecommerce-users")
+    .find({ username: req.params.username })
+    .toArray(function (err, result) {
+      if (err) {
+        res.status(400).send("Error fetching user info!");
+      } else {
+        res.json(result);
+        console.log(result);
+      }
+    });
 });
 
 //cloudinary routes
