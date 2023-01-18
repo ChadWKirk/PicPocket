@@ -468,13 +468,14 @@ app.get("/image/:title", (req, res) => {
 app.get("/:username/:sort/:filter", (req, res) => {
   let sort = req.params.sort;
   let filter = req.params.filter;
+  let user = req.params.username;
 
   let db_connect = dbo.getDb();
 
   if (sort == "most-recent" && filter == "all-types") {
     db_connect
       .collection("mern-ecommerce-images")
-      .find()
+      .find({ uploadedBy: user })
       .sort({ created_at: -1 })
       // .limit(12)
       .toArray(function (err, result) {

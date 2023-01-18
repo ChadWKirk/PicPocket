@@ -1,13 +1,12 @@
 import React from "react";
 import NavBar from "../../components/NavBar";
 import Logo from "../../components/Logo";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import SearchBar from "../../components/SearchBar";
 import DropDown from "../../components/DropDown";
 
-const AccountPage = ({ curUser, loggedIn }) => {
+const UserSettingsPage = ({ curUser, loggedIn }) => {
   const navigate = useNavigate();
-  // const { username } = useParams();
   console.log(curUser + " this is username in url");
   async function delAcc(e) {
     e.preventDefault();
@@ -44,4 +43,4 @@ const AccountPage = ({ curUser, loggedIn }) => {
   );
 };
 
-export default AccountPage;
+export default UserSettingsPage;

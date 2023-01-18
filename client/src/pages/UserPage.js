@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import NavBar from "../../components/NavBar";
+import { useNavigate, useParams } from "react-router-dom";
+import NavBar from "../components/NavBar";
 import Dropdown from "react-bootstrap/Dropdown";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
@@ -8,8 +8,9 @@ import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import DropdownButton from "react-bootstrap/DropdownButton";
 
-const LikesPage = ({ curUser, loggedIn }) => {
+const UserPage = ({ curUser, loggedIn }) => {
   let navigate = useNavigate();
+  const { username } = useParams();
 
   var likesArr = [];
   var resultsArr = [];
@@ -41,10 +42,8 @@ const LikesPage = ({ curUser, loggedIn }) => {
   );
 
   useEffect(() => {
-    navigate(`/Account/${curUser}/Likes/${sort}/${filter}`);
-
     async function searchFetch() {
-      await fetch(`http://localhost:5000/${curUser}/likes/${sort}/${filter}`, {
+      await fetch(`http://localhost:5000/${username}/${sort}/${filter}`, {
         method: "GET",
         headers: { "Content-type": "application/json" },
       }).then((response) =>
@@ -72,13 +71,15 @@ const LikesPage = ({ curUser, loggedIn }) => {
       }
       var count = -1;
       //use split to get an array split by the /
-      //only output the public_id after the last /. last index of array meaning length-1
+      //only output the public_id after the last /. last count of array meaning length-1
       //replace all spaces with dashes
       setResultsMap(
-        resultsArr.map((element, index) => {
+        resultsArr.map((element, index, count) => {
           let parts = element.public_id.split("/");
           let result = parts[parts.length - 1];
           var likeButton;
+          count = count + 1;
+          console.log(index);
 
           if (element.likedBy.includes(curUser)) {
             likeButton = (
@@ -162,10 +163,6 @@ const LikesPage = ({ curUser, loggedIn }) => {
   async function handleLike(e, element, index) {
     var likesArrCopy = likesArr;
 
-    //popup box
-    //if no, return
-    //else continue
-
     if (likesArrCopy[index].likedBy.includes(curUser)) {
       await fetch(
         `http://localhost:5000/removeLikedBy/${element.asset_id}/${curUser}`,
@@ -208,10 +205,10 @@ const LikesPage = ({ curUser, loggedIn }) => {
       <div className="galleryContainer">
         <div className="galleryHeadingAndSortContainer">
           <div className="galleryHeading">
-            <h2>Your Likes</h2>
-            <p>
-              {resultsMapLength} images liked by {curUser}
-            </p>
+            <div>Profile Pic</div>
+            <h2>{username}</h2>
+            <p>description</p>
+            <p>Images by {username}</p>
           </div>
         </div>
         <div className="gallerySortBar d-flex">
@@ -318,4 +315,4 @@ const LikesPage = ({ curUser, loggedIn }) => {
   );
 };
 
-export default LikesPage;
+export default UserPage;

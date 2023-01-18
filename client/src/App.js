@@ -6,7 +6,8 @@ import Footer from "./components/Footer";
 //pages
 import MainPage from "./pages/MainPage/MainPage";
 import MainPageMostPopularImages from "./pages/MainPage/MainPageMostPopularImages";
-import AccountPage from "./pages/AccountManipulationPages/AccountPage";
+import UserSettingsPage from "./pages/AccountManipulationPages/UserSettingsPage";
+import UserPage from "./pages/UserPage";
 import SignInPage from "./pages/AccountManipulationPages/SignInPage";
 import SignUpPage from "./pages/AccountManipulationPages/SignUpPage";
 import SignUpSuccessPage from "./pages/AccountManipulationPages/SignUpSuccessPage";
@@ -84,7 +85,11 @@ function App() {
           <Route path="/like-test" element={<LikeTestPage />}></Route>
           <Route
             path={`/Account/${curUser}`}
-            element={<AccountPage curUser={curUser} loggedIn={loggedIn} />}
+            element={<UserSettingsPage curUser={curUser} loggedIn={loggedIn} />}
+          ></Route>
+          <Route
+            path={`/User/:username`}
+            element={<UserPage curUser={curUser} loggedIn={loggedIn} />}
           ></Route>
           <Route
             path={`/Account/${curUser}/My-Pics/:sort/:filter`}

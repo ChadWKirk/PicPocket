@@ -129,7 +129,12 @@ const MainPage = ({ curUser, loggedIn }) => {
                 className="downloadButton1"
               ></FontAwesomeIcon>
             </a>
-            <a className="imgAuthor1">{element.uploadedBy}</a>
+            <a
+              className="imgAuthor1"
+              href={`http://localhost:3000/User/${element.uploadedBy}`}
+            >
+              {element.uploadedBy}
+            </a>
           </div>
         </div>
       );
