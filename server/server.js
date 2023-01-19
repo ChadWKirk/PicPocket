@@ -299,6 +299,29 @@ app.post("/upload", (req, res) => {
   res.json("uploaded");
 });
 
+//upload pfp post
+app.post("/upload/pfp/:username", (req, res) => {
+  //req.body.secure_url for pfp src
+  let db_connect = dbo.getDb();
+  //make sure it's working
+  console.log("upload test start");
+  console.log("upload test start");
+  console.log(req.body);
+  //insert them into MongoDB with a likes and uploaded by field added
+  db_connect.collection("mern-ecommerce-users").updateOne(
+    {
+      username: req.params.username,
+    },
+    {
+      //change pfp to uploaded image
+      $set: {
+        pfp: req.body.secure_url,
+      },
+    }
+  );
+  res.json("uploaded");
+});
+
 //My Likes GET
 app.get("/:username/likes", (req, res) => {
   console.log("likes get");

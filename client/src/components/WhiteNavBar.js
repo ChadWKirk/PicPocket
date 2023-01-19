@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
 import { BsCartCheck } from "react-icons/bs";
@@ -43,6 +43,29 @@ const WhiteNavBar = ({ curUser, loggedIn }) => {
 
   const [hoverClass, setHoverClass] = useState(false);
 
+  const [userInfo, setUserInfo] = useState();
+  const [userPFP, setPFP] = useState();
+
+  useEffect(() => {
+    async function userInfoFetch() {
+      await fetch(`http://localhost:5000/${curUser}/info`, {
+        method: "GET",
+        headers: { "Content-type": "application/json" },
+      }).then((response) =>
+        response
+          .json()
+          .then((resJSON) => JSON.stringify(resJSON))
+          .then((stringJSON) => JSON.parse(stringJSON))
+          .then((parsedJSON) => {
+            setUserInfo(parsedJSON[0]);
+            setPFP(parsedJSON[0].pfp);
+          })
+      );
+    }
+
+    userInfoFetch();
+  }, []);
+
   if (loggedIn) {
     accButton = (
       <div
@@ -64,12 +87,17 @@ const WhiteNavBar = ({ curUser, loggedIn }) => {
           onClick={() => setVisibleClassFunc()}
           style={{ color: "black" }}
         >
-          {curUser}
-          <FontAwesomeIcon
-            icon={faChevronDown}
-            fontSize={10}
-            style={{ marginLeft: "7px", marginBottom: "6px" }}
-          />
+          <a href={`/Account/${curUser}`}>
+            <div className="whiteNavBarPFPDiv">
+              <img src={userPFP} className="profilePicSmall" />
+            </div>
+            <FontAwesomeIcon
+              className="navbarArrowIconDownwardsWHITENAVBAR"
+              icon={faChevronDown}
+              fontSize={10}
+              // style={{ marginLeft: "7px", marginBottom: "6px", color: "black" }}
+            />
+          </a>
         </button>
         <div className={hoverClass ? `navbarULCont` : `navbarULCont gone`}>
           <ul className="navbarUL">

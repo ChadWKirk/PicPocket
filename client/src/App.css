@@ -75,6 +75,26 @@ button {
   font-size: 1rem;
 }
 
+.changePWBtn {
+  padding: 0.8rem;
+  background-color: #d4d4d4;
+  color: rgb(25, 25, 25);
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+}
+
+.deleteAccountBtn {
+  padding: 0.8rem;
+  background-color: #de0c0c;
+  color: rgb(252, 252, 252);
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+}
+
 .navbarButton {
   padding: 0.8rem;
   /* background-color: #debb0c; */
@@ -117,8 +137,13 @@ button {
   border: none;
   border-radius: 10px;
   font-size: 1rem;
-  /* display: flex;
-  align-items: flex-start; */
+  display: flex;
+  align-items: center;
+}
+
+.navbarDropButton a {
+  display: flex;
+  align-items: center;
 }
 
 .navbarDropButton:hover {
@@ -728,6 +753,70 @@ button {
   font-size: 1.2rem;
 }
 
+.profilePicSmall {
+  border-radius: 50%;
+  width: 29px;
+  height: 29px;
+  /* background-color: rgb(0, 0, 0); */
+  transition: 0.2s;
+}
+
+.navbarArrowIconDownwards {
+  margin-left: 7px;
+  margin-bottom: 6px;
+  color: white;
+  transition: 0.2s ease-in-out;
+}
+
+.whiteNavBarPFPDiv:hover ~ .navbarArrowIconDownwards {
+  color: rgb(114, 114, 114);
+}
+
+.navbarArrowIconDownwardsWHITENAVBAR {
+  color: rgb(173, 173, 173);
+  transition: 0.2s ease-in-out;
+  margin-left: 7px;
+  margin-bottom: 6px;
+}
+
+.whiteNavBarPFPDiv:hover ~ .navbarArrowIconDownwardsWHITENAVBAR {
+  color: rgb(149, 149, 149);
+}
+
+.whiteNavBarPFPDiv:hover:after {
+  opacity: 0.2;
+}
+
+.whiteNavBarPFPDiv:after {
+  opacity: 0;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgb(0, 0, 0);
+  transition: 0.2s ease-in-out;
+}
+
+.whiteNavBarPFPDiv {
+  position: relative;
+}
+
+/* .profilePicSmall::after {
+  content: "/A";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgb(0, 0, 0);
+  opacity: 1;
+} */
+
 .profilePic {
   border-radius: 50%;
   width: 50px;
@@ -1089,6 +1178,19 @@ button {
 }
 
 .editorFormDetailsSubContainer textarea {
+  width: 100%;
+  border-radius: 4px;
+  border: 1px solid lightgray;
+  font-size: 0.85rem;
+  /* font-weight: 600; */
+  padding: 0.35rem;
+  padding-left: 0.5rem;
+  margin-top: 0.6rem;
+  height: 5rem;
+  resize: none;
+}
+
+.textArea1 {
   width: 100%;
   border-radius: 4px;
   border: 1px solid lightgray;

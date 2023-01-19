@@ -35,9 +35,13 @@ create image view page - pull in synonym tags to click to search
 
 create image view modal
 
-style account page for other users
+fix scaling for profile pic circle
 
-create profile picture upload -- In User Settings page, have a profile pic icon with Change button next to it. Can upload pic and have it automatically be scaled down and centered to best fit circle. add "profilePic" entry to user collection.
+put profile pic next to author name on image overlay
+
+make it so when you are hovering over entire button the pfp and arrow icon change color
+
+style account page for other users
 
 edit account settings page
 
