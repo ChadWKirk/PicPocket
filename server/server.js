@@ -243,7 +243,7 @@ app.delete("/Account/:username/delUser", (req, res) => {
 //get user info (pfp, description)
 app.get("/:username/info", (req, res) => {
   let db_connect = dbo.getDb();
-
+  console.log("SSSSS");
   db_connect
     .collection("mern-ecommerce-users")
     .find({ username: req.params.username })
@@ -253,6 +253,7 @@ app.get("/:username/info", (req, res) => {
       } else {
         res.json(result);
         console.log(result);
+        console.log("o");
       }
     });
 });
@@ -1240,7 +1241,17 @@ app.get("/most-recent-images", (req, res) => {
 
   db_connect
     .collection("mern-ecommerce-images")
-    .find()
+    .aggregate([
+      //use $lookup to pull user info tied to image for profile pic on overlay
+      {
+        $lookup: {
+          from: "mern-ecommerce-users",
+          localField: "uploadedBy",
+          foreignField: "username",
+          as: "test",
+        },
+      },
+    ])
     .sort({ created_at: -1 })
     // .limit(12)
     .toArray(function (err, result) {

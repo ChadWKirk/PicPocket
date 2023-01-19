@@ -36,11 +36,16 @@ const MainPage = ({ curUser, loggedIn }) => {
 
   var mapArr;
 
+  const [userInfo, setUserInfo] = useState();
+  const [userPFP, setPFP] = useState([]);
+  let pfpArray = [];
+
+  //get images
   useEffect(() => {
     console.log("run");
 
     async function getImages() {
-      await fetch("http://localhost:5000/most-recent-images", {
+      fetch("http://localhost:5000/most-recent-images", {
         method: "GET",
         headers: { "Content-type": "application/json" },
       }).then((response) =>
@@ -48,18 +53,98 @@ const MainPage = ({ curUser, loggedIn }) => {
           .json()
           .then((resJSON) => JSON.stringify(resJSON))
           .then((stringJSON) => JSON.parse(stringJSON))
-          .then((parsedJSON) => setFetchArr(parsedJSON))
+          .then((parsedJSON) => {
+            setFetchArr(parsedJSON);
+            console.log(parsedJSON);
+          })
       );
     }
+
+    // let getPFP = fetch(`http://localhost:5000/${fetchArr[0].uploadedBy}/info`, {
+    //   method: "GET",
+    //   headers: { "Content-type": "application/json" },
+    // }).then((response) =>
+    //   response
+    //     .json()
+    //     .then((resJSON) => JSON.stringify(resJSON))
+    //     .then((stringJSON) => JSON.parse(stringJSON))
+    //     .then((parsedJSON) => {
+    //       setPFP((userPFP) => [...userPFP, parsedJSON[0].pfp]);
+    //     })
+    // );
+
+    // const getAll = async function () {
+    //   let results = await Promise.all([getImages, getPFP]);
+    //   console.log(results);
+    // };
+    // getAll();
     getImages();
   }, []);
 
+  // useEffect(() => {
+  //   async function getPFP() {
+  //     await fetch(`http://localhost:5000/${fetchArr[i].uploadedBy}/info`, {
+  //       method: "GET",
+  //       headers: { "Content-type": "application/json" },
+  //     }).then((response) =>
+  //       response
+  //         .json()
+  //         .then((resJSON) => JSON.stringify(resJSON))
+  //         .then((stringJSON) => JSON.parse(stringJSON))
+  //         .then((parsedJSON) =>
+  //           setPFP((userPFP) => [...userPFP, parsedJSON[0].pfp])
+  //         )
+  //     );
+  //   }
+  //   if (fetchArr) {
+  //     for (let i = 0; i < fetchArr.length; i++) {
+  //       getPFP();
+  //     }
+  //   }
+
+  //   console.log(fetchArr);
+  // }, [fetchArr]);
+
+  //get pfp from image array uploadedBy
+  // useEffect(() => {
+  //   for (let i = 0; i < fetchArr.length; i++) {
+  //     async function fetchPFP() {
+  //       await fetch(`http://localhost:5000/${fetchArr[i].uploadedBy}/info`, {
+  //         method: "GET",
+  //         headers: { "Content-type": "application/json" },
+  //       }).then((response) =>
+  //         response
+  //           .json()
+  //           .then((resJSON) => JSON.stringify(resJSON))
+  //           .then((stringJSON) => JSON.parse(stringJSON))
+  //           .then((parsedJSON) => {
+  //             setPFP((userPFP) => [...userPFP, parsedJSON[0].pfp]);
+  //           })
+  //       );
+  //     }
+
+  //     fetchPFP();
+  //   }
+  // }, [fetchArr]);
+  // async function getPFP() {
+  //   await fetch(`http://localhost:5000/${fetchArr[0].uploadedBy}/info`, {
+  //     method: "GET",
+  //     headers: { "Content-type": "application/json" },
+  //   }).then((response) =>
+  //     response
+  //       .json()
+  //       .then((resJSON) => JSON.stringify(resJSON))
+  //       .then((stringJSON) => JSON.parse(stringJSON))
+  //       .then((parsedJSON) => {
+  //         setPFP((userPFP) => [...userPFP, parsedJSON[0].pfp]);
+  //       })
+  //   );
+  // }
   //map over img array
   useEffect(() => {
-    console.log("run 2");
     mapArr = fetchArr.map((element, index) => {
       var likeButton;
-
+      console.log(fetchArr[index].uploadedBy);
       if (element.likedBy.includes(curUser)) {
         likeButton = (
           <div>
@@ -79,6 +164,25 @@ const MainPage = ({ curUser, loggedIn }) => {
           </div>
         );
       }
+
+      // async function userInfoFetch() {
+      //   await fetch(`http://localhost:5000/${element.uploadedBy}/info`, {
+      //     method: "GET",
+      //     headers: { "Content-type": "application/json" },
+      //   }).then((response) =>
+      //     response
+      //       .json()
+      //       .then((resJSON) => JSON.stringify(resJSON))
+      //       .then((stringJSON) => JSON.parse(stringJSON))
+      //       .then((parsedJSON) => {
+      //         setPFP(parsedJSON[0].pfp);
+      //         console.log(element.uploadedBy);
+      //       })
+      //   );
+      // }
+
+      // userInfoFetch();
+
       return (
         <div key={index} className="imgGalleryImgCont1">
           <a
@@ -129,18 +233,21 @@ const MainPage = ({ curUser, loggedIn }) => {
                 className="downloadButton1"
               ></FontAwesomeIcon>
             </a>
-            <a
-              className="imgAuthor1"
-              href={`http://localhost:3000/User/${element.uploadedBy}`}
-            >
-              {element.uploadedBy}
-            </a>
+            <div>
+              <a
+                className="imgAuthor1"
+                href={`http://localhost:3000/User/${element.uploadedBy}`}
+              >
+                <img src={element.test[0].pfp} className="profilePicSmall" />
+                {element.uploadedBy}
+              </a>
+            </div>
           </div>
         </div>
       );
     });
     setImgGallery(mapArr);
-  }, [fetchArr, isLiked]);
+  }, [fetchArr, userPFP, isLiked]);
 
   async function handleLike(e, element, index) {
     var fetchArrCopy = fetchArr;

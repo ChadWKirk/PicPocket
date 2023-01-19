@@ -220,7 +220,11 @@ const UserPage = ({ curUser, loggedIn }) => {
   let pfp;
   let bio;
   if (userInfo) {
-    pfp = userInfo.pfp;
+    pfp =
+      userInfo.pfp.slice(0, 50) +
+      "q_60/c_scale,w_200/dpr_auto/" +
+      userInfo.pfp.slice(50, userInfo.pfp.lastIndexOf(".")) +
+      ".jpg";
     bio = userInfo.bio;
   }
 

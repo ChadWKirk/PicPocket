@@ -55,7 +55,15 @@ const NavBar = ({ curUser, loggedIn }) => {
           .then((stringJSON) => JSON.parse(stringJSON))
           .then((parsedJSON) => {
             setUserInfo(parsedJSON[0]);
-            setPFP(parsedJSON[0].pfp);
+            setPFP(
+              parsedJSON[0].pfp.slice(0, 50) +
+                "q_60/c_scale,w_200/dpr_auto/" +
+                parsedJSON[0].pfp.slice(
+                  50,
+                  parsedJSON[0].pfp.lastIndexOf(".")
+                ) +
+                ".jpg"
+            );
           })
       );
     }

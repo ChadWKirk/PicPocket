@@ -35,11 +35,19 @@ create image view page - pull in synonym tags to click to search
 
 create image view modal
 
-fix scaling for profile pic circle
+make it so that when you delete your account it deletes all of your images
 
-put profile pic next to author name on image overlay
+pfp stuff:
 
-make it so when you are hovering over entire button the pfp and arrow icon change color
+-make it so when you change your pfp, it deletes the old one from cloudinary and mongodb
+
+-add error handling for wrong pfp file type upload
+
+-fix scaling for profile pic circle to not look warped
+
+-put profile pic next to author name on image overlay
+
+-make it so when you are hovering over entire button the pfp and arrow icon change color
 
 style account page for other users
 
