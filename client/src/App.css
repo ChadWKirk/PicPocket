@@ -151,6 +151,11 @@ button {
   transition: 0.1s ease-in-out;
 }
 
+.navbarDropButton:hover .profilePicSmall {
+  color: rgb(220, 220, 220);
+  transition: 0.1s ease-in-out;
+}
+
 .navbarULContHover {
   visibility: visible;
   opacity: 1;
@@ -758,7 +763,7 @@ button {
   width: 29px;
   height: 29px;
   /* background-color: rgb(0, 0, 0); */
-  transition: 0.2s;
+  transition: 0.2s ease-in-out;
 }
 
 .navbarArrowIconDownwards {
@@ -768,7 +773,7 @@ button {
   transition: 0.2s ease-in-out;
 }
 
-.whiteNavBarPFPDiv:hover ~ .navbarArrowIconDownwards {
+.navbarDropButton:hover .navbarArrowIconDownwards {
   color: rgb(114, 114, 114);
 }
 
@@ -779,11 +784,11 @@ button {
   margin-bottom: 6px;
 }
 
-.whiteNavBarPFPDiv:hover ~ .navbarArrowIconDownwardsWHITENAVBAR {
+.navbarDropButton:hover .navbarArrowIconDownwardsWHITENAVBAR {
   color: rgb(149, 149, 149);
 }
 
-.whiteNavBarPFPDiv:hover:after {
+.navbarDropButton:hover .whiteNavBarPFPDiv:after {
   opacity: 0.2;
 }
 
@@ -805,17 +810,6 @@ button {
 .whiteNavBarPFPDiv {
   position: relative;
 }
-
-/* .profilePicSmall::after {
-  content: "/A";
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background-color: rgb(0, 0, 0);
-  opacity: 1;
-} */
 
 .profilePic {
   border-radius: 50%;
