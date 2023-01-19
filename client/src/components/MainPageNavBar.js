@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 import { BsCartCheck } from "react-icons/bs";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 
 const MainPageNavBar = ({ curUser, loggedIn }) => {
   let soButton;
@@ -57,7 +57,26 @@ const MainPageNavBar = ({ curUser, loggedIn }) => {
 
     userInfoFetch();
   }, []);
-
+  let icon;
+  if (hoverClass) {
+    icon = (
+      <FontAwesomeIcon
+        className="navbarArrowIconDownwards"
+        icon={faChevronUp}
+        fontSize={10}
+        style={{ marginBottom: "1px" }}
+      />
+    );
+  } else {
+    icon = (
+      <FontAwesomeIcon
+        className="navbarArrowIconDownwards"
+        icon={faChevronDown}
+        fontSize={10}
+        // style={{ marginLeft: "7px", marginBottom: "6px" }}
+      />
+    );
+  }
   if (loggedIn) {
     accButton = (
       <div
@@ -65,13 +84,15 @@ const MainPageNavBar = ({ curUser, loggedIn }) => {
         onMouseEnter={() =>
           (timer = setTimeout(() => {
             setHoverClass(true);
-          }, 200))
+            icon = faChevronUp;
+          }, 170))
         }
         onMouseLeave={() => {
           clearTimeout(timer);
           setTimeout(() => {
             setHoverClass(false);
-          }, 200);
+            icon = faChevronDown;
+          }, 170);
         }}
       >
         <button
@@ -82,12 +103,7 @@ const MainPageNavBar = ({ curUser, loggedIn }) => {
             <div className="whiteNavBarPFPDiv">
               <img src={userPFP} className="profilePicSmall" />
             </div>
-            <FontAwesomeIcon
-              className="navbarArrowIconDownwards"
-              icon={faChevronDown}
-              fontSize={10}
-              // style={{ marginLeft: "7px", marginBottom: "6px" }}
-            />
+            {icon}
           </a>
         </button>
         <div className={hoverClass ? `navbarULCont` : `navbarULCont gone`}>
