@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "../../components/NavBar";
 import Logo from "../../components/Logo";
+import ChangePFPBtn from "../../components/ChangePFPBtn";
 import { useNavigate } from "react-router-dom";
 import SearchBar from "../../components/SearchBar";
 import DropDown from "../../components/DropDown";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 const UserSettingsPage = ({ curUser, loggedIn }) => {
   const navigate = useNavigate();
   console.log(curUser + " this is username in url");
+
+  const [pfpToUpload, setPfpToUpload] = useState("");
+  const [isDone, setIsDone] = useState(false);
+
   async function delAcc(e) {
     e.preventDefault();
 
@@ -76,7 +83,22 @@ const UserSettingsPage = ({ curUser, loggedIn }) => {
 
     for (var i = 0; i < e.target.files.length; i++) {
       const image = e.target.files[i];
+      console.log(image);
+      if (
+        image.type != "image/png" ||
+        image.type != "image/jpeg" ||
+        image.type != "image/jpg"
+      ) {
+        image.isUploading = false;
+        image.isError = true;
+        setPfpToUpload(image);
+        setIsDone(true);
+        // return;
+        console.log(e.target.files[i].type);
+        // return;
+      }
       image.isUploading = true;
+      setPfpToUpload(image);
       targetFilesArray.push(image);
       // setImagesToUpload((imagesToUpload) => [...imagesToUpload, image]);
       console.log(targetFilesArray + " target files");
@@ -124,6 +146,7 @@ const UserSettingsPage = ({ curUser, loggedIn }) => {
         })
           .then((res) => {
             image.isUploading = false;
+            setPfpToUpload(image);
             setPFP(uploadToMongoBody.secure_url);
             image.secure_url = uploadToMongoBody.secure_url;
             image.publicId = uploadToMongoBody.public_id;
@@ -141,7 +164,10 @@ const UserSettingsPage = ({ curUser, loggedIn }) => {
           });
       } else {
         image.isError = true;
+
         image.isUploading = false;
+        setPfpToUpload(image);
+        setIsDone(true);
         // setImageError(!imageError);
       }
     }
@@ -153,8 +179,17 @@ const UserSettingsPage = ({ curUser, loggedIn }) => {
       <div>
         <img src={userPFP} className="profilePicBig" />
         <div>
-          <input type="file" onChange={(e) => uploadHandler(e)} />
-          <button className="navbarClickThisButton">Change Image</button>
+          <button className="changePFPBtn">
+            <input
+              className="changePFPInput"
+              type="file"
+              onChange={(e) => uploadHandler(e)}
+            />
+            <ChangePFPBtn
+              pfpToUpload={pfpToUpload}
+              setPfpToUpload={setPfpToUpload}
+            />
+          </button>
         </div>
       </div>
       <div>

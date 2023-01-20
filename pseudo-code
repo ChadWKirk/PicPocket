@@ -37,7 +37,7 @@ create image view modal
 
 pfp stuff:
 
--add error handling for wrong pfp file type upload
+-add error handling for wrong pfp file type upload - need to check for files that aren't images and throw errors for those
 
 -fix scaling for profile pic circle to not look warped
 

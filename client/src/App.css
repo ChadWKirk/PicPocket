@@ -1406,6 +1406,32 @@ button {
   }
 }
 
+.changePFPInput {
+  opacity: 0;
+  font-size: 0px;
+  cursor: pointer;
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  /* margin: -125px 0 0 -300px; */
+  width: 100%;
+  height: 100%;
+  z-index: 1001;
+  background-color: red;
+  border-radius: 10px;
+}
+
+.changePFPBtn {
+  position: relative;
+  padding: 0.8rem;
+  background-color: #debb0c;
+  color: rgb(25, 25, 25);
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+}
+
 .dragOverCSS {
   background-color: rgb(205, 220, 252);
   border: 6px dashed rgb(55, 137, 209);

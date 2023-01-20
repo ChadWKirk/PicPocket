@@ -46,7 +46,7 @@ const UploadForm = ({
           console.log(err);
         });
       //if file type is jpg, png or jpeg and successfully gets uploaded to cloudinary,
-      //send to mongoDB
+      //send to mongoDB. Accepted file types are controlled through upload preset GUI on the cloudinary website
       if (uploadToMongoBody.public_id) {
         //add fields to fetch response to get ready to send to MongoDB
         uploadToMongoBody.likes = 0;
