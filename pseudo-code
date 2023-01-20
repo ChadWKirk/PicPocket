@@ -35,21 +35,25 @@ create image view page - pull in synonym tags to click to search
 
 create image view modal
 
-pfp stuff:
+toastify alerts:
 
--add error handling for wrong pfp file type upload - need to check for files that aren't images and throw errors for those
+-edit success
 
--fix scaling for profile pic circle to not look warped
+-edit fail
+
+-delete success
+
+-delete fail
+
+-change pfp success
+
+-change pfp fail
 
 style account page for other users
 
 edit account settings page
 
 create change password page
-
-Deal with edit success/failure
-
-Make Delete Success alert
 
 Create mass delete function (only deletes 2 right now)
 
