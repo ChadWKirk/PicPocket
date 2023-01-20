@@ -35,11 +35,9 @@ create image view page - pull in synonym tags to click to search
 
 create image view modal
 
-make it so that when you delete your account it deletes all of your images
-
 pfp stuff:
 
--make it so when you change your pfp, it deletes the old one from cloudinary and mongodb
+-make purple default pfp an svg that is stored locally and use it as the background for pfp. this way it will show until you have uploaded an actual pfp
 
 -add error handling for wrong pfp file type upload
 

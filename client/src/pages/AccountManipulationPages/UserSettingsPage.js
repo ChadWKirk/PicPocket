@@ -58,6 +58,13 @@ const UserSettingsPage = ({ curUser, loggedIn }) => {
     bio = userInfo.bio;
     email = userInfo.email;
   }
+  //slicing secure url to exclude the picpocket part and the extension at the end
+  //to add picpocket/ back to in the back end. had to remove the slash part because it messed up the route
+  let pfpID;
+  if (userPFP) {
+    pfpID = userPFP.slice(72, userPFP.length - 4);
+    console.log(pfpID);
+  }
 
   //upload profile pic
   //cloudinary preset and file for formData
@@ -110,7 +117,7 @@ const UserSettingsPage = ({ curUser, loggedIn }) => {
         uploadToMongoBody.imageType = "Photo";
 
         //send to mongoDB
-        fetch(`http://localhost:5000/upload/pfp/${curUser}`, {
+        fetch(`http://localhost:5000/upload/pfp/${curUser}/${pfpID}`, {
           method: "POST",
           headers: { "Content-type": "application/json" },
           body: JSON.stringify(uploadToMongoBody),

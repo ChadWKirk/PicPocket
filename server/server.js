@@ -235,6 +235,14 @@ app.delete("/Account/:username/delUser", (req, res) => {
     .collection("mern-ecommerce-users")
     .deleteOne({ username: req.params.username });
 
+  db_connect
+    .collection("mern-ecommerce-images")
+    .deleteMany({ uploadedBy: req.params.username });
+
+  db_connect
+    .collection("mern-ecommerce-pfps")
+    .deleteMany({ uploadedBy: req.params.username });
+
   res.json("deleted");
 
   console.log("account deleted " + req.params.username); //req.params.username is whatever is in the URL at the position of :username
@@ -301,14 +309,17 @@ app.post("/upload", (req, res) => {
 });
 
 //upload pfp post
-app.post("/upload/pfp/:username", (req, res) => {
-  //req.body.secure_url for pfp src
+app.post("/upload/pfp/:username/:oldPFP", (req, res) => {
+  //req.body.secure_url for new PFP src
+  let oldPFPID = "picpocket/" + req.params.oldPFP;
   let db_connect = dbo.getDb();
   //make sure it's working
   console.log("upload test start");
   console.log("upload test start");
   console.log(req.body);
-  //insert them into MongoDB with a likes and uploaded by field added
+
+  //upload new PFP to mongoDb
+  db_connect.collection("mern-ecommerce-pfps").insertOne(req.body);
   db_connect.collection("mern-ecommerce-users").updateOne(
     {
       username: req.params.username,
@@ -320,6 +331,22 @@ app.post("/upload/pfp/:username", (req, res) => {
       },
     }
   );
+  //delete old pfp from mongoDb
+  db_connect
+    .collection("mern-ecommerce-pfps")
+    .deleteOne({ public_id: oldPFPID });
+
+  //delete old pfp from Cloudinary
+  //if(oldPFP != default purple image public id)
+  cloudinary.uploader
+    .destroy(oldPFPID, { invalidate: true })
+    .then((result) => {
+      console.log(result);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
   res.json("uploaded");
 });
 
