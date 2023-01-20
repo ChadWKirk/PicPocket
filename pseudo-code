@@ -37,8 +37,6 @@ create image view modal
 
 pfp stuff:
 
--make purple default pfp an svg that is stored locally and use it as the background for pfp. this way it will show until you have uploaded an actual pfp
-
 -add error handling for wrong pfp file type upload
 
 -fix scaling for profile pic circle to not look warped

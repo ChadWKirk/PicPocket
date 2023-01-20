@@ -16,7 +16,7 @@ const UserSettingsPage = ({ curUser, loggedIn }) => {
         `Are you sure you would like to permanantely delete your account "${curUser}"?`
       )
     ) {
-      await fetch(`http://localhost:5000/Account/${curUser}/delUser`, {
+      await fetch(`http://localhost:5000/Account/${curUser}/delUser/${pfpID}`, {
         method: "DELETE",
         headers: { "Content-type": "application/json" },
       }).then(() =>
@@ -128,6 +128,10 @@ const UserSettingsPage = ({ curUser, loggedIn }) => {
             image.secure_url = uploadToMongoBody.secure_url;
             image.publicId = uploadToMongoBody.public_id;
             image.assetId = uploadToMongoBody.asset_id;
+            pfpID = uploadToMongoBody.secure_url.slice(
+              72,
+              uploadToMongoBody.secure_url.length - 4
+            );
             // setImagesToUpload((imagesToUpload) => [...imagesToUpload]);
             // console.log(imagesToUpload);
           })

@@ -21,6 +21,7 @@ const dbo = require("./db/conn");
 const { response, json } = require("express");
 const { ObjectID } = require("bson");
 const { ObjectId } = require("mongodb");
+const e = require("express");
 
 app.get("/", (req, res) => {
   res.send("ok");
@@ -86,7 +87,7 @@ app.post("/users", (req, response) => {
     password: req.body.password,
     email: req.body.email,
     bio: "",
-    pfp: "https://res.cloudinary.com/dtyg4ctfr/image/upload/v1674071860/PicPocket/default_pfp_purple_mb2egd.jpg",
+    pfp: "https://res.cloudinary.com/dtyg4ctfr/image/upload/v1674238936/PicPocket/default_purple_pfp_ibof5p.jpg",
     signedIn: false,
   };
   //find any users already signed in and push them to another array to access it
@@ -133,7 +134,7 @@ app.post("/users", (req, response) => {
               password: req.body.password,
               email: req.body.email,
               bio: "",
-              pfp: "https://res.cloudinary.com/dtyg4ctfr/image/upload/v1674071860/PicPocket/default_pfp_purple_mb2egd.jpg",
+              pfp: "https://res.cloudinary.com/dtyg4ctfr/image/upload/v1674238936/PicPocket/default_purple_pfp_ibof5p.jpg",
               signedIn: true,
             },
             function (err, res) {
@@ -154,7 +155,7 @@ app.post("/users", (req, response) => {
               password: req.body.password,
               email: req.body.email,
               bio: "",
-              pfp: "https://res.cloudinary.com/dtyg4ctfr/image/upload/v1674071860/PicPocket/default_pfp_purple_mb2egd.jpg",
+              pfp: "https://res.cloudinary.com/dtyg4ctfr/image/upload/v1674238936/PicPocket/default_purple_pfp_ibof5p.jpg",
               signedIn: true,
             },
             function (err, res) {
@@ -228,8 +229,20 @@ app.post("/SignOut", (req, res) => {
     );
 });
 
-app.delete("/Account/:username/delUser", (req, res) => {
+app.delete("/Account/:username/delUser/:pfpID", (req, res) => {
   let db_connect = dbo.getDb();
+
+  let pfpID = "picpocket/" + req.params.pfpID;
+  if (pfpID != "picpocket/default_purple_pfp_ibof5p") {
+    cloudinary.uploader
+      .destroy(pfpID, { invalidate: true })
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   db_connect
     .collection("mern-ecommerce-users")
@@ -332,20 +345,22 @@ app.post("/upload/pfp/:username/:oldPFP", (req, res) => {
     }
   );
   //delete old pfp from mongoDb
+
   db_connect
     .collection("mern-ecommerce-pfps")
     .deleteOne({ public_id: oldPFPID });
 
   //delete old pfp from Cloudinary
-  //if(oldPFP != default purple image public id)
-  cloudinary.uploader
-    .destroy(oldPFPID, { invalidate: true })
-    .then((result) => {
-      console.log(result);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  if (oldPFPID != "picpocket/default_purple_pfp_ibof5p") {
+    cloudinary.uploader
+      .destroy(oldPFPID, { invalidate: true })
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   res.json("uploaded");
 });
