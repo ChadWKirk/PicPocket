@@ -35,29 +35,15 @@ create image view page - pull in synonym tags to click to search
 
 create image view modal
 
-toastify alerts:
-
--edit success
-
--edit fail
-
--delete success
-
--delete fail
-
--change pfp success
-
--change pfp fail
-
 style account page for other users
 
 edit account settings page
 
 create change password page
 
-Create mass delete function (only deletes 2 right now)
+Create mass delete function (only deletes 3 right now) - use cloudinary admin api - https://cloudinary.com/documentation/admin_api#delete_resources
 
-Create mass download function
+Create mass download function - https://support.cloudinary.com/hc/en-us/articles/360017606620-How-can-I-download-my-account-s-resources-
 
 create user tokens
 

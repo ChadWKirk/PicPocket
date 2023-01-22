@@ -1497,3 +1497,16 @@ button {
 .signUpContainer button:hover {
   background-color: #3f60a7;
 }
+
+.Toastify__toast-theme--colored.Toastify__toast--success {
+  background-color: rgb(23, 135, 53);
+  width: 400px;
+}
+
+.Toastify__toast-theme--colored.Toastify__toast--error {
+  width: 400px;
+}
+
+.material-icons {
+  margin-top: 16px;
+}
