@@ -11,7 +11,7 @@ module.exports = {
   connectToServer: (callback) => {
     client.connect((err, db) => {
       if (db) {
-        _db = db.db("mern-ecommerce");
+        _db = db.db("picpocket-mern");
         console.log("successfully connected to MongoDB.");
       }
       return callback(err);

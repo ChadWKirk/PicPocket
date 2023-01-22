@@ -38,7 +38,7 @@ app.get("/users", (req, res) => {
   let db_connect = dbo.getDb();
 
   db_connect
-    .collection("mern-ecommerce-users")
+    .collection("picpocket-users")
     .find()
     .toArray(function (err, result) {
       if (err) {
@@ -53,7 +53,7 @@ app.get("/curUser", (req, res) => {
   db_connect = dbo.getDb();
   //see if any user has signedIn: true
   db_connect
-    .collection("mern-ecommerce-users")
+    .collection("picpocket-users")
     .findOne({ signedIn: true }, function (err, user) {
       if (err) {
         console.log(err);
@@ -65,7 +65,7 @@ app.get("/curUser", (req, res) => {
     });
 
   db_connect
-    .collection("mern-ecommerce-users")
+    .collection("picpocket-users")
     .findOne({ signedIn: true }, function (err, user) {
       if (err) {
         console.log(err);
@@ -92,7 +92,7 @@ app.post("/users", (req, response) => {
   };
   //find any users already signed in and push them to another array to access it
   var cursor = db_connect
-    .collection("mern-ecommerce-users")
+    .collection("picpocket-users")
     .find({ signedIn: true });
   var signedInArray;
   async function getArr() {
@@ -104,7 +104,7 @@ app.post("/users", (req, response) => {
   getArr();
 
   db_connect
-    .collection("mern-ecommerce-users")
+    .collection("picpocket-users")
     .find({ username: req.body.username })
     .toArray(function (err, result) {
       if (err) {
@@ -124,11 +124,11 @@ app.post("/users", (req, response) => {
           //if pressing OK on are you sure box:
           //find user(s) that is signed in and sign it out
           await db_connect
-            .collection("mern-ecommerce-users")
+            .collection("picpocket-users")
             .updateMany({ signedIn: true }, { $set: { signedIn: false } });
 
           //insertone as signedIn: true
-          await db_connect.collection("mern-ecommerce-users").insertOne(
+          await db_connect.collection("picpocket-users").insertOne(
             {
               username: req.body.username,
               password: req.body.password,
@@ -149,7 +149,7 @@ app.post("/users", (req, response) => {
         console.log("user is new");
         async function insertNew() {
           //insertone as signedIn: true
-          await db_connect.collection("mern-ecommerce-users").insertOne(
+          await db_connect.collection("picpocket-users").insertOne(
             {
               username: req.body.username,
               password: req.body.password,
@@ -172,7 +172,7 @@ app.post("/users", (req, response) => {
 app.post("/SignIn", (req, res) => {
   let db_connect = dbo.getDb();
 
-  db_connect.collection("mern-ecommerce-users").findOne(
+  db_connect.collection("picpocket-users").findOne(
     //see if user exists via name and password
     {
       username: req.body.username,
@@ -194,7 +194,7 @@ app.post("/SignIn", (req, res) => {
       } else if (user.signedIn === false) {
         console.log("success");
         res.send({ "signed in": "yes" });
-        db_connect.collection("mern-ecommerce-users").updateOne(
+        db_connect.collection("picpocket-users").updateOne(
           {
             username: req.body.username,
             password: req.body.password,
@@ -218,7 +218,7 @@ app.post("/SignOut", (req, res) => {
   let db_connect = dbo.getDb();
 
   db_connect
-    .collection("mern-ecommerce-users")
+    .collection("picpocket-users")
     .updateMany(
       { signedIn: true },
       { $set: { signedIn: false } },
@@ -245,15 +245,15 @@ app.delete("/Account/:username/delUser/:pfpID", (req, res) => {
   }
 
   db_connect
-    .collection("mern-ecommerce-users")
+    .collection("picpocket-users")
     .deleteOne({ username: req.params.username });
 
   db_connect
-    .collection("mern-ecommerce-images")
+    .collection("picpocket-images")
     .deleteMany({ uploadedBy: req.params.username });
 
   db_connect
-    .collection("mern-ecommerce-pfps")
+    .collection("picpocket-pfps")
     .deleteMany({ uploadedBy: req.params.username });
 
   res.json("deleted");
@@ -266,7 +266,7 @@ app.get("/:username/info", (req, res) => {
   let db_connect = dbo.getDb();
   console.log("SSSSS");
   db_connect
-    .collection("mern-ecommerce-users")
+    .collection("picpocket-users")
     .find({ username: req.params.username })
     .toArray(function (err, result) {
       if (err) {
@@ -296,7 +296,7 @@ app.get("/search/:searchQuery", (req, res) => {
   //uses regex options i to make it case insensitive and
   //if title contains any part of search query
   db_connect
-    .collection("mern-ecommerce-images")
+    .collection("picpocket-images")
     .find({ title: { $regex: req.params.searchQuery, $options: "i" } })
     .toArray(function (err, result) {
       if (err) {
@@ -317,7 +317,7 @@ app.post("/upload", (req, res) => {
   console.log("upload test start");
   console.log(req.body);
   //insert them into MongoDB with a likes and uploaded by field added
-  db_connect.collection("mern-ecommerce-images").insertOne(req.body);
+  db_connect.collection("picpocket-images").insertOne(req.body);
   res.json("uploaded");
 });
 
@@ -332,8 +332,8 @@ app.post("/upload/pfp/:username/:oldPFP", (req, res) => {
   console.log(req.body);
 
   //upload new PFP to mongoDb
-  db_connect.collection("mern-ecommerce-pfps").insertOne(req.body);
-  db_connect.collection("mern-ecommerce-users").updateOne(
+  db_connect.collection("picpocket-pfps").insertOne(req.body);
+  db_connect.collection("picpocket-users").updateOne(
     {
       username: req.params.username,
     },
@@ -346,9 +346,7 @@ app.post("/upload/pfp/:username/:oldPFP", (req, res) => {
   );
   //delete old pfp from mongoDb
 
-  db_connect
-    .collection("mern-ecommerce-pfps")
-    .deleteOne({ public_id: oldPFPID });
+  db_connect.collection("picpocket-pfps").deleteOne({ public_id: oldPFPID });
 
   //delete old pfp from Cloudinary
   if (oldPFPID != "picpocket/default_purple_pfp_ibof5p") {
@@ -372,7 +370,7 @@ app.get("/:username/likes", (req, res) => {
   let db_connect = dbo.getDb();
 
   let result = db_connect
-    .collection("mern-ecommerce-images")
+    .collection("picpocket-images")
     .find({ likedBy: req.params.username })
     .toArray(function (err, result) {
       if (err) throw err;
@@ -388,7 +386,7 @@ app.get("/:username/my-pics", (req, res) => {
   let db_connect = dbo.getDb();
 
   db_connect
-    .collection("mern-ecommerce-images")
+    .collection("picpocket-images")
     .find({ uploadedBy: req.params.username })
     .toArray(function (err, result) {
       if (err) {
@@ -414,7 +412,7 @@ app.post("/deleteImage", (req, res) => {
   let db_connect = dbo.getDb();
   var myQuery = { public_id: req.body.public_id };
   db_connect
-    .collection("mern-ecommerce-images")
+    .collection("picpocket-images")
     .deleteOne(myQuery, function (err, obj) {
       if (err) throw err;
       console.log("1 document deleted. Public Id = " + req.body.public_id);
@@ -439,7 +437,7 @@ app.get("/download", (req, res) => {
   //   let db_connect = dbo.getDb();
   //   var myQuery = { public_id: req.body.public_id };
   //   db_connect
-  //     .collection("mern-ecommerce-images")
+  //     .collection("picpocket-images")
   //     .deleteMany(
   //       { public_id: { $in: req.body.public_id } },
   //       function (err, obj) {
@@ -493,7 +491,7 @@ app.put("/update/:username", async (req, res) => {
   mongoReplacement.imageType = req.body.imageType;
 
   db_connect
-    .collection("mern-ecommerce-images")
+    .collection("picpocket-images")
     .replaceOne(myQuery, mongoReplacement);
 
   res.json("updated");
@@ -508,7 +506,7 @@ app.post("/addLikedBy/:assetID/:username", (req, res) => {
   let db_connect = dbo.getDb();
 
   db_connect
-    .collection("mern-ecommerce-images")
+    .collection("picpocket-images")
     .updateOne(
       { asset_id: imgAssetID },
       { $push: { likedBy: user }, $inc: { likes: 1 } }
@@ -526,7 +524,7 @@ app.post("/removeLikedBy/:assetID/:username", (req, res) => {
   let db_connect = dbo.getDb();
 
   db_connect
-    .collection("mern-ecommerce-images")
+    .collection("picpocket-images")
     .updateOne(
       { asset_id: imgAssetID },
       { $pull: { likedBy: user }, $inc: { likes: -1 } }
@@ -543,7 +541,7 @@ app.get("/image/:title", (req, res) => {
   let db_connect = dbo.getDb();
 
   db_connect
-    .collection("mern-ecommerce-images")
+    .collection("picpocket-images")
     .find({ title: image })
     .toArray(function (err, result) {
       if (err) {
@@ -566,7 +564,7 @@ app.get("/:username/:sort/:filter", (req, res) => {
 
   if (sort == "most-recent" && filter == "all-types") {
     db_connect
-      .collection("mern-ecommerce-images")
+      .collection("picpocket-images")
       .find({ uploadedBy: user })
       .sort({ created_at: -1 })
       // .limit(12)
@@ -580,7 +578,7 @@ app.get("/:username/:sort/:filter", (req, res) => {
       });
   } else if (sort == "most-recent" && filter != "all-types") {
     db_connect
-      .collection("mern-ecommerce-images")
+      .collection("picpocket-images")
       .find({ imageType: filter })
       .sort({ created_at: -1 })
       // .limit(12)
@@ -594,7 +592,7 @@ app.get("/:username/:sort/:filter", (req, res) => {
       });
   } else if (sort == "oldest" && filter == "all-types") {
     db_connect
-      .collection("mern-ecommerce-images")
+      .collection("picpocket-images")
       .find()
       .sort({ created_at: 1 })
       // .limit(12)
@@ -608,7 +606,7 @@ app.get("/:username/:sort/:filter", (req, res) => {
       });
   } else if (sort == "oldest" && filter != "all-types") {
     db_connect
-      .collection("mern-ecommerce-images")
+      .collection("picpocket-images")
       .find({ imageType: filter })
       .sort({ created_at: 1 })
       // .limit(12)
@@ -622,7 +620,7 @@ app.get("/:username/:sort/:filter", (req, res) => {
       });
   } else if (sort == "aToz" && filter == "all-types") {
     db_connect
-      .collection("mern-ecommerce-images")
+      .collection("picpocket-images")
       .find()
       .sort({ title: 1 })
       // .limit(12)
@@ -636,7 +634,7 @@ app.get("/:username/:sort/:filter", (req, res) => {
       });
   } else if (sort == "aToz" && filter != "all-types") {
     db_connect
-      .collection("mern-ecommerce-images")
+      .collection("picpocket-images")
       .find({ imageType: filter })
       .sort({ title: 1 })
       // .limit(12)
@@ -650,7 +648,7 @@ app.get("/:username/:sort/:filter", (req, res) => {
       });
   } else if (sort == "zToa" && filter == "all-types") {
     db_connect
-      .collection("mern-ecommerce-images")
+      .collection("picpocket-images")
       .find()
       .sort({ title: -1 })
       // .limit(12)
@@ -664,7 +662,7 @@ app.get("/:username/:sort/:filter", (req, res) => {
       });
   } else if (sort == "zToa" && filter != "all-types") {
     db_connect
-      .collection("mern-ecommerce-images")
+      .collection("picpocket-images")
       .find({ imageType: filter })
       .sort({ title: -1 })
       // .limit(12)
@@ -678,7 +676,7 @@ app.get("/:username/:sort/:filter", (req, res) => {
       });
   } else if (sort == "leastLikes" && filter == "all-types") {
     db_connect
-      .collection("mern-ecommerce-images")
+      .collection("picpocket-images")
       .find()
       .sort({ likes: 1 })
       // .limit(12)
@@ -692,7 +690,7 @@ app.get("/:username/:sort/:filter", (req, res) => {
       });
   } else if (sort == "leastLikes" && filter != "all-types") {
     db_connect
-      .collection("mern-ecommerce-images")
+      .collection("picpocket-images")
       .find({ imageType: filter })
       .sort({ likes: 1 })
       // .limit(12)
@@ -706,7 +704,7 @@ app.get("/:username/:sort/:filter", (req, res) => {
       });
   } else if (sort == "mostLikes" && filter == "all-types") {
     db_connect
-      .collection("mern-ecommerce-images")
+      .collection("picpocket-images")
       .find()
       .sort({ likes: -1 })
       // .limit(12)
@@ -720,7 +718,7 @@ app.get("/:username/:sort/:filter", (req, res) => {
       });
   } else if (sort == "mostLikes" && filter != "all-types") {
     db_connect
-      .collection("mern-ecommerce-images")
+      .collection("picpocket-images")
       .find({ imageType: filter })
       .sort({ likes: -1 })
       // .limit(12)
@@ -747,14 +745,14 @@ app.get("/search/:searchQuery/:sort/:filter", (req, res) => {
 
   let db_connect = dbo.getDb();
   //title or tag must match searchQuery. Uses collation strength 2 for case insensitive (OLD)
-  //using search index searchTitle to search for title and tags individual words case insensitive
+  //using search index imageTitleSearchIndex to search for title and tags individual words case insensitive
   if (sort == "most-recent" && filter == "all-types") {
     db_connect
-      .collection("mern-ecommerce-images")
+      .collection("picpocket-images")
       .aggregate([
         {
           $search: {
-            index: "searchTitle",
+            index: "imageTitleSearchIndex",
             text: {
               query: req.params.searchQuery,
               path: ["title", "tags"],
@@ -774,11 +772,11 @@ app.get("/search/:searchQuery/:sort/:filter", (req, res) => {
       });
   } else if (sort == "most-recent" && filter != "all-types") {
     db_connect
-      .collection("mern-ecommerce-images")
+      .collection("picpocket-images")
       .aggregate([
         {
           $search: {
-            index: "searchTitle",
+            index: "imageTitleSearchIndex",
             compound: {
               must: {
                 text: {
@@ -808,11 +806,11 @@ app.get("/search/:searchQuery/:sort/:filter", (req, res) => {
       });
   } else if (sort == "oldest" && filter == "all-types") {
     db_connect
-      .collection("mern-ecommerce-images")
+      .collection("picpocket-images")
       .aggregate([
         {
           $search: {
-            index: "searchTitle",
+            index: "imageTitleSearchIndex",
             text: {
               query: req.params.searchQuery,
               path: ["title", "tags"],
@@ -832,11 +830,11 @@ app.get("/search/:searchQuery/:sort/:filter", (req, res) => {
       });
   } else if (sort == "oldest" && filter != "all-types") {
     db_connect
-      .collection("mern-ecommerce-images")
+      .collection("picpocket-images")
       .aggregate([
         {
           $search: {
-            index: "searchTitle",
+            index: "imageTitleSearchIndex",
             compound: {
               must: {
                 text: {
@@ -866,11 +864,11 @@ app.get("/search/:searchQuery/:sort/:filter", (req, res) => {
       });
   } else if (sort == "aToz" && filter == "all-types") {
     db_connect
-      .collection("mern-ecommerce-images")
+      .collection("picpocket-images")
       .aggregate([
         {
           $search: {
-            index: "searchTitle",
+            index: "imageTitleSearchIndex",
             text: {
               query: req.params.searchQuery,
               path: ["title", "tags"],
@@ -890,11 +888,11 @@ app.get("/search/:searchQuery/:sort/:filter", (req, res) => {
       });
   } else if (sort == "aToz" && filter != "all-types") {
     db_connect
-      .collection("mern-ecommerce-images")
+      .collection("picpocket-images")
       .aggregate([
         {
           $search: {
-            index: "searchTitle",
+            index: "imageTitleSearchIndex",
             compound: {
               must: {
                 text: {
@@ -924,11 +922,11 @@ app.get("/search/:searchQuery/:sort/:filter", (req, res) => {
       });
   } else if (sort == "zToa" && filter == "all-types") {
     db_connect
-      .collection("mern-ecommerce-images")
+      .collection("picpocket-images")
       .aggregate([
         {
           $search: {
-            index: "searchTitle",
+            index: "imageTitleSearchIndex",
             text: {
               query: req.params.searchQuery,
               path: ["title", "tags"],
@@ -948,11 +946,11 @@ app.get("/search/:searchQuery/:sort/:filter", (req, res) => {
       });
   } else if (sort == "zToa" && filter != "all-types") {
     db_connect
-      .collection("mern-ecommerce-images")
+      .collection("picpocket-images")
       .aggregate([
         {
           $search: {
-            index: "searchTitle",
+            index: "imageTitleSearchIndex",
             compound: {
               must: {
                 text: {
@@ -982,11 +980,11 @@ app.get("/search/:searchQuery/:sort/:filter", (req, res) => {
       });
   } else if (sort == "leastLikes" && filter == "all-types") {
     db_connect
-      .collection("mern-ecommerce-images")
+      .collection("picpocket-images")
       .aggregate([
         {
           $search: {
-            index: "searchTitle",
+            index: "imageTitleSearchIndex",
             text: {
               query: req.params.searchQuery,
               path: ["title", "tags"],
@@ -1006,11 +1004,11 @@ app.get("/search/:searchQuery/:sort/:filter", (req, res) => {
       });
   } else if (sort == "leastLikes" && filter != "all-types") {
     db_connect
-      .collection("mern-ecommerce-images")
+      .collection("picpocket-images")
       .aggregate([
         {
           $search: {
-            index: "searchTitle",
+            index: "imageTitleSearchIndex",
             compound: {
               must: {
                 text: {
@@ -1040,11 +1038,11 @@ app.get("/search/:searchQuery/:sort/:filter", (req, res) => {
       });
   } else if (sort == "mostLikes" && filter == "all-types") {
     db_connect
-      .collection("mern-ecommerce-images")
+      .collection("picpocket-images")
       .aggregate([
         {
           $search: {
-            index: "searchTitle",
+            index: "imageTitleSearchIndex",
             text: {
               query: req.params.searchQuery,
               path: ["title", "tags"],
@@ -1064,11 +1062,11 @@ app.get("/search/:searchQuery/:sort/:filter", (req, res) => {
       });
   } else if (sort == "mostLikes" && filter != "all-types") {
     db_connect
-      .collection("mern-ecommerce-images")
+      .collection("picpocket-images")
       .aggregate([
         {
           $search: {
-            index: "searchTitle",
+            index: "imageTitleSearchIndex",
             compound: {
               must: {
                 text: {
@@ -1109,7 +1107,7 @@ app.get("/:username/likes/:sort/:filter", (req, res) => {
 
   if (sort == "most-recent" && filter == "all-types") {
     db_connect
-      .collection("mern-ecommerce-images")
+      .collection("picpocket-images")
       .find({ likedBy: req.params.username })
       .sort({ created_at: -1 })
       // .limit(12)
@@ -1123,7 +1121,7 @@ app.get("/:username/likes/:sort/:filter", (req, res) => {
       });
   } else if (sort == "most-recent" && filter != "all-types") {
     db_connect
-      .collection("mern-ecommerce-images")
+      .collection("picpocket-images")
       .find({ $and: [{ likedBy: req.params.username }, { imageType: filter }] })
       .sort({ created_at: -1 })
       // .limit(12)
@@ -1137,7 +1135,7 @@ app.get("/:username/likes/:sort/:filter", (req, res) => {
       });
   } else if (sort == "oldest" && filter == "all-types") {
     db_connect
-      .collection("mern-ecommerce-images")
+      .collection("picpocket-images")
       .find({ likedBy: req.params.username })
       .sort({ created_at: 1 })
       // .limit(12)
@@ -1151,7 +1149,7 @@ app.get("/:username/likes/:sort/:filter", (req, res) => {
       });
   } else if (sort == "oldest" && filter != "all-types") {
     db_connect
-      .collection("mern-ecommerce-images")
+      .collection("picpocket-images")
       .find({ $and: [{ likedBy: req.params.username }, { imageType: filter }] })
       .sort({ created_at: 1 })
       // .limit(12)
@@ -1165,7 +1163,7 @@ app.get("/:username/likes/:sort/:filter", (req, res) => {
       });
   } else if (sort == "aToz" && filter == "all-types") {
     db_connect
-      .collection("mern-ecommerce-images")
+      .collection("picpocket-images")
       .find({ likedBy: req.params.username })
       .sort({ title: 1 })
       // .limit(12)
@@ -1179,7 +1177,7 @@ app.get("/:username/likes/:sort/:filter", (req, res) => {
       });
   } else if (sort == "aToz" && filter != "all-types") {
     db_connect
-      .collection("mern-ecommerce-images")
+      .collection("picpocket-images")
       .find({ $and: [{ likedBy: req.params.username }, { imageType: filter }] })
       .sort({ title: 1 })
       // .limit(12)
@@ -1193,7 +1191,7 @@ app.get("/:username/likes/:sort/:filter", (req, res) => {
       });
   } else if (sort == "zToa" && filter == "all-types") {
     db_connect
-      .collection("mern-ecommerce-images")
+      .collection("picpocket-images")
       .find({ likedBy: req.params.username })
       .sort({ title: -1 })
       // .limit(12)
@@ -1207,7 +1205,7 @@ app.get("/:username/likes/:sort/:filter", (req, res) => {
       });
   } else if (sort == "zToa" && filter != "all-types") {
     db_connect
-      .collection("mern-ecommerce-images")
+      .collection("picpocket-images")
       .find({ $and: [{ likedBy: req.params.username }, { imageType: filter }] })
       .sort({ title: -1 })
       // .limit(12)
@@ -1221,7 +1219,7 @@ app.get("/:username/likes/:sort/:filter", (req, res) => {
       });
   } else if (sort == "leastLikes" && filter == "all-types") {
     db_connect
-      .collection("mern-ecommerce-images")
+      .collection("picpocket-images")
       .find({ likedBy: req.params.username })
       .sort({ likes: 1 })
       // .limit(12)
@@ -1235,7 +1233,7 @@ app.get("/:username/likes/:sort/:filter", (req, res) => {
       });
   } else if (sort == "leastLikes" && filter != "all-types") {
     db_connect
-      .collection("mern-ecommerce-images")
+      .collection("picpocket-images")
       .find({ $and: [{ likedBy: req.params.username }, { imageType: filter }] })
       .sort({ likes: 1 })
       // .limit(12)
@@ -1249,7 +1247,7 @@ app.get("/:username/likes/:sort/:filter", (req, res) => {
       });
   } else if (sort == "mostLikes" && filter == "all-types") {
     db_connect
-      .collection("mern-ecommerce-images")
+      .collection("picpocket-images")
       .find({ likedBy: req.params.username })
       .sort({ likes: -1 })
       // .limit(12)
@@ -1263,7 +1261,7 @@ app.get("/:username/likes/:sort/:filter", (req, res) => {
       });
   } else if (sort == "mostLikes" && filter != "all-types") {
     db_connect
-      .collection("mern-ecommerce-images")
+      .collection("picpocket-images")
       .find({ $and: [{ likedBy: req.params.username }, { imageType: filter }] })
       .sort({ likes: -1 })
       // .limit(12)
@@ -1282,12 +1280,12 @@ app.get("/most-recent-images", (req, res) => {
   let db_connect = dbo.getDb();
 
   db_connect
-    .collection("mern-ecommerce-images")
+    .collection("picpocket-images")
     .aggregate([
       //use $lookup to pull user info tied to image for profile pic on overlay
       {
         $lookup: {
-          from: "mern-ecommerce-users",
+          from: "picpocket-users",
           localField: "uploadedBy",
           foreignField: "username",
           as: "test",
@@ -1311,7 +1309,7 @@ app.get("/most-popular", (req, res) => {
   let db_connect = dbo.getDb();
 
   db_connect
-    .collection("mern-ecommerce-images")
+    .collection("picpocket-images")
     .find()
     .sort({ likes: -1 })
     // .limit(12)
