@@ -78,8 +78,9 @@ const UserSettingsPage = ({ curUser, loggedIn }) => {
 
   //upload profile pic
   //cloudinary preset and file for formData
-  var CLOUDINARY_UPLOAD_PRESET = "qpexpq57";
+  var CLOUDINARY_UPLOAD_PRESET = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET;
   var targetFilesArray = [];
+  let CLOUDINARY_CLOUD_NAME = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
 
   async function uploadHandler(e) {
     e.preventDefault();
@@ -122,10 +123,13 @@ const UserSettingsPage = ({ curUser, loggedIn }) => {
 
         //send post request to cloudinary api upload endpoint url (have to use admin API
         //from cloudinary for multi upload). Upload preset only allows jpg, jpeg or png files.
-        await fetch("https://api.cloudinary.com/v1_1/dtyg4ctfr/upload", {
-          method: "POST",
-          body: formData,
-        })
+        await fetch(
+          `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/upload`,
+          {
+            method: "POST",
+            body: formData,
+          }
+        )
           .then((result) =>
             result.json().then((resJSON) => (uploadToMongoBody = resJSON))
           )
