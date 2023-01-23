@@ -39,7 +39,7 @@ style account page for other users
 
 edit account settings page
 
-create change password pageeeee
+create change password page
 
 Create mass delete function (only deletes 3 right now) - use cloudinary admin api - https://cloudinary.com/documentation/admin_api#delete_resources
 

@@ -261,7 +261,9 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
       body: JSON.stringify(massArr.current[0]),
     }).then((res) => {
       setDelOrDownFunc(!delOrDownFunc);
-      // notify_edit_success();
+      setToastStatus("Success");
+      setToastMessage("Your avatar was updated successfully.");
+      toastDissappear();
     });
     // .catch((err) => notify_edit_failure);
   }
@@ -281,12 +283,16 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
         body: JSON.stringify({ public_id: massArr.current[p].public_id }),
       })
         .then((res) => {
-          // notify_delete_success();
           setDelOrDownFunc(!delOrDownFunc);
+          setToastStatus("Success");
+          setToastMessage("Pic(s) successfully deleted.");
+          toastDissappear();
         })
         .catch((err) => {
           console.error(err);
-          // notify_delete_failure();
+          setToastStatus("Error");
+          setToastMessage("Error. Deletion unsuccessful");
+          toastDissappear();
         });
     }
   }
@@ -362,10 +368,14 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
 
   return (
     <div style={{ overflow: "hidden" }}>
-      {/* <ToastContainer closeButton={CloseButton} /> */}
       <WhiteNavBar curUser={curUser} loggedIn={loggedIn} />
       {/* <DropDown /> */}
       <div className="myPicsGalleryMainContainer">
+        <Toast
+          status={toastStatus}
+          message={toastMessage}
+          closeToast={closeToast}
+        />
         <div className="galleryHeadingAndSortContainer">
           <div className="galleryHeading">
             <h2>Your Pics</h2>
@@ -646,11 +656,6 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
                     }}
                   />
                 </button>
-                <Toast
-                  status={toastStatus}
-                  message={toastMessage}
-                  closeToast={closeToast}
-                />
               </div>
             </div>
           </form>
