@@ -3,12 +3,25 @@ import WhiteNavBar from "../../components/WhiteNavBar";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
+import Toast from "../../components/Toast";
 //font awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
 
 const MyPicsPage = ({ curUser, loggedIn }) => {
+  const [toastMessage, setToastMessage] = useState();
+  const [toastStatus, setToastStatus] = useState();
+  function toastDissappear() {
+    setTimeout(() => {
+      setToastStatus();
+      setToastMessage();
+    }, 3000);
+  }
+  function closeToast() {
+    setToastMessage();
+    setToastStatus();
+  }
   let navigate = useNavigate();
 
   //image array to display in the HTML
@@ -633,6 +646,11 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
                     }}
                   />
                 </button>
+                <Toast
+                  status={toastStatus}
+                  message={toastMessage}
+                  closeToast={closeToast}
+                />
               </div>
             </div>
           </form>
