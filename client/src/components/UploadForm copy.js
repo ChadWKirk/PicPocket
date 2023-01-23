@@ -5,8 +5,8 @@ import { faCircleMinus } from "@fortawesome/free-solid-svg-icons";
 
 const UploadForm = ({ id, onClick, num, curUser, onMultiPic, pic }) => {
   //cloudinary preset and file for formData
-  var CLOUDINARY_UPLOAD_PRESET = "qpexpq57";
-  // var file;
+  var CLOUDINARY_UPLOAD_PRESET = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET;
+  let CLOUDINARY_CLOUD_NAME = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
 
   const [picture, setPicture] = useState("");
   const [title, setTitle] = useState("");
@@ -38,10 +38,13 @@ const UploadForm = ({ id, onClick, num, curUser, onMultiPic, pic }) => {
       var uploadToMongoBody;
 
       //send post request to cloudinary api upload endpoint url
-      await fetch("https://api.cloudinary.com/v1_1/dtyg4ctfr/upload", {
-        method: "POST",
-        body: formData,
-      })
+      await fetch(
+        `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/upload`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      )
         .then((result) =>
           result
             .json()

@@ -7,7 +7,7 @@ node_modules
 
 # ENV
 config.env
-react_app_config.env
+.env.development
 
 # testing
 /coverage

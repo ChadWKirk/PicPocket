@@ -43,6 +43,7 @@ const UserSettingsPage = ({ curUser, loggedIn }) => {
   const [userPFP, setPFP] = useState();
 
   useEffect(() => {
+    console.log(process.env);
     async function userInfoFetch() {
       await fetch(`http://localhost:5000/${curUser}/info`, {
         method: "GET",
@@ -80,7 +81,7 @@ const UserSettingsPage = ({ curUser, loggedIn }) => {
   //cloudinary preset and file for formData
   var CLOUDINARY_UPLOAD_PRESET = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET;
   var targetFilesArray = [];
-  let CLOUDINARY_CLOUD_NAME = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
+  var CLOUDINARY_CLOUD_NAME = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
 
   async function uploadHandler(e) {
     e.preventDefault();

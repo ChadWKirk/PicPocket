@@ -260,12 +260,7 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
 
       // console.log(publicIdArr);
 
-      //cloudinary admin api for bulk delete. going to use this once site is hosted due
-      //to cors stuff with api
-      // await fetch(
-      //   "https://api.cloudinary.com/v1_1/dtyg4ctfr/resources/image/upload",
-      //   { method: "DELETE" }
-      // );
+      //cloudinary admin api for bulk delete.
 
       await fetch(`http://localhost:5000/deleteImage/`, {
         method: "POST",
