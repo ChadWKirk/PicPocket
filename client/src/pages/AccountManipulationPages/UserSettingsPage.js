@@ -1,41 +1,18 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "../../components/NavBar";
 import ChangePFPBtn from "../../components/ChangePFPBtn";
+import Toast from "../../components/Toast";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 const UserSettingsPage = ({ curUser, loggedIn }) => {
-  const notify_pfp_upload_success = () =>
-    toast.success("Your avatar was updated successfully", {
-      position: "bottom-center",
-      autoClose: 3000,
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: 0,
-      theme: "colored",
-    });
-
-  const notify_pfp_upload_failure = () =>
-    toast.error("Error. Only PNG, JPG and JPEG files allowed.", {
-      position: "bottom-center",
-      autoClose: 3000,
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-    });
-
-  const CloseButton = ({ closeToast }) => (
-    <p className="material-icons" onClick={closeToast}>
-      Close
-    </p>
-  );
-
+  const [toastMessage, setToastMessage] = useState();
+  const [toastStatus, setToastStatus] = useState();
+  function toastDissappear() {
+    setTimeout(() => {
+      setToastStatus();
+      setToastMessage();
+    }, 3000);
+  }
   const navigate = useNavigate();
 
   const [pfpToUpload, setPfpToUpload] = useState("");
@@ -119,7 +96,10 @@ const UserSettingsPage = ({ curUser, loggedIn }) => {
           image.isError = true;
           setPfpToUpload(image);
           setIsDone(true);
-          notify_pfp_upload_failure();
+          setToastStatus("Error");
+          setToastMessage("Error. Only JPEG, JPG and PNG files allowed.");
+          toastDissappear();
+          // notify_pfp_upload_failure();
         }, 80);
 
         console.log(e.target.files[i].type);
@@ -174,10 +154,15 @@ const UserSettingsPage = ({ curUser, loggedIn }) => {
             body: JSON.stringify(uploadToMongoBody),
           })
             .then((res) => {
+              setToastStatus("Success");
+              setToastMessage("Your avatar was updated successfully.");
+              toastDissappear();
+              console.log(toastMessage);
               image.isUploading = false;
               setPfpToUpload(image);
               setPFP(uploadToMongoBody.secure_url);
-              notify_pfp_upload_success();
+              // notify_pfp_upload_success();
+
               image.secure_url = uploadToMongoBody.secure_url;
               image.publicId = uploadToMongoBody.public_id;
               image.assetId = uploadToMongoBody.asset_id;
@@ -205,6 +190,11 @@ const UserSettingsPage = ({ curUser, loggedIn }) => {
     }
   }
 
+  function closeToast() {
+    setToastMessage();
+    setToastStatus();
+  }
+
   return (
     <div>
       <NavBar curUser={curUser} loggedIn={loggedIn} />
@@ -222,7 +212,11 @@ const UserSettingsPage = ({ curUser, loggedIn }) => {
               setPfpToUpload={setPfpToUpload}
             />
           </button>
-          <ToastContainer closeButton={CloseButton} />
+          <Toast
+            status={toastStatus}
+            message={toastMessage}
+            closeToast={closeToast}
+          />
         </div>
       </div>
       <div>

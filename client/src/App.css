@@ -1498,15 +1498,38 @@ button {
   background-color: #3f60a7;
 }
 
-.Toastify__toast-theme--colored.Toastify__toast--success {
-  background-color: rgb(23, 135, 53);
+/* toast css */
+
+.toastSuccess {
   width: 400px;
+  max-height: 80px;
+  padding: 1.15rem 1rem;
+  background-color: green;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1rem;
+  color: white;
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translate(-200px, 0);
 }
 
-.Toastify__toast-theme--colored.Toastify__toast--error {
-  width: 400px;
-}
-
-.material-icons {
-  margin-top: 16px;
+.toastError {
+  width: 450px;
+  max-height: 80px;
+  padding: 1.15rem 1rem;
+  background-color: rgb(174, 61, 61);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1rem;
+  color: white;
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translate(-200px, 0);
 }

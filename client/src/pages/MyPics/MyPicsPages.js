@@ -7,65 +7,8 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
-//toastify
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 const MyPicsPage = ({ curUser, loggedIn }) => {
-  const notify_edit_success = () =>
-    toast.success("Updated successfully", {
-      position: "bottom-center",
-      autoClose: 3000,
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: 0,
-      theme: "colored",
-    });
-
-  const notify_edit_failure = () =>
-    toast.error("Error. Update failed.", {
-      position: "bottom-center",
-      autoClose: 3000,
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-    });
-
-  const notify_delete_success = () =>
-    toast.success("Your pic(s) were deleted successfully", {
-      position: "bottom-center",
-      autoClose: 3000,
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: 0,
-      theme: "colored",
-    });
-
-  const notify_delete_failure = () =>
-    toast.error("Error. Deletion failed.", {
-      position: "bottom-center",
-      autoClose: 3000,
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-    });
-
-  const CloseButton = ({ closeToast }) => (
-    <p className="material-icons" onClick={closeToast}>
-      Close
-    </p>
-  );
-
   let navigate = useNavigate();
 
   //image array to display in the HTML
@@ -303,12 +246,11 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
       method: "PUT",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify(massArr.current[0]),
-    })
-      .then((res) => {
-        setDelOrDownFunc(!delOrDownFunc);
-        notify_edit_success();
-      })
-      .catch((err) => notify_edit_failure);
+    }).then((res) => {
+      setDelOrDownFunc(!delOrDownFunc);
+      // notify_edit_success();
+    });
+    // .catch((err) => notify_edit_failure);
   }
 
   async function deleteImageFromBackEnd() {
@@ -331,12 +273,12 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
         body: JSON.stringify({ public_id: massArr.current[p].public_id }),
       })
         .then((res) => {
-          notify_delete_success();
+          // notify_delete_success();
           setDelOrDownFunc(!delOrDownFunc);
         })
         .catch((err) => {
           console.error(err);
-          notify_delete_failure();
+          // notify_delete_failure();
         });
     }
   }
@@ -412,7 +354,7 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
 
   return (
     <div style={{ overflow: "hidden" }}>
-      <ToastContainer closeButton={CloseButton} />
+      {/* <ToastContainer closeButton={CloseButton} /> */}
       <WhiteNavBar curUser={curUser} loggedIn={loggedIn} />
       {/* <DropDown /> */}
       <div className="myPicsGalleryMainContainer">
