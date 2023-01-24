@@ -10,6 +10,8 @@ import { faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
 
 const MyPicsPage = ({ curUser, loggedIn }) => {
+  const [massDlLink, setMassDlLink] = useState();
+
   const [toastMessage, setToastMessage] = useState();
   const [toastStatus, setToastStatus] = useState();
   function toastDissappear() {
@@ -262,7 +264,7 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
     }).then((res) => {
       setDelOrDownFunc(!delOrDownFunc);
       setToastStatus("Success");
-      setToastMessage("Your avatar was updated successfully.");
+      setToastMessage("Your pic was updated successfully.");
       toastDissappear();
     });
     // .catch((err) => notify_edit_failure);
@@ -297,6 +299,48 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
     }
   }
 
+  //mass delete images
+  async function massDeleteImages() {
+    let publicIDArr = massArr.current.map((a) => a.public_id);
+    console.log(publicIDArr);
+    await fetch(`http://localhost:5000/massDeleteImages`, {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify(publicIDArr),
+    })
+      .then((res) => {
+        setDelOrDownFunc(!delOrDownFunc);
+        setToastStatus("Success");
+        setToastMessage("Pic(s) successfully deleted.");
+        toastDissappear();
+      })
+      .catch((err) => {
+        console.error(err);
+        setToastStatus("Error");
+        setToastMessage("Error. Deletion unsuccessful");
+        toastDissappear();
+      });
+  }
+
+  //mass download images
+  async function massDownloadImages() {
+    let publicIDArr = massArr.current.map((a) =>
+      a.public_id.replace("/", "%2F")
+    );
+    console.log(publicIDArr);
+    await fetch(`http://localhost:5000/massDownloadImages/${publicIDArr}`, {
+      method: "GET",
+      headers: { "Content-type": "application/json" },
+    }).then((res) => {
+      res
+        .json()
+        .then((resJSON) => JSON.stringify(resJSON))
+        .then((stringJSON) => JSON.parse(stringJSON))
+        .then((parsedJSON) => (window.location.href = parsedJSON));
+      setDelOrDownFunc(!delOrDownFunc);
+    });
+  }
+
   let massButtons;
 
   const [hoverClassDel, setHoverClassDel] = useState(false);
@@ -309,7 +353,7 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
           <FontAwesomeIcon
             icon={faTrash}
             className="massIcon"
-            onClick={(e) => deleteImageFromBackEnd(e)}
+            onClick={() => massDeleteImages()}
             onMouseEnter={() => {
               setTimeout(() => {
                 setHoverClassDel(true);
@@ -329,6 +373,7 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
           <FontAwesomeIcon
             icon={faDownload}
             className="massIcon"
+            onClick={() => massDownloadImages()}
             onMouseEnter={() => {
               setTimeout(() => {
                 setHoverClassDown(true);

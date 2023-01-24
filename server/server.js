@@ -420,32 +420,44 @@ app.post("/deleteImage", (req, res) => {
   return res.status(200).json({ result: true, msg: "file deleted" });
 });
 
-//mass download images
-app.get("/download", (req, res) => {
-  console.log("download");
-  //download from cloudinary
+//mass delete images
+app.post("/massDeleteImages", (req, res) => {
+  console.log(req.body);
+  console.log("mass delete req");
+  //mass delete from cloudinary
   cloudinary.api
-    .resources()
+    .delete_resources(req.body, { invalidate: true })
     .then((result) => {
       console.log(result);
-      res.json(result);
     })
     .catch((error) => {
       console.log(error);
     });
-  //delete from mongodb
-  //   let db_connect = dbo.getDb();
-  //   var myQuery = { public_id: req.body.public_id };
-  //   db_connect
-  //     .collection("picpocket-images")
-  //     .deleteMany(
-  //       { public_id: { $in: req.body.public_id } },
-  //       function (err, obj) {
-  //         if (err) throw err;
-  //         console.log("Documents have been deleted " + req.body.public_id);
-  //       }
-  //     );
-  //   return res.status(200).json({ result: true, msg: "files deleted" });
+
+  //mass delete from mongodb
+  let queryArr = req.body;
+  let db_connect = dbo.getDb();
+  var myQuery = { public_id: { $in: queryArr } };
+  db_connect
+    .collection("picpocket-images")
+    .deleteMany(myQuery, function (err, obj) {
+      if (err) throw err;
+      console.log("Many documents deleted " + obj);
+    });
+  return res.status(200).json({ result: true, msg: "files deleted" });
+});
+
+//mass download images
+app.get("/massDownloadImages/:publicIDArr", (req, res) => {
+  console.log("mass download");
+
+  let publicIDArr = req.params.publicIDArr;
+
+  result = cloudinary.utils.download_zip_url(
+    { public_ids: publicIDArr.split(",") },
+    { target_public_id: "PicPocketMyPics" }
+  );
+  res.json(result);
 });
 
 //update image info

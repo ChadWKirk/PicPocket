@@ -1,4 +1,4 @@
-https://github.com/ChadWKirk/mern-ecommerce.git
+https://github.com/ChadWKirk/PicPocket.git
 
 Concepts to brush up on:
 
@@ -41,9 +41,7 @@ edit account settings page
 
 create change password page
 
-Create mass delete function (only deletes 3 right now) - use cloudinary admin api - https://cloudinary.com/documentation/admin_api#delete_resources
-
-Create mass download function - https://support.cloudinary.com/hc/en-us/articles/360017606620-How-can-I-download-my-account-s-resources-
+Create single download in myPics - set download button HREF to secure url with fl_attachment in url when selecting an image
 
 create user tokens
 
