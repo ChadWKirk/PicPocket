@@ -286,7 +286,7 @@ const MainPage = ({ curUser, loggedIn }) => {
 
   return (
     <div>
-      <div className="mainPage__bg">
+      <div className="mainPage__heroPicture">
         <MainPageNavBar curUser={curUser} loggedIn={loggedIn} />
         <div className={`${navPosition}`}>
           <WhiteNavBar curUser={curUser} loggedIn={loggedIn} />
