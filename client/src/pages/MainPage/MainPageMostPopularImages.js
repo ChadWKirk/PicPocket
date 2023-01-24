@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import MainPageNavBar from "../../components/MainPageNavBar";
-import Carousel2 from "../../components/Carousel";
+import MainPageHeroImage from "../../components/MainPageHeroImage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
@@ -180,7 +180,7 @@ const MainPageMostPopularImages = ({ curUser, loggedIn }) => {
           <WhiteNavBar curUser={curUser} loggedIn={loggedIn} />
         </div>
         {/* <DropDown /> */}
-        <Carousel2 />
+        <MainPageHeroImage />
       </div>
       <div className="imgGallerySectionCont1">
         <div className="sortingBarCont1">

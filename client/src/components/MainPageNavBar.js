@@ -171,19 +171,21 @@ const MainPageNavBar = ({ curUser, loggedIn }) => {
   }
 
   return (
-    <div className="navbar">
-      <div>
-        <a href="/" className="logo">
-          <h1 className="logo__color-white">PicPocket</h1>
-        </a>
-      </div>
-      <div className="navbar__buttons">
-        {siButton}
-        {suButton}
-        {accButton}
-        {soButton}
-        {uploadButton}
-        {/* {cartButton} */}
+    <div className="navbarContainer">
+      <div className="navbarContents">
+        <div>
+          <a href="/" className="logo">
+            <h1 className="logo__color-white">PicPocket</h1>
+          </a>
+        </div>
+        <div className="navbar__buttons">
+          {siButton}
+          {suButton}
+          {accButton}
+          {soButton}
+          {uploadButton}
+          {/* {cartButton} */}
+        </div>
       </div>
     </div>
   );

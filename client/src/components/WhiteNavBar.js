@@ -128,7 +128,10 @@ const WhiteNavBar = ({ curUser, loggedIn }) => {
     );
     uploadButton = (
       <a href={`/${curUser}/upload`}>
-        <button className="navbarClickThisButton" style={{ color: "black" }}>
+        <button
+          className="navbarClickThisButton__whitenav"
+          style={{ color: "black" }}
+        >
           Upload
         </button>
       </a>
@@ -178,29 +181,34 @@ const WhiteNavBar = ({ curUser, loggedIn }) => {
   }
 
   return (
-    <div className="navbar navbar__white">
-      <div>
-        <a href="/" className="logo" style={{ color: "black" }}>
-          <h1>PicPocket</h1>
-        </a>
-      </div>
-      <form className="search__container" onSubmit={onSubmit}>
-        <input
-          className="search__bar"
-          placeholder="Search for free photos"
-          onChange={onChange}
-        ></input>
-        <button className="search__button" type="submit">
-          <FontAwesomeIcon icon={faMagnifyingGlass} className="search__icon" />
-        </button>
-      </form>
-      <div className="navbar__buttons">
-        {siButton}
-        {suButton}
-        {accButton}
-        {soButton}
-        {uploadButton}
-        {/* {cartButton} */}
+    <div className="navbarContainer navbar__white">
+      <div className="navbarContents">
+        <div>
+          <a href="/" className="logo" style={{ color: "black" }}>
+            <h1>PicPocket</h1>
+          </a>
+        </div>
+        <form className="search__container" onSubmit={onSubmit}>
+          <input
+            className="search__bar"
+            placeholder="Search for free photos"
+            onChange={onChange}
+          ></input>
+          <button className="search__button" type="submit">
+            <FontAwesomeIcon
+              icon={faMagnifyingGlass}
+              className="search__icon"
+            />
+          </button>
+        </form>
+        <div className="navbar__buttons">
+          {siButton}
+          {suButton}
+          {accButton}
+          {soButton}
+          {uploadButton}
+          {/* {cartButton} */}
+        </div>
       </div>
     </div>
   );

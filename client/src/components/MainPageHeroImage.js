@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Carousel from "react-bootstrap/Carousel";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-const Carousel2 = () => {
+const MainPageHeroImage = () => {
   //on load, fetch 5 random images and use them as variables in the img src
   //resJSON will be an array of secure_url's
   const [heroImage, setHeroImage] = useState();
@@ -73,8 +72,7 @@ const Carousel2 = () => {
     <div className="carousel__container">
       <div className="carousel__overlay">
         <p>
-          The best free stock photos, royalty free images & videos shared by
-          creators.
+          The best free stock photos. Royalty free images shared by creators.
         </p>
 
         <form className="carousel__search-container" onSubmit={onSubmit}>
@@ -124,4 +122,4 @@ const Carousel2 = () => {
   );
 };
 
-export default Carousel2;
+export default MainPageHeroImage;
