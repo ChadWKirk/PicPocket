@@ -14,6 +14,7 @@ const MainPageNavBar = ({ curUser, loggedIn }) => {
   let cartButton;
   let uploadButton;
   let timer;
+  let leaveTimer;
 
   const [isVisibleClass, setIsVisibleClass] = useState("gone");
 
@@ -64,7 +65,7 @@ const MainPageNavBar = ({ curUser, loggedIn }) => {
         className="navbarArrowIconDownwards"
         icon={faChevronUp}
         fontSize={10}
-        style={{ marginBottom: "1px" }}
+        style={{ marginTop: "4px" }}
       />
     );
   } else {
@@ -73,7 +74,6 @@ const MainPageNavBar = ({ curUser, loggedIn }) => {
         className="navbarArrowIconDownwards"
         icon={faChevronDown}
         fontSize={10}
-        // style={{ marginLeft: "7px", marginBottom: "6px" }}
       />
     );
   }
@@ -81,15 +81,16 @@ const MainPageNavBar = ({ curUser, loggedIn }) => {
     accButton = (
       <div
         className="navbarDropCont"
-        onMouseEnter={() =>
-          (timer = setTimeout(() => {
+        onMouseEnter={() => {
+          clearTimeout(leaveTimer);
+          timer = setTimeout(() => {
             setHoverClass(true);
             icon = faChevronUp;
-          }, 170))
-        }
+          }, 170);
+        }}
         onMouseLeave={() => {
           clearTimeout(timer);
-          setTimeout(() => {
+          leaveTimer = setTimeout(() => {
             setHoverClass(false);
             icon = faChevronDown;
           }, 170);
@@ -100,9 +101,12 @@ const MainPageNavBar = ({ curUser, loggedIn }) => {
           onClick={() => setVisibleClassFunc()}
         >
           <a href={`/Account/${curUser}`}>
-            <div className="whiteNavBarPFPDiv">
-              <img src={userPFP} className="profilePicSmall" />
+            <div className="hoverDIV">
+              <div className="whiteNavBarPFPDiv">
+                <img src={userPFP} className="profilePicSmall" />
+              </div>
             </div>
+
             {icon}
           </a>
         </button>
@@ -120,6 +124,11 @@ const MainPageNavBar = ({ curUser, loggedIn }) => {
             </li>
             <li>
               <a href={`/Account/${curUser}`}>User Settings</a>
+            </li>
+            <li>
+              <a href="/" onClick={signOut}>
+                Sign Out
+              </a>
             </li>
           </ul>
         </div>
@@ -182,7 +191,6 @@ const MainPageNavBar = ({ curUser, loggedIn }) => {
           {siButton}
           {suButton}
           {accButton}
-          {soButton}
           {uploadButton}
           {/* {cartButton} */}
         </div>

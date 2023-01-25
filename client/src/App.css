@@ -39,6 +39,10 @@ button {
   margin-right: 0.825rem;
 }
 
+.logo h1 {
+  font-size: 1.5rem;
+}
+
 .logo__color-white {
   color: white;
   transition: color 0.15s ease-in-out;
@@ -52,15 +56,14 @@ button {
   height: 80px;
   display: flex;
   justify-content: center;
-  /* background-color: red; */
 }
 
 .navbarContents {
-  width: 1550px;
+  width: 90vw;
+  max-width: 1600px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* padding: 0.8rem 11.45rem; */
   gap: 39px;
   margin: 0 30px;
 }
@@ -180,28 +183,23 @@ button {
   border-radius: 50%;
   width: 29px;
   height: 29px;
-  /* background-color: rgb(0, 0, 0); */
-  transition: 0.32s;
-}
-
-.profilePicSmall:hover .whiteNavBarPFPDiv:after {
-  opacity: 0.4;
 }
 
 .navbarArrowIconDownwards {
   margin-left: 7px;
-  margin-bottom: -1px;
+  margin-bottom: 6px;
   color: white;
-  transition: color 0.2s ease-out;
+  transition: color 0.1s linear;
+  font-weight: bold;
 }
 
 .navbarDropButton:hover .navbarArrowIconDownwards {
-  color: rgb(163, 163, 163);
+  color: rgb(209, 209, 209);
 }
 
 .navbarArrowIconDownwardsWHITENAVBAR {
   color: rgb(173, 173, 173);
-  transition: 0.2s ease-in-out;
+  transition: 0.1s linear;
   margin-left: 7px;
   margin-bottom: 6px;
 }
@@ -210,7 +208,16 @@ button {
   color: rgb(149, 149, 149);
 }
 
-.navbarDropButton:hover .whiteNavBarPFPDiv:after {
+.whiteNavBarPFPDiv {
+  position: relative;
+}
+
+.hoverDIV:hover .whiteNavBarPFPDiv:after {
+  opacity: 0.32 !important;
+  transition: 0.3s;
+}
+
+.navbarDropButton:hover .whiteNavBarPFPDiv::after {
   opacity: 0.2;
 }
 
@@ -226,18 +233,14 @@ button {
   top: 0;
   left: 0;
   background-color: rgb(0, 0, 0);
-  transition: 0.2s ease-in-out;
-}
-
-.whiteNavBarPFPDiv {
-  position: relative;
+  transition: 0.125s linear;
 }
 
 /* MainPage CSS*/
 
 .mainPage__heroPicture {
   background-size: cover;
-  height: 26.65rem;
+  height: 31.5rem;
   background-color: rgba(23, 45, 212, 0.312);
   background-blend-mode: darken;
   /* background: url("C:\Users\Chad Kirk\Documents\mern-stuff\mern-ecommerce\client\src\4K_Nature-Wallpaper.jpg") */
@@ -316,6 +319,9 @@ button {
 
 .navbarDropCont {
   position: relative;
+  padding-bottom: 0.8rem;
+  margin-top: 0.8rem;
+  z-index: 100000;
 }
 
 .navbarDropButton {
@@ -354,17 +360,35 @@ button {
 }
 
 .navbarULCont {
-  /* visibility: hidden;
-  opacity: 0; */
-  border: 1px solid grey;
+  border: 1px solid rgba(128, 128, 128, 0.642);
   position: absolute;
   right: -10px;
-  top: 50px;
-  width: 130px;
-  border-radius: 12px;
+  top: 39px;
+  width: 140px;
+  border-radius: 8px;
   background-color: white;
-  padding-top: 0.55rem;
-  padding-bottom: 0.55rem;
+  padding: 0.55rem 0;
+}
+
+.navbarULCont::after {
+  content: "";
+  border: 8.5px solid transparent;
+  border-top-color: white;
+  position: absolute;
+  top: -15px;
+  left: 102.5px;
+  transform: rotate(180deg);
+}
+
+.navbarULCont::before {
+  content: "";
+  border: 8.5px solid transparent;
+  border-top-color: rgb(176, 176, 176);
+  position: absolute;
+  top: -16.5px;
+  z-index: -1;
+  left: 102.5px;
+  transform: rotate(180deg);
 }
 
 .navbarUL {
@@ -372,16 +396,18 @@ button {
 }
 
 .navbarUL li {
-  padding: 0.25rem;
+  padding: 0.325rem 0.25rem;
   width: 100%;
   cursor: pointer;
 }
 
 .navbarUL li a {
   color: #535353;
+  font-size: 1rem;
   padding-left: 0.75rem;
   display: inline-block;
   width: 100%;
+  text-decoration: none;
 }
 
 .navbarUL li:hover {
@@ -391,29 +417,6 @@ button {
 .navbar .btn-primary:hover {
   background-color: #debb0c;
   color: rgb(77, 77, 77);
-}
-
-.logo {
-  font-size: 1.125rem;
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-}
-
-.logo__color-white {
-  color: white;
-}
-
-.logo__color-blue {
-  color: blue;
-}
-
-.logo h1 {
-  font-size: 1.5rem;
-}
-
-.logo:hover {
-  text-decoration: none;
 }
 
 /* Home Page Navbar Searchbar */
@@ -475,8 +478,7 @@ button {
   font-size: 2rem;
   font-weight: bold;
   position: absolute;
-  top: 11.4rem;
-  /* top: 30%; */
+  top: 10rem;
   z-index: 100;
   color: white;
   margin: auto;
