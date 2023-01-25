@@ -74,7 +74,6 @@ const MainPageHeroImage = () => {
         <p>
           The best free stock photos. Royalty free images shared by creators.
         </p>
-
         <form className="carousel__search-container" onSubmit={onSubmit}>
           <input
             className="carousel__search-bar"
@@ -103,7 +102,7 @@ const MainPageHeroImage = () => {
             Tech,
           </a>
           <a href="http://localhost:3000/search/Landscape/most-recent/all-types">
-             Landscape
+            Landscape
           </a>
         </div>
       </div>

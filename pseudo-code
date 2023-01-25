@@ -29,6 +29,22 @@ If array.length > 1, show stack of little images and say "Select a single image 
 
 TASKS:
 
+styling:
+
+move arrow icon in navbar downwards
+
+do media queries for trans navbar - make upload button and logo smaller after certain screen size, replace buttons when getting really thin
+
+copy trans navbar style to whitenavbar
+
+style and media queries for whitenavbar
+
+put download and like buttons on images always visible after certain screen size (think phone no hover)
+
+masonry layout
+
+---
+
 copy over mainpage to mainpage most popular
 
 create image view page - pull in synonym tags to click to search
