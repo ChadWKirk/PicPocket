@@ -86,14 +86,14 @@ const MainPageNavBar = ({ curUser, loggedIn }) => {
           timer = setTimeout(() => {
             setHoverClass(true);
             icon = faChevronUp;
-          }, 170);
+          }, 175);
         }}
         onMouseLeave={() => {
           clearTimeout(timer);
           leaveTimer = setTimeout(() => {
             setHoverClass(false);
             icon = faChevronDown;
-          }, 170);
+          }, 175);
         }}
       >
         <button

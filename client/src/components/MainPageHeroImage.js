@@ -89,25 +89,21 @@ const MainPageHeroImage = () => {
           </button>
         </form>
         <div className="carousel__overlay-categories">
-          Try these:{" "}
+          <p>Try these: </p>
           <a href="http://localhost:3000/search/Nature/most-recent/all-types">
-            Nature
+            Nature,
           </a>
-          ,
           <a href="http://localhost:3000/search/Cats/most-recent/all-types">
-            Cats
+            Cats,
           </a>
-          ,
           <a href="http://localhost:3000/search/Dogs/most-recent/all-types">
-            Dogs
+            Dogs,
           </a>
-          ,
           <a href="http://localhost:3000/search/Tech/most-recent/all-types">
-            Tech
+            Tech,
           </a>
-          ,
           <a href="http://localhost:3000/search/Landscape/most-recent/all-types">
-            Landscape
+             Landscape
           </a>
         </div>
       </div>

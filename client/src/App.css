@@ -181,8 +181,8 @@ button {
 
 .profilePicSmall {
   border-radius: 50%;
-  width: 29px;
-  height: 29px;
+  width: 30px;
+  height: 30px;
 }
 
 .navbarArrowIconDownwards {
@@ -190,7 +190,6 @@ button {
   margin-bottom: 6px;
   color: white;
   transition: color 0.1s linear;
-  font-weight: bold;
 }
 
 .navbarDropButton:hover .navbarArrowIconDownwards {
@@ -423,7 +422,7 @@ button {
 
 .carousel__search-container {
   position: relative;
-  width: 35ch;
+  max-width: 35ch;
   margin: auto;
   margin-top: 1rem;
 }
@@ -438,14 +437,16 @@ button {
 
 .carousel__search-bar {
   border: none;
-  border-radius: 10px;
-  width: 38rem;
+  border-radius: 9px;
+  max-width: 38rem;
+  width: 100%;
   font-size: 1rem;
   font-weight: 500;
   padding: 0.5rem 1.25rem;
   padding-right: 55px;
   outline: none;
   color: #747474;
+  height: 50px;
 }
 
 .carousel__search-icon {
@@ -485,25 +486,35 @@ button {
 }
 
 .carousel__overlay p {
-  width: 35ch;
+  max-width: 35ch;
   margin: auto;
+  padding: 0 15px;
 }
 
 .carousel__overlay-categories {
   margin: auto;
-  width: 72ch;
+  margin-top: 0.8rem;
+  max-width: 72ch;
   font-size: 1rem;
   padding: 0.7rem;
 }
 
 .carousel__overlay-categories a {
-  padding: 0.25rem;
+  padding: 0.25rem 0.13rem;
   color: white;
   transition: 0.1s ease-in-out;
+  text-decoration: none;
+  font-size: 0.9rem;
 }
 
 .carousel__overlay-categories a:hover {
-  color: rgb(130, 196, 224);
+  color: rgb(207, 207, 207);
+}
+
+.carousel__overlay-categories p {
+  display: inline;
+  color: rgb(219, 219, 219);
+  font-weight: 400;
 }
 
 /*Search Results and My Likes Gallery CSS*/
