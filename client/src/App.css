@@ -286,8 +286,8 @@ button {
 }
 
 .hamburgerIcon {
-  display: none;
-  position: relative;
+  /* display: none;
+  position: relative; */
 }
 
 .hamburgerXIcon {
@@ -319,10 +319,7 @@ button {
   .logo h1 {
     font-size: 1.35rem;
   }
-  .hamburgerIcon {
-    display: inline;
-    position: inherit;
-  }
+
   .navbarDropCont {
     display: none;
     position: relative;

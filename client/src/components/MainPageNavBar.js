@@ -14,10 +14,11 @@ import {
   faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
 
-const MainPageNavBar = ({ curUser, loggedIn }) => {
+const MainPageNavBar = ({ curUser, loggedIn, windowSize }) => {
+  //for searchbar
   var navigate = useNavigate();
   let inputValue;
-
+  console.log(windowSize);
   function onChange(event) {
     inputValue = event.target.value;
     console.log(inputValue);
@@ -28,25 +29,26 @@ const MainPageNavBar = ({ curUser, loggedIn }) => {
       navigate(`/search/${inputValue}/most-recent/all-types`);
     }
   }
-
+  //navbuttons
   let soButton;
   let accButton;
   let hamburgerButton;
   let hamIconOrX;
+  //media queries for hamburger. if hamOpen - remove pfp button if width < 730px
   let blackBG;
   let goAwayClass;
   let goAwayClass__forUploadBtn;
   const [hamIconOpen, setHamIconOpen] = useState(false);
+  //if ham open
   if (!hamIconOpen) {
     hamIconOrX = <FontAwesomeIcon icon={faBars} className="hamburgerIcon" />;
     goAwayClass = "gone";
   } else if (hamIconOpen) {
     hamIconOrX = <FontAwesomeIcon icon={faXmark} className="hamburgerXIcon" />;
     blackBG = "blackBG";
-  }
-  if (hamIconOpen && window.innerWidth < 650) {
+  } else if (hamIconOpen && windowSize.innerWidth < 650) {
     goAwayClass__forUploadBtn = "gone";
-  } else if (hamIconOpen && window.innerWidth > 650) {
+  } else if (hamIconOpen && windowSize.innerWidth > 650) {
   }
 
   let siButton;
@@ -212,7 +214,7 @@ const MainPageNavBar = ({ curUser, loggedIn }) => {
     siButton = null;
     suButton = null;
     hamburgerButton = (
-      <div className="hamburgerIcon">
+      <div>
         <button
           className="navbarDropButton"
           onClick={() => setHamIconOpen(!hamIconOpen)}
