@@ -8,6 +8,7 @@ import {
   faChevronDown,
   faChevronUp,
   faBars,
+  faUpload,
 } from "@fortawesome/free-solid-svg-icons";
 
 const MainPageNavBar = ({ curUser, loggedIn }) => {
@@ -18,6 +19,7 @@ const MainPageNavBar = ({ curUser, loggedIn }) => {
   let suButton;
   let cartButton;
   let uploadButton;
+  let smallUploadButton;
   let timer;
   let leaveTimer;
 
@@ -144,6 +146,13 @@ const MainPageNavBar = ({ curUser, loggedIn }) => {
         <button className="navbarClickThisButton">Upload</button>
       </a>
     );
+    smallUploadButton = (
+      <a href={`/${curUser}/upload`} className="smallUploadButton">
+        <button className="smallUploadButton">
+          <FontAwesomeIcon icon={faUpload} />
+        </button>
+      </a>
+    );
     soButton = (
       <a href="/">
         <button className="navbarButton" onClick={signOut}>
@@ -248,7 +257,9 @@ const MainPageNavBar = ({ curUser, loggedIn }) => {
           {siButton}
           {suButton}
           {accButton}
+          {smallUploadButton}
           {uploadButton}
+
           {/* {cartButton} */}
           {hamburgerButton}
         </div>

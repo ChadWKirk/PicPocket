@@ -45,6 +45,7 @@ button {
 .logo__color-white {
   color: white;
   transition: color 0.15s ease-in-out;
+  margin: 0;
 }
 
 .logo__color-white:hover {
@@ -283,13 +284,26 @@ button {
   position: relative;
 }
 
+.smallUploadButton {
+  color: white;
+  font-size: 0.95rem;
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.smallUploadButton:hover {
+  color: #debb0c;
+}
+
 @media (width < 650px) {
   .navbarClickThisButton {
     padding: 0.48rem 1.4rem;
     border-radius: 4px;
   }
   .logo h1 {
-    font-size: 1.325rem;
+    font-size: 1.35rem;
   }
   .hamburgerIcon {
     display: inline;
@@ -301,14 +315,17 @@ button {
   }
 }
 
-@media (width < 300px) {
+@media (width < 310px) {
   .navbarClickThisButton {
-    padding: 0.5rem 0.8rem;
-    border-radius: 4px;
-    font-size: 0.5rem;
+    display: none;
+    position: relative;
   }
-  .navbarContents {
-    justify-content: center;
+  .smallUploadButton {
+    display: inline;
+    position: inherit;
+  }
+  .navbar__buttons {
+    gap: 0.725rem;
   }
 }
 
@@ -418,7 +435,7 @@ button {
 
 .mainPage__heroPicture {
   background-size: cover;
-  height: 31.5rem;
+  min-height: 31.5rem;
   background-color: rgba(23, 45, 212, 0.312);
   background-blend-mode: darken;
   /* background: url("C:\Users\Chad Kirk\Documents\mern-stuff\mern-ecommerce\client\src\4K_Nature-Wallpaper.jpg") */
@@ -531,7 +548,13 @@ button {
   padding: 0 15px;
 }
 
-@media (width < 300px) {
+@media (width < 559px) {
+  .carousel__overlay {
+    top: 9rem;
+  }
+}
+
+@media (width < 314px) {
   .carousel__overlay {
     top: 6.5rem;
   }
