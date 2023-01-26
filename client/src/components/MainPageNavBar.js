@@ -4,11 +4,16 @@ import Button from "react-bootstrap/Button";
 import { BsCartCheck } from "react-icons/bs";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChevronDown,
+  faChevronUp,
+  faBars,
+} from "@fortawesome/free-solid-svg-icons";
 
 const MainPageNavBar = ({ curUser, loggedIn }) => {
   let soButton;
   let accButton;
+  let hamburgerButton;
   let siButton;
   let suButton;
   let cartButton;
@@ -65,7 +70,7 @@ const MainPageNavBar = ({ curUser, loggedIn }) => {
         className="navbarArrowIconDownwards"
         icon={faChevronUp}
         fontSize={10}
-        style={{ marginTop: "4px" }}
+        style={{ marginTop: "5px" }}
       />
     );
   } else {
@@ -156,6 +161,58 @@ const MainPageNavBar = ({ curUser, loggedIn }) => {
     );
     siButton = null;
     suButton = null;
+    hamburgerButton = (
+      <div
+        className="hamburgerIcon"
+        onMouseEnter={() => {
+          clearTimeout(leaveTimer);
+          timer = setTimeout(() => {
+            setHoverClass(true);
+            icon = faChevronUp;
+          }, 175);
+        }}
+        onMouseLeave={() => {
+          clearTimeout(timer);
+          leaveTimer = setTimeout(() => {
+            setHoverClass(false);
+            icon = faChevronDown;
+          }, 175);
+        }}
+      >
+        <button
+          className="navbarDropButton"
+          onClick={() => setHoverClass(true)}
+        >
+          <div className="hoverDIV">
+            <div className="whiteNavBarPFPDiv">
+              <FontAwesomeIcon icon={faBars} className="hamburgerIcon" />
+            </div>
+          </div>
+        </button>
+        <div className={hoverClass ? `navbarULCont` : `navbarULCont gone`}>
+          <ul className="navbarUL">
+            <li>
+              <a href={`/Account/${curUser}/Likes/most-recent/all-types`}>
+                Likes
+              </a>
+            </li>
+            <li>
+              <a href={`/Account/${curUser}/My-Pics/most-recent/all-types`}>
+                My Pics
+              </a>
+            </li>
+            <li>
+              <a href={`/Account/${curUser}`}>User Settings</a>
+            </li>
+            <li>
+              <a href="/" onClick={signOut}>
+                Sign Out
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    );
   } else {
     accButton = null;
     soButton = null;
@@ -193,6 +250,7 @@ const MainPageNavBar = ({ curUser, loggedIn }) => {
           {accButton}
           {uploadButton}
           {/* {cartButton} */}
+          {hamburgerButton}
         </div>
       </div>
     </div>

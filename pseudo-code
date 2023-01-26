@@ -31,8 +31,6 @@ TASKS:
 
 styling:
 
-move arrow icon in navbar downwards
-
 do media queries for trans navbar - make upload button and logo smaller after certain screen size, replace buttons when getting really thin
 
 copy trans navbar style to whitenavbar

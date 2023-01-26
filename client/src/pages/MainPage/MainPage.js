@@ -288,9 +288,9 @@ const MainPage = ({ curUser, loggedIn }) => {
     <div>
       <div className="mainPage__heroPicture">
         <MainPageNavBar curUser={curUser} loggedIn={loggedIn} />
-        <div className={`${navPosition}`}>
+        {/* <div className={`${navPosition}`}>
           <WhiteNavBar curUser={curUser} loggedIn={loggedIn} />
-        </div>
+        </div> */}
         <MainPageHeroImage />
       </div>
       <div className="imgGallerySectionCont1">
