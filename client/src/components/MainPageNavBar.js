@@ -1,4 +1,5 @@
 import { React, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
 import { BsCartCheck } from "react-icons/bs";
@@ -9,12 +10,45 @@ import {
   faChevronUp,
   faBars,
   faUpload,
+  faXmark,
+  faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
 
 const MainPageNavBar = ({ curUser, loggedIn }) => {
+  var navigate = useNavigate();
+  let inputValue;
+
+  function onChange(event) {
+    inputValue = event.target.value;
+    console.log(inputValue);
+  }
+
+  function onSubmit() {
+    if (inputValue.length > 0) {
+      navigate(`/search/${inputValue}/most-recent/all-types`);
+    }
+  }
+
   let soButton;
   let accButton;
   let hamburgerButton;
+  let hamIconOrX;
+  let blackBG;
+  let goAwayClass;
+  let goAwayClass__forUploadBtn;
+  const [hamIconOpen, setHamIconOpen] = useState(false);
+  if (!hamIconOpen) {
+    hamIconOrX = <FontAwesomeIcon icon={faBars} className="hamburgerIcon" />;
+    goAwayClass = "gone";
+  } else if (hamIconOpen) {
+    hamIconOrX = <FontAwesomeIcon icon={faXmark} className="hamburgerXIcon" />;
+    blackBG = "blackBG";
+  }
+  if (hamIconOpen && window.innerWidth < 650) {
+    goAwayClass__forUploadBtn = "gone";
+  } else if (hamIconOpen && window.innerWidth > 650) {
+  }
+
   let siButton;
   let suButton;
   let cartButton;
@@ -143,11 +177,18 @@ const MainPageNavBar = ({ curUser, loggedIn }) => {
     );
     uploadButton = (
       <a href={`/${curUser}/upload`}>
-        <button className="navbarClickThisButton">Upload</button>
+        <button
+          className={`navbarClickThisButton ${goAwayClass__forUploadBtn}`}
+        >
+          Upload
+        </button>
       </a>
     );
     smallUploadButton = (
-      <a href={`/${curUser}/upload`} className="smallUploadButton">
+      <a
+        href={`/${curUser}/upload`}
+        className={`smallUploadButton ${goAwayClass__forUploadBtn}`}
+      >
         <button className="smallUploadButton">
           <FontAwesomeIcon icon={faUpload} />
         </button>
@@ -171,55 +212,13 @@ const MainPageNavBar = ({ curUser, loggedIn }) => {
     siButton = null;
     suButton = null;
     hamburgerButton = (
-      <div
-        className="hamburgerIcon"
-        onMouseEnter={() => {
-          clearTimeout(leaveTimer);
-          timer = setTimeout(() => {
-            setHoverClass(true);
-            icon = faChevronUp;
-          }, 175);
-        }}
-        onMouseLeave={() => {
-          clearTimeout(timer);
-          leaveTimer = setTimeout(() => {
-            setHoverClass(false);
-            icon = faChevronDown;
-          }, 175);
-        }}
-      >
+      <div className="hamburgerIcon">
         <button
           className="navbarDropButton"
-          onClick={() => setHoverClass(true)}
+          onClick={() => setHamIconOpen(!hamIconOpen)}
         >
-          <div className="hoverDIV">
-            <div className="whiteNavBarPFPDiv">
-              <FontAwesomeIcon icon={faBars} className="hamburgerIcon" />
-            </div>
-          </div>
+          <div className="transparentNavBar__hamburger-div">{hamIconOrX}</div>
         </button>
-        <div className={hoverClass ? `navbarULCont` : `navbarULCont gone`}>
-          <ul className="navbarUL">
-            <li>
-              <a href={`/Account/${curUser}/Likes/most-recent/all-types`}>
-                Likes
-              </a>
-            </li>
-            <li>
-              <a href={`/Account/${curUser}/My-Pics/most-recent/all-types`}>
-                My Pics
-              </a>
-            </li>
-            <li>
-              <a href={`/Account/${curUser}`}>User Settings</a>
-            </li>
-            <li>
-              <a href="/" onClick={signOut}>
-                Sign Out
-              </a>
-            </li>
-          </ul>
-        </div>
       </div>
     );
   } else {
@@ -246,13 +245,29 @@ const MainPageNavBar = ({ curUser, loggedIn }) => {
   }
 
   return (
-    <div className="navbarContainer">
+    <div className={`navbarContainer ${blackBG}`}>
       <div className="navbarContents">
         <div>
           <a href="/" className="logo">
             <h1 className="logo__color-white">PicPocket</h1>
           </a>
         </div>
+        <form
+          className={`search__container ${goAwayClass}`}
+          onSubmit={onSubmit}
+        >
+          <input
+            className="search__bar"
+            placeholder="Search for free photos"
+            onChange={onChange}
+          ></input>
+          <button className="search__button" type="submit">
+            <FontAwesomeIcon
+              icon={faMagnifyingGlass}
+              className="search__icon"
+            />
+          </button>
+        </form>
         <div className="navbar__buttons">
           {siButton}
           {suButton}

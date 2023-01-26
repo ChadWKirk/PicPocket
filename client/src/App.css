@@ -56,6 +56,12 @@ button {
   height: 80px;
   display: flex;
   justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.blackBG {
+  background-color: black;
+  transition: 0.5s;
 }
 
 .navbarContents {
@@ -284,6 +290,14 @@ button {
   position: relative;
 }
 
+.hamburgerXIcon {
+  font-size: 1.41rem;
+}
+
+.hamburgerXIcon:hover {
+  color: rgb(209, 209, 209);
+}
+
 .smallUploadButton {
   color: white;
   font-size: 0.95rem;
@@ -312,6 +326,9 @@ button {
   .navbarDropCont {
     display: none;
     position: relative;
+  }
+  .navbar__buttons {
+    gap: 1.3rem;
   }
 }
 

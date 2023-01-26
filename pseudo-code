@@ -31,7 +31,7 @@ TASKS:
 
 styling:
 
-do media queries for trans navbar - make upload button and logo smaller after certain screen size, replace buttons when getting really thin
+navbar hamburger icon click event - onclick = remove upload button when window width below 650px and ham icon is open, don't remove ham icon x when window is over 650px, show div with all menu options that covers entire website
 
 copy trans navbar style to whitenavbar
 
