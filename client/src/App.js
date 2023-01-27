@@ -22,25 +22,6 @@ import LikeTestPage from "./pages/MyLikes/LikeTestPage";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
-  //get window size on resize. windowSize.innerWidth;
-  const [windowSize, setWindowSize] = useState(getWindowSize());
-
-  useEffect(() => {
-    function handleWindowResize() {
-      setWindowSize(getWindowSize());
-    }
-
-    window.addEventListener("resize", handleWindowResize);
-
-    return () => {
-      window.removeEventListener("resize", handleWindowResize);
-    };
-  }, []);
-
-  function getWindowSize() {
-    const { innerWidth, innerHeight } = window;
-    return { innerWidth, innerHeight };
-  }
   const [curUser, setCurUser] = useState();
   const [loggedIn, setLoggedIn] = useState();
   console.log("render");
@@ -82,13 +63,7 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={
-              <MainPage
-                curUser={curUser}
-                loggedIn={loggedIn}
-                windowSize={windowSize}
-              />
-            }
+            element={<MainPage curUser={curUser} loggedIn={loggedIn} />}
           ></Route>
           <Route
             path="/most-popular"

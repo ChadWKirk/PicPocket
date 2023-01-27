@@ -15,7 +15,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import HamburgerList from "./HamburgerList";
 
-const MainPageNavBar = ({ curUser, loggedIn, windowSize }) => {
+const MainPageNavBar = ({ curUser, loggedIn }) => {
   //go to /search/whateverYouSearchFor when hitting enter or clicking search button
   var navigate = useNavigate();
   let inputValue;
@@ -56,6 +56,7 @@ const MainPageNavBar = ({ curUser, loggedIn, windowSize }) => {
     navbarContentsClass = "navbarContents--hamopen";
     navbar__buttonsClass = "navbar__buttons--hamopen";
     hamburgerListClass = "hamburgerListClass";
+    document.body.classList.add("overflowYHidden");
   } else if (!hamIconOpen) {
     hamIconOrX = <FontAwesomeIcon icon={faBars} className="hamburgerIcon" />;
     accButtonClass = "navbarDropCont";
@@ -66,6 +67,7 @@ const MainPageNavBar = ({ curUser, loggedIn, windowSize }) => {
     navbarContentsClass = "navbarContents";
     navbar__buttonsClass = "navbar__buttons";
     hamburgerListClass = "gone";
+    document.body.classList.remove("overflowYHidden");
   }
 
   let siButton;

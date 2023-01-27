@@ -8,7 +8,7 @@ import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import WhiteNavBar from "../../components/WhiteNavBar";
 
-const MainPage = ({ curUser, loggedIn, windowSize }) => {
+const MainPage = ({ curUser, loggedIn }) => {
   //sticky nav bar
   const [navPosition, setNavPosition] = useState("gone");
 
@@ -287,11 +287,7 @@ const MainPage = ({ curUser, loggedIn, windowSize }) => {
   return (
     <div>
       <div className="mainPage__heroPicture">
-        <MainPageNavBar
-          curUser={curUser}
-          loggedIn={loggedIn}
-          windowSize={windowSize}
-        />
+        <MainPageNavBar curUser={curUser} loggedIn={loggedIn} />
         {/* <div className={`${navPosition}`}>
           <WhiteNavBar curUser={curUser} loggedIn={loggedIn} />
         </div> */}

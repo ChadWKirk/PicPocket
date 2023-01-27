@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+.overflowYHidden {
+  overflow: hidden;
+}
+
 .blue {
   color: blue;
 }
@@ -340,17 +344,19 @@ button {
 }
 
 .hamburgerListClass {
+  overflow-y: auto;
   width: 100vw;
-  height: 100vh;
+  height: calc(100vh - 80px);
   background-color: black;
   color: white;
   border-top: 0.3px solid rgb(61, 61, 61);
-  position: absolute;
+  position: fixed;
   top: 80px;
   left: 0;
   z-index: 9999999;
   animation: fadeIn 0.6s;
   font-size: 2rem;
+  padding-bottom: 1.75rem;
 }
 
 .hamburgerListClass ul {
@@ -363,6 +369,7 @@ button {
 
 .hamburgerListClass ul li a {
   color: white;
+  font-size: 1.2rem;
 }
 
 .hamburgerListClass ul li a:hover {
