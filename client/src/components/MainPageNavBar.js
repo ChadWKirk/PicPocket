@@ -2,7 +2,7 @@ import { React, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
-import { BsCartCheck } from "react-icons/bs";
+// import { BsCartCheck } from "react-icons/bs";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -13,21 +13,20 @@ import {
   faXmark,
   faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
+import HamburgerList from "./HamburgerList";
 
 const MainPageNavBar = ({ curUser, loggedIn, windowSize }) => {
-  //for searchbar
+  //go to /search/whateverYouSearchFor when hitting enter or clicking search button
   var navigate = useNavigate();
   let inputValue;
-  console.log(windowSize);
+
   function onChange(event) {
     inputValue = event.target.value;
     console.log(inputValue);
   }
 
   function onSubmit() {
-    if (inputValue.length > 0) {
-      navigate(`/search/${inputValue}/most-recent/all-types`);
-    }
+    navigate(`/search/${inputValue}/most-recent/all-types`);
   }
   //navbuttons
   let soButton;
@@ -35,25 +34,42 @@ const MainPageNavBar = ({ curUser, loggedIn, windowSize }) => {
   let hamburgerButton;
   let hamIconOrX;
   //media queries for hamburger. if hamOpen - remove pfp button if width < 730px
+  let accButtonClass;
+  let uploadButtonClass;
   let blackBG;
-  let goAwayClass;
-  let goAwayClass__forUploadBtn;
+  let searchbarClass;
+  let hamburgerIconClass;
+  let smallUploadButtonClass;
+  let navbarContentsClass;
+  let navbar__buttonsClass;
+  let hamburgerListClass;
   const [hamIconOpen, setHamIconOpen] = useState(false);
-  //if ham open
-  if (!hamIconOpen) {
-    hamIconOrX = <FontAwesomeIcon icon={faBars} className="hamburgerIcon" />;
-    goAwayClass = "gone";
-  } else if (hamIconOpen) {
+  //if ham open or close
+  if (hamIconOpen) {
     hamIconOrX = <FontAwesomeIcon icon={faXmark} className="hamburgerXIcon" />;
     blackBG = "blackBG";
-  } else if (hamIconOpen && windowSize.innerWidth < 650) {
-    goAwayClass__forUploadBtn = "gone";
-  } else if (hamIconOpen && windowSize.innerWidth > 650) {
+    accButtonClass = "navbarDropCont--hamopen";
+    uploadButtonClass = "navbarClickThisButton--hamopen";
+    searchbarClass = "carousel__search-container--hamopen";
+    hamburgerIconClass = "hamburgerIcon--hamopen";
+    smallUploadButtonClass = "smallUploadButton--hamopen";
+    navbarContentsClass = "navbarContents--hamopen";
+    navbar__buttonsClass = "navbar__buttons--hamopen";
+    hamburgerListClass = "hamburgerListClass";
+  } else if (!hamIconOpen) {
+    hamIconOrX = <FontAwesomeIcon icon={faBars} className="hamburgerIcon" />;
+    accButtonClass = "navbarDropCont";
+    uploadButtonClass = "navbarClickThisButton";
+    searchbarClass = "carousel__search-container--hamclose";
+    hamburgerIconClass = "hamburgerIcon";
+    smallUploadButtonClass = "smallUploadButton";
+    navbarContentsClass = "navbarContents";
+    navbar__buttonsClass = "navbar__buttons";
+    hamburgerListClass = "gone";
   }
 
   let siButton;
   let suButton;
-  let cartButton;
   let uploadButton;
   let smallUploadButton;
   let timer;
@@ -123,7 +139,7 @@ const MainPageNavBar = ({ curUser, loggedIn, windowSize }) => {
   if (loggedIn) {
     accButton = (
       <div
-        className="navbarDropCont"
+        className={`${accButtonClass}`}
         onMouseEnter={() => {
           clearTimeout(leaveTimer);
           timer = setTimeout(() => {
@@ -179,18 +195,11 @@ const MainPageNavBar = ({ curUser, loggedIn, windowSize }) => {
     );
     uploadButton = (
       <a href={`/${curUser}/upload`}>
-        <button
-          className={`navbarClickThisButton ${goAwayClass__forUploadBtn}`}
-        >
-          Upload
-        </button>
+        <button className={`${uploadButtonClass}`}>Upload</button>
       </a>
     );
     smallUploadButton = (
-      <a
-        href={`/${curUser}/upload`}
-        className={`smallUploadButton ${goAwayClass__forUploadBtn}`}
-      >
+      <a href={`/${curUser}/upload`} className={`${smallUploadButtonClass}`}>
         <button className="smallUploadButton">
           <FontAwesomeIcon icon={faUpload} />
         </button>
@@ -203,18 +212,11 @@ const MainPageNavBar = ({ curUser, loggedIn, windowSize }) => {
         </button>
       </a>
     );
-    cartButton = (
-      <a href="/Cart">
-        <Button className="navbar__cartBtn">
-          <BsCartCheck size={36} className="navbar__cartIcon" />
-          <div>Cart</div>
-        </Button>
-      </a>
-    );
+
     siButton = null;
     suButton = null;
     hamburgerButton = (
-      <div>
+      <div className={`${hamburgerIconClass}`}>
         <button
           className="navbarDropButton"
           onClick={() => setHamIconOpen(!hamIconOpen)}
@@ -226,7 +228,6 @@ const MainPageNavBar = ({ curUser, loggedIn, windowSize }) => {
   } else {
     accButton = null;
     soButton = null;
-    cartButton = null;
     siButton = (
       <a href="/SignIn" style={{ color: "black" }}>
         Sign In
@@ -248,39 +249,41 @@ const MainPageNavBar = ({ curUser, loggedIn, windowSize }) => {
 
   return (
     <div className={`navbarContainer ${blackBG}`}>
-      <div className="navbarContents">
+      <div className={`${navbarContentsClass}`}>
         <div>
           <a href="/" className="logo">
             <h1 className="logo__color-white">PicPocket</h1>
           </a>
         </div>
-        <form
-          className={`search__container ${goAwayClass}`}
-          onSubmit={onSubmit}
-        >
+        <form className={`${searchbarClass}`} onSubmit={onSubmit}>
           <input
-            className="search__bar"
+            className="carousel__search-bar--hamopen"
             placeholder="Search for free photos"
             onChange={onChange}
           ></input>
-          <button className="search__button" type="submit">
+          <button className="carousel__search-button--hamopen" type="submit">
             <FontAwesomeIcon
               icon={faMagnifyingGlass}
-              className="search__icon"
+              className="carousel__search-icon--hamopen"
             />
           </button>
         </form>
-        <div className="navbar__buttons">
+        <div className={`${navbar__buttonsClass}`}>
           {siButton}
           {suButton}
           {accButton}
           {smallUploadButton}
           {uploadButton}
 
-          {/* {cartButton} */}
           {hamburgerButton}
         </div>
       </div>
+      <HamburgerList
+        hamburgerListClass={hamburgerListClass}
+        curUser={curUser}
+        loggedIn={loggedIn}
+        signOut={signOut}
+      />
     </div>
   );
 };

@@ -31,7 +31,7 @@ TASKS:
 
 styling:
 
-navbar hamburger icon click event - onclick = remove upload button when window width below 650px and ham icon is open, don't remove ham icon x when window is over 650px, show div with all menu options that covers entire website
+make hamburger list conditionals if not logged in don't show likes, user settings, upload, etc.
 
 copy trans navbar style to whitenavbar
 
