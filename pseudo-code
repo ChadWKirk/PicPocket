@@ -39,6 +39,10 @@ style and media queries for whitenavbar
 
 put download and like buttons on images always visible after certain screen size (think phone no hover)
 
+resize images to smaller with media queries for phones to show more than one image horizontally
+
+make free stock photos text smaller on main page on phones with media queries
+
 masonry layout
 
 ---

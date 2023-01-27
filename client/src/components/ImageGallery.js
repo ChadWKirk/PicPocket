@@ -1,36 +1,13 @@
-import React, { useState, useEffect, useRef } from "react";
-import MainPageNavBar from "../../components/MainPageNavBar";
-import MainPageHeroImage from "../../components/MainPageHeroImage";
-import ImageGallery from "../../components/ImageGallery";
+import { React, useEffect, useState } from "react";
+import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faDownload } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
-import { faDownload } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
-import WhiteNavBar from "../../components/WhiteNavBar";
 
-const MainPage = ({ curUser, loggedIn }) => {
-  //sticky nav bar
-  const [navPosition, setNavPosition] = useState("gone");
-
-  useEffect(() => {
-    window.addEventListener("scroll", setNavToFixed);
-
-    return () => {
-      window.removeEventListener("scroll", setNavToFixed);
-    };
-  }, []);
-
-  function setNavToFixed() {
-    if (window !== undefined) {
-      let windowHeight = window.scrollY;
-      windowHeight > 425 ? setNavPosition("fixed") : setNavPosition("gone");
-    }
-  }
-
+const ImageGallery = ({ curUser, loggedIn }) => {
   //img array to display
   const [imgGallery, setImgGallery] = useState([]);
-  //fetch img array
+  //fetch img array to map over
   const [fetchArr, setFetchArr] = useState([]);
   //isLiked just to re render array
   const [isLiked, setIsLiked] = useState(false);
@@ -60,8 +37,10 @@ const MainPage = ({ curUser, loggedIn }) => {
           })
       );
     }
+
     getImages();
   }, []);
+
   //map over img array
   useEffect(() => {
     mapArr = fetchArr.map((element, index) => {
@@ -187,44 +166,15 @@ const MainPage = ({ curUser, loggedIn }) => {
     }
     setIsLiked(!isLiked);
   }
-
   return (
-    <div>
-      <div className="mainPage__heroPicture">
-        <MainPageNavBar curUser={curUser} loggedIn={loggedIn} />
-        {/* <div className={`${navPosition}`}>
-          <WhiteNavBar curUser={curUser} loggedIn={loggedIn} />
-        </div> */}
-        <MainPageHeroImage />
-      </div><div className="sortingBarCont1">
-          <a>
-            <button className="buttonClicked">Most Recent</button>
-          </a>
-          <a href="/most-popular">
-            <button className="buttonNotClicked">Most Popular</button>
-          </a>
-        </div>
-      <div className="imgGallerySectionCont1">
-        
-        
-        {/* <div className="imgGalleryCont1">{imgGallery}</div> */}
-        <ImageGallery curUser={curUser} loggedIn={loggedIn} />
-        <a href="/signup">
-          <button
-            style={{
-              backgroundColor: "blue",
-              color: "white",
-              fontSize: "2.5rem",
-              borderRadius: "30px",
-              padding: "1.5rem",
-            }}
-          >
-            Sign Up!
-          </button>
-        </a>
-      </div>
-    </div>
+    <ResponsiveMasonry
+      columnsCountBreakPoints={{ 900: 2, 901: 3 }}
+      className="imgGalleryCont1"
+    >
+      <h1 className="freeStockPhotosHeading">Free Stock Photos</h1>
+      <Masonry>{imgGallery}</Masonry>
+    </ResponsiveMasonry>
   );
 };
 
-export default MainPage;
+export default ImageGallery;
