@@ -48,21 +48,17 @@ const ImageGallery = ({ curUser, loggedIn }) => {
       console.log(fetchArr[index].uploadedBy);
       if (element.likedBy.includes(curUser)) {
         likeButton = (
-          <div>
-            <FontAwesomeIcon
-              icon={faHeart}
-              className="likeButtonHeart1 likeButtonLikedFill1"
-            ></FontAwesomeIcon>
-          </div>
+          <FontAwesomeIcon
+            icon={faHeart}
+            className="likeButtonHeart1 likeButtonLikedFill1"
+          ></FontAwesomeIcon>
         );
       } else {
         likeButton = (
-          <div>
-            <FontAwesomeIcon
-              icon={farHeart}
-              className="likeButtonHeart1"
-            ></FontAwesomeIcon>
-          </div>
+          <FontAwesomeIcon
+            icon={farHeart}
+            className="likeButtonHeart1"
+          ></FontAwesomeIcon>
         );
       }
 

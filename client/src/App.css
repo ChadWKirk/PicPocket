@@ -340,7 +340,7 @@ button {
 *:focus {
   border: none;
   outline: none;
-  color: rgb(209, 209, 209) !important;
+  /* color: rgb(209, 209, 209) !important; */
 }
 
 .hamburgerXIcon:focus {
@@ -893,11 +893,11 @@ button {
   box-shadow: inset 0px 0px 30px 60px rgba(0, 0, 0, 0.15);
   content: "";
   display: inline-block;
-  height: 97.5%;
+  height: 100%;
   position: absolute;
   top: 0;
   left: -390px;
-  width: 290%;
+  width: 490%;
   z-index: 0;
   pointer-events: none;
 }
@@ -909,6 +909,33 @@ button {
 .imgGalleryImgCont1:hover .imgGalleryImgOverlay1 {
   opacity: 1;
   position: initial;
+}
+
+@media (width < 650px) {
+  .imgGalleryImgOverlay1 {
+    opacity: 1;
+  }
+  .likeButtonContainer1 {
+    /* background-color: rgba(0, 0, 0, 0) !important; */
+    color: white !important;
+  }
+  .downloadButtonCont1 {
+    background-color: rgba(0, 0, 0, 0) !important;
+    color: white !important;
+    font-size: 1.25rem;
+    bottom: 10px !important;
+    padding-bottom: 0rem !important;
+    padding-right: 0.25rem !important;
+  }
+  .imgAuthor1 {
+    opacity: 0;
+  }
+}
+
+@media (width < 500px) {
+  .downloadButtonCont1 {
+    font-size: 1rem !important;
+  }
 }
 
 .buttonClicked {
@@ -943,6 +970,19 @@ button {
   border-radius: 10px;
   padding: 1.3rem;
   z-index: 100;
+}
+
+@media (width < 650px) {
+  .likeButtonContainer1 {
+    padding: 2px 23px 0px 0px;
+    height: 25px;
+    width: 25px;
+    background-color: rgba(0, 0, 0, 0) !important;
+  }
+  .likeButtonHeart1 {
+    top: 2px !important;
+    left: 5px !important;
+  }
 }
 
 .likeButtonHeart1 {
@@ -1007,13 +1047,13 @@ button {
   cursor: pointer;
   position: absolute;
   z-index: 100;
-  bottom: 20px;
+  bottom: 10px;
   right: 10px;
   background-color: white;
   text-decoration: none;
   color: rgb(73, 73, 73);
   border-radius: 10px;
-  padding: 0.75rem;
+  padding: 0.6rem 0.85rem;
 }
 
 .downloadButton1 {
@@ -1418,7 +1458,7 @@ button {
 }
 
 .likeButton {
-  font-size: 36px;
+  font-size: 2.25rem;
   transition: 0.14s ease;
 }
 

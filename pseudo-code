@@ -33,11 +33,11 @@ styling:
 
 make hamburger list conditionals if not logged in don't show likes, user settings, upload, etc.
 
+make heart button sit centered in overlay container when zoomed out
+
 copy trans navbar style to whitenavbar
 
 style and media queries for whitenavbar
-
-put download and like buttons on images always visible after certain screen size (think phone no hover)
 
 ---
 
