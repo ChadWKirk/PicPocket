@@ -117,7 +117,7 @@ const ImageGallery = ({ curUser, loggedIn }) => {
                 className="imgAuthor1"
                 href={`http://localhost:3000/User/${element.uploadedBy}`}
               >
-                <img src={element.test[0].pfp} className="profilePicSmall" />
+                <img src={element.test[0].pfp} className="profilePicAuthor" />
                 {element.uploadedBy}
               </a>
             </div>

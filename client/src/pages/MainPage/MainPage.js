@@ -196,32 +196,25 @@ const MainPage = ({ curUser, loggedIn }) => {
           <WhiteNavBar curUser={curUser} loggedIn={loggedIn} />
         </div> */}
         <MainPageHeroImage />
-      </div><div className="sortingBarCont1">
-          <a>
-            <button className="buttonClicked">Most Recent</button>
-          </a>
-          <a href="/most-popular">
-            <button className="buttonNotClicked">Most Popular</button>
-          </a>
-        </div>
+      </div>
+      <div className="sortingBarCont1">
+        <a>
+          <button className="buttonClicked">Most Recent</button>
+        </a>
+        <a href="/most-popular">
+          <button className="buttonNotClicked">Most Popular</button>
+        </a>
+      </div>
       <div className="imgGallerySectionCont1">
-        
-        
         {/* <div className="imgGalleryCont1">{imgGallery}</div> */}
         <ImageGallery curUser={curUser} loggedIn={loggedIn} />
-        <a href="/signup">
-          <button
-            style={{
-              backgroundColor: "blue",
-              color: "white",
-              fontSize: "2.5rem",
-              borderRadius: "30px",
-              padding: "1.5rem",
-            }}
-          >
-            Sign Up!
-          </button>
-        </a>
+      </div>
+      <div className="joinNowContainer">
+        <h1>Want to contribute?</h1>
+        <h3>Upload your own stock photos in minutes.</h3>
+        <button>
+          <a href="/signup">Join Now</a>
+        </button>
       </div>
     </div>
   );

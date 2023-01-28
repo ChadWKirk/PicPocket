@@ -31,9 +31,9 @@ TASKS:
 
 styling:
 
-make hamburger list conditionals if not logged in don't show likes, user settings, upload, etc.
+create sign up now section - Want to contribute? - Upload your own stock photos in minutes. Join Now -- goes to sign up page
 
-make heart button sit centered in overlay container when zoomed out
+make hamburger list conditionals if not logged in don't show likes, user settings, upload, etc.
 
 copy trans navbar style to whitenavbar
 
