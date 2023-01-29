@@ -7,6 +7,7 @@ import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import DropdownButton from "react-bootstrap/DropdownButton";
+import ImageGallery from "../components/ImageGallery";
 
 const UserPage = ({ curUser, loggedIn }) => {
   let navigate = useNavigate();
@@ -237,8 +238,8 @@ const UserPage = ({ curUser, loggedIn }) => {
           <div className="galleryHeading">
             <img src={pfp} className="profilePicBig" />
             <h2>{username}</h2>
-            <p>{bio}</p>
-            <p>Images by {username}</p>
+            <p>{bio} okokoko bio</p>
+            {/* <p>Images by {username}</p> */}
           </div>
         </div>
         <div className="gallerySortBar d-flex">
@@ -334,11 +335,8 @@ const UserPage = ({ curUser, loggedIn }) => {
             </Dropdown.Item>
           </DropdownButton>
         </div>
-        <div
-          className="imgGalleryCont1"
-          style={{ marginLeft: "1rem", marginRight: "1rem" }}
-        >
-          {resultsMap}
+        <div className="imgGallerySectionCont1">
+          <ImageGallery curUser={curUser} loggedIn={loggedIn} />
         </div>
       </div>
     </div>

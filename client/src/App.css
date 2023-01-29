@@ -869,6 +869,7 @@ button {
   max-width: 1500px;
   margin: auto;
   margin-top: 0.6rem;
+  margin-bottom: 4.25rem;
 }
 
 .freeStockPhotosHeading {
@@ -1040,6 +1041,7 @@ button {
   align-items: center;
   color: white;
   gap: 1.5rem;
+  margin-top: -1.8rem;
 }
 
 .joinNowContainer h1 {
@@ -1192,7 +1194,7 @@ button {
 .galleryHeading p {
   font-size: 1rem;
   margin-top: -1.6rem;
-  color: rgb(77, 77, 77);
+  color: rgb(118, 118, 118);
 }
 
 .gallery {

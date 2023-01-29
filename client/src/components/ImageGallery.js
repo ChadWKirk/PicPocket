@@ -1,29 +1,48 @@
 import { React, useEffect, useState } from "react";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
+import { useNavigate, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faDownload } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 
 const ImageGallery = ({ curUser, loggedIn }) => {
-  //img array to display
-  const [imgGallery, setImgGallery] = useState([]);
-  //fetch img array to map over
-  const [fetchArr, setFetchArr] = useState([]);
+  let navigate = useNavigate();
+  const { username } = useParams();
+
+  var likesArr = [];
+  var resultsArr = [];
+  const [resultsMap, setResultsMap] = useState();
   //isLiked just to re render array
   const [isLiked, setIsLiked] = useState(false);
 
-  var mapArr;
+  //sort and filter values to do get requests
+  const [sort, setSort] = useState("most-recent");
+  const [filter, setFilter] = useState("all-types");
+  //sort and filter values to change the titles of the dropdown menus
+  const [sortTitle, setSortTitle] = useState("Most Recent");
+  const [filterTitle, setFilterTitle] = useState("All Types");
+
+  //modal for "are you sure you want to remove this pic from your likes?"
+  let modalResult;
+  let appear = "gone";
+  let modalClasses = `likesModalCont ${appear}`;
+  let modal = (
+    <div className={modalClasses}>
+      <div className="likesModalDiv">
+        <p>Are you sure you would like to remove this pic from your likes?</p>
+        <div className="likesModalButtonCont">
+          <button onClick={(modalResult = true)}>Yes</button>
+          <button onClick={(modalResult = false)}>No</button>
+        </div>
+      </div>
+    </div>
+  );
 
   const [userInfo, setUserInfo] = useState();
-  const [userPFP, setPFP] = useState([]);
-  let pfpArray = [];
 
-  //get images
   useEffect(() => {
-    console.log("run");
-
-    async function getImages() {
-      fetch("http://localhost:5000/most-recent-images", {
+    async function userInfoFetch() {
+      await fetch(`http://localhost:5000/${username}/info`, {
         method: "GET",
         headers: { "Content-type": "application/json" },
       }).then((response) =>
@@ -31,107 +50,147 @@ const ImageGallery = ({ curUser, loggedIn }) => {
           .json()
           .then((resJSON) => JSON.stringify(resJSON))
           .then((stringJSON) => JSON.parse(stringJSON))
-          .then((parsedJSON) => {
-            setFetchArr(parsedJSON);
-            console.log(parsedJSON);
-          })
+          .then((parsedJSON) => setUserInfo(parsedJSON[0]))
       );
     }
 
-    getImages();
+    userInfoFetch();
   }, []);
 
-  //map over img array
   useEffect(() => {
-    mapArr = fetchArr.map((element, index) => {
-      var likeButton;
-      console.log(fetchArr[index].uploadedBy);
-      if (element.likedBy.includes(curUser)) {
-        likeButton = (
-          <FontAwesomeIcon
-            icon={faHeart}
-            className="likeButtonHeart1 likeButtonLikedFill1"
-          ></FontAwesomeIcon>
-        );
-      } else {
-        likeButton = (
-          <FontAwesomeIcon
-            icon={farHeart}
-            className="likeButtonHeart1"
-          ></FontAwesomeIcon>
-        );
-      }
-
-      return (
-        <div key={index} className="imgGalleryImgCont1">
-          <a
-            href={
-              element.secure_url.slice(0, 50) +
-              "q_60/c_scale,w_1600/dpr_auto/" +
-              element.secure_url.slice(
-                50,
-                element.secure_url.lastIndexOf(".")
-              ) +
-              ".jpg"
-            }
-          >
-            <img
-              src={
-                element.secure_url.slice(0, 50) +
-                "q_60/c_scale,w_1600/dpr_auto/" +
-                element.secure_url.slice(
-                  50,
-                  element.secure_url.lastIndexOf(".")
-                ) +
-                ".jpg"
-              }
-              className="imgGalleryImg1"
-            ></img>
-          </a>
-
-          <div className="imgGalleryImgOverlay1">
-            <a
-              className="likeButtonContainer1"
-              onClick={(e) => handleLike(e, element, index)}
-            >
-              {likeButton}
-            </a>
-            <a
-              className="downloadButtonCont1"
-              href={
-                element.secure_url.slice(0, 50) +
-                "q_100/fl_attachment/" +
-                element.secure_url.slice(
-                  50,
-                  element.secure_url.lastIndexOf(".")
-                )
-              }
-            >
-              <FontAwesomeIcon
-                icon={faDownload}
-                className="downloadButton1"
-              ></FontAwesomeIcon>
-            </a>
-            <div>
-              <a
-                className="imgAuthor1"
-                href={`http://localhost:3000/User/${element.uploadedBy}`}
-              >
-                <img src={element.test[0].pfp} className="profilePicAuthor" />
-                {element.uploadedBy}
-              </a>
-            </div>
-          </div>
-        </div>
+    async function searchFetch() {
+      await fetch(`http://localhost:5000/${username}/${sort}/${filter}`, {
+        method: "GET",
+        headers: { "Content-type": "application/json" },
+      }).then((response) =>
+        response
+          .json()
+          .then((resJSON) => JSON.stringify(resJSON))
+          .then((stringJSON) => JSON.parse(stringJSON))
+          .then((parsedJSON) => (likesArr = parsedJSON))
       );
-    });
-    setImgGallery(mapArr);
-  }, [fetchArr, userPFP, isLiked]);
+      console.log(likesArr);
+      // //make everything lower case to allow case insensitive searching
+      for (var i = 0; i < likesArr.length; i++) {
+        // if (
+        //   likesArr[i].tags
+        //     .toString()
+        //     .toLowerCase()
+        //     .includes(searchQuery.toLowerCase()) ||
+        //   likesArr[i].public_id
+        //     .toString()
+        //     .toLowerCase()
+        //     .includes(searchQuery.toLowerCase())
+        // ) {
+        resultsArr.push(likesArr[i]);
+        // }
+      }
+      var count = -1;
+      //use split to get an array split by the /
+      //only output the public_id after the last /. last count of array meaning length-1
+      //replace all spaces with dashes
+      setResultsMap(
+        resultsArr.map((element, index, count) => {
+          let parts = element.public_id.split("/");
+          let result = parts[parts.length - 1];
+          var likeButton;
+          count = count + 1;
+          console.log(index);
+
+          if (element.likedBy.includes(curUser)) {
+            likeButton = (
+              <div>
+                <FontAwesomeIcon
+                  icon={faHeart}
+                  className="likeButtonHeart1 likeButtonLikedFill1"
+                ></FontAwesomeIcon>
+              </div>
+            );
+          } else {
+            likeButton = (
+              <div>
+                <FontAwesomeIcon
+                  icon={farHeart}
+                  className="likeButtonHeart1"
+                ></FontAwesomeIcon>
+              </div>
+            );
+          }
+          return (
+            <div key={index} className="imgGalleryImgCont1">
+              <a
+                href={
+                  element.secure_url.slice(0, 50) +
+                  "q_60/c_scale,w_1600/dpr_auto/" +
+                  element.secure_url.slice(
+                    50,
+                    element.secure_url.lastIndexOf(".")
+                  ) +
+                  ".jpg"
+                }
+              >
+                <img
+                  src={
+                    element.secure_url.slice(0, 50) +
+                    "q_60/c_scale,w_1600/dpr_auto/" +
+                    element.secure_url.slice(
+                      50,
+                      element.secure_url.lastIndexOf(".")
+                    ) +
+                    ".jpg"
+                  }
+                  className="imgGalleryImg1"
+                ></img>
+              </a>
+
+              <div className="imgGalleryImgOverlay1">
+                <a
+                  className="likeButtonContainer1"
+                  onClick={(e) => handleLike(e, element, index)}
+                >
+                  {likeButton}
+                </a>
+                <a
+                  className="downloadButtonCont1"
+                  href={
+                    element.secure_url.slice(0, 50) +
+                    "q_100/fl_attachment/" +
+                    element.secure_url.slice(
+                      50,
+                      element.secure_url.lastIndexOf(".")
+                    )
+                  }
+                >
+                  <FontAwesomeIcon
+                    icon={faDownload}
+                    className="downloadButton1"
+                  ></FontAwesomeIcon>
+                </a>
+                <div>
+                  <a
+                    className="imgAuthor1"
+                    href={`http://localhost:3000/User/${element.uploadedBy}`}
+                  >
+                    <img
+                      src={element.test[0].pfp}
+                      className="profilePicAuthor"
+                    />
+                    {element.uploadedBy}
+                  </a>
+                </div>
+              </div>
+            </div>
+          );
+        })
+      );
+    }
+    searchFetch();
+  }, [sort, filter, isLiked]);
 
   async function handleLike(e, element, index) {
-    var fetchArrCopy = fetchArr;
+    var likesArrCopy = likesArr;
 
-    if (fetchArrCopy[index].likedBy.includes(curUser)) {
+    if (likesArrCopy[index].likedBy.includes(curUser)) {
       await fetch(
         `http://localhost:5000/removeLikedBy/${element.asset_id}/${curUser}`,
         {
@@ -139,15 +198,15 @@ const ImageGallery = ({ curUser, loggedIn }) => {
           headers: { "Content-type": "application/json" },
         }
       ).then((res) => {
-        fetchArrCopy[index].likedBy = fetchArrCopy[index].likedBy.filter(
+        likesArrCopy[index].likedBy = likesArrCopy[index].likedBy.filter(
           (user) => {
             return user !== curUser;
           }
         );
-        setFetchArr(fetchArrCopy);
+        likesArr = likesArrCopy;
         console.log("run 3");
       });
-    } else if (!fetchArrCopy[index].likedBy.includes(curUser)) {
+    } else if (!likesArrCopy[index].likedBy.includes(curUser)) {
       await fetch(
         `http://localhost:5000/addLikedBy/${element.asset_id}/${curUser}`,
         {
@@ -155,20 +214,34 @@ const ImageGallery = ({ curUser, loggedIn }) => {
           headers: { "Content-type": "application/json" },
         }
       ).then((res) => {
-        fetchArrCopy[index].likedBy.push(curUser);
-        setFetchArr(fetchArrCopy);
+        likesArrCopy[index].likedBy.push(curUser);
+        likesArr = likesArrCopy;
         console.log("run 4");
       });
     }
     setIsLiked(!isLiked);
+  }
+  let resultsMapLength;
+  if (resultsMap) {
+    resultsMapLength = resultsMap.length;
+  }
+  let pfp;
+  let bio;
+  if (userInfo) {
+    pfp =
+      userInfo.pfp.slice(0, 50) +
+      "q_60/c_scale,w_200/dpr_auto/" +
+      userInfo.pfp.slice(50, userInfo.pfp.lastIndexOf(".")) +
+      ".jpg";
+    bio = userInfo.bio;
   }
   return (
     <ResponsiveMasonry
       columnsCountBreakPoints={{ 900: 2, 901: 3 }}
       className="imgGalleryCont1"
     >
-      <h1 className="freeStockPhotosHeading">Free Stock Photos</h1>
-      <Masonry>{imgGallery}</Masonry>
+      <h1 className="freeStockPhotosHeading">Photos By {curUser}</h1>
+      <Masonry>{resultsMap}</Masonry>
     </ResponsiveMasonry>
   );
 };

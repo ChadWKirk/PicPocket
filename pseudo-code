@@ -33,6 +33,10 @@ styling:
 
 footer - make about us page - make conditional renders for if logged out or logged in
 
+fix ImgGallery back end for user page, likes page
+
+put drop down buttons to the right aligned with "Photos By curuser" for likes page and user page
+
 create sign up now section - have pic of female photographer to the right or left and have it fade to just a solid background color (darker yellow) and have the text and join now button on the empty side
 
 make hamburger list conditionals if not logged in don't show likes, user settings, upload, etc.
