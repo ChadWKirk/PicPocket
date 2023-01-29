@@ -31,7 +31,7 @@ TASKS:
 
 styling:
 
-footer - make about us and contact us pages - make conditional renders for if logged out or logged in
+footer - make about us page - make conditional renders for if logged out or logged in
 
 create sign up now section - have pic of female photographer to the right or left and have it fade to just a solid background color (darker yellow) and have the text and join now button on the empty side
 
@@ -42,6 +42,8 @@ copy trans navbar style to whitenavbar
 style and media queries for whitenavbar
 
 ---
+
+contact us page backend once site is hosted and get website email
 
 copy over mainpage to mainpage most popular
 

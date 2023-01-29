@@ -55,7 +55,7 @@ const Footer = ({ curUser, loggedIn }) => {
           used several different websites for design and implementation
           inspiration." - The Creator
         </i>
-        <div>Copyright PicPocket 2023</div>
+        <div>Copyright © 2023 PicPocket</div>
       </div>
     </div>
   );

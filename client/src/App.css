@@ -2051,3 +2051,75 @@ button {
   align-items: center;
   min-height: 160px;
 }
+
+.contactFormCont {
+  margin: 2.75rem auto;
+  padding: 2.5rem 2rem 4rem 2rem;
+  width: 550px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border: 1px solid rgb(229, 229, 229);
+  border-radius: 3px;
+}
+
+.contactFormCont h1 {
+  font-size: 1.625rem;
+  font-weight: 1000;
+  margin-bottom: 3.75rem;
+}
+
+.contactForm--InputBlock {
+  margin-bottom: 2rem;
+}
+
+.contactForm--InputBlock label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+
+.contactForm--InputBlock input {
+  font-size: 1rem;
+  width: 410px;
+  height: 50px;
+  border: 2px solid rgb(228, 228, 228);
+  border-radius: 4px;
+  padding: 0rem 0.5rem;
+}
+
+.contactForm--InputBlock input:focus {
+  border: 2px solid black;
+}
+
+.contactForm--InputBlock textarea {
+  font-size: 1rem;
+  width: 410px;
+  min-height: 70px;
+  height: 50px;
+  border: 2px solid rgb(228, 228, 228);
+  border-radius: 3px;
+  padding: 0.2rem 0.5rem;
+}
+
+.contactForm--InputBlock textarea:focus {
+  border: 2px solid black;
+}
+
+.contactFormCont button {
+  margin-top: 1.4rem;
+  float: right;
+  color: white;
+  background-color: rgb(1, 1, 72);
+  font-weight: 300;
+  padding: 0.55rem 0.8rem;
+  border-radius: 4px;
+  transition: 0.2s;
+}
+
+.contactFormCont button:hover {
+  background-color: rgb(6, 6, 41);
+  transition: 0.2s;
+}
