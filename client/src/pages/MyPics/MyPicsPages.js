@@ -421,7 +421,7 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
           message={toastMessage}
           closeToast={closeToast}
         />
-        <div className="galleryHeadingAndSortContainer">
+        <div className="myPicsGalleryHeadingAndSortContainer">
           <div className="galleryHeading">
             <h2>Your Pics</h2>
             <p>

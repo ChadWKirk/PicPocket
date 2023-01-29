@@ -18,6 +18,9 @@ import UploadPage from "./pages/UploadPage";
 import ImageViewPage from "./pages/ImageViewPage";
 import LikesPage from "./pages/MyLikes/LikesPage";
 import LikeTestPage from "./pages/MyLikes/LikeTestPage";
+import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
+import TOSPage from "./pages/TOSPage";
+import DisclaimerPage from "./pages/DisclaimerPage";
 //bootstrap
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -119,8 +122,22 @@ function App() {
             path="/delSuccess"
             element={<DelSuccessPage curUser={curUser} loggedIn={loggedIn} />}
           ></Route>
+          <Route
+            path="/Privacy-Policy"
+            element={
+              <PrivacyPolicyPage curUser={curUser} loggedIn={loggedIn} />
+            }
+          ></Route>
+          <Route
+            path="/Terms-And-Conditions"
+            element={<TOSPage curUser={curUser} loggedIn={loggedIn} />}
+          ></Route>
+          <Route
+            path="/Disclaimer"
+            element={<DisclaimerPage curUser={curUser} loggedIn={loggedIn} />}
+          ></Route>
         </Routes>
-        <Footer />
+        <Footer curUser={curUser} loggedIn={loggedIn} />
       </div>
     );
   }

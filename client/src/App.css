@@ -1148,7 +1148,7 @@ button {
   cursor: pointer;
   position: absolute;
   bottom: 0px;
-  left: 10px;
+  left: 3px;
   text-decoration: none;
   color: #f1f1f1;
   font-weight: 800;
@@ -1171,19 +1171,28 @@ button {
 }
 
 .galleryHeadingAndSortContainer {
-  padding: 2rem;
-  margin: auto;
-  margin-top: 1.5rem;
+  margin-top: 3rem;
 }
 
 .galleryHeading {
   font-size: 2rem;
   text-align: center;
   margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.galleryHeading h2 {
+  font-size: 2.77rem;
 }
 
 .galleryHeading p {
   font-size: 1rem;
+  margin-top: -1.6rem;
+  color: rgb(77, 77, 77);
 }
 
 .gallery {
@@ -1278,8 +1287,8 @@ button {
 
 .profilePicBig {
   border-radius: 50%;
-  width: 80px;
-  height: 80px;
+  width: 130px;
+  height: 130px;
   background-color: beige;
   object-fit: cover;
 }
@@ -1319,6 +1328,16 @@ button {
 }
 
 .galleryHeadingAndSortContainer {
+  /* height: 130px;
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 72%; */
+}
+
+.myPicsGalleryHeadingAndSortContainer {
   height: 130px;
   padding: 1.25rem;
   display: flex;
@@ -1326,17 +1345,17 @@ button {
   flex-direction: row;
   justify-content: space-between;
   width: 72%;
-}
-
-.galleryHeading {
-  font-size: 1.75rem;
+  padding: 2rem;
+  margin: auto;
+  /* margin-top: 1.5rem; */
 }
 
 .gallerySortBar {
   gap: 1.25rem;
   margin: auto;
   justify-content: center;
-  margin-bottom: 3.7rem;
+  margin-bottom: 2rem;
+  margin-top: 2rem;
 }
 
 .myPicsGallerySortBar {
@@ -1390,24 +1409,21 @@ button {
 }
 
 .galleryDropDownButton .btn-primary {
-  background-color: rgb(246, 247, 247);
+  background-color: white;
   color: gray;
-  border: 1px solid;
-  border-color: rgba(123, 123, 123, 0.412);
-  border-radius: 20px;
-  width: 100px;
-  font-weight: 400;
-  font-size: 12px;
+  border: none;
+  outline: 1px solid rgba(179, 179, 179, 0.412);
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  font-size: 1rem;
 }
 
 .galleryDropDownButton .btn-primary:hover {
   color: gray;
-  border: 1px solid;
-  border-color: rgba(123, 123, 123, 0.412);
-
-  border-radius: 20px;
-  width: 100px;
-  background-color: rgba(104, 104, 104, 0.18);
+  border: none;
+  outline: 1.5px solid rgba(94, 94, 94, 0.412);
+  background-color: white;
 }
 
 .myPicsGallery {
@@ -1695,13 +1711,49 @@ button {
 .footerContainer {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-around;
   color: grey;
   background-color: rgb(45, 45, 45);
   font-size: 1rem;
   height: 10%;
   padding: 2rem;
   /* margin-top: 6.5rem; */
+}
+
+.footerContainer h4 {
+  color: white;
+  font-size: 1rem;
+}
+
+.footerUnderline {
+  margin-bottom: 0.75rem;
+  width: 3.7rem;
+  height: 4px;
+  background-color: orange;
+}
+
+.footerUnderline2 {
+  margin-bottom: 0.75rem;
+  width: 4rem;
+  height: 4px;
+  background-color: orange;
+}
+
+.footerContainer a {
+  font-size: 0.8rem;
+  color: rgb(194, 193, 193);
+  text-decoration: none;
+}
+
+.footerContainer a:hover {
+  color: rgb(220, 218, 218);
+}
+
+.footerText {
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
 .imageViewContainer {
