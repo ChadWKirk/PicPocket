@@ -1027,8 +1027,12 @@ button {
 }
 
 .joinNowContainer {
-  background: url("C:\Users\Chad Kirk\Documents\mern-stuff\PicPocket\client\src\joinNowBG.jpg");
-  background-size: cover;
+  background-color: rgb(214, 184, 33);
+  /* background-size: cover;
+  background-repeat: no-repeat;
+  background-position-y: -90px;
+  background-blend-mode: darken;
+  background-color: rgba(0, 0, 0, 0.329); */
   min-height: 400px;
   display: flex;
   flex-direction: column;
@@ -1039,13 +1043,13 @@ button {
 }
 
 .joinNowContainer h1 {
-  font-size: 2.5rem;
-  font-weight: 500;
+  font-size: 1.875rem;
+  font-weight: 700;
 }
 
 .joinNowContainer h3 {
-  font-weight: 300;
-  font-size: 2rem;
+  font-weight: 400;
+  font-size: 1.5rem;
 }
 
 .joinNowContainer a {
@@ -1055,12 +1059,13 @@ button {
 
 .joinNowContainer button {
   margin-bottom: 4.5rem;
-  background-color: #debb0c;
+  background-color: #ebc81a;
   color: black;
+  border: 3px solid black;
   padding: 0.5rem 5.5rem;
   border-radius: 25px;
-  font-size: 1.5rem;
-  font-weight: 800;
+  font-size: 1.125rem;
+  font-weight: 700;
   transition: 0.2s;
 }
 
@@ -1116,7 +1121,7 @@ button {
   cursor: pointer;
   position: absolute;
   z-index: 100;
-  bottom: 10px;
+  bottom: 12px;
   right: 10px;
   background-color: white;
   text-decoration: none;
@@ -1142,7 +1147,7 @@ button {
 .imgAuthor1 {
   cursor: pointer;
   position: absolute;
-  bottom: 7px;
+  bottom: 0px;
   left: 10px;
   text-decoration: none;
   color: #f1f1f1;
@@ -1985,4 +1990,12 @@ button {
   bottom: 40px;
   left: 50%;
   transform: translate(-200px, 0);
+}
+
+.reachedTheEndCont {
+  font-size: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 160px;
 }

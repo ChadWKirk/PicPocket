@@ -209,6 +209,9 @@ const MainPage = ({ curUser, loggedIn }) => {
         {/* <div className="imgGalleryCont1">{imgGallery}</div> */}
         <ImageGallery curUser={curUser} loggedIn={loggedIn} />
       </div>
+      <div className="reachedTheEndCont">
+        heartIcon You've reached the end! heartIcon
+      </div>
       <div className="joinNowContainer">
         <h1>Want to contribute?</h1>
         <h3>Upload your own stock photos in minutes.</h3>
