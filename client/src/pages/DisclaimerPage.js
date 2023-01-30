@@ -1,4 +1,6 @@
 import React, { useEffect } from "react";
+import WhiteNavBar from "../components/WhiteNavBar";
+import PaperWorkButtons from "../components/PaperWorkButtons";
 
 const DisclaimerPage = () => {
   let disclaimerID = process.env.REACT_APP_TERMLY_DISCLAIMER_ID;
@@ -11,7 +13,11 @@ const DisclaimerPage = () => {
   }, []);
 
   return (
-    <div name="termly-embed" data-id={disclaimerID} data-type="iframe"></div>
+    <div>
+      <WhiteNavBar />
+      <PaperWorkButtons whatPage={"disclaimer"} />
+      <div name="termly-embed" data-id={disclaimerID} data-type="iframe"></div>
+    </div>
   );
 };
 

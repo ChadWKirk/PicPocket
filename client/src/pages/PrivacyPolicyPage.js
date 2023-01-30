@@ -1,4 +1,6 @@
 import React, { useEffect } from "react";
+import WhiteNavBar from "../components/WhiteNavBar";
+import PaperWorkButtons from "../components/PaperWorkButtons";
 
 const PrivacyPolicyPage = () => {
   let privacyID = process.env.REACT_APP_TERMLY_PRIVACY_POLICY_ID;
@@ -10,7 +12,13 @@ const PrivacyPolicyPage = () => {
     document.body.appendChild(script);
   }, []);
 
-  return <div name="termly-embed" data-id={privacyID} data-type="iframe"></div>;
+  return (
+    <div>
+      <WhiteNavBar />
+      <PaperWorkButtons whatPage={"privacy"} />
+      <div name="termly-embed" data-id={privacyID} data-type="iframe"></div>
+    </div>
+  );
 };
 
 export default PrivacyPolicyPage;

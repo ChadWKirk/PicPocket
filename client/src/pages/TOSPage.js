@@ -1,4 +1,6 @@
 import React, { useEffect } from "react";
+import WhiteNavBar from "../components/WhiteNavBar";
+import PaperWorkButtons from "../components/PaperWorkButtons";
 
 const TOSPage = () => {
   let TOSID = process.env.REACT_APP_TERMLY_TOS_ID;
@@ -10,7 +12,13 @@ const TOSPage = () => {
     document.body.appendChild(script);
   }, []);
 
-  return <div name="termly-embed" data-id={TOSID} data-type="iframe"></div>;
+  return (
+    <div>
+      <WhiteNavBar />
+      <PaperWorkButtons whatPage={"tos"} />
+      <div name="termly-embed" data-id={TOSID} data-type="iframe"></div>
+    </div>
+  );
 };
 
 export default TOSPage;
