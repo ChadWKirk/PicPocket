@@ -1734,9 +1734,16 @@ button {
   /* margin-top: 6.5rem; */
 }
 
+@media (width < 900px) {
+  .footerContainer {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+}
+
 .footerContainer h4 {
   color: white;
-  font-size: 1rem;
+  font-size: 1.4375rem;
 }
 
 .footerUnderline {
@@ -1754,7 +1761,7 @@ button {
 }
 
 .footerContainer a {
-  font-size: 0.8rem;
+  font-size: 1.3rem;
   color: rgb(194, 193, 193);
   text-decoration: none;
 }
