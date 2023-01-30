@@ -231,13 +231,13 @@ const MainPageNavBar = ({ curUser, loggedIn }) => {
     accButton = null;
     soButton = null;
     siButton = (
-      <a href="/SignIn" style={{ color: "black" }}>
-        Sign In
+      <a href="/SignIn" className="navbar--logInButton">
+        Log In
       </a>
     );
     suButton = (
       <a href="/SignUp">
-        <button className="navbarButton">Sign Up</button>
+        <button className="navbarClickThisButton">Join</button>
       </a>
     );
   }

@@ -33,6 +33,8 @@ styling:
 
 footer - make about us page - make conditional renders for if logged out or logged in
 
+sign in page - create collage of stock photos to have as img on the right, get facebook and google auth svg's for oauth buttons
+
 fix ImgGallery back end for user page, likes page
 
 put drop down buttons to the right aligned with "Photos By curuser" for likes page and user page

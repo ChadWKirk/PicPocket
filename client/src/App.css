@@ -117,6 +117,18 @@ button {
   font-size: 1rem;
 }
 
+.navbar--logInButton {
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.navbar--logInButton:hover {
+  color: rgb(232, 232, 232);
+}
+
 .search__container {
   flex-grow: 1;
   position: relative;
@@ -2124,4 +2136,104 @@ button {
 .contactFormCont button:hover {
   background-color: rgb(6, 6, 41);
   transition: 0.2s;
+}
+
+.signInPage--contentsContainer {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+
+.signInPage--formContainer {
+  width: 28.125rem;
+  padding: 2.1rem 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.signInPage--formContainer button {
+  font-size: 1rem;
+  width: 100%;
+  height: 50px;
+  border: 2px solid rgb(228, 228, 228);
+  border-radius: 4px;
+  padding: 0rem 0.5rem;
+  margin-top: 1rem;
+  font-weight: 500;
+}
+
+.signInPage--signInBtn {
+  font-size: 1rem;
+  width: 100%;
+  height: 50px;
+  border: none !important;
+  border-radius: 4px;
+  padding: 0rem 0.5rem;
+  margin-bottom: 1rem;
+  font-weight: 500;
+  background-color: #debb0c;
+  color: black;
+}
+
+.signInPage--signInBtn:hover {
+  box-shadow: 0px 0px 5px 1px rgb(214, 187, 136);
+  background-color: #d7b408;
+  transition: 0.1s;
+}
+
+.signInPage--contentsContainer form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.signInPage--inputBlock {
+  margin-top: 1.25rem;
+  width: 100%;
+}
+
+.signInPage--inputBlock label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.signInPage--inputBlock input {
+  font-size: 1rem;
+  width: 100%;
+  height: 45px;
+  border: 2px solid rgb(228, 228, 228);
+  border-radius: 4px;
+  padding: 0rem 0.5rem;
+}
+
+.signInPage--inputBlock input:focus {
+  border: 2px solid black;
+}
+
+.signInPage--rightImgCont {
+  width: calc(100vw - 450px);
+  height: 675px;
+  background-color: darkgreen;
+}
+
+.signInPage--or {
+  width: 100%;
+  margin-top: 1.25rem;
+  font-size: 0.8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.orLine {
+  height: 1px;
+  background-color: rgb(222, 222, 222);
+  width: 100px;
 }

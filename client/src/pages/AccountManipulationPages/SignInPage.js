@@ -66,14 +66,41 @@ const SignInPage = ({ curUser, loggedIn }) => {
 
   return (
     <div>
-      <NavBar curUser={curUser} loggedIn={loggedIn} />
-      <form onSubmit={onSubmit}>
-        <label htmlFor="username">Username: </label>
-        <input id="username" onChange={onChangeName}></input>
-        <label htmlFor="password">Password: </label>
-        <input id="password" onChange={onChangePW}></input>
-        <button type="submit">Sign In</button>
-      </form>
+      {/* <NavBar curUser={curUser} loggedIn={loggedIn} /> */}
+      <div className="signInPage--contentsContainer">
+        <div className="signInPage--formContainer">
+          <div style={{ fontSize: "1rem" }}>PicPocket</div>
+          <div
+            style={{ fontSize: "2rem", color: "#c6ac28", fontWeight: "500" }}
+          >
+            Log in to your account
+          </div>
+          <button>Google</button>
+          <button>Facebook</button>
+          <div className="signInPage--or">
+            <div className="orLine"></div>
+            <div>or</div>
+            <div className="orLine"></div>
+          </div>
+          <form onSubmit={onSubmit}>
+            <div className="signInPage--inputBlock">
+              <label htmlFor="username">Username: </label>
+              <input id="username" onChange={onChangeName}></input>
+            </div>
+            <div className="signInPage--inputBlock">
+              <label htmlFor="password">Password: </label>
+              <input id="password" onChange={onChangePW}></input>
+            </div>
+            <button type="submit" className="signInPage--signInBtn">
+              Sign In
+            </button>
+          </form>
+        </div>
+        <div className="signInPage--rightImgCont">
+          imgimgimgimgimgimgimgimgimgimgimgimgimgimgimg
+          imgimgimgimgimgimgimgimgimgimgimgimgimgimgimgimgimgimg
+        </div>
+      </div>
     </div>
   );
 };
