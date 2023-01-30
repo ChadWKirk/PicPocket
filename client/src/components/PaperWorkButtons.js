@@ -1,4 +1,9 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faChevronLeft,
+  faChevronRight,
+} from "@fortawesome/free-solid-svg-icons";
 
 const PaperWorkButtons = ({ whatPage }) => {
   let disclaimerBtn = (
@@ -38,10 +43,22 @@ const PaperWorkButtons = ({ whatPage }) => {
   }
   return (
     <div>
-      <div className="paperWorkButtons--container">
-        {disclaimerBtn}
+      <div className="paperWorkButtons--container">{disclaimerBtn}
+        <div className="paperWorkButtons-overflowArrowLeft">
+          <FontAwesomeIcon
+            icon={faChevronLeft}
+            className="paperWorkButtons-arrowIcon"
+          />
+        </div>
+        
         {privacyBtn}
         {tosBtn}
+        <div className="paperWorkButtons-overflowArrowRight">
+          <FontAwesomeIcon
+            icon={faChevronRight}
+            className="paperWorkButtons-arrowIcon"
+          />
+        </div>
       </div>
     </div>
   );

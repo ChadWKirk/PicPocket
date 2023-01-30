@@ -980,7 +980,7 @@ button {
   align-items: center;
   font-size: 1.1rem;
   margin: 1.5rem 0px;
-  margin-left: 14px;
+  /* margin-left: 14px; */
 }
 
 @media (width < 420px) {
@@ -990,12 +990,38 @@ button {
   }
 }
 
+.paperWorkButtons-overflowArrowLeft {
+  position: absolute;
+  left: -12px;
+  padding: 1.25rem;
+  width: 60px;
+  background: linear-gradient(
+    270deg,
+    rgba(255, 255, 255, 0) 0,
+    hsla(0, 0%, 100%, 1000)
+  );
+}
+
+.paperWorkButtons-overflowArrowRight {
+  position: absolute;
+  right: -12px;
+  padding: 1.25rem;
+  background: linear-gradient(270deg, #fff 0, hsla(0, 0%, 100%, 0));
+}
+
+.paperWorkButtons-arrowIcon {
+  font-size: 0.85rem;
+  color: rgb(85, 85, 85);
+}
+
 .inactivePWorkBtn {
+  position: relative;
   color: black;
 }
 
 .activePWorkBtn {
-  color: rgb(206, 206, 206);
+  position: relative;
+  color: rgb(206, 206, 206) !important;
   background-color: black;
   padding: 0.5rem;
   border-radius: 5px;
