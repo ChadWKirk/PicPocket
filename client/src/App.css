@@ -2389,9 +2389,7 @@ button {
     padding-bottom: 0.5rem;
     margin-left: 4px !important;
   }
-  .galleryDropDownButton .btn-primary {
-    width: 95.5vw !important;
+  .galleryDropDownButton {
     margin-left: 6px !important;
-    /* margin-right: 15px !important; */
   }
 }

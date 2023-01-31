@@ -203,8 +203,9 @@ const ImageGallery = ({ curUser, loggedIn }) => {
           <h1 className="freeStockPhotosHeading">Photos By {username}</h1>
           <div className="gallerySortBar d-flex">
             <DropdownButton
-              className="galleryDropDownButton"
+              className="galleryDropDownButton d-grid"
               title={`${sortTitle}`}
+              block
             >
               <Dropdown.Item
                 className="galleryDropDownItem"
