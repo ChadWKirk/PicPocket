@@ -2379,15 +2379,14 @@ button {
     flex-direction: column;
     align-items: flex-start;
   }
-  .d-flex {
-    flex-direction: column;
-  }
   .gallerySortBar {
     margin-top: 0;
+    margin-bottom: 1.5rem;
   }
   .freeStockPhotosHeading {
     padding-bottom: 0.5rem;
     margin-left: 4px !important;
+    margin-top: 2.75rem;
   }
   .galleryDropDownButton {
     margin-left: 6px !important;
