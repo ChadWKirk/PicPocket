@@ -978,9 +978,15 @@ button {
   gap: 1.25rem;
   justify-content: center;
   align-items: center;
-  font-size: 1.1rem;
-  margin: 1.5rem 0px;
-  /* margin-left: 14px; */
+  font-size: 1rem;
+  margin: 1.5rem 15px;
+  position: relative;
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+
+.paperWorkButtons--container::-webkit-scrollbar {
+  display: none;
 }
 
 @media (width < 420px) {
@@ -991,37 +997,69 @@ button {
 }
 
 .paperWorkButtons-overflowArrowLeft {
+  z-index: 999999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
-  left: -12px;
-  padding: 1.25rem;
-  width: 60px;
+  top: 89px;
+  left: 0;
+  padding: 0.5rem;
+  height: 70px;
   background: linear-gradient(
-    270deg,
-    rgba(255, 255, 255, 0) 0,
-    hsla(0, 0%, 100%, 1000)
+    90deg,
+    rgb(255, 255, 255) 30%,
+    rgba(0, 212, 255, 0) 100%
   );
+  animation: fadeIn 0.2s;
 }
 
 .paperWorkButtons-overflowArrowRight {
+  z-index: 999999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
-  right: -12px;
-  padding: 1.25rem;
-  background: linear-gradient(270deg, #fff 0, hsla(0, 0%, 100%, 0));
+  top: 89px;
+  right: 0px;
+  padding: 0.5rem;
+  height: 70px;
+  background: linear-gradient(
+    270deg,
+    rgb(255, 255, 255) 30%,
+    rgba(0, 212, 255, 0) 100%
+  );
+  animation: fadeIn 0.2s;
+}
+
+@media (width > 400px) {
+  .paperWorkButtons-overflowArrowLeft {
+    display: none;
+  }
+  .paperWorkButtons-overflowArrowRight {
+    display: none;
+  }
+}
+
+.opacity0 {
+  opacity: 0;
+  transition: 0.1s;
 }
 
 .paperWorkButtons-arrowIcon {
-  font-size: 0.85rem;
+  font-size: 1rem;
   color: rgb(85, 85, 85);
 }
 
 .inactivePWorkBtn {
   position: relative;
   color: black;
+  font-weight: 300;
 }
 
 .activePWorkBtn {
   position: relative;
-  color: rgb(206, 206, 206) !important;
+  color: rgb(236, 236, 236) !important;
   background-color: black;
   padding: 0.5rem;
   border-radius: 5px;
@@ -1994,6 +2032,15 @@ button {
   }
 }
 
+@keyframes fadeOut {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .changePFPInput {
   opacity: 0;
   font-size: 0px;
@@ -2207,6 +2254,16 @@ button {
   height: 100%;
 }
 
+@media (width < 800px) {
+  .signInPage--contentsContainer {
+    flex-direction: column;
+  }
+  .signInPage--formContainer {
+    width: 100% !important;
+    order: 2 !important;
+  }
+}
+
 .signInPage--formContainer {
   width: 28.125rem;
   padding: 2.1rem 3rem;
@@ -2280,7 +2337,7 @@ button {
 }
 
 .signInPage--rightImgCont {
-  width: calc(100vw - 450px);
+  flex: 1;
   height: 675px;
   background-color: darkgreen;
 }

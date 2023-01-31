@@ -96,10 +96,7 @@ const SignInPage = ({ curUser, loggedIn }) => {
             </button>
           </form>
         </div>
-        <div className="signInPage--rightImgCont">
-          imgimgimgimgimgimgimgimgimgimgimgimgimgimgimg
-          imgimgimgimgimgimgimgimgimgimgimgimgimgimgimgimgimgimg
-        </div>
+        <div className="signInPage--rightImgCont">img</div>
       </div>
     </div>
   );

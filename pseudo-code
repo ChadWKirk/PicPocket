@@ -31,8 +31,6 @@ TASKS:
 
 styling:
 
-paper work buttons - refine transparent gradient, make arrows only appear at certain scroll positions, make scroll bar invisible
-
 footer - make about us page - make conditional renders for if logged out or logged in
 
 sign in page - create collage of stock photos to have as img on the right, get facebook and google auth svg's for oauth buttons

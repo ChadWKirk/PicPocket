@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronLeft,
@@ -6,6 +6,27 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const PaperWorkButtons = ({ whatPage }) => {
+  const [leftArrowClass, setLeftArrowClass] = useState(
+    "paperWorkButtons-overflowArrowLeft"
+  );
+  const [rightArrowClass, setRightArrowClass] = useState(
+    "paperWorkButtons-overflowArrowRight"
+  );
+
+  function scrollPos(e) {
+    let maxScroll = e.target.scrollWidth - e.target.clientWidth - 1;
+    console.log(e);
+    if (e.target.scrollLeft == 0) {
+      setLeftArrowClass("paperWorkButtons-overflowArrowLeft opacity0");
+    } else {
+      setLeftArrowClass("paperWorkButtons-overflowArrowLeft");
+    }
+    if (e.target.scrollLeft > maxScroll) {
+      setRightArrowClass("paperWorkButtons-overflowArrowRight opacity0");
+    } else {
+      setRightArrowClass("paperWorkButtons-overflowArrowRight");
+    }
+  }
   let disclaimerBtn = (
     <a href="/Disclaimer">
       <button className="inactivePWorkBtn">Disclaimer</button>
@@ -43,22 +64,26 @@ const PaperWorkButtons = ({ whatPage }) => {
   }
   return (
     <div>
-      <div className="paperWorkButtons--container">{disclaimerBtn}
-        <div className="paperWorkButtons-overflowArrowLeft">
-          <FontAwesomeIcon
-            icon={faChevronLeft}
-            className="paperWorkButtons-arrowIcon"
-          />
-        </div>
-        
+      <div className={leftArrowClass}>
+        <FontAwesomeIcon
+          icon={faChevronLeft}
+          className="paperWorkButtons-arrowIcon"
+        />
+      </div>
+      <div className={rightArrowClass}>
+        <FontAwesomeIcon
+          icon={faChevronRight}
+          className="paperWorkButtons-arrowIcon"
+        />
+      </div>
+      <div
+        className="paperWorkButtons--container"
+        onScroll={(e) => scrollPos(e)}
+      >
+        {disclaimerBtn}
+
         {privacyBtn}
         {tosBtn}
-        <div className="paperWorkButtons-overflowArrowRight">
-          <FontAwesomeIcon
-            icon={faChevronRight}
-            className="paperWorkButtons-arrowIcon"
-          />
-        </div>
       </div>
     </div>
   );
