@@ -1460,7 +1460,7 @@ button {
 
 .gallerySortBar {
   gap: 1.25rem;
-  margin: auto;
+  /* margin: auto; */
   justify-content: center;
   margin-bottom: 2rem;
   margin-top: 2rem;
@@ -2356,4 +2356,25 @@ button {
   height: 1px;
   background-color: rgb(222, 222, 222);
   width: 100px;
+}
+
+.photosByContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 100%;
+  margin: auto;
+  margin-right: 18px;
+}
+
+@media (width < 900px) {
+  .photosByContainer {
+    margin-right: 9px;
+  }
+}
+
+@media (width < 710px) {
+  .photosByContainer {
+    flex-direction: column;
+  }
 }

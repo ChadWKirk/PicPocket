@@ -577,7 +577,17 @@ app.get("/:username/:sort/:filter", (req, res) => {
   if (sort == "most-recent" && filter == "all-types") {
     db_connect
       .collection("picpocket-images")
-      .find({ uploadedBy: user })
+      .aggregate([
+        //use $lookup to pull user info tied to image for profile pic on overlay
+        {
+          $lookup: {
+            from: "picpocket-users",
+            localField: "uploadedBy",
+            foreignField: "username",
+            as: "test",
+          },
+        },
+      ])
       .sort({ created_at: -1 })
       // .limit(12)
       .toArray(function (err, result) {

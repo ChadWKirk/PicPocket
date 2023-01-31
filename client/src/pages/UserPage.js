@@ -239,102 +239,10 @@ const UserPage = ({ curUser, loggedIn }) => {
             <img src={pfp} className="profilePicBig" />
             <h2>{username}</h2>
             <p>{bio} okokoko bio</p>
-            {/* <p>Images by {username}</p> */}
           </div>
         </div>
-        <div className="gallerySortBar d-flex">
-          <DropdownButton
-            className="galleryDropDownButton"
-            title={`${sortTitle}`}
-          >
-            <Dropdown.Item
-              className="galleryDropDownItem"
-              onClick={() => {
-                setSort("most-recent");
-                setSortTitle("Most Recent");
-              }}
-            >
-              Most Recent
-            </Dropdown.Item>
-            <Dropdown.Item
-              className="galleryDropDownItem"
-              onClick={() => {
-                setSort("oldest");
-                setSortTitle("Oldest");
-              }}
-            >
-              Oldest
-            </Dropdown.Item>
-            <Dropdown.Item
-              className="galleryDropDownItem"
-              onClick={() => {
-                setSort("aToz");
-                setSortTitle("A - Z");
-              }}
-            >
-              A - Z
-            </Dropdown.Item>
-            <Dropdown.Item
-              className="galleryDropDownItem"
-              onClick={() => {
-                setSort("zToa");
-                setSortTitle("Z - A");
-              }}
-            >
-              Z - A
-            </Dropdown.Item>
-            <Dropdown.Item
-              className="galleryDropDownItem"
-              onClick={() => {
-                setSort("leastLikes");
-                setSortTitle("Least Popular");
-              }}
-            >
-              Least Popular
-            </Dropdown.Item>
-            <Dropdown.Item
-              className="galleryDropDownItem"
-              onClick={() => {
-                setSort("mostLikes");
-                setSortTitle("Popular");
-              }}
-            >
-              Popular
-            </Dropdown.Item>
-          </DropdownButton>
-          <DropdownButton
-            className="galleryDropDownButton"
-            title={`${filterTitle}`}
-          >
-            <Dropdown.Item
-              className="galleryDropDownItem"
-              onClick={() => {
-                setFilter("all-types");
-                setFilterTitle("All Types");
-              }}
-            >
-              All types
-            </Dropdown.Item>
-            <Dropdown.Item
-              className="galleryDropDownItem"
-              onClick={() => {
-                setFilter("Photo");
-                setFilterTitle("Photo");
-              }}
-            >
-              Photo
-            </Dropdown.Item>
-            <Dropdown.Item
-              className="galleryDropDownItem"
-              onClick={() => {
-                setFilter("Illustration");
-                setFilterTitle("Illustration");
-              }}
-            >
-              Illustration
-            </Dropdown.Item>
-          </DropdownButton>
-        </div>
+        
+
         <div className="imgGallerySectionCont1">
           <ImageGallery curUser={curUser} loggedIn={loggedIn} />
         </div>
