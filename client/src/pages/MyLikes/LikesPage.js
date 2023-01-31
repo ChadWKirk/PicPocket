@@ -57,18 +57,7 @@ const LikesPage = ({ curUser, loggedIn }) => {
       console.log(likesArr);
       // //make everything lower case to allow case insensitive searching
       for (var i = 0; i < likesArr.length; i++) {
-        // if (
-        //   likesArr[i].tags
-        //     .toString()
-        //     .toLowerCase()
-        //     .includes(searchQuery.toLowerCase()) ||
-        //   likesArr[i].public_id
-        //     .toString()
-        //     .toLowerCase()
-        //     .includes(searchQuery.toLowerCase())
-        // ) {
         resultsArr.push(likesArr[i]);
-        // }
       }
       var count = -1;
       //use split to get an array split by the /

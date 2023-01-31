@@ -40,25 +40,6 @@ const ImageGallery = ({ curUser, loggedIn }) => {
     </div>
   );
 
-  const [userInfo, setUserInfo] = useState();
-
-  useEffect(() => {
-    async function userInfoFetch() {
-      await fetch(`http://localhost:5000/${username}/info`, {
-        method: "GET",
-        headers: { "Content-type": "application/json" },
-      }).then((response) =>
-        response
-          .json()
-          .then((resJSON) => JSON.stringify(resJSON))
-          .then((stringJSON) => JSON.parse(stringJSON))
-          .then((parsedJSON) => setUserInfo(parsedJSON[0]))
-      );
-    }
-
-    userInfoFetch();
-  }, []);
-
   useEffect(() => {
     async function searchFetch() {
       await fetch(`http://localhost:5000/${username}/${sort}/${filter}`, {
@@ -72,20 +53,8 @@ const ImageGallery = ({ curUser, loggedIn }) => {
           .then((parsedJSON) => (likesArr = parsedJSON))
       );
       console.log(likesArr);
-      // //make everything lower case to allow case insensitive searching
       for (var i = 0; i < likesArr.length; i++) {
-        // if (
-        //   likesArr[i].tags
-        //     .toString()
-        //     .toLowerCase()
-        //     .includes(searchQuery.toLowerCase()) ||
-        //   likesArr[i].public_id
-        //     .toString()
-        //     .toLowerCase()
-        //     .includes(searchQuery.toLowerCase())
-        // ) {
         resultsArr.push(likesArr[i]);
-        // }
       }
       var count = -1;
       //use split to get an array split by the /
@@ -223,20 +192,7 @@ const ImageGallery = ({ curUser, loggedIn }) => {
     }
     setIsLiked(!isLiked);
   }
-  let resultsMapLength;
-  if (resultsMap) {
-    resultsMapLength = resultsMap.length;
-  }
-  let pfp;
-  let bio;
-  if (userInfo) {
-    pfp =
-      userInfo.pfp.slice(0, 50) +
-      "q_60/c_scale,w_200/dpr_auto/" +
-      userInfo.pfp.slice(50, userInfo.pfp.lastIndexOf(".")) +
-      ".jpg";
-    bio = userInfo.bio;
-  }
+
   return (
     <div>
       <ResponsiveMasonry
