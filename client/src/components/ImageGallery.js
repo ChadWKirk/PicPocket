@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from "react";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,13 +8,13 @@ import { faHeart, faDownload } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 
 const ImageGallery = ({ curUser, loggedIn }) => {
-  let navigate = useNavigate();
   const { username } = useParams();
 
-  var likesArr = [];
-  var resultsArr = [];
+  //img array to display
   const [resultsMap, setResultsMap] = useState();
-  //isLiked just to re render array
+  //fetch img array to map over
+  let likesArr = [];
+  //isLiked to re render array
   const [isLiked, setIsLiked] = useState(false);
 
   //sort and filter values to do get requests
@@ -53,15 +53,15 @@ const ImageGallery = ({ curUser, loggedIn }) => {
           .then((parsedJSON) => (likesArr = parsedJSON))
       );
       console.log(likesArr);
-      for (var i = 0; i < likesArr.length; i++) {
-        resultsArr.push(likesArr[i]);
-      }
+      // for (var i = 0; i < likesArr.length; i++) {
+      //   resultsArr.push(likesArr[i]);
+      // }
       var count = -1;
       //use split to get an array split by the /
       //only output the public_id after the last /. last count of array meaning length-1
       //replace all spaces with dashes
       setResultsMap(
-        resultsArr.map((element, index, count) => {
+        likesArr.map((element, index, count) => {
           let parts = element.public_id.split("/");
           let result = parts[parts.length - 1];
           var likeButton;
