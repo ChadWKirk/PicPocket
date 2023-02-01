@@ -15,7 +15,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import HamburgerList from "./HamburgerList";
 
-const MainPageNavBar = ({ curUser, loggedIn }) => {
+const MainPageNavBar = ({ curUser, loggedIn, navDisplayClass }) => {
   //go to /search/whateverYouSearchFor when hitting enter or clicking search button
   var navigate = useNavigate();
   let inputValue;
@@ -250,7 +250,7 @@ const MainPageNavBar = ({ curUser, loggedIn }) => {
   }
 
   return (
-    <div className={`navbarContainer ${blackBG}`}>
+    <div className={`navbarContainer ${navDisplayClass} ${blackBG}`}>
       <div className={`${navbarContentsClass}`}>
         <div>
           <a href="/" className="logo">

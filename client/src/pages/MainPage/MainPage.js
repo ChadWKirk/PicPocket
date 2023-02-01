@@ -11,20 +11,20 @@ import WhiteNavBar from "../../components/WhiteNavBar";
 
 const MainPage = ({ curUser, loggedIn }) => {
   //sticky nav bar
-  const [navPosition, setNavPosition] = useState("gone");
+  const [navDisplayClass, setNavDisplayClass] = useState();
 
   useEffect(() => {
-    window.addEventListener("scroll", setNavToFixed);
+    window.addEventListener("scroll", setNavDisplayFunction);
 
     return () => {
-      window.removeEventListener("scroll", setNavToFixed);
+      window.removeEventListener("scroll", setNavDisplayFunction);
     };
   }, []);
 
-  function setNavToFixed() {
+  function setNavDisplayFunction() {
     if (window !== undefined) {
       let windowHeight = window.scrollY;
-      windowHeight > 425 ? setNavPosition("fixed") : setNavPosition("gone");
+      windowHeight > 425 ? setNavDisplayClass("fixed") : setNavDisplayClass();
     }
   }
 
@@ -191,8 +191,12 @@ const MainPage = ({ curUser, loggedIn }) => {
   return (
     <div>
       <div className="mainPage__heroPicture">
-        <MainPageNavBar curUser={curUser} loggedIn={loggedIn} />
-        {/* <div className={`${navPosition}`}>
+        <MainPageNavBar
+          curUser={curUser}
+          loggedIn={loggedIn}
+          navDisplayClass={navDisplayClass}
+        />
+        {/* <div className={`${navDisplayClass}`}>
           <WhiteNavBar curUser={curUser} loggedIn={loggedIn} />
         </div> */}
         <MainPageHeroImage />

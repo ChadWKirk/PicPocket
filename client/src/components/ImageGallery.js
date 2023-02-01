@@ -175,7 +175,7 @@ const ImageGallery = ({
     <div>
       <ResponsiveMasonry
         columnsCountBreakPoints={{ 900: 2, 901: 3 }}
-        className="imgGalleryCont1"
+        // className="imgGalleryCont1"
       >
         <Masonry>{imgGallery}</Masonry>
       </ResponsiveMasonry>
