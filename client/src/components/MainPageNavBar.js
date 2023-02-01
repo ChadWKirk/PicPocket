@@ -15,7 +15,33 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import HamburgerList from "./HamburgerList";
 
-const MainPageNavBar = ({ curUser, loggedIn, navDisplayClass }) => {
+const MainPageNavBar = ({
+  curUser,
+  loggedIn,
+  navPositionClass,
+  navColorClass,
+}) => {
+  //color class
+  let navBackgroundColor;
+  let logoColor;
+  let navTextColor1;
+  let navTextColor2;
+  if (navColorClass == "transparent") {
+    navBackgroundColor = "navBGColor--transparentBG";
+    logoColor = "navLogoColor--transparentBG";
+    navTextColor1 = "navTextColor1--transparentBG";
+    navTextColor2 = "navTextColor2--transparentBG";
+  } else if (navColorClass == "white") {
+    navBackgroundColor = "navBGColor--whiteBG";
+    logoColor = "navLogoColor--whiteBG";
+    navTextColor1 = "navTextColor1--whiteBG";
+    navTextColor2 = "navTextColor2--whiteBG";
+  } else if (navColorClass == "black") {
+    navBackgroundColor = "black";
+    logoColor = "navBGColor--blackBG";
+    navTextColor1 = "navTextColor1--blackBG";
+    navTextColor2 = "navTextColor2--blackBG";
+  }
   //go to /search/whateverYouSearchFor when hitting enter or clicking search button
   var navigate = useNavigate();
   let inputValue;
@@ -35,6 +61,7 @@ const MainPageNavBar = ({ curUser, loggedIn, navDisplayClass }) => {
   let hamIconOrX;
   //media queries for hamburger. if hamOpen - remove pfp button if width < 730px
   let accButtonClass;
+  let logoColorClass;
   let uploadButtonClass;
   let blackBG;
   let searchbarClass;
@@ -48,6 +75,7 @@ const MainPageNavBar = ({ curUser, loggedIn, navDisplayClass }) => {
   if (hamIconOpen) {
     hamIconOrX = <FontAwesomeIcon icon={faXmark} className="hamburgerXIcon" />;
     blackBG = "blackBG";
+    logoColorClass = "logo navLogoColor--transparentBG";
     accButtonClass = "navbarDropCont--hamopen";
     uploadButtonClass = "navbarClickThisButton--hamopen";
     searchbarClass = "carousel__search-container--hamopen";
@@ -58,7 +86,13 @@ const MainPageNavBar = ({ curUser, loggedIn, navDisplayClass }) => {
     hamburgerListClass = "hamburgerListClass";
     document.body.classList.add("overflowYHidden");
   } else if (!hamIconOpen) {
-    hamIconOrX = <FontAwesomeIcon icon={faBars} className="hamburgerIcon" />;
+    hamIconOrX = (
+      <FontAwesomeIcon
+        icon={faBars}
+        className={`hamburgerIcon ${navTextColor1}`}
+      />
+    );
+    logoColorClass = `logo ${logoColor}`;
     accButtonClass = "navbarDropCont";
     uploadButtonClass = "navbarClickThisButton";
     searchbarClass = "carousel__search-container--hamclose";
@@ -218,12 +252,14 @@ const MainPageNavBar = ({ curUser, loggedIn, navDisplayClass }) => {
     siButton = null;
     suButton = null;
     hamburgerButton = (
-      <div className={`${hamburgerIconClass}`}>
+      <div className={`${hamburgerIconClass} ${navTextColor1}`}>
         <button
           className="navbarDropButton"
           onClick={() => setHamIconOpen(!hamIconOpen)}
         >
-          <div className="transparentNavBar__hamburger-div">{hamIconOrX}</div>
+          <div className={`${navTextColor1} transparentNavBar__hamburger-div`}>
+            {hamIconOrX}
+          </div>
         </button>
       </div>
     );
@@ -250,11 +286,13 @@ const MainPageNavBar = ({ curUser, loggedIn, navDisplayClass }) => {
   }
 
   return (
-    <div className={`navbarContainer ${navDisplayClass} ${blackBG}`}>
+    <div
+      className={`navbarContainer ${navPositionClass} ${navBackgroundColor} ${blackBG}`}
+    >
       <div className={`${navbarContentsClass}`}>
         <div>
-          <a href="/" className="logo">
-            <h1 className="logo__color-white">PicPocket</h1>
+          <a href="/" className={logoColorClass}>
+            PicPocket
           </a>
         </div>
         <form className={`${searchbarClass}`} onSubmit={onSubmit}>
