@@ -8,9 +8,13 @@ import WhiteNavBar from "../../components/WhiteNavBar";
 import { useParams } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
+import ImageGallery from "../../components/ImageGallery";
 
 const SearchResultsPage = ({ curUser, loggedIn }) => {
   let navigate = useNavigate();
+
+  //to get number of images in array for "x pics liked by user" or "x search results" heading
+  const [imgGalleryLength, setImgGalleryLength] = useState();
 
   //sticky nav bar
   const [navPosition, setNavPosition] = useState("gone");
@@ -210,7 +214,7 @@ const SearchResultsPage = ({ curUser, loggedIn }) => {
       </div>
       <div className="imgGallerySectionCont1">
         <h1>
-          {searchQuery} Images {searchArr.length} results
+          {searchQuery} Images {imgGalleryLength} results
         </h1>
         <div className="myPicsGallerySortBar-leftContainer">
           <DropdownButton
@@ -305,8 +309,17 @@ const SearchResultsPage = ({ curUser, loggedIn }) => {
             </Dropdown.Item>
           </DropdownButton>
         </div>
+        <ImageGallery
+          curUser={curUser}
+          loggedIn={loggedIn}
+          sort={sort}
+          filter={filter}
+          imgGalleryLength={imgGalleryLength}
+          setImgGalleryLength={setImgGalleryLength}
+          type={"search"}
+        />
 
-        <div className="imgGalleryCont1">{resultsMap}</div>
+        {/* <div className="imgGalleryCont1">{resultsMap}</div> */}
         <a href="/signup">
           <button
             style={{

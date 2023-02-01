@@ -12,7 +12,7 @@ const MainPageImageGallery = ({ curUser, loggedIn }) => {
   //isLiked just to re render array
   const [isLiked, setIsLiked] = useState(false);
 
-  var mapArr;
+  let mapArr;
 
   const [userInfo, setUserInfo] = useState();
   const [userPFP, setPFP] = useState([]);
@@ -44,7 +44,7 @@ const MainPageImageGallery = ({ curUser, loggedIn }) => {
   //map over img array
   useEffect(() => {
     mapArr = fetchArr.map((element, index) => {
-      var likeButton;
+      let likeButton;
       console.log(fetchArr[index].uploadedBy);
       if (element.likedBy.includes(curUser)) {
         likeButton = (
@@ -129,7 +129,7 @@ const MainPageImageGallery = ({ curUser, loggedIn }) => {
   }, [fetchArr, userPFP, isLiked]);
 
   async function handleLike(e, element, index) {
-    var fetchArrCopy = fetchArr;
+    let fetchArrCopy = fetchArr;
 
     if (fetchArrCopy[index].likedBy.includes(curUser)) {
       await fetch(

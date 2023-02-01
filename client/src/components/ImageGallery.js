@@ -1,48 +1,46 @@
 import { React, useEffect, useState } from "react";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import { useParams } from "react-router-dom";
-import Dropdown from "react-bootstrap/Dropdown";
-import DropdownButton from "react-bootstrap/DropdownButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faDownload } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 
-const ImageGallery = ({ curUser, loggedIn }) => {
+const ImageGallery = ({
+  curUser,
+  loggedIn,
+  sort,
+  filter,
+  type,
+  imgGalleryLength,
+  setImgGalleryLength,
+}) => {
+  //username for user page (not current logged in user's username)
   const { username } = useParams();
+  //the thing you searched to use for fetch request (if being used for search results page)
+  const { searchQuery } = useParams();
 
   //img array to display
-  const [resultsMap, setResultsMap] = useState();
+  const [imgGallery, setImgGallery] = useState([]);
   //fetch img array to map over
-  let likesArr = [];
-  //isLiked to re render array
+  const [imgData, setImgData] = useState([]);
+  //isLiked to re render array upon liking or unliking a pic
   const [isLiked, setIsLiked] = useState(false);
 
-  //sort and filter values to do get requests
-  const [sort, setSort] = useState("most-recent");
-  const [filter, setFilter] = useState("all-types");
-  //sort and filter values to change the titles of the dropdown menus
-  const [sortTitle, setSortTitle] = useState("Most Recent");
-  const [filterTitle, setFilterTitle] = useState("All Types");
+  let imgDataMapOutcome;
 
-  //modal for "are you sure you want to remove this pic from your likes?"
-  let modalResult;
-  let appear = "gone";
-  let modalClasses = `likesModalCont ${appear}`;
-  let modal = (
-    <div className={modalClasses}>
-      <div className="likesModalDiv">
-        <p>Are you sure you would like to remove this pic from your likes?</p>
-        <div className="likesModalButtonCont">
-          <button onClick={(modalResult = true)}>Yes</button>
-          <button onClick={(modalResult = false)}>No</button>
-        </div>
-      </div>
-    </div>
-  );
-
+  //fetch image data
   useEffect(() => {
-    async function searchFetch() {
-      await fetch(`http://localhost:5000/${username}/${sort}/${filter}`, {
+    //depending on what the type prop is set to, use one of these routes to fetch img data
+    let fetchRoute;
+    if (type == "userPage") {
+      fetchRoute = `http://localhost:5000/${username}/${sort}/${filter}`;
+    } else if (type == "likes") {
+      fetchRoute = `http://localhost:5000/${curUser}/likes/${sort}/${filter}`;
+    } else if (type == "search") {
+      fetchRoute = `http://localhost:5000/search/${searchQuery}/${sort}/${filter}`;
+    }
+    async function fetchImgData() {
+      await fetch(fetchRoute, {
         method: "GET",
         headers: { "Content-type": "application/json" },
       }).then((response) =>
@@ -50,118 +48,100 @@ const ImageGallery = ({ curUser, loggedIn }) => {
           .json()
           .then((resJSON) => JSON.stringify(resJSON))
           .then((stringJSON) => JSON.parse(stringJSON))
-          .then((parsedJSON) => (likesArr = parsedJSON))
-      );
-      console.log(likesArr);
-      // for (var i = 0; i < likesArr.length; i++) {
-      //   resultsArr.push(likesArr[i]);
-      // }
-      var count = -1;
-      //use split to get an array split by the /
-      //only output the public_id after the last /. last count of array meaning length-1
-      //replace all spaces with dashes
-      setResultsMap(
-        likesArr.map((element, index, count) => {
-          let parts = element.public_id.split("/");
-          let result = parts[parts.length - 1];
-          var likeButton;
-          count = count + 1;
-          console.log(index);
-
-          if (element.likedBy.includes(curUser)) {
-            likeButton = (
-              <div>
-                <FontAwesomeIcon
-                  icon={faHeart}
-                  className="likeButtonHeart1 likeButtonLikedFill1"
-                ></FontAwesomeIcon>
-              </div>
-            );
-          } else {
-            likeButton = (
-              <div>
-                <FontAwesomeIcon
-                  icon={farHeart}
-                  className="likeButtonHeart1"
-                ></FontAwesomeIcon>
-              </div>
-            );
-          }
-          return (
-            <div key={index} className="imgGalleryImgCont1">
-              <a
-                href={
-                  element.secure_url.slice(0, 50) +
-                  "q_60/c_scale,w_1600/dpr_auto/" +
-                  element.secure_url.slice(
-                    50,
-                    element.secure_url.lastIndexOf(".")
-                  ) +
-                  ".jpg"
-                }
-              >
-                <img
-                  src={
-                    element.secure_url.slice(0, 50) +
-                    "q_60/c_scale,w_1600/dpr_auto/" +
-                    element.secure_url.slice(
-                      50,
-                      element.secure_url.lastIndexOf(".")
-                    ) +
-                    ".jpg"
-                  }
-                  className="imgGalleryImg1"
-                ></img>
-              </a>
-
-              <div className="imgGalleryImgOverlay1">
-                <a
-                  className="likeButtonContainer1"
-                  onClick={(e) => handleLike(e, element, index)}
-                >
-                  {likeButton}
-                </a>
-                <a
-                  className="downloadButtonCont1"
-                  href={
-                    element.secure_url.slice(0, 50) +
-                    "q_100/fl_attachment/" +
-                    element.secure_url.slice(
-                      50,
-                      element.secure_url.lastIndexOf(".")
-                    )
-                  }
-                >
-                  <FontAwesomeIcon
-                    icon={faDownload}
-                    className="downloadButton1"
-                  ></FontAwesomeIcon>
-                </a>
-                <div>
-                  <a
-                    className="imgAuthor1"
-                    href={`http://localhost:3000/User/${element.uploadedBy}`}
-                  >
-                    <img
-                      src={element.test[0].pfp}
-                      className="profilePicAuthor"
-                    />
-                    {element.uploadedBy}
-                  </a>
-                </div>
-              </div>
-            </div>
-          );
-        })
+          .then((parsedJSON) => setImgData(parsedJSON))
       );
     }
-    searchFetch();
-  }, [sort, filter, isLiked]);
+    fetchImgData();
+  }, []);
+
+  //map over image data to create img items for img gallery
+  useEffect(() => {
+    imgDataMapOutcome = imgData.map((element, index) => {
+      let likeButton;
+
+      if (element.likedBy.includes(curUser)) {
+        likeButton = (
+          <div>
+            <FontAwesomeIcon
+              icon={faHeart}
+              className="likeButtonHeart1 likeButtonLikedFill1"
+            ></FontAwesomeIcon>
+          </div>
+        );
+      } else {
+        likeButton = (
+          <div>
+            <FontAwesomeIcon
+              icon={farHeart}
+              className="likeButtonHeart1"
+            ></FontAwesomeIcon>
+          </div>
+        );
+      }
+      return (
+        //each of these is one image item in the image gallery. Includes overlay with like, download and pfp buttons
+        <div key={index} className="imgGalleryImgCont1">
+          <a href={`http://localhost:3000/image/${element.title}`}>
+            <img
+              src={
+                element.secure_url.slice(0, 50) +
+                "q_60/c_scale,w_1600/dpr_auto/" +
+                element.secure_url.slice(
+                  50,
+                  element.secure_url.lastIndexOf(".")
+                ) +
+                ".jpg"
+              }
+              className="imgGalleryImg1"
+            ></img>
+          </a>
+
+          <div className="imgGalleryImgOverlay1">
+            <a
+              className="likeButtonContainer1"
+              onClick={(e) => handleLike(e, element, index)}
+            >
+              {likeButton}
+            </a>
+            <a
+              className="downloadButtonCont1"
+              href={
+                element.secure_url.slice(0, 50) +
+                "q_100/fl_attachment/" +
+                element.secure_url.slice(
+                  50,
+                  element.secure_url.lastIndexOf(".")
+                )
+              }
+            >
+              <FontAwesomeIcon
+                icon={faDownload}
+                className="downloadButton1"
+              ></FontAwesomeIcon>
+            </a>
+            <div>
+              <a
+                className="imgAuthor1"
+                href={`http://localhost:3000/User/${element.uploadedBy}`}
+              >
+                <img src={element.test[0].pfp} className="profilePicAuthor" />
+                {element.uploadedBy}
+              </a>
+            </div>
+          </div>
+        </div>
+      );
+    });
+    setImgGallery(imgDataMapOutcome);
+  }, [sort, filter, isLiked, imgData]);
+
+  //set this to get the amount of results to use in headings like "x search results" or "x images liked by user". It's being sent up to whatever parent page is using this component.
+  setImgGalleryLength(imgGallery.length);
 
   async function handleLike(e, element, index) {
-    var likesArrCopy = likesArr;
+    let imgDataCopy = imgData;
 
-    if (likesArrCopy[index].likedBy.includes(curUser)) {
+    if (imgDataCopy[index].likedBy.includes(curUser)) {
       await fetch(
         `http://localhost:5000/removeLikedBy/${element.asset_id}/${curUser}`,
         {
@@ -169,15 +149,14 @@ const ImageGallery = ({ curUser, loggedIn }) => {
           headers: { "Content-type": "application/json" },
         }
       ).then((res) => {
-        likesArrCopy[index].likedBy = likesArrCopy[index].likedBy.filter(
+        imgDataCopy[index].likedBy = imgDataCopy[index].likedBy.filter(
           (user) => {
             return user !== curUser;
           }
         );
-        likesArr = likesArrCopy;
-        console.log("run 3");
+        setImgData(imgDataCopy);
       });
-    } else if (!likesArrCopy[index].likedBy.includes(curUser)) {
+    } else if (!imgDataCopy[index].likedBy.includes(curUser)) {
       await fetch(
         `http://localhost:5000/addLikedBy/${element.asset_id}/${curUser}`,
         {
@@ -185,9 +164,8 @@ const ImageGallery = ({ curUser, loggedIn }) => {
           headers: { "Content-type": "application/json" },
         }
       ).then((res) => {
-        likesArrCopy[index].likedBy.push(curUser);
-        likesArr = likesArrCopy;
-        console.log("run 4");
+        imgDataCopy[index].likedBy.push(curUser);
+        setImgData(imgDataCopy);
       });
     }
     setIsLiked(!isLiked);
@@ -199,103 +177,7 @@ const ImageGallery = ({ curUser, loggedIn }) => {
         columnsCountBreakPoints={{ 900: 2, 901: 3 }}
         className="imgGalleryCont1"
       >
-        <div className="photosByContainer">
-          <h1 className="freeStockPhotosHeading">Photos By {username}</h1>
-          <div className="gallerySortBar d-flex">
-            <DropdownButton
-              className="galleryDropDownButton"
-              title={`${sortTitle}`}
-            >
-              <Dropdown.Item
-                className="galleryDropDownItem"
-                onClick={() => {
-                  setSort("most-recent");
-                  setSortTitle("Most Recent");
-                }}
-              >
-                Most Recent
-              </Dropdown.Item>
-              <Dropdown.Item
-                className="galleryDropDownItem"
-                onClick={() => {
-                  setSort("oldest");
-                  setSortTitle("Oldest");
-                }}
-              >
-                Oldest
-              </Dropdown.Item>
-              <Dropdown.Item
-                className="galleryDropDownItem"
-                onClick={() => {
-                  setSort("aToz");
-                  setSortTitle("A - Z");
-                }}
-              >
-                A - Z
-              </Dropdown.Item>
-              <Dropdown.Item
-                className="galleryDropDownItem"
-                onClick={() => {
-                  setSort("zToa");
-                  setSortTitle("Z - A");
-                }}
-              >
-                Z - A
-              </Dropdown.Item>
-              <Dropdown.Item
-                className="galleryDropDownItem"
-                onClick={() => {
-                  setSort("leastLikes");
-                  setSortTitle("Least Popular");
-                }}
-              >
-                Least Popular
-              </Dropdown.Item>
-              <Dropdown.Item
-                className="galleryDropDownItem"
-                onClick={() => {
-                  setSort("mostLikes");
-                  setSortTitle("Popular");
-                }}
-              >
-                Popular
-              </Dropdown.Item>
-            </DropdownButton>
-            <DropdownButton
-              className="galleryDropDownButton"
-              title={`${filterTitle}`}
-            >
-              <Dropdown.Item
-                className="galleryDropDownItem"
-                onClick={() => {
-                  setFilter("all-types");
-                  setFilterTitle("All Types");
-                }}
-              >
-                All types
-              </Dropdown.Item>
-              <Dropdown.Item
-                className="galleryDropDownItem"
-                onClick={() => {
-                  setFilter("Photo");
-                  setFilterTitle("Photo");
-                }}
-              >
-                Photo
-              </Dropdown.Item>
-              <Dropdown.Item
-                className="galleryDropDownItem"
-                onClick={() => {
-                  setFilter("Illustration");
-                  setFilterTitle("Illustration");
-                }}
-              >
-                Illustration
-              </Dropdown.Item>
-            </DropdownButton>
-          </div>
-        </div>
-        <Masonry>{resultsMap}</Masonry>
+        <Masonry>{imgGallery}</Masonry>
       </ResponsiveMasonry>
     </div>
   );

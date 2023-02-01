@@ -578,6 +578,8 @@ app.get("/:username/:sort/:filter", (req, res) => {
     db_connect
       .collection("picpocket-images")
       .aggregate([
+        //use match to find only uploadedBy
+        { $match: { uploadedBy: req.params.username } },
         //use $lookup to pull user info tied to image for profile pic on overlay
         {
           $lookup: {
@@ -779,6 +781,14 @@ app.get("/search/:searchQuery/:sort/:filter", (req, res) => {
               query: req.params.searchQuery,
               path: ["title", "tags"],
             },
+          },
+        },
+        {
+          $lookup: {
+            from: "picpocket-users",
+            localField: "uploadedBy",
+            foreignField: "username",
+            as: "test",
           },
         },
       ])
@@ -1130,7 +1140,20 @@ app.get("/:username/likes/:sort/:filter", (req, res) => {
   if (sort == "most-recent" && filter == "all-types") {
     db_connect
       .collection("picpocket-images")
-      .find({ likedBy: req.params.username })
+      .aggregate([
+        //use match to find only uploadedBy
+        { $match: { likedBy: req.params.username } },
+        //use $lookup to pull user info tied to image for profile pic on overlay
+        {
+          $lookup: {
+            from: "picpocket-users",
+            localField: "uploadedBy",
+            foreignField: "username",
+            as: "test",
+          },
+        },
+      ])
+
       .sort({ created_at: -1 })
       // .limit(12)
       .toArray(function (err, result) {
