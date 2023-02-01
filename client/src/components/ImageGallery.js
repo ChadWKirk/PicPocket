@@ -35,7 +35,7 @@ const ImageGallery = ({
     if (type == "userPage") {
       fetchRoute = `http://localhost:5000/${username}/${sort}/${filter}`;
     } else if (type == "likes") {
-      fetchRoute = `http://localhost:5000/${curUser}/likes/${sort}/${filter}`;
+      fetchRoute = `http://localhost:5000/${username}/likes/${sort}/${filter}`;
     } else if (type == "search") {
       fetchRoute = `http://localhost:5000/search/${searchQuery}/${sort}/${filter}`;
     }

@@ -61,7 +61,7 @@ const UserPage = ({ curUser, loggedIn }) => {
           </div>
         </div>
 
-        <div className="imgGallerySectionCont1">
+        <div className="imgGalleryCont1">
           <div className="photosByContainer">
             <h1 className="freeStockPhotosHeading">Photos By {username}</h1>
             <div className="gallerySortBar d-flex">

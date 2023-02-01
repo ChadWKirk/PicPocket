@@ -100,7 +100,7 @@ function App() {
             element={<MyPicsPage curUser={curUser} loggedIn={loggedIn} />}
           ></Route>
           <Route
-            path={`/Account/${curUser}/Likes/:sort/:filter`}
+            path={`/Account/:username/Likes/:sort/:filter`}
             element={<LikesPage curUser={curUser} loggedIn={loggedIn} />}
           ></Route>
           <Route

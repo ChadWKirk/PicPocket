@@ -888,6 +888,53 @@ button {
   padding: 1.65rem 0px 1.3rem 0px;
   margin-left: 15px;
   font-size: 1.7rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.freeStockPhotosHeading a {
+  font-size: 1.15rem;
+  text-decoration: none;
+  color: rgb(68, 68, 68);
+}
+
+.freeStockPhotosHeading a:hover {
+  color: black;
+  transition: 0.2s;
+}
+
+.hoverThisForPFPOverlay {
+  position: relative;
+}
+
+.freeStockPhotosHeadingImg::after {
+  opacity: 0;
+  display: block;
+  content: "";
+  position: absolute;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  top: -4px;
+  left: -4px;
+  background-color: rgb(0, 0, 0);
+  transition: 0.125s linear;
+}
+
+.hoverThisForPFPOverlay:hover .freeStockPhotosHeadingImg::after {
+  opacity: 0.25 !important;
+  transition: 0.3s;
+}
+
+.likesPageHeadingUsernameLink {
+  border-bottom: 2px dotted rgba(0, 0, 0, 0.3);
+  transition: 0.2s;
+}
+
+.likesPageHeadingUsernameLink:hover {
+  border-bottom: 2px dotted black;
+  transition: 0.4s !important;
 }
 
 .imgGalleryImgCont1 {
