@@ -44,17 +44,14 @@ const MainPageNavBar = ({
     navigate(`/search/${inputValue}/most-recent/all-types`);
   }
   //navbuttons
-  let soButton;
   let accButton;
   let hamburgerButton;
   let hamIconOrX;
   //media queries for hamburger. if hamOpen - remove pfp button if width < 730px
-  let blackBG;
   const [hamIconOpen, setHamIconOpen] = useState(false);
   //if ham open or close
   if (hamIconOpen) {
     hamIconOrX = <FontAwesomeIcon icon={faXmark} className="hamburgerXIcon" />;
-    blackBG = "blackBG";
     document.body.classList.add("overflowYHidden");
   } else if (!hamIconOpen) {
     hamIconOrX = <FontAwesomeIcon icon={faBars} className="hamburgerIcon" />;
@@ -68,16 +65,6 @@ const MainPageNavBar = ({
   let smallUploadButton;
   let timer;
   let leaveTimer;
-
-  const [isVisibleClass, setIsVisibleClass] = useState("gone");
-
-  function setVisibleClassFunc() {
-    if (isVisibleClass == "gone") {
-      setIsVisibleClass("");
-    } else {
-      setIsVisibleClass("gone");
-    }
-  }
 
   const [hoverClass, setHoverClass] = useState(false);
 
@@ -115,16 +102,15 @@ const MainPageNavBar = ({
   if (hoverClass) {
     icon = (
       <FontAwesomeIcon
-        className="navbarArrowIconDownwards"
+        className="navbar__up-arrow-icon"
         icon={faChevronUp}
         fontSize={10}
-        style={{ marginTop: "5px" }}
       />
     );
   } else {
     icon = (
       <FontAwesomeIcon
-        className="navbarArrowIconDownwards"
+        className="navbar__down-arrow-icon"
         icon={faChevronDown}
         fontSize={10}
       />
@@ -133,7 +119,7 @@ const MainPageNavBar = ({
   if (loggedIn) {
     accButton = (
       <div
-        className="navbarDropCont"
+        className="navbar__account-button-and-list-container"
         onMouseEnter={() => {
           clearTimeout(leaveTimer);
           timer = setTimeout(() => {
@@ -149,22 +135,23 @@ const MainPageNavBar = ({
           }, 175);
         }}
       >
-        <button
-          className="navbarDropButton"
-          onClick={() => setVisibleClassFunc()}
+        <a
+          href={`/Account/${curUser}`}
+          className="navbar__account-button-container"
         >
-          <a href={`/Account/${curUser}`}>
-            <div className="hoverDIV">
-              <div className="whiteNavBarPFPDiv">
-                <img src={userPFP} className="profilePicSmall" />
-              </div>
-            </div>
-
-            {icon}
-          </a>
-        </button>
-        <div className={hoverClass ? `navbarULCont` : `navbarULCont gone`}>
-          <ul className="navbarUL">
+          <div className="navbar__account-button-hover-overlay-div">
+            <img src={userPFP} className="profile-pic__small" />
+          </div>
+          {icon}
+        </a>
+        <div
+          className={
+            hoverClass
+              ? `navbar__dropdown-menu-container`
+              : `navbar__dropdown-menu-container displayNone`
+          }
+        >
+          <ul className="navbar__dropdown-menu">
             <li>
               <a href={`/Account/${curUser}/Likes/most-recent/all-types`}>
                 Likes
@@ -197,13 +184,6 @@ const MainPageNavBar = ({
         <FontAwesomeIcon icon={faUpload} />
       </a>
     );
-    soButton = (
-      <a href="/">
-        <button className="navbarButton" onClick={signOut}>
-          Sign Out
-        </button>
-      </a>
-    );
 
     siButton = null;
     suButton = null;
@@ -219,7 +199,6 @@ const MainPageNavBar = ({
     );
   } else {
     accButton = null;
-    soButton = null;
     siButton = (
       <a href="/SignIn" className="navbar__login-button">
         Log In
@@ -246,7 +225,7 @@ const MainPageNavBar = ({
       className={`navbar__container ${navPositionClass}`}
     >
       <div className="navbar__contents">
-        <a href="/" className="logo">
+        <a href="/" className="navbar__logo">
           PicPocket
         </a>
         <form className="navbar__search-container" onSubmit={onSubmit}>
