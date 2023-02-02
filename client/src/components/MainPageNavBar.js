@@ -23,29 +23,14 @@ const MainPageNavBar = ({
 }) => {
   const [navbarColorTheme, setNavbarColorTheme] = useState("transparent");
   const [hamIsOpen, setHamIsOpen] = useState(false);
+
   let hamOpenOrClosed;
   if (hamIsOpen) {
     hamOpenOrClosed = "open";
   } else {
     hamOpenOrClosed = "closed";
   }
-  //color class
-  let navBackgroundColor;
-  let navTextColor1;
-  let navTextColor2;
-  if (navColorClass == "transparent") {
-    navBackgroundColor = "navBGColor--transparentBG";
-    navTextColor1 = "navTextColor1--transparentBG";
-    navTextColor2 = "navTextColor2--transparentBG";
-  } else if (navColorClass == "white") {
-    navBackgroundColor = "navBGColor--whiteBG";
-    navTextColor1 = "navTextColor1--whiteBG";
-    navTextColor2 = "navTextColor2--whiteBG";
-  } else if (navColorClass == "black") {
-    navBackgroundColor = "black";
-    navTextColor1 = "navTextColor1--blackBG";
-    navTextColor2 = "navTextColor2--blackBG";
-  }
+
   //go to /search/whateverYouSearchFor when hitting enter or clicking search button
   var navigate = useNavigate();
   let inputValue;
@@ -64,30 +49,16 @@ const MainPageNavBar = ({
   let hamburgerButton;
   let hamIconOrX;
   //media queries for hamburger. if hamOpen - remove pfp button if width < 730px
-  let uploadButtonClass;
   let blackBG;
-  let searchbarClass;
-  let smallUploadButtonClass;
-  let navbarContentsClass;
-  let navbar__buttonsClass;
   const [hamIconOpen, setHamIconOpen] = useState(false);
   //if ham open or close
   if (hamIconOpen) {
     hamIconOrX = <FontAwesomeIcon icon={faXmark} className="hamburgerXIcon" />;
     blackBG = "blackBG";
-    // uploadButtonClass = "navbarClickThisButton--hamopen";
-    // searchbarClass = "transparentNavBar__search-container--hamopen";
-    // smallUploadButtonClass = "smallUploadButton--hamopen";
-    // navbarContentsClass = "navbarContents--hamopen";
-    // navbar__buttonsClass = "navbar__buttons--hamopen";
     document.body.classList.add("overflowYHidden");
   } else if (!hamIconOpen) {
     hamIconOrX = <FontAwesomeIcon icon={faBars} className="hamburgerIcon" />;
-    // uploadButtonClass = "navbarClickThisButton";
-    // searchbarClass = "transparentNavBar__search-container--hamclose";
-    // smallUploadButtonClass = "smallUploadButton";
-    // navbarContentsClass = "navbarContents";
-    // navbar__buttonsClass = "navbar__buttons";
+
     document.body.classList.remove("overflowYHidden");
   }
 
@@ -217,15 +188,13 @@ const MainPageNavBar = ({
       </div>
     );
     uploadButton = (
-      <a href={`/${curUser}/upload`}>
-        <button className="navbarClickThisButton">Upload</button>
+      <a href={`/${curUser}/upload`} className="navbar__CTA-button-1">
+        Upload
       </a>
     );
     smallUploadButton = (
-      <a href={`/${curUser}/upload`} className="smallUploadButton">
-        <button>
-          <FontAwesomeIcon icon={faUpload} />
-        </button>
+      <a href={`/${curUser}/upload`} className="navbar__smallUploadButton">
+        <FontAwesomeIcon icon={faUpload} />
       </a>
     );
     soButton = (
@@ -257,8 +226,8 @@ const MainPageNavBar = ({
       </a>
     );
     suButton = (
-      <a href="/SignUp">
-        <button className="navbarClickThisButton">Join</button>
+      <a href="/SignUp" className="navbar__CTA-button-1">
+        Join
       </a>
     );
   }
@@ -274,31 +243,26 @@ const MainPageNavBar = ({
     <div
       data-hamOpenOrClosed={hamOpenOrClosed}
       data-navTheme={navColorClass}
-      className={`navbarContainer ${navPositionClass}`}
+      className={`navbar__container ${navPositionClass}`}
     >
-      <div className="navbarContents">
-        <div>
-          <a href="/" className="logo">
-            PicPocket
-          </a>
-        </div>
-        <form
-          className="transparentNavBar__search-container"
-          onSubmit={onSubmit}
-        >
+      <div className="navbar__contents">
+        <a href="/" className="logo">
+          PicPocket
+        </a>
+        <form className="navbar__search-container" onSubmit={onSubmit}>
           <input
-            className="carousel__search-bar--hamopen"
+            className="navbar__search-bar"
             placeholder="Search for free photos"
             onChange={onChange}
           ></input>
-          <button className="carousel__search-button--hamopen" type="submit">
+          <button className="navbar__search-button" type="submit">
             <FontAwesomeIcon
               icon={faMagnifyingGlass}
-              className="carousel__search-icon--hamopen"
+              className="navbar__search-icon"
             />
           </button>
         </form>
-        <div className="navbar__buttons">
+        <div className="navbar__buttons-container">
           {siButton}
           {suButton}
           {accButton}

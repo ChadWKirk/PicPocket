@@ -201,9 +201,6 @@ const MainPage = ({ curUser, loggedIn }) => {
           navPositionClass={navPositionClass}
           navColorClass={navColorClass}
         />
-        {/* <div className={`${navPositionClass}`}>
-          <WhiteNavBar curUser={curUser} loggedIn={loggedIn} />
-        </div> */}
         <MainPageHeroImage />
       </div>
       <div className="sortingBarCont1">
