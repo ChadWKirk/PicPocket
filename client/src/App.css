@@ -4,6 +4,54 @@
   box-sizing: border-box;
 }
 
+[data-navTheme="transparent"] {
+  --navBGColor: none;
+  --navLogoColor: white;
+  --navArrowIconColor: white;
+  --hamburgerIconColor: white;
+}
+
+[data-navTheme="white"] {
+  --navBGColor: white;
+  --navLogoColor: #4a4a4a;
+  --navArrowIconColor: #4a4a4a;
+  --navSearchDisplay: flex;
+  --hamburgerIconColor: #4a4a4a;
+}
+
+[data-navTheme="black"] {
+  --navBGColor: #4a4a4a;
+  --navLogoColor: white;
+  --navArrowIconColor: white;
+  --navSearchDisplay: flex;
+  --hamburgerIconColor: white;
+}
+
+[data-hamOpenOrClosed="open"] {
+  --navBGColor: #000000;
+  --navLogoColor: white;
+  --navSearchDisplay: flex;
+  --hamburgerIconFontSize: 1.41rem;
+  --hamburgerListDisplay: block;
+}
+
+[data-hamOpenOrClosed="closed"] {
+  --navSearchDisplay: none;
+  --hamburgerIconFontSize: 1rem;
+  --hamburgerListDisplay: none;
+}
+
+@media (width < 650px) {
+  .navbarClickThisButton {
+    padding: 0.48rem 1.4rem;
+    border-radius: 4px;
+  }
+  [data-hamOpenOrClosed="open"] .navbarClickThisButton {
+    display: none;
+    position: relative;
+  }
+}
+
 .overflowYHidden {
   overflow: hidden;
 }
@@ -43,20 +91,8 @@ button {
   text-decoration: none;
   font-size: 1.35rem;
   font-weight: 500;
-}
-
-.navLogoColor--transparentBG {
-  color: white;
+  color: var(--navLogoColor);
   transition: color 0.15s ease-in-out;
-}
-
-.navLogoColor--whiteBG {
-  color: #4a4a4a;
-  transition: color 0.15s ease-in-out;
-}
-
-.navTextColor1--whiteBG {
-  color: #4a4a4a !important;
 }
 
 /* .logo h1 {
@@ -77,6 +113,7 @@ button {
   height: 80px;
   display: flex;
   justify-content: center;
+  background-color: var(--navBGColor);
   transition: background-color 0.2s;
 }
 
@@ -101,15 +138,6 @@ button {
   gap: 39px;
 }
 
-.navbarContents--hamopen {
-  width: 90vw;
-  max-width: 1600px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 39px;
-}
-
 .navbar__darken {
   background-color: rgb(55, 57, 65);
 }
@@ -126,14 +154,6 @@ button {
 }
 
 .navbar__buttons {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 2.1rem;
-  font-size: 1rem;
-}
-
-.navbar__buttons--hamopen {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -256,7 +276,7 @@ button {
 .navbarArrowIconDownwards {
   margin-left: 7px;
   margin-top: 6px;
-  color: white;
+  color: var(--navArrowIconColor);
   transition: color 0.1s linear;
 }
 
@@ -325,7 +345,6 @@ button {
   font-weight: 500;
   border-radius: 6px;
   font-size: 1rem;
-
   box-shadow: 0px 0px 0px 1px #d8b60a;
   transition: box-shadow 0.1s ease-out;
 }
@@ -339,7 +358,7 @@ button {
   outline: 2px solid black;
 }
 
-.navbarClickThisButton--hamopen {
+/* .navbarClickThisButton--hamopen {
   padding: 0.83rem 1.4rem;
   background-color: #debb0c;
   color: rgb(25, 25, 25);
@@ -349,31 +368,18 @@ button {
 
   box-shadow: 0px 0px 0px 1px #debb0c;
   transition: box-shadow 0.1s ease-out;
-}
-
-.navbarClickThisButton__whitenav {
-  padding: 0.83rem 1.29rem;
-  background-color: #debb0c;
-  color: rgb(25, 25, 25);
-  font-weight: 500;
-  border-radius: 6px;
-  font-size: 1rem;
-  box-shadow: 0px 0px 0px 1px #debb0c;
-}
-
-.navbarClickThisButton__whitenav:hover {
-  background-color: #e0bf18;
-}
+} */
 
 .hamburgerIcon {
   display: none;
   position: relative;
-  color: white;
+  color: var(--hamburgerIconColor);
+  font-size: var(--hamburgerIconFontSize);
 }
 
-.hamburgerIcon--hamopen {
+/* .hamburgerIcon--hamopen {
   font-size: 1.41rem;
-}
+} */
 
 .hamburgerXIcon {
   font-size: 1.41rem;
@@ -415,6 +421,7 @@ button {
   animation: fadeIn 0.6s;
   font-size: 2rem;
   padding-bottom: 1.75rem;
+  display: var(--hamburgerListDisplay);
 }
 
 .hamburgerListClass ul {
@@ -451,18 +458,16 @@ button {
   color: #debb0c;
 }
 
-.smallUploadButton--hamopen {
+/* .smallUploadButton--hamopen {
   display: none;
-  position: absolute;
-}
+} */
 
 @media (width < 650px) {
   .navbarClickThisButton {
     padding: 0.48rem 1.4rem;
     border-radius: 4px;
   }
-  .navbarClickThisButton--hamopen,
-  .navbarDropCont--hamopen {
+  [data-hamOpenOrClosed="open"] .navbarClickThisButton {
     display: none;
     position: relative;
   }
@@ -474,7 +479,7 @@ button {
     top: 27% !important;
     left: 2% !important;
   }
-  .navbarContents--hamopen {
+  [data-hamOpenOrClosed="open"] .navbarContents {
     gap: 1.5625rem; /*25px*/
   }
   .logo h1 {
@@ -488,7 +493,7 @@ button {
   .navbar__buttons {
     gap: 1.3rem;
   }
-  .navbar__buttons--hamopen {
+  [data-hamOpenOrClosed="open"] .navbar__buttons {
     gap: 0.3rem;
   }
 }
@@ -498,7 +503,7 @@ button {
     display: none;
     position: relative;
   }
-  .smallUploadButton {
+  [data-hamOpenOrClosed="closed"] .smallUploadButton {
     display: inline;
     position: inherit;
   }
@@ -508,13 +513,6 @@ button {
 }
 
 .navbarDropCont {
-  position: relative;
-  padding-bottom: 0.8rem;
-  margin-top: 0.8rem;
-  z-index: 100000;
-}
-
-.navbarDropCont--hamopen {
   position: relative;
   padding-bottom: 0.8rem;
   margin-top: 0.8rem;
@@ -669,14 +667,9 @@ button {
   align-items: center;
 }
 
-.carousel__search-container--hamclose {
-  display: none;
-  position: relative;
-}
-
-.carousel__search-container--hamopen {
+.transparentNavBar__search-container {
   width: 100%;
-  display: flex;
+  display: var(--navSearchDisplay);
   justify-content: center;
   align-items: center;
 }
@@ -736,6 +729,7 @@ button {
   outline: none;
   color: #747474;
   height: 50px;
+  /* animation: fadeIn 0.6s; */
 }
 
 .carousel__search-bar--hamopen {

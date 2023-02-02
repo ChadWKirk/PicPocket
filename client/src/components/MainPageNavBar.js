@@ -21,24 +21,28 @@ const MainPageNavBar = ({
   navPositionClass,
   navColorClass,
 }) => {
+  const [navbarColorTheme, setNavbarColorTheme] = useState("transparent");
+  const [hamIsOpen, setHamIsOpen] = useState(false);
+  let hamOpenOrClosed;
+  if (hamIsOpen) {
+    hamOpenOrClosed = "open";
+  } else {
+    hamOpenOrClosed = "closed";
+  }
   //color class
   let navBackgroundColor;
-  let logoColor;
   let navTextColor1;
   let navTextColor2;
   if (navColorClass == "transparent") {
     navBackgroundColor = "navBGColor--transparentBG";
-    logoColor = "navLogoColor--transparentBG";
     navTextColor1 = "navTextColor1--transparentBG";
     navTextColor2 = "navTextColor2--transparentBG";
   } else if (navColorClass == "white") {
     navBackgroundColor = "navBGColor--whiteBG";
-    logoColor = "navLogoColor--whiteBG";
     navTextColor1 = "navTextColor1--whiteBG";
     navTextColor2 = "navTextColor2--whiteBG";
   } else if (navColorClass == "black") {
     navBackgroundColor = "black";
-    logoColor = "navBGColor--blackBG";
     navTextColor1 = "navTextColor1--blackBG";
     navTextColor2 = "navTextColor2--blackBG";
   }
@@ -60,47 +64,30 @@ const MainPageNavBar = ({
   let hamburgerButton;
   let hamIconOrX;
   //media queries for hamburger. if hamOpen - remove pfp button if width < 730px
-  let accButtonClass;
-  let logoColorClass;
   let uploadButtonClass;
   let blackBG;
   let searchbarClass;
-  let hamburgerIconClass;
   let smallUploadButtonClass;
   let navbarContentsClass;
   let navbar__buttonsClass;
-  let hamburgerListClass;
   const [hamIconOpen, setHamIconOpen] = useState(false);
   //if ham open or close
   if (hamIconOpen) {
     hamIconOrX = <FontAwesomeIcon icon={faXmark} className="hamburgerXIcon" />;
     blackBG = "blackBG";
-    logoColorClass = "logo navLogoColor--transparentBG";
-    accButtonClass = "navbarDropCont--hamopen";
-    uploadButtonClass = "navbarClickThisButton--hamopen";
-    searchbarClass = "carousel__search-container--hamopen";
-    hamburgerIconClass = "hamburgerIcon--hamopen";
-    smallUploadButtonClass = "smallUploadButton--hamopen";
-    navbarContentsClass = "navbarContents--hamopen";
-    navbar__buttonsClass = "navbar__buttons--hamopen";
-    hamburgerListClass = "hamburgerListClass";
+    // uploadButtonClass = "navbarClickThisButton--hamopen";
+    // searchbarClass = "transparentNavBar__search-container--hamopen";
+    // smallUploadButtonClass = "smallUploadButton--hamopen";
+    // navbarContentsClass = "navbarContents--hamopen";
+    // navbar__buttonsClass = "navbar__buttons--hamopen";
     document.body.classList.add("overflowYHidden");
   } else if (!hamIconOpen) {
-    hamIconOrX = (
-      <FontAwesomeIcon
-        icon={faBars}
-        className={`hamburgerIcon ${navTextColor1}`}
-      />
-    );
-    logoColorClass = `logo ${logoColor}`;
-    accButtonClass = "navbarDropCont";
-    uploadButtonClass = "navbarClickThisButton";
-    searchbarClass = "carousel__search-container--hamclose";
-    hamburgerIconClass = "hamburgerIcon";
-    smallUploadButtonClass = "smallUploadButton";
-    navbarContentsClass = "navbarContents";
-    navbar__buttonsClass = "navbar__buttons";
-    hamburgerListClass = "gone";
+    hamIconOrX = <FontAwesomeIcon icon={faBars} className="hamburgerIcon" />;
+    // uploadButtonClass = "navbarClickThisButton";
+    // searchbarClass = "transparentNavBar__search-container--hamclose";
+    // smallUploadButtonClass = "smallUploadButton";
+    // navbarContentsClass = "navbarContents";
+    // navbar__buttonsClass = "navbar__buttons";
     document.body.classList.remove("overflowYHidden");
   }
 
@@ -175,7 +162,7 @@ const MainPageNavBar = ({
   if (loggedIn) {
     accButton = (
       <div
-        className={`${accButtonClass}`}
+        className="navbarDropCont"
         onMouseEnter={() => {
           clearTimeout(leaveTimer);
           timer = setTimeout(() => {
@@ -231,12 +218,12 @@ const MainPageNavBar = ({
     );
     uploadButton = (
       <a href={`/${curUser}/upload`}>
-        <button className={`${uploadButtonClass}`}>Upload</button>
+        <button className="navbarClickThisButton">Upload</button>
       </a>
     );
     smallUploadButton = (
-      <a href={`/${curUser}/upload`} className={`${smallUploadButtonClass}`}>
-        <button className="smallUploadButton">
+      <a href={`/${curUser}/upload`} className="smallUploadButton">
+        <button>
           <FontAwesomeIcon icon={faUpload} />
         </button>
       </a>
@@ -252,14 +239,12 @@ const MainPageNavBar = ({
     siButton = null;
     suButton = null;
     hamburgerButton = (
-      <div className={`${hamburgerIconClass} ${navTextColor1}`}>
+      <div className="hamburgerIcon" onClick={() => setHamIsOpen(!hamIsOpen)}>
         <button
           className="navbarDropButton"
           onClick={() => setHamIconOpen(!hamIconOpen)}
         >
-          <div className={`${navTextColor1} transparentNavBar__hamburger-div`}>
-            {hamIconOrX}
-          </div>
+          <div>{hamIconOrX}</div>
         </button>
       </div>
     );
@@ -284,18 +269,23 @@ const MainPageNavBar = ({
       headers: { "Content-type": "application/json" },
     });
   }
-
+  console.log(hamOpenOrClosed);
   return (
     <div
-      className={`navbarContainer ${navPositionClass} ${navBackgroundColor} ${blackBG}`}
+      data-hamOpenOrClosed={hamOpenOrClosed}
+      data-navTheme={navColorClass}
+      className={`navbarContainer ${navPositionClass}`}
     >
-      <div className={`${navbarContentsClass}`}>
+      <div className="navbarContents">
         <div>
-          <a href="/" className={logoColorClass}>
+          <a href="/" className="logo">
             PicPocket
           </a>
         </div>
-        <form className={`${searchbarClass}`} onSubmit={onSubmit}>
+        <form
+          className="transparentNavBar__search-container"
+          onSubmit={onSubmit}
+        >
           <input
             className="carousel__search-bar--hamopen"
             placeholder="Search for free photos"
@@ -308,22 +298,16 @@ const MainPageNavBar = ({
             />
           </button>
         </form>
-        <div className={`${navbar__buttonsClass}`}>
+        <div className="navbar__buttons">
           {siButton}
           {suButton}
           {accButton}
           {smallUploadButton}
           {uploadButton}
-
           {hamburgerButton}
         </div>
       </div>
-      <HamburgerList
-        hamburgerListClass={hamburgerListClass}
-        curUser={curUser}
-        loggedIn={loggedIn}
-        signOut={signOut}
-      />
+      <HamburgerList curUser={curUser} loggedIn={loggedIn} signOut={signOut} />
     </div>
   );
 };
