@@ -221,7 +221,7 @@ const MainPageNavBar = ({
     accButton = null;
     soButton = null;
     siButton = (
-      <a href="/SignIn" className="navbar--logInButton">
+      <a href="/SignIn" className="navbar__login-button">
         Log In
       </a>
     );
