@@ -47,6 +47,8 @@ make hamburger list conditionals if not logged in don't show likes, user setting
 
 ---
 
+make it so that duplicate public ID's get named something else in cloudinary
+
 contact us page backend once site is hosted and get website email
 
 fix all sorting and routes -- maybe figure out a way to make it so you don't need a ton of routes for likes sort, search sort, etc.

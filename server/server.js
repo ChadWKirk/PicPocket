@@ -571,10 +571,23 @@ app.get("/:username/:sort/:filter", (req, res) => {
   let sort = req.params.sort;
   let filter = req.params.filter;
   let user = req.params.username;
+  if (sort == "most-recent") {
+    sortBy = { created_at: -1 };
+  } else if (sort == "oldest") {
+    sortBy = { created_at: 1 };
+  } else if (sort == "aToz") {
+    sortBy = { title: 1 };
+  } else if (sort == "zToa") {
+    sortBy = { title: -1 };
+  } else if (sort == "leastLikes") {
+    sortBy = { likes: 1 };
+  } else if (sort == "mostLikes") {
+    sortBy = { likes: -1 };
+  }
 
   let db_connect = dbo.getDb();
 
-  if (sort == "most-recent" && filter == "all-types") {
+  if (filter == "all-types") {
     db_connect
       .collection("picpocket-images")
       .aggregate([
@@ -590,7 +603,7 @@ app.get("/:username/:sort/:filter", (req, res) => {
           },
         },
       ])
-      .sort({ created_at: -1 })
+      .sort(sortBy)
       // .limit(12)
       .toArray(function (err, result) {
         if (err) {
@@ -600,151 +613,28 @@ app.get("/:username/:sort/:filter", (req, res) => {
           console.log(result);
         }
       });
-  } else if (sort == "most-recent" && filter != "all-types") {
+  } else if (filter != "all-types") {
     db_connect
       .collection("picpocket-images")
-      .find({ imageType: filter })
-      .sort({ created_at: -1 })
-      // .limit(12)
-      .toArray(function (err, result) {
-        if (err) {
-          res.status(400).send("Error fetching listings!");
-        } else {
-          res.json(result);
-          console.log(result);
-        }
-      });
-  } else if (sort == "oldest" && filter == "all-types") {
-    db_connect
-      .collection("picpocket-images")
-      .find()
-      .sort({ created_at: 1 })
-      // .limit(12)
-      .toArray(function (err, result) {
-        if (err) {
-          res.status(400).send("Error fetching listings!");
-        } else {
-          res.json(result);
-          console.log(result);
-        }
-      });
-  } else if (sort == "oldest" && filter != "all-types") {
-    db_connect
-      .collection("picpocket-images")
-      .find({ imageType: filter })
-      .sort({ created_at: 1 })
-      // .limit(12)
-      .toArray(function (err, result) {
-        if (err) {
-          res.status(400).send("Error fetching listings!");
-        } else {
-          res.json(result);
-          console.log(result);
-        }
-      });
-  } else if (sort == "aToz" && filter == "all-types") {
-    db_connect
-      .collection("picpocket-images")
-      .find()
-      .sort({ title: 1 })
-      // .limit(12)
-      .toArray(function (err, result) {
-        if (err) {
-          res.status(400).send("Error fetching listings!");
-        } else {
-          res.json(result);
-          console.log(result);
-        }
-      });
-  } else if (sort == "aToz" && filter != "all-types") {
-    db_connect
-      .collection("picpocket-images")
-      .find({ imageType: filter })
-      .sort({ title: 1 })
-      // .limit(12)
-      .toArray(function (err, result) {
-        if (err) {
-          res.status(400).send("Error fetching listings!");
-        } else {
-          res.json(result);
-          console.log(result);
-        }
-      });
-  } else if (sort == "zToa" && filter == "all-types") {
-    db_connect
-      .collection("picpocket-images")
-      .find()
-      .sort({ title: -1 })
-      // .limit(12)
-      .toArray(function (err, result) {
-        if (err) {
-          res.status(400).send("Error fetching listings!");
-        } else {
-          res.json(result);
-          console.log(result);
-        }
-      });
-  } else if (sort == "zToa" && filter != "all-types") {
-    db_connect
-      .collection("picpocket-images")
-      .find({ imageType: filter })
-      .sort({ title: -1 })
-      // .limit(12)
-      .toArray(function (err, result) {
-        if (err) {
-          res.status(400).send("Error fetching listings!");
-        } else {
-          res.json(result);
-          console.log(result);
-        }
-      });
-  } else if (sort == "leastLikes" && filter == "all-types") {
-    db_connect
-      .collection("picpocket-images")
-      .find()
-      .sort({ likes: 1 })
-      // .limit(12)
-      .toArray(function (err, result) {
-        if (err) {
-          res.status(400).send("Error fetching listings!");
-        } else {
-          res.json(result);
-          console.log(result);
-        }
-      });
-  } else if (sort == "leastLikes" && filter != "all-types") {
-    db_connect
-      .collection("picpocket-images")
-      .find({ imageType: filter })
-      .sort({ likes: 1 })
-      // .limit(12)
-      .toArray(function (err, result) {
-        if (err) {
-          res.status(400).send("Error fetching listings!");
-        } else {
-          res.json(result);
-          console.log(result);
-        }
-      });
-  } else if (sort == "mostLikes" && filter == "all-types") {
-    db_connect
-      .collection("picpocket-images")
-      .find()
-      .sort({ likes: -1 })
-      // .limit(12)
-      .toArray(function (err, result) {
-        if (err) {
-          res.status(400).send("Error fetching listings!");
-        } else {
-          res.json(result);
-          console.log(result);
-        }
-      });
-  } else if (sort == "mostLikes" && filter != "all-types") {
-    db_connect
-      .collection("picpocket-images")
-      .find({ imageType: filter })
-      .sort({ likes: -1 })
+      .aggregate([
+        //use match to find only uploadedBy
+        {
+          $match: {
+            $and: [{ uploadedBy: req.params.username }, { imageType: filter }],
+          },
+        },
+        //use $lookup to pull user info tied to image for profile pic on overlay
+        {
+          $lookup: {
+            from: "picpocket-users",
+            localField: "uploadedBy",
+            foreignField: "username",
+            as: "test",
+          },
+        },
+      ])
+      // .find({ imageType: filter })
+      .sort(sortBy)
       // .limit(12)
       .toArray(function (err, result) {
         if (err) {
@@ -762,6 +652,19 @@ app.get("/:username/:sort/:filter", (req, res) => {
 app.get("/search/:searchQuery/:sort/:filter", (req, res) => {
   let sort = req.params.sort;
   let filter = req.params.filter;
+  if (sort == "most-recent") {
+    sortBy = { created_at: -1 };
+  } else if (sort == "oldest") {
+    sortBy = { created_at: 1 };
+  } else if (sort == "aToz") {
+    sortBy = { title: 1 };
+  } else if (sort == "zToa") {
+    sortBy = { title: -1 };
+  } else if (sort == "leastLikes") {
+    sortBy = { likes: 1 };
+  } else if (sort == "mostLikes") {
+    sortBy = { likes: -1 };
+  }
 
   const objectId = ObjectId("63c03bab0ea2381b005e565b");
 
@@ -770,7 +673,7 @@ app.get("/search/:searchQuery/:sort/:filter", (req, res) => {
   let db_connect = dbo.getDb();
   //title or tag must match searchQuery. Uses collation strength 2 for case insensitive (OLD)
   //using search index imageTitleSearchIndex to search for title and tags individual words case insensitive
-  if (sort == "most-recent" && filter == "all-types") {
+  if (filter == "all-types") {
     db_connect
       .collection("picpocket-images")
       .aggregate([
@@ -792,7 +695,7 @@ app.get("/search/:searchQuery/:sort/:filter", (req, res) => {
           },
         },
       ])
-      .sort({ created_at: -1 })
+      .sort(sortBy)
       .toArray(function (err, result) {
         if (err) {
           res.status(400).send("Error fetching listings!");
@@ -802,7 +705,7 @@ app.get("/search/:searchQuery/:sort/:filter", (req, res) => {
           console.log(result);
         }
       });
-  } else if (sort == "most-recent" && filter != "all-types") {
+  } else if (filter != "all-types") {
     db_connect
       .collection("picpocket-images")
       .aggregate([
@@ -825,298 +728,16 @@ app.get("/search/:searchQuery/:sort/:filter", (req, res) => {
             },
           },
         },
-      ])
-      .sort({ created_at: -1 })
-      // .limit(12)
-      .toArray(function (err, result) {
-        if (err) {
-          res.status(400).send("Error fetching listings!");
-        } else {
-          res.json(result);
-          console.log(result);
-        }
-      });
-  } else if (sort == "oldest" && filter == "all-types") {
-    db_connect
-      .collection("picpocket-images")
-      .aggregate([
         {
-          $search: {
-            index: "imageTitleSearchIndex",
-            text: {
-              query: req.params.searchQuery,
-              path: ["title", "tags"],
-            },
+          $lookup: {
+            from: "picpocket-users",
+            localField: "uploadedBy",
+            foreignField: "username",
+            as: "test",
           },
         },
       ])
-      .sort({ created_at: 1 })
-      // .limit(12)
-      .toArray(function (err, result) {
-        if (err) {
-          res.status(400).send("Error fetching listings!");
-        } else {
-          res.json(result);
-          console.log(result);
-        }
-      });
-  } else if (sort == "oldest" && filter != "all-types") {
-    db_connect
-      .collection("picpocket-images")
-      .aggregate([
-        {
-          $search: {
-            index: "imageTitleSearchIndex",
-            compound: {
-              must: {
-                text: {
-                  query: req.params.searchQuery,
-                  path: ["title", "tags"],
-                },
-              },
-              filter: {
-                text: {
-                  path: "imageType",
-                  query: filter,
-                },
-              },
-            },
-          },
-        },
-      ])
-      .sort({ created_at: 1 })
-      // .limit(12)
-      .toArray(function (err, result) {
-        if (err) {
-          res.status(400).send("Error fetching listings!");
-        } else {
-          res.json(result);
-          console.log(result);
-        }
-      });
-  } else if (sort == "aToz" && filter == "all-types") {
-    db_connect
-      .collection("picpocket-images")
-      .aggregate([
-        {
-          $search: {
-            index: "imageTitleSearchIndex",
-            text: {
-              query: req.params.searchQuery,
-              path: ["title", "tags"],
-            },
-          },
-        },
-      ])
-      .sort({ title: 1 })
-      // .limit(12)
-      .toArray(function (err, result) {
-        if (err) {
-          res.status(400).send("Error fetching listings!");
-        } else {
-          res.json(result);
-          console.log(result);
-        }
-      });
-  } else if (sort == "aToz" && filter != "all-types") {
-    db_connect
-      .collection("picpocket-images")
-      .aggregate([
-        {
-          $search: {
-            index: "imageTitleSearchIndex",
-            compound: {
-              must: {
-                text: {
-                  query: req.params.searchQuery,
-                  path: ["title", "tags"],
-                },
-              },
-              filter: {
-                text: {
-                  path: "imageType",
-                  query: filter,
-                },
-              },
-            },
-          },
-        },
-      ])
-      .sort({ title: 1 })
-      // .limit(12)
-      .toArray(function (err, result) {
-        if (err) {
-          res.status(400).send("Error fetching listings!");
-        } else {
-          res.json(result);
-          console.log(result);
-        }
-      });
-  } else if (sort == "zToa" && filter == "all-types") {
-    db_connect
-      .collection("picpocket-images")
-      .aggregate([
-        {
-          $search: {
-            index: "imageTitleSearchIndex",
-            text: {
-              query: req.params.searchQuery,
-              path: ["title", "tags"],
-            },
-          },
-        },
-      ])
-      .sort({ title: -1 })
-      // .limit(12)
-      .toArray(function (err, result) {
-        if (err) {
-          res.status(400).send("Error fetching listings!");
-        } else {
-          res.json(result);
-          console.log(result);
-        }
-      });
-  } else if (sort == "zToa" && filter != "all-types") {
-    db_connect
-      .collection("picpocket-images")
-      .aggregate([
-        {
-          $search: {
-            index: "imageTitleSearchIndex",
-            compound: {
-              must: {
-                text: {
-                  query: req.params.searchQuery,
-                  path: ["title", "tags"],
-                },
-              },
-              filter: {
-                text: {
-                  path: "imageType",
-                  query: filter,
-                },
-              },
-            },
-          },
-        },
-      ])
-      .sort({ title: -1 })
-      // .limit(12)
-      .toArray(function (err, result) {
-        if (err) {
-          res.status(400).send("Error fetching listings!");
-        } else {
-          res.json(result);
-          console.log(result);
-        }
-      });
-  } else if (sort == "leastLikes" && filter == "all-types") {
-    db_connect
-      .collection("picpocket-images")
-      .aggregate([
-        {
-          $search: {
-            index: "imageTitleSearchIndex",
-            text: {
-              query: req.params.searchQuery,
-              path: ["title", "tags"],
-            },
-          },
-        },
-      ])
-      .sort({ likes: 1 })
-      // .limit(12)
-      .toArray(function (err, result) {
-        if (err) {
-          res.status(400).send("Error fetching listings!");
-        } else {
-          res.json(result);
-          console.log(result);
-        }
-      });
-  } else if (sort == "leastLikes" && filter != "all-types") {
-    db_connect
-      .collection("picpocket-images")
-      .aggregate([
-        {
-          $search: {
-            index: "imageTitleSearchIndex",
-            compound: {
-              must: {
-                text: {
-                  query: req.params.searchQuery,
-                  path: ["title", "tags"],
-                },
-              },
-              filter: {
-                text: {
-                  path: "imageType",
-                  query: filter,
-                },
-              },
-            },
-          },
-        },
-      ])
-      .sort({ likes: 1 })
-      // .limit(12)
-      .toArray(function (err, result) {
-        if (err) {
-          res.status(400).send("Error fetching listings!");
-        } else {
-          res.json(result);
-          console.log(result);
-        }
-      });
-  } else if (sort == "mostLikes" && filter == "all-types") {
-    db_connect
-      .collection("picpocket-images")
-      .aggregate([
-        {
-          $search: {
-            index: "imageTitleSearchIndex",
-            text: {
-              query: req.params.searchQuery,
-              path: ["title", "tags"],
-            },
-          },
-        },
-      ])
-      .sort({ likes: -1 })
-      // .limit(12)
-      .toArray(function (err, result) {
-        if (err) {
-          res.status(400).send("Error fetching listings!");
-        } else {
-          res.json(result);
-          console.log(result);
-        }
-      });
-  } else if (sort == "mostLikes" && filter != "all-types") {
-    db_connect
-      .collection("picpocket-images")
-      .aggregate([
-        {
-          $search: {
-            index: "imageTitleSearchIndex",
-            compound: {
-              must: {
-                text: {
-                  query: req.params.searchQuery,
-                  path: ["title", "tags"],
-                },
-              },
-              filter: {
-                text: {
-                  path: "imageType",
-                  query: filter,
-                },
-              },
-            },
-          },
-        },
-      ])
-      .sort({ likes: -1 })
+      .sort(sortBy)
       // .limit(12)
       .toArray(function (err, result) {
         if (err) {
@@ -1134,10 +755,23 @@ app.get("/search/:searchQuery/:sort/:filter", (req, res) => {
 app.get("/:username/likes/:sort/:filter", (req, res) => {
   let sort = req.params.sort;
   let filter = req.params.filter;
+  if (sort == "most-recent") {
+    sortBy = { created_at: -1 };
+  } else if (sort == "oldest") {
+    sortBy = { created_at: 1 };
+  } else if (sort == "aToz") {
+    sortBy = { title: 1 };
+  } else if (sort == "zToa") {
+    sortBy = { title: -1 };
+  } else if (sort == "leastLikes") {
+    sortBy = { likes: 1 };
+  } else if (sort == "mostLikes") {
+    sortBy = { likes: -1 };
+  }
 
   let db_connect = dbo.getDb();
 
-  if (sort == "most-recent" && filter == "all-types") {
+  if (filter == "all-types") {
     db_connect
       .collection("picpocket-images")
       .aggregate([
@@ -1153,8 +787,7 @@ app.get("/:username/likes/:sort/:filter", (req, res) => {
           },
         },
       ])
-
-      .sort({ created_at: -1 })
+      .sort(sortBy)
       // .limit(12)
       .toArray(function (err, result) {
         if (err) {
@@ -1164,151 +797,27 @@ app.get("/:username/likes/:sort/:filter", (req, res) => {
           console.log(result);
         }
       });
-  } else if (sort == "most-recent" && filter != "all-types") {
+  } else if (filter != "all-types") {
     db_connect
       .collection("picpocket-images")
-      .find({ $and: [{ likedBy: req.params.username }, { imageType: filter }] })
-      .sort({ created_at: -1 })
-      // .limit(12)
-      .toArray(function (err, result) {
-        if (err) {
-          res.status(400).send("Error fetching listings!");
-        } else {
-          res.json(result);
-          console.log(result);
-        }
-      });
-  } else if (sort == "oldest" && filter == "all-types") {
-    db_connect
-      .collection("picpocket-images")
-      .find({ likedBy: req.params.username })
-      .sort({ created_at: 1 })
-      // .limit(12)
-      .toArray(function (err, result) {
-        if (err) {
-          res.status(400).send("Error fetching listings!");
-        } else {
-          res.json(result);
-          console.log(result);
-        }
-      });
-  } else if (sort == "oldest" && filter != "all-types") {
-    db_connect
-      .collection("picpocket-images")
-      .find({ $and: [{ likedBy: req.params.username }, { imageType: filter }] })
-      .sort({ created_at: 1 })
-      // .limit(12)
-      .toArray(function (err, result) {
-        if (err) {
-          res.status(400).send("Error fetching listings!");
-        } else {
-          res.json(result);
-          console.log(result);
-        }
-      });
-  } else if (sort == "aToz" && filter == "all-types") {
-    db_connect
-      .collection("picpocket-images")
-      .find({ likedBy: req.params.username })
-      .sort({ title: 1 })
-      // .limit(12)
-      .toArray(function (err, result) {
-        if (err) {
-          res.status(400).send("Error fetching listings!");
-        } else {
-          res.json(result);
-          console.log(result);
-        }
-      });
-  } else if (sort == "aToz" && filter != "all-types") {
-    db_connect
-      .collection("picpocket-images")
-      .find({ $and: [{ likedBy: req.params.username }, { imageType: filter }] })
-      .sort({ title: 1 })
-      // .limit(12)
-      .toArray(function (err, result) {
-        if (err) {
-          res.status(400).send("Error fetching listings!");
-        } else {
-          res.json(result);
-          console.log(result);
-        }
-      });
-  } else if (sort == "zToa" && filter == "all-types") {
-    db_connect
-      .collection("picpocket-images")
-      .find({ likedBy: req.params.username })
-      .sort({ title: -1 })
-      // .limit(12)
-      .toArray(function (err, result) {
-        if (err) {
-          res.status(400).send("Error fetching listings!");
-        } else {
-          res.json(result);
-          console.log(result);
-        }
-      });
-  } else if (sort == "zToa" && filter != "all-types") {
-    db_connect
-      .collection("picpocket-images")
-      .find({ $and: [{ likedBy: req.params.username }, { imageType: filter }] })
-      .sort({ title: -1 })
-      // .limit(12)
-      .toArray(function (err, result) {
-        if (err) {
-          res.status(400).send("Error fetching listings!");
-        } else {
-          res.json(result);
-          console.log(result);
-        }
-      });
-  } else if (sort == "leastLikes" && filter == "all-types") {
-    db_connect
-      .collection("picpocket-images")
-      .find({ likedBy: req.params.username })
-      .sort({ likes: 1 })
-      // .limit(12)
-      .toArray(function (err, result) {
-        if (err) {
-          res.status(400).send("Error fetching listings!");
-        } else {
-          res.json(result);
-          console.log(result);
-        }
-      });
-  } else if (sort == "leastLikes" && filter != "all-types") {
-    db_connect
-      .collection("picpocket-images")
-      .find({ $and: [{ likedBy: req.params.username }, { imageType: filter }] })
-      .sort({ likes: 1 })
-      // .limit(12)
-      .toArray(function (err, result) {
-        if (err) {
-          res.status(400).send("Error fetching listings!");
-        } else {
-          res.json(result);
-          console.log(result);
-        }
-      });
-  } else if (sort == "mostLikes" && filter == "all-types") {
-    db_connect
-      .collection("picpocket-images")
-      .find({ likedBy: req.params.username })
-      .sort({ likes: -1 })
-      // .limit(12)
-      .toArray(function (err, result) {
-        if (err) {
-          res.status(400).send("Error fetching listings!");
-        } else {
-          res.json(result);
-          console.log(result);
-        }
-      });
-  } else if (sort == "mostLikes" && filter != "all-types") {
-    db_connect
-      .collection("picpocket-images")
-      .find({ $and: [{ likedBy: req.params.username }, { imageType: filter }] })
-      .sort({ likes: -1 })
+      .aggregate([
+        //use match to find only uploadedBy
+        {
+          $match: {
+            $and: [{ likedBy: req.params.username }, { imageType: filter }],
+          },
+        },
+        //use $lookup to pull user info tied to image for profile pic on overlay
+        {
+          $lookup: {
+            from: "picpocket-users",
+            localField: "uploadedBy",
+            foreignField: "username",
+            as: "test",
+          },
+        },
+      ])
+      .sort(sortBy)
       // .limit(12)
       .toArray(function (err, result) {
         if (err) {

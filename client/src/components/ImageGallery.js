@@ -39,6 +39,7 @@ const ImageGallery = ({
     } else if (type == "search") {
       fetchRoute = `http://localhost:5000/search/${searchQuery}/${sort}/${filter}`;
     }
+    console.log(fetchRoute);
     async function fetchImgData() {
       await fetch(fetchRoute, {
         method: "GET",
@@ -52,7 +53,7 @@ const ImageGallery = ({
       );
     }
     fetchImgData();
-  }, []);
+  }, [sort, filter]);
 
   //map over image data to create img items for img gallery
   useEffect(() => {

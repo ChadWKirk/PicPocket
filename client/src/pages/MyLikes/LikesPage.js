@@ -2,13 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 // import NavBar from "../../components/NavBar";
 import NavbarComponent from "../../components/NavbarComponent";
-import Dropdown from "react-bootstrap/Dropdown";
-import DropdownButton from "react-bootstrap/DropdownButton";
+import ImageGallerySortFilterAndSubheadingComponent from "../../components/ImageGallerySortFilterAndSubheadingComponent";
 import ImageGallery from "../../components/ImageGallery";
 
 const LikesPage = ({ curUser, loggedIn }) => {
   const { username } = useParams();
-  let navigate = useNavigate();
 
   //to get profile picture of user's like page you are seeing
   const [userInfo, setUserInfo] = useState();
@@ -50,10 +48,6 @@ const LikesPage = ({ curUser, loggedIn }) => {
   //sort and filter values to change the titles of the dropdown menus
   const [sortTitle, setSortTitle] = useState("Most Recent");
   const [filterTitle, setFilterTitle] = useState("All Types");
-
-  // useEffect(() => {
-  //   navigate(`/Account/${curUser}/Likes/${sort}/${filter}`);
-  // }, []);
 
   let whosLikesIsItHeading;
 
@@ -100,99 +94,18 @@ const LikesPage = ({ curUser, loggedIn }) => {
                 {username}
               </a>
             </h1>
-            <div className="gallerySortBar d-flex">
-              <DropdownButton
-                className="galleryDropDownButton"
-                title={`${sortTitle}`}
-              >
-                <Dropdown.Item
-                  className="galleryDropDownItem"
-                  onClick={() => {
-                    setSort("most-recent");
-                    setSortTitle("Most Recent");
-                  }}
-                >
-                  Most Recent
-                </Dropdown.Item>
-                <Dropdown.Item
-                  className="galleryDropDownItem"
-                  onClick={() => {
-                    setSort("oldest");
-                    setSortTitle("Oldest");
-                  }}
-                >
-                  Oldest
-                </Dropdown.Item>
-                <Dropdown.Item
-                  className="galleryDropDownItem"
-                  onClick={() => {
-                    setSort("aToz");
-                    setSortTitle("A - Z");
-                  }}
-                >
-                  A - Z
-                </Dropdown.Item>
-                <Dropdown.Item
-                  className="galleryDropDownItem"
-                  onClick={() => {
-                    setSort("zToa");
-                    setSortTitle("Z - A");
-                  }}
-                >
-                  Z - A
-                </Dropdown.Item>
-                <Dropdown.Item
-                  className="galleryDropDownItem"
-                  onClick={() => {
-                    setSort("leastLikes");
-                    setSortTitle("Least Popular");
-                  }}
-                >
-                  Least Popular
-                </Dropdown.Item>
-                <Dropdown.Item
-                  className="galleryDropDownItem"
-                  onClick={() => {
-                    setSort("mostLikes");
-                    setSortTitle("Popular");
-                  }}
-                >
-                  Popular
-                </Dropdown.Item>
-              </DropdownButton>
-              <DropdownButton
-                className="galleryDropDownButton"
-                title={`${filterTitle}`}
-              >
-                <Dropdown.Item
-                  className="galleryDropDownItem"
-                  onClick={() => {
-                    setFilter("all-types");
-                    setFilterTitle("All Types");
-                  }}
-                >
-                  All types
-                </Dropdown.Item>
-                <Dropdown.Item
-                  className="galleryDropDownItem"
-                  onClick={() => {
-                    setFilter("Photo");
-                    setFilterTitle("Photo");
-                  }}
-                >
-                  Photo
-                </Dropdown.Item>
-                <Dropdown.Item
-                  className="galleryDropDownItem"
-                  onClick={() => {
-                    setFilter("Illustration");
-                    setFilterTitle("Illustration");
-                  }}
-                >
-                  Illustration
-                </Dropdown.Item>
-              </DropdownButton>
-            </div>
+            <ImageGallerySortFilterAndSubheadingComponent
+              sort={sort}
+              setSort={setSort}
+              sortTitle={sortTitle}
+              setSortTitle={setSortTitle}
+              filter={filter}
+              setFilter={setFilter}
+              filterTitle={filterTitle}
+              setFilterTitle={setFilterTitle}
+              imgGalleryLength={imgGalleryLength}
+              page={"likesPage"}
+            />
           </div>
           {/* {resultsMap} */}
           <ImageGallery
