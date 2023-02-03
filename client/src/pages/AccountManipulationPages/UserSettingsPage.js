@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import NavbarComponent from "../../components/NavbarComponent";
 // import NavBar from "../../components/NavBar";
 import ChangePFPBtn from "../../components/ChangePFPBtn";
 import Toast from "../../components/Toast";
@@ -203,6 +204,12 @@ const UserSettingsPage = ({ curUser, loggedIn }) => {
   return (
     <div>
       {/* <NavBar curUser={curUser} loggedIn={loggedIn} /> */}
+      <NavbarComponent
+        curUser={curUser}
+        loggedIn={loggedIn}
+        navPositionClass={"fixed"}
+        navColorClass={"white"}
+      />
       <div>
         <img src={userPFP} className="profilePicBig" />
         <div>

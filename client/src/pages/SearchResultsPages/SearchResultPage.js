@@ -1,10 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
-import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
-import { faDownload } from "@fortawesome/free-solid-svg-icons";
+import NavbarComponent from "../../components/NavbarComponent";
 import { useNavigate } from "react-router-dom";
-import WhiteNavBar from "../../components/WhiteNavBar";
 import { useParams } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
@@ -19,24 +15,6 @@ const SearchResultsPage = ({ curUser, loggedIn }) => {
   //search query for heading
   const { searchQuery } = useParams();
 
-  //sticky nav bar
-  const [navPosition, setNavPosition] = useState("gone");
-
-  useEffect(() => {
-    window.addEventListener("scroll", setNavToFixed);
-
-    return () => {
-      window.removeEventListener("scroll", setNavToFixed);
-    };
-  }, []);
-
-  function setNavToFixed() {
-    if (window !== undefined) {
-      let windowHeight = window.scrollY;
-      windowHeight > 425 ? setNavPosition("fixed") : setNavPosition("gone");
-    }
-  }
-
   //sort and filter values to do get requests
   const [sort, setSort] = useState("most-recent");
   const [filter, setFilter] = useState("all-types");
@@ -46,18 +24,23 @@ const SearchResultsPage = ({ curUser, loggedIn }) => {
 
   return (
     <div>
-      <WhiteNavBar curUser={curUser} loggedIn={loggedIn} />
-      <div className={`${navPosition}`}>
-        <WhiteNavBar curUser={curUser} loggedIn={loggedIn} />
-      </div>
+      <NavbarComponent
+        curUser={curUser}
+        loggedIn={loggedIn}
+        navPositionClass={"fixed"}
+        navColorClass={"white"}
+      />
       <div className="imgGalleryCont1">
         <div className="photosByContainer">
-          <h1
-            className="freeStockPhotosHeading searchHeading"
-            style={{ fontSize: "2.85rem", color: "rgba(0, 0, 0, 0.65)" }}
-          >
-            {searchQuery} Images {imgGalleryLength} results
-          </h1>
+          <div>
+            <h1
+              className="freeStockPhotosHeading searchHeading"
+              style={{ fontSize: "3rem", color: "rgba(0, 0, 0, 0.65)" }}
+            >
+              {searchQuery} Images
+            </h1>
+          </div>
+
           <div className="gallerySortBar d-flex">
             <DropdownButton
               className="galleryDropDownButton"
@@ -151,6 +134,9 @@ const SearchResultsPage = ({ curUser, loggedIn }) => {
               </Dropdown.Item>
             </DropdownButton>
           </div>
+        </div>
+        <div>
+          <h4>{imgGalleryLength} results</h4>
         </div>
 
         <ImageGallery

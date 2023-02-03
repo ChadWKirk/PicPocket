@@ -16,6 +16,7 @@
   --navArrowIconColor: white;
   --navArrowIconColorHover: rgb(209, 209, 209);
   --hamburgerIconColor: white;
+  --navbarHeightMargin: 0px;
 }
 
 [data-navTheme="white"] {
@@ -26,6 +27,7 @@
   --navSearchDisplay: flex;
   --hamburgerIconColor: #4a4a4a;
   --navOutline: solid 1px #e7e7e762;
+  --navbarHeightMargin: 80px;
 }
 
 [data-navTheme="black"] {
@@ -35,6 +37,7 @@
   --navArrowIconColorHover: rgb(209, 209, 209);
   --navSearchDisplay: flex;
   --hamburgerIconColor: white;
+  --navbarHeightMargin: 80px;
 }
 
 [data-hamOpenOrClosed="open"] {
@@ -88,7 +91,9 @@ button {
 }
 
 /* NavBar CSS */
-
+.navbar__height-margin {
+  height: var(--navbarHeightMargin);
+}
 .navbar__container {
   background-color: var(--navBGColor);
   display: flex;
@@ -96,6 +101,7 @@ button {
   justify-content: center;
   outline: var(--navOutline);
   transition: background-color 0.5s;
+  z-index: 99999999999999999999999999;
 }
 .navbar__contents {
   width: 90vw;
@@ -118,6 +124,9 @@ button {
 }
 [data-navTheme="transparent"] .navbar__logo:hover {
   color: rgb(207, 207, 207);
+}
+[data-navTheme="white"] .navbar__logo:hover {
+  color: rgb(46, 46, 46);
 }
 [data-navTheme="black"] .navbar__logo:hover {
   color: rgb(207, 207, 207);
@@ -1139,7 +1148,7 @@ button {
   font-size: 1rem;
   border-radius: 10px;
   padding: 0.75rem;
-  z-index: 1000;
+  z-index: 10;
   display: flex;
   align-items: center;
   gap: 0.425rem;
@@ -1170,7 +1179,7 @@ button {
 }
 
 .galleryHeading h2 {
-  font-size: 2.77rem;
+  font-size: 3.125rem;
 }
 
 .galleryHeading p {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import MainPageNavBar from "../../components/MainPageNavBar";
+import NavbarComponent from "../../components/NavbarComponent";
 import MainPageHeroImage from "../../components/MainPageHeroImage";
 import MainPageImageGallery from "../../components/MainPageImageGallery";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -194,7 +194,7 @@ const MainPage = ({ curUser, loggedIn }) => {
   return (
     <div>
       <div className="mainPage__heroPicture">
-        <MainPageNavBar
+        <NavbarComponent
           curUser={curUser}
           loggedIn={loggedIn}
           navPositionClass={navPositionClass}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import MainPageNavBar from "../../components/MainPageNavBar";
+// import MainPageNavBar from "../../components/MainPageNavBar";
 import MainPageHeroImage from "../../components/MainPageHeroImage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
@@ -175,10 +175,8 @@ const MainPageMostPopularImages = ({ curUser, loggedIn }) => {
   return (
     <div>
       <div className="mainPage__bg">
-        <MainPageNavBar curUser={curUser} loggedIn={loggedIn} />
-        <div className={`${navPosition}`}>
-          <WhiteNavBar curUser={curUser} loggedIn={loggedIn} />
-        </div>
+        {/* <MainPageNavBar curUser={curUser} loggedIn={loggedIn} /> */}
+
         {/* <DropDown /> */}
         <MainPageHeroImage />
       </div>

@@ -90,7 +90,7 @@ const SignUpPage = ({ curUser, loggedIn }) => {
   return (
     <div className="signUpPage">
       <div className="navContainer">
-        <SignUpNavBar curUser={curUser} loggedIn={loggedIn} />
+        {/* <SignUpNavBar curUser={curUser} loggedIn={loggedIn} /> */}
       </div>
       <div className="signUpContainer">
         <div className="signUpContainer__heading">Join PicPocket</div>

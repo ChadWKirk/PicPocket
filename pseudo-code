@@ -31,6 +31,10 @@ TASKS:
 
 styling:
 
+put drop down menu for likes, user and search page into a component
+
+search page - put drop down menu and results count under search query heading and make it responsive
+
 footer - make about us page - make conditional renders for if logged out or logged in
 
 sign in page - create collage of stock photos to have as img on the right, get facebook and google auth svg's for oauth buttons
@@ -40,10 +44,6 @@ put drop down buttons to the right aligned with "Photos By curuser" for likes pa
 create sign up now section - have pic of female photographer to the right or left and have it fade to just a solid background color (darker yellow) and have the text and join now button on the empty side
 
 make hamburger list conditionals if not logged in don't show likes, user settings, upload, etc.
-
-copy trans navbar style to whitenavbar
-
-style and media queries for whitenavbar
 
 ---
 
