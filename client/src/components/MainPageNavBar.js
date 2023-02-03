@@ -51,10 +51,14 @@ const MainPageNavBar = ({
   const [hamIconOpen, setHamIconOpen] = useState(false);
   //if ham open or close
   if (hamIconOpen) {
-    hamIconOrX = <FontAwesomeIcon icon={faXmark} className="hamburgerXIcon" />;
+    hamIconOrX = (
+      <FontAwesomeIcon icon={faXmark} className="navbar__hamburger-icon-x" />
+    );
     document.body.classList.add("overflowYHidden");
   } else if (!hamIconOpen) {
-    hamIconOrX = <FontAwesomeIcon icon={faBars} className="hamburgerIcon" />;
+    hamIconOrX = (
+      <FontAwesomeIcon icon={faBars} className="navbar__hamburger-icon-bars" />
+    );
 
     document.body.classList.remove("overflowYHidden");
   }
@@ -188,7 +192,10 @@ const MainPageNavBar = ({
     siButton = null;
     suButton = null;
     hamburgerButton = (
-      <div className="hamburgerIcon" onClick={() => setHamIsOpen(!hamIsOpen)}>
+      <div
+        className="navbar__hamburger-icon-bars"
+        onClick={() => setHamIsOpen(!hamIsOpen)}
+      >
         <button
           className="navbarDropButton"
           onClick={() => setHamIconOpen(!hamIconOpen)}

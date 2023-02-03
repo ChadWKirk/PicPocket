@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 
-const HamburgerList = ({ hamburgerListClass, curUser, loggedIn, signOut }) => {
+const HamburgerList = ({ curUser, loggedIn, signOut }) => {
   return (
-    <div className="hamburgerListClass">
-      <ul className="navbarUL">
+    <div className="navbar__hamburger-list-container">
+      <ul>
         <li>
           <a href="/">Home</a>
         </li>

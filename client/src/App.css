@@ -45,6 +45,11 @@
   --hamburgerListDisplay: block;
 }
 
+*:focus {
+  border: none;
+  outline: none;
+}
+
 a {
   text-decoration: none;
 }
@@ -173,15 +178,6 @@ button {
 .navbar__login-button:hover {
   color: rgb(232, 232, 232);
 }
-.navbar__smallUploadButton {
-  color: white;
-  font-size: 0.95rem;
-  display: none;
-  margin-right: 1rem;
-}
-.navbar__smallUploadButton:hover {
-  color: #debb0c;
-}
 .navbar__account-button-and-list-container {
   position: relative;
   padding-bottom: 0.8rem;
@@ -197,6 +193,32 @@ button {
   display: flex;
   align-items: center;
   flex-direction: row;
+}
+.navbar__account-button-hover-overlay-div {
+  position: relative;
+}
+.navbar__account-button-hover-overlay-div:after {
+  opacity: 0;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgb(0, 0, 0);
+  transition: 0.125s linear;
+}
+.navbar__account-button-container:hover
+  .navbar__account-button-hover-overlay-div::after {
+  opacity: 0.2;
+}
+.navbar__account-button-hover-overlay-div:hover
+  .navbar__account-button-hover-overlay-div:after {
+  opacity: 0.32 !important;
+  transition: 0.3s;
 }
 .navbar__down-arrow-icon {
   margin-left: 7px;
@@ -216,6 +238,186 @@ button {
 .navbar__account-button-container:not(:hover) .navbar__up-arrow-icon {
   color: var(--navArrowIconColor);
   transition: 0.1s;
+}
+.navbar__dropdown-menu-container {
+  border: 1px solid rgba(128, 128, 128, 0.642);
+  position: absolute;
+  right: -10px;
+  top: 39px;
+  width: 140px;
+  border-radius: 8px;
+  background-color: white;
+  padding: 0.55rem 0;
+}
+.navbar__dropdown-menu-container::after {
+  content: "";
+  border: 8.5px solid transparent;
+  border-top-color: white;
+  position: absolute;
+  top: -15px;
+  left: 104.5px;
+  transform: rotate(180deg);
+}
+.navbar__dropdown-menu-container::before {
+  content: "";
+  border: 8.5px solid transparent;
+  border-top-color: rgb(176, 176, 176);
+  position: absolute;
+  top: -16.5px;
+  z-index: -1;
+  left: 104.5px;
+  transform: rotate(180deg);
+}
+.navbar__dropdown-menu {
+  font-weight: 500;
+}
+.navbar__dropdown-menu li {
+  padding: 0.325rem 0.25rem;
+  width: 100%;
+  cursor: pointer;
+}
+.navbar__dropdown-menu li a {
+  color: #535353;
+  font-size: 1rem;
+  padding-left: 0.75rem;
+  display: inline-block;
+  width: 100%;
+  text-decoration: none;
+}
+.navbar__dropdown-menu li:hover {
+  background-color: rgb(245, 245, 245);
+}
+.navbar__CTA-button-1 {
+  padding: 0.83rem 1.4rem;
+  background-color: #debb0c;
+  color: rgb(25, 25, 25);
+  font-weight: 500;
+  border-radius: 6px;
+  font-size: 1rem;
+  box-shadow: 0px 0px 0px 1px #d8b60a;
+  transition: box-shadow 0.1s ease-out;
+}
+.navbar__CTA-button-1:hover {
+  box-shadow: 0px 0px 0px 0px #debb0c;
+  color: rgb(25, 25, 25);
+}
+.navbar__CTA-button-1:focus {
+  color: black !important;
+  outline: 2px solid black;
+}
+.navbar__smallUploadButton {
+  color: white;
+  font-size: 0.95rem;
+  display: none;
+  margin-right: 1rem;
+}
+.navbar__smallUploadButton:hover {
+  color: #debb0c;
+}
+.navbar__hamburger-icon-bars {
+  display: none;
+  position: relative;
+  color: var(--hamburgerIconColor);
+  font-size: var(--hamburgerIconFontSize);
+}
+.navbar__hamburger-icon-x {
+  font-size: 1.41rem;
+}
+.navbar__hamburger-icon-x:focus {
+  color: rgb(209, 209, 209) !important;
+}
+.navbar__hamburger-icon-x:hover {
+  color: rgb(209, 209, 209);
+}
+.navbar__hamburger-list-container {
+  overflow-y: auto;
+  width: 100vw;
+  height: calc(100vh - 80px);
+  background-color: black;
+  color: white;
+  border-top: 0.3px solid rgb(61, 61, 61);
+  position: fixed;
+  top: 80px;
+  left: 0;
+  z-index: 9999999;
+  animation: fadeIn 0.6s;
+  font-size: 2rem;
+  padding-bottom: 1.75rem;
+  display: var(--hamburgerListDisplay);
+}
+.navbar__hamburger-list-container ul {
+  margin-top: 1rem;
+}
+.navbar__hamburger-list-container li {
+  padding: 0 0.4rem !important;
+}
+.navbar__hamburger-list-container ul li a {
+  color: white;
+  font-size: 1.2rem;
+}
+.navbar__hamburger-list-container ul li a:hover {
+  color: lightgray;
+}
+.navbar__hamburger-list-container ul li {
+  background-color: black !important;
+}
+
+@media (width < 310px) {
+  .navbar__CTA-button-1 {
+    display: none;
+    position: relative;
+  }
+  [data-hamOpenOrClosed="closed"] .navbar__smallUploadButton {
+    display: inline;
+    position: inherit;
+  }
+  .navbar__buttons-container {
+    gap: 0.725rem;
+  }
+}
+
+@media (width < 650px) {
+  .navbar__CTA-button-1 {
+    padding: 0.48rem 1.4rem;
+    border-radius: 4px;
+  }
+  [data-hamOpenOrClosed="open"] .navbar__CTA-button-1 {
+    display: none;
+    position: relative;
+  }
+  .navbar__search-bar,
+  .navbar__search-button {
+    height: 35px !important;
+  }
+  .navbar__search-icon {
+    font-size: 1rem !important;
+    top: 27% !important;
+    left: 18% !important;
+  }
+  [data-hamOpenOrClosed="open"] .navbar-contents {
+    gap: 1.5625rem; /*25px*/
+  }
+  .navbar__logo h1 {
+    font-size: 1.35rem;
+  }
+  .navbar__account-button-and-list-container {
+    display: none;
+    position: relative;
+  }
+  .navbar__buttons-container {
+    gap: 1.3rem;
+  }
+  [data-hamOpenOrClosed="open"] .navbar__buttons-container {
+    gap: 0.3rem;
+  }
+}
+
+@media (width < 900px) {
+  .navbar__hamburger-icon-bars {
+    display: inline;
+    position: inherit;
+    font-size: 1.41rem;
+  }
 }
 
 /* .logo h1 {
@@ -268,25 +470,6 @@ button {
 .search__button:hover .search__icon {
   color: #3d6098;
   transition: 0.05s ease;
-}
-
-.navbar__cartIcon {
-  padding: 0px;
-  margin-top: 0px;
-}
-
-.navbar__cartBtn {
-  display: flex;
-  align-items: center;
-  padding-top: 5px;
-  height: 100%;
-}
-
-.navbar__cartBtn div {
-  margin-left: 2px;
-  margin-top: 21px;
-  font-weight: 600;
-  border: none;
 }
 
 .dropDownMenu {
@@ -343,56 +526,6 @@ button {
   color: rgb(149, 149, 149);
 }
 
-.navbar__account-button-hover-overlay-div {
-  position: relative;
-}
-
-.navbar__account-button-hover-overlay-div:hover
-  .navbar__account-button-hover-overlay-div:after {
-  opacity: 0.32 !important;
-  transition: 0.3s;
-}
-
-.navbar__account-button-container:hover
-  .navbar__account-button-hover-overlay-div::after {
-  opacity: 0.2;
-}
-
-.navbar__account-button-hover-overlay-div:after {
-  opacity: 0;
-  border-radius: 50%;
-  width: 28px;
-  height: 28px;
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background-color: rgb(0, 0, 0);
-  transition: 0.125s linear;
-}
-
-.navbar__CTA-button-1 {
-  padding: 0.83rem 1.4rem;
-  background-color: #debb0c;
-  color: rgb(25, 25, 25);
-  font-weight: 500;
-  border-radius: 6px;
-  font-size: 1rem;
-  box-shadow: 0px 0px 0px 1px #d8b60a;
-  transition: box-shadow 0.1s ease-out;
-}
-
-.navbar__CTA-button-1:hover {
-  box-shadow: 0px 0px 0px 0px #debb0c;
-}
-
-.navbar__CTA-button-1:focus {
-  color: black !important;
-  outline: 2px solid black;
-}
-
 /* .navbar__CTA-button-1--hamopen {
   padding: 0.83rem 1.4rem;
   background-color: #debb0c;
@@ -405,155 +538,14 @@ button {
   transition: box-shadow 0.1s ease-out;
 } */
 
-.hamburgerIcon {
-  display: none;
-  position: relative;
-  color: var(--hamburgerIconColor);
-  font-size: var(--hamburgerIconFontSize);
-}
-
-/* .hamburgerIcon--hamopen {
+/* .navbar__hamburger-icon-bars--hamopen {
   font-size: 1.41rem;
 } */
-
-.hamburgerXIcon {
-  font-size: 1.41rem;
-}
-
-*:focus {
-  border: none;
-  outline: none;
-  /* color: rgb(209, 209, 209) !important; */
-}
-
-.hamburgerXIcon:focus {
-  color: rgb(209, 209, 209) !important;
-}
-
-.hamburgerXIcon:hover {
-  color: rgb(209, 209, 209);
-}
-
-.hamburgerListClass {
-  overflow-y: auto;
-  width: 100vw;
-  height: calc(100vh - 80px);
-  background-color: black;
-  color: white;
-  border-top: 0.3px solid rgb(61, 61, 61);
-  position: fixed;
-  top: 80px;
-  left: 0;
-  z-index: 9999999;
-  animation: fadeIn 0.6s;
-  font-size: 2rem;
-  padding-bottom: 1.75rem;
-  display: var(--hamburgerListDisplay);
-}
-
-.hamburgerListClass ul {
-  margin-top: 1rem;
-}
-
-.hamburgerListClass li {
-  padding: 0 0.4rem !important;
-}
-
-.hamburgerListClass ul li a {
-  color: white;
-  font-size: 1.2rem;
-}
-
-.hamburgerListClass ul li a:hover {
-  color: lightgray;
-}
-
-.hamburgerListClass ul li {
-  background-color: black !important;
-}
 
 /* .navbar__account-button-container a {
   display: flex;
   align-items: center;
 } */
-
-.navbar__account-button-container:hover {
-  color: rgb(220, 220, 220);
-  transition: 0.1s ease-in-out;
-}
-
-.navbar__account-button-container:hover .profile-pic__small {
-  color: rgb(220, 220, 220);
-  transition: 0.1s ease-in-out;
-}
-
-.navbar__dropdown-menu-containerHover {
-  visibility: visible;
-  opacity: 1;
-  transition: 0s ease;
-  transition-property: all;
-  transition-delay: 0.2s;
-}
-
-.navbar__dropdown-menu-container {
-  border: 1px solid rgba(128, 128, 128, 0.642);
-  position: absolute;
-  right: -10px;
-  top: 39px;
-  width: 140px;
-  border-radius: 8px;
-  background-color: white;
-  padding: 0.55rem 0;
-}
-
-.navbar__dropdown-menu-container::after {
-  content: "";
-  border: 8.5px solid transparent;
-  border-top-color: white;
-  position: absolute;
-  top: -15px;
-  left: 104.5px;
-  transform: rotate(180deg);
-}
-
-.navbar__dropdown-menu-container::before {
-  content: "";
-  border: 8.5px solid transparent;
-  border-top-color: rgb(176, 176, 176);
-  position: absolute;
-  top: -16.5px;
-  z-index: -1;
-  left: 104.5px;
-  transform: rotate(180deg);
-}
-
-.navbar__dropdown-menu {
-  font-weight: 500;
-}
-
-.navbar__dropdown-menu li {
-  padding: 0.325rem 0.25rem;
-  width: 100%;
-  cursor: pointer;
-}
-
-.navbar__dropdown-menu li a {
-  color: #535353;
-  font-size: 1rem;
-  padding-left: 0.75rem;
-  display: inline-block;
-  width: 100%;
-  text-decoration: none;
-}
-
-.navbar__dropdown-menu li:hover {
-  background-color: rgb(245, 245, 245);
-}
-
-.navbar .btn-primary:hover {
-  background-color: #debb0c;
-  color: rgb(77, 77, 77);
-}
 
 /* MainPage CSS*/
 
@@ -2236,19 +2228,6 @@ button {
 }
 
 /* Media Queries (organized from less px to greater */
-@media (width < 310px) {
-  .navbar__CTA-button-1 {
-    display: none;
-    position: relative;
-  }
-  [data-hamOpenOrClosed="closed"] .navbar__smallUploadButton {
-    display: inline;
-    position: inherit;
-  }
-  .navbar__buttons-container {
-    gap: 0.725rem;
-  }
-}
 
 @media (width < 314px) {
   .carousel__overlay {
@@ -2314,17 +2293,6 @@ button {
 }
 
 @media (width < 650px) {
-  .navbar__CTA-button-1 {
-    padding: 0.48rem 1.4rem;
-    border-radius: 4px;
-  }
-  [data-hamOpenOrClosed="open"] .navbar__CTA-button-1 {
-    display: none;
-    position: relative;
-  }
-}
-
-@media (width < 650px) {
   .imgGalleryImgOverlay1 {
     opacity: 1;
   }
@@ -2342,43 +2310,6 @@ button {
   }
   .imgAuthor1 {
     opacity: 0;
-  }
-}
-
-@media (width < 650px) {
-  .navbar__CTA-button-1 {
-    padding: 0.48rem 1.4rem;
-    border-radius: 4px;
-  }
-  [data-hamOpenOrClosed="open"] .navbar__CTA-button-1 {
-    display: none;
-    position: relative;
-  }
-  .navbar__search-bar,
-  .navbar__search-button {
-    height: 35px !important;
-  }
-  .navbar__search-icon {
-    font-size: 1rem !important;
-    top: 27% !important;
-    left: 18% !important;
-  }
-  [data-hamOpenOrClosed="open"] .navbar-contents {
-    gap: 1.5625rem; /*25px*/
-  }
-  .navbar__logo h1 {
-    font-size: 1.35rem;
-  }
-
-  .navbar__account-button-and-list-container {
-    display: none;
-    position: relative;
-  }
-  .navbar__buttons-container {
-    gap: 1.3rem;
-  }
-  [data-hamOpenOrClosed="open"] .navbar__buttons-container {
-    gap: 0.3rem;
   }
 }
 
@@ -2420,14 +2351,6 @@ button {
 @media (width < 900px) {
   .photosByContainer {
     margin-right: 9px;
-  }
-}
-
-@media (width < 900px) {
-  .hamburgerIcon {
-    display: inline;
-    position: inherit;
-    font-size: 1.41rem;
   }
 }
 
