@@ -14,7 +14,16 @@ const ImageGallerySortFilterAndSubheadingComponent = ({
   setFilterTitle,
   imgGalleryLength,
   searchQuery,
+  page,
 }) => {
+  let subHeading;
+  if (page == "searchPage") {
+    subHeading = (
+      <div>
+        <h4>{imgGalleryLength} results</h4>
+      </div>
+    );
+  }
   return (
     <div className="gallerySortBar d-flex">
       <DropdownButton className="galleryDropDownButton" title={`${sortTitle}`}>
