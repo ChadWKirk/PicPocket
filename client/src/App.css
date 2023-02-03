@@ -428,9 +428,7 @@ button {
     font-size: 1.41rem;
   }
 }
----
 
----
 /* Image Gallery CSS */
 .image-gallery__container {
   max-width: 1467px;
@@ -438,6 +436,9 @@ button {
   margin-top: 0.6rem;
   margin-bottom: 4.25rem;
   padding: 0px 6px 0px 6px;
+}
+.image-gallery__searchquery-heading {
+  margin-left: 15px;
 }
 .image-gallery__dropdown-and-subheading-container {
   display: flex;
@@ -454,6 +455,52 @@ button {
   display: flex;
   align-items: center;
   gap: 1rem;
+}
+.image-gallery__likes-page-subheading-container {
+  padding: 1.65rem 0px 1.3rem 0px;
+  margin-left: 15px;
+  font-size: 1.7rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.image-gallery__likes-page-subheading-container a {
+  font-size: 1.15rem;
+  text-decoration: none;
+  color: rgb(68, 68, 68);
+}
+.image-gallery__likes-page-subheading-container a:hover {
+  color: black;
+  transition: 0.2s;
+}
+.image-gallery__likes-page-hover-div {
+  position: relative;
+}
+.image-gallery__likes-page-subheading-img::after {
+  opacity: 0;
+  display: block;
+  content: "";
+  position: absolute;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  top: -4px;
+  left: -4px;
+  background-color: rgb(0, 0, 0);
+  transition: 0.125s linear;
+}
+.image-gallery__likes-page-hover-div:hover
+  .image-gallery__likes-page-subheading-img::after {
+  opacity: 0.25 !important;
+  transition: 0.3s;
+}
+.image-gallery__likes-page-subheading-username-link {
+  border-bottom: 2px dotted rgba(0, 0, 0, 0.3);
+  transition: 0.2s;
+}
+.image-gallery__likes-page-subheading-username-link:hover {
+  border-bottom: 2px dotted black;
+  transition: 0.4s !important;
 }
 .image-gallery__sort-filter-dropdown-container {
   gap: 1.25rem;
@@ -543,7 +590,7 @@ button {
   top: 13px;
   left: 13.5px;
 }
-.image-gallery__like-button-filled {
+.image-gallery__like-button-icon-filled {
   color: red;
   z-index: 105;
   animation: likeAnimation 0.4s;
@@ -568,7 +615,7 @@ button {
   pointer-events: none;
   border-radius: 10px;
 }
-.image-gallery__image-author-name-link {
+.image-gallery__image-author-link-container {
   cursor: pointer;
   position: absolute;
   bottom: 0px;
@@ -593,6 +640,100 @@ button {
   border-radius: 50%;
   width: 40px;
   height: 40px;
+}
+
+@media (width < 450px) {
+  .searchHeading {
+    font-size: 1.25rem !important;
+    margin-top: 0 !important;
+  }
+}
+
+@media (width < 500px) {
+  .image-gallery__download-button-container {
+    font-size: 1rem !important;
+  }
+}
+
+@media (width < 650px) {
+  .image-gallery__like-button-container {
+    padding: 2px 23px 0px 0px;
+    height: 25px;
+    width: 25px;
+    background-color: rgba(0, 0, 0, 0) !important;
+  }
+  .image-gallery__like-button-icon {
+    top: 2px;
+    left: 5px;
+  }
+  .image-gallery__like-button-icon-filled {
+    animation: likeAnimationZoomedIn 0.4s !important;
+  }
+  .image-gallery__image-overlay-container {
+    opacity: 1;
+  }
+  .image-gallery__like-button-container {
+    /* background-color: rgba(0, 0, 0, 0) !important; */
+    color: white !important;
+  }
+  .image-gallery__download-button-container {
+    background-color: rgba(0, 0, 0, 0) !important;
+    color: white !important;
+    font-size: 1.25rem;
+    bottom: 10px !important;
+    padding-bottom: 0rem !important;
+    padding-right: 0.25rem !important;
+  }
+  .image-gallery__image-author-link-container {
+    opacity: 0;
+  }
+}
+
+@media (width < 710px) {
+  .image-gallery__dropdown-and-subheading-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .image-gallery__sort-filter-dropdown-container {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+  }
+  .freeStockPhotosHeading {
+    padding-bottom: 0.5rem;
+    margin-left: 4px !important;
+    margin-top: 2.75rem;
+  }
+  .image-gallery__dropdown-button {
+    margin-left: 6px !important;
+  }
+}
+
+@media (width < 800px) {
+  .sortingBarCont1 {
+    border-bottom: 1px solid rgb(228, 228, 228);
+  }
+}
+
+@media (width < 900px) {
+  .image-gallery__dropdown-and-subheading-container {
+    margin-right: 9px;
+  }
+}
+
+@media (width < 901px) {
+  .image-gallery__image-container {
+    margin: 7px;
+  }
+  .freeStockPhotosHeading {
+    margin-left: 6px;
+  }
+}
+
+@media (width < 1000px) {
+  .searchHeading {
+    font-size: 2rem !important;
+    margin-top: 0 !important;
+  }
 }
 
 /* .logo h1 {
@@ -684,7 +825,7 @@ button {
   height: 30px;
 }
 
-.profilePicAuthor {
+.image-gallery__image-author-profile-pic {
   border-radius: 50%;
   width: 40px;
   height: 40px;
@@ -947,7 +1088,7 @@ button {
 }
 
 .imgGalleryCont1 {
-  max-width: 1467px;
+  width: 1467px;
   margin: auto;
   margin-top: 0.6rem;
   margin-bottom: 4.25rem;
@@ -1007,7 +1148,7 @@ button {
   transition: 0.4s !important;
 }
 
-.imgGalleryImgCont1 {
+.image-gallery__image-container {
   position: relative;
   font-size: 1rem;
   color: rgb(73, 73, 73);
@@ -1018,7 +1159,7 @@ button {
 }
 
 /* imgoverlay black thing */
-.imgGalleryImgCont1:hover::after {
+.image-gallery__image-container:hover::after {
   opacity: 1;
   box-shadow: inset 0px 0px 30px 60px rgba(0, 0, 0, 0.15);
   content: "";
@@ -1032,11 +1173,11 @@ button {
   pointer-events: none;
 }
 
-.imgGalleryImgOverlay1 {
+.image-gallery__image-overlay-container {
   opacity: 0;
 }
 
-.imgGalleryImgCont1:hover .imgGalleryImgOverlay1 {
+.image-gallery__image-container:hover .image-gallery__image-overlay-container {
   opacity: 1;
   position: initial;
 }
@@ -1133,14 +1274,14 @@ button {
   font-weight: 500;
 }
 
-.imgGalleryImg1 {
+.image-gallery__image {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
 
-.likeButtonContainer1 {
+.image-gallery__like-button-container {
   cursor: pointer;
   position: absolute;
   top: 10px;
@@ -1153,7 +1294,7 @@ button {
   z-index: 100;
 }
 
-.likeButtonHeart1 {
+.image-gallery__like-button-icon {
   font-size: 1rem;
   border-radius: 10px;
   pointer-events: none;
@@ -1163,7 +1304,7 @@ button {
   left: 13.5px;
 }
 
-.likeButtonLikedFill1 {
+.image-gallery__like-button-icon-filled {
   color: red;
   z-index: 105;
   animation: likeAnimation 0.4s;
@@ -1276,7 +1417,7 @@ button {
   }
 }
 
-.downloadButtonCont1 {
+.image-gallery__download-button-container {
   cursor: pointer;
   position: absolute;
   z-index: 100;
@@ -1289,21 +1430,21 @@ button {
   padding: 8.5px 13px;
 }
 
-.downloadButton1 {
+.image-gallery__download-button-icon {
   z-index: 100;
   pointer-events: none;
   border-radius: 10px;
 }
 
-.likeButtonContainer1:hover {
+.image-gallery__like-button-container:hover {
   background-color: #f1f1f1;
 }
 
-.downloadButtonCont1:hover {
+.image-gallery__download-button-container:hover {
   background-color: #f1f1f1;
 }
 
-.imgAuthor1 {
+.image-gallery__image-author-link-container {
   cursor: pointer;
   position: absolute;
   bottom: 0px;
@@ -1320,7 +1461,7 @@ button {
   gap: 0.425rem;
 }
 
-.imgAuthor1:hover {
+.image-gallery__image-author-link-container:hover {
   background: none;
   color: #f1f1f1;
   text-decoration: underline;
@@ -1509,7 +1650,7 @@ button {
   /* margin-top: 1.5rem; */
 }
 
-.gallerySortBar {
+.image-gallery__sort-filter-dropdown-container {
   gap: 1.25rem;
   /* margin: auto; */
   justify-content: center;
@@ -1517,7 +1658,7 @@ button {
   margin-top: 2rem;
 }
 
-.myPicsGallerySortBar {
+.myPicsimage-gallery__sort-filter-dropdown-container {
   gap: 20px;
   padding: 1rem;
   padding-left: 1.5rem;
@@ -1528,13 +1669,13 @@ button {
   justify-content: space-between;
 }
 
-.myPicsGallerySortBar-leftContainer {
+.myPicsimage-gallery__sort-filter-dropdown-container-leftContainer {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-.myPicsGallerySortBar-rightContainer {
+.myPicsimage-gallery__sort-filter-dropdown-container-rightContainer {
   display: flex;
   align-items: center;
   gap: 1.65rem;
@@ -1563,11 +1704,11 @@ button {
   border-radius: 4px;
 }
 
-.galleryDropDownButton {
+.image-gallery__dropdown-button {
   display: flex;
 }
 
-.galleryDropDownButton .btn-primary {
+.image-gallery__dropdown-button .btn-primary {
   background-color: white;
   color: gray;
   border: none;
@@ -1579,7 +1720,7 @@ button {
   width: 100%;
 }
 
-.galleryDropDownButton .btn-primary:hover {
+.image-gallery__dropdown-button .btn-primary:hover {
   color: gray;
   border: none;
   outline: 1.5px solid rgba(94, 94, 94, 0.412);
@@ -2393,7 +2534,7 @@ button {
   width: 100px;
 }
 
-.photosByContainer {
+.image-gallery__dropdown-and-subheading-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -2440,7 +2581,7 @@ button {
 }
 
 @media (width < 500px) {
-  .downloadButtonCont1 {
+  .image-gallery__download-button-container {
     font-size: 1rem !important;
   }
 }
@@ -2452,30 +2593,30 @@ button {
 }
 
 @media (width < 650px) {
-  .likeButtonContainer1 {
+  .image-gallery__like-button-container {
     padding: 2px 23px 0px 0px;
     height: 25px;
     width: 25px;
     background-color: rgba(0, 0, 0, 0) !important;
   }
-  .likeButtonHeart1 {
+  .image-gallery__like-button-icon {
     top: 2px;
     left: 5px;
   }
-  .likeButtonLikedFill1 {
+  .image-gallery__like-button-icon-filled {
     animation: likeAnimationZoomedIn 0.4s !important;
   }
 }
 
 @media (width < 650px) {
-  .imgGalleryImgOverlay1 {
+  .image-gallery__image-overlay-container {
     opacity: 1;
   }
-  .likeButtonContainer1 {
+  .image-gallery__like-button-container {
     /* background-color: rgba(0, 0, 0, 0) !important; */
     color: white !important;
   }
-  .downloadButtonCont1 {
+  .image-gallery__download-button-container {
     background-color: rgba(0, 0, 0, 0) !important;
     color: white !important;
     font-size: 1.25rem;
@@ -2483,17 +2624,17 @@ button {
     padding-bottom: 0rem !important;
     padding-right: 0.25rem !important;
   }
-  .imgAuthor1 {
+  .image-gallery__image-author-link-container {
     opacity: 0;
   }
 }
 
 @media (width < 710px) {
-  .photosByContainer {
+  .image-gallery__dropdown-and-subheading-container {
     flex-direction: column;
     align-items: flex-start;
   }
-  .gallerySortBar {
+  .image-gallery__sort-filter-dropdown-container {
     margin-top: 0;
     margin-bottom: 1.5rem;
   }
@@ -2502,7 +2643,7 @@ button {
     margin-left: 4px !important;
     margin-top: 2.75rem;
   }
-  .galleryDropDownButton {
+  .image-gallery__dropdown-button {
     margin-left: 6px !important;
   }
 }
@@ -2524,7 +2665,7 @@ button {
 }
 
 @media (width < 900px) {
-  .photosByContainer {
+  .image-gallery__dropdown-and-subheading-container {
     margin-right: 9px;
   }
 }
@@ -2537,7 +2678,7 @@ button {
 }
 
 @media (width < 901px) {
-  .imgGalleryImgCont1 {
+  .image-gallery__image-container {
     margin: 7px;
   }
   .freeStockPhotosHeading {

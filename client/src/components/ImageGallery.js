@@ -65,7 +65,7 @@ const ImageGallery = ({
           <div>
             <FontAwesomeIcon
               icon={faHeart}
-              className="likeButtonHeart1 likeButtonLikedFill1"
+              className="image-gallery__like-button-icon image-gallery__like-button-icon-filled"
             ></FontAwesomeIcon>
           </div>
         );
@@ -74,14 +74,14 @@ const ImageGallery = ({
           <div>
             <FontAwesomeIcon
               icon={farHeart}
-              className="likeButtonHeart1"
+              className="image-gallery__like-button-icon"
             ></FontAwesomeIcon>
           </div>
         );
       }
       return (
         //each of these is one image item in the image gallery. Includes overlay with like, download and pfp buttons
-        <div key={index} className="imgGalleryImgCont1">
+        <div key={index} className="image-gallery__image-container">
           <a href={`http://localhost:3000/image/${element.title}`}>
             <img
               src={
@@ -93,19 +93,19 @@ const ImageGallery = ({
                 ) +
                 ".jpg"
               }
-              className="imgGalleryImg1"
+              className="image-gallery__image"
             ></img>
           </a>
 
-          <div className="imgGalleryImgOverlay1">
+          <div className="image-gallery__image-overlay-container">
             <a
-              className="likeButtonContainer1"
+              className="image-gallery__like-button-container"
               onClick={(e) => handleLike(e, element, index)}
             >
               {likeButton}
             </a>
             <a
-              className="downloadButtonCont1"
+              className="image-gallery__download-button-container"
               href={
                 element.secure_url.slice(0, 50) +
                 "q_100/fl_attachment/" +
@@ -117,15 +117,18 @@ const ImageGallery = ({
             >
               <FontAwesomeIcon
                 icon={faDownload}
-                className="downloadButton1"
+                className="image-gallery__download-button-icon"
               ></FontAwesomeIcon>
             </a>
             <div>
               <a
-                className="imgAuthor1"
+                className="image-gallery__image-author-link-container"
                 href={`http://localhost:3000/User/${element.uploadedBy}`}
               >
-                <img src={element.test[0].pfp} className="profilePicAuthor" />
+                <img
+                  src={element.test[0].pfp}
+                  className="image-gallery__image-author-profile-pic"
+                />
                 {element.uploadedBy}
               </a>
             </div>

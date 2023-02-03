@@ -65,7 +65,7 @@ const LikesPage = ({ curUser, loggedIn }) => {
         navPositionClass={"fixed"}
         navColorClass={"white"}
       />
-      <div className="galleryContainer">
+      <div>
         <div className="galleryHeadingAndSortContainer">
           <div className="galleryHeading">
             {whosLikesIsItHeading}
@@ -75,21 +75,21 @@ const LikesPage = ({ curUser, loggedIn }) => {
           </div>
         </div>
 
-        <div className="imgGalleryCont1">
-          <div className="photosByContainer">
-            <h1 className="freeStockPhotosHeading">
-              <div className="hoverThisForPFPOverlay">
+        <div className="image-gallery__container">
+          <div className="image-gallery__dropdown-and-subheading-container">
+            <h1 className="image-gallery__likes-page-subheading-container">
+              <div className="image-gallery__likes-page-hover-div">
                 <a
-                  href={`http://localhost:3000/Account/${username}`}
-                  className="freeStockPhotosHeadingImg"
+                  href={`http://localhost:3000/User/${username}`}
+                  className="image-gallery__likes-page-subheading-img"
                 >
                   <img src={pfp} className="profilePic" />
                 </a>
               </div>
 
               <a
-                href={`http://localhost:3000/Account/${username}`}
-                className="likesPageHeadingUsernameLink"
+                href={`http://localhost:3000/User/${username}`}
+                className="image-gallery__likes-page-subheading-username-link"
               >
                 {username}
               </a>

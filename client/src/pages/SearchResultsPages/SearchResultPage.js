@@ -34,48 +34,37 @@ const SearchResultsPage = ({ curUser, loggedIn }) => {
         navPositionClass={"fixed"}
         navColorClass={"white"}
       />
-      <div className="imgGalleryCont1">
-        <div className="photosByContainer">
-          <div>
-            <h1
-              className="freeStockPhotosHeading"
-              style={{ fontSize: "3rem", color: "rgba(0, 0, 0, 0.65)" }}
-            >
-              {searchQuery} Images
-            </h1>
-          </div>
-        </div>
-        <div className="imgGalleryCont1">
-          <div
-            className="photosByContainer"
-            style={{ height: "20px", marginBottom: "27px" }}
-          >
-            <h1 className="freeStockPhotosHeading">
-              {imgGalleryLength} results
-            </h1>
-            <ImageGallerySortFilterAndSubheadingComponent
-              sort={sort}
-              setSort={setSort}
-              sortTitle={sortTitle}
-              setSortTitle={setSortTitle}
-              filter={filter}
-              setFilter={setFilter}
-              filterTitle={filterTitle}
-              setFilterTitle={setFilterTitle}
-              imgGalleryLength={imgGalleryLength}
-              page={"searchPage"}
-            />
-          </div>
-          <ImageGallery
-            curUser={curUser}
-            loggedIn={loggedIn}
+      <div className="image-gallery__container">
+        <h1 className="image-gallery__searchquery-heading">
+          {searchQuery} Images
+        </h1>
+        <div
+          className="image-gallery__dropdown-and-subheading-container"
+          style={{ height: "20px", marginBottom: "27px" }}
+        >
+          <h1>{imgGalleryLength} results</h1>
+          <ImageGallerySortFilterAndSubheadingComponent
             sort={sort}
+            setSort={setSort}
+            sortTitle={sortTitle}
+            setSortTitle={setSortTitle}
             filter={filter}
+            setFilter={setFilter}
+            filterTitle={filterTitle}
+            setFilterTitle={setFilterTitle}
             imgGalleryLength={imgGalleryLength}
-            setImgGalleryLength={setImgGalleryLength}
-            type={"search"}
+            page={"searchPage"}
           />
         </div>
+        <ImageGallery
+          curUser={curUser}
+          loggedIn={loggedIn}
+          sort={sort}
+          filter={filter}
+          imgGalleryLength={imgGalleryLength}
+          setImgGalleryLength={setImgGalleryLength}
+          type={"search"}
+        />
       </div>
     </div>
   );

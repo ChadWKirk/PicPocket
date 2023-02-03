@@ -25,10 +25,13 @@ const ImageGallerySortFilterAndSubheadingComponent = ({
     );
   }
   return (
-    <div className="gallerySortBar d-flex">
-      <DropdownButton className="galleryDropDownButton" title={`${sortTitle}`}>
+    <div className="image-gallery__sort-filter-dropdown-container d-flex">
+      <DropdownButton
+        className="image-gallery__dropdown-button"
+        title={`${sortTitle}`}
+      >
         <Dropdown.Item
-          className="galleryDropDownItem"
+          className="image-gallery__dropdown-item"
           onClick={() => {
             setSort("most-recent");
             setSortTitle("Most Recent");
@@ -37,7 +40,7 @@ const ImageGallerySortFilterAndSubheadingComponent = ({
           Most Recent
         </Dropdown.Item>
         <Dropdown.Item
-          className="galleryDropDownItem"
+          className="image-gallery__dropdown-item"
           onClick={() => {
             setSort("oldest");
             setSortTitle("Oldest");
@@ -46,7 +49,7 @@ const ImageGallerySortFilterAndSubheadingComponent = ({
           Oldest
         </Dropdown.Item>
         <Dropdown.Item
-          className="galleryDropDownItem"
+          className="image-gallery__dropdown-item"
           onClick={() => {
             setSort("aToz");
             setSortTitle("A - Z");
@@ -55,7 +58,7 @@ const ImageGallerySortFilterAndSubheadingComponent = ({
           A - Z
         </Dropdown.Item>
         <Dropdown.Item
-          className="galleryDropDownItem"
+          className="image-gallery__dropdown-item"
           onClick={() => {
             setSort("zToa");
             setSortTitle("Z - A");
@@ -64,7 +67,7 @@ const ImageGallerySortFilterAndSubheadingComponent = ({
           Z - A
         </Dropdown.Item>
         <Dropdown.Item
-          className="galleryDropDownItem"
+          className="image-gallery__dropdown-item"
           onClick={() => {
             setSort("leastLikes");
             setSortTitle("Least Popular");
@@ -73,7 +76,7 @@ const ImageGallerySortFilterAndSubheadingComponent = ({
           Least Popular
         </Dropdown.Item>
         <Dropdown.Item
-          className="galleryDropDownItem"
+          className="image-gallery__dropdown-item"
           onClick={() => {
             setSort("mostLikes");
             setSortTitle("Popular");
@@ -83,11 +86,11 @@ const ImageGallerySortFilterAndSubheadingComponent = ({
         </Dropdown.Item>
       </DropdownButton>
       <DropdownButton
-        className="galleryDropDownButton"
+        className="image-gallery__dropdown-button"
         title={`${filterTitle}`}
       >
         <Dropdown.Item
-          className="galleryDropDownItem"
+          className="image-gallery__dropdown-item"
           onClick={() => {
             setFilter("all-types");
             setFilterTitle("All Types");
@@ -96,7 +99,7 @@ const ImageGallerySortFilterAndSubheadingComponent = ({
           All types
         </Dropdown.Item>
         <Dropdown.Item
-          className="galleryDropDownItem"
+          className="image-gallery__dropdown-item"
           onClick={() => {
             setFilter("Photo");
             setFilterTitle("Photo");
@@ -105,7 +108,7 @@ const ImageGallerySortFilterAndSubheadingComponent = ({
           Photo
         </Dropdown.Item>
         <Dropdown.Item
-          className="galleryDropDownItem"
+          className="image-gallery__dropdown-item"
           onClick={() => {
             setFilter("Illustration");
             setFilterTitle("Illustration");
