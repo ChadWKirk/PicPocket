@@ -1,8 +1,6 @@
 import { React, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Button from "react-bootstrap/Button";
-// import { BsCartCheck } from "react-icons/bs";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -21,62 +19,10 @@ const MainPageNavBar = ({
   navPositionClass,
   navColorClass,
 }) => {
-  const [navbarColorTheme, setNavbarColorTheme] = useState("transparent");
-  const [hamIsOpen, setHamIsOpen] = useState(false);
-
-  let hamOpenOrClosed;
-  if (hamIsOpen) {
-    hamOpenOrClosed = "open";
-  } else {
-    hamOpenOrClosed = "closed";
-  }
-
-  //go to /search/whateverYouSearchFor when hitting enter or clicking search button
-  var navigate = useNavigate();
-  let inputValue;
-
-  function onChange(event) {
-    inputValue = event.target.value;
-    console.log(inputValue);
-  }
-
-  function onSubmit() {
-    navigate(`/search/${inputValue}/most-recent/all-types`);
-  }
-  //navbuttons
-  let accButton;
-  let hamburgerButton;
-  let hamIconOrX;
-  //media queries for hamburger. if hamOpen - remove pfp button if width < 730px
-  const [hamIconOpen, setHamIconOpen] = useState(false);
-  //if ham open or close
-  if (hamIconOpen) {
-    hamIconOrX = (
-      <FontAwesomeIcon icon={faXmark} className="navbar__hamburger-icon-x" />
-    );
-    document.body.classList.add("overflowYHidden");
-  } else if (!hamIconOpen) {
-    hamIconOrX = (
-      <FontAwesomeIcon icon={faBars} className="navbar__hamburger-icon-bars" />
-    );
-
-    document.body.classList.remove("overflowYHidden");
-  }
-
-  let siButton;
-  let suButton;
-  let uploadButton;
-  let smallUploadButton;
-  let timer;
-  let leaveTimer;
-
-  const [hoverClass, setHoverClass] = useState(false);
-
-  const [userInfo, setUserInfo] = useState();
+  //fetch current user's info to get their profile picture to display in accButton
   const [userPFP, setPFP] = useState();
-
   useEffect(() => {
-    async function userInfoFetch() {
+    async function fetchUserInfo() {
       await fetch(`http://localhost:5000/${curUser}/info`, {
         method: "GET",
         headers: { "Content-type": "application/json" },
@@ -86,7 +32,6 @@ const MainPageNavBar = ({
           .then((resJSON) => JSON.stringify(resJSON))
           .then((stringJSON) => JSON.parse(stringJSON))
           .then((parsedJSON) => {
-            setUserInfo(parsedJSON[0]);
             setPFP(
               parsedJSON[0].pfp.slice(0, 50) +
                 "q_60/c_scale,w_200/dpr_auto/" +
@@ -99,12 +44,58 @@ const MainPageNavBar = ({
           })
       );
     }
-
-    userInfoFetch();
+    fetchUserInfo();
   }, []);
-  let icon;
-  if (hoverClass) {
-    icon = (
+
+  //check if ham menu is open or closed. sets data-hamOpenOrClosed attribute to use appropriate CSS variable values for navbar
+  const [hamDataIsOpen, setHamDataIsOpen] = useState(false);
+  let hamOpenOrClosed;
+  if (hamDataIsOpen) {
+    hamOpenOrClosed = "open";
+  } else {
+    hamOpenOrClosed = "closed";
+  }
+
+  //go to /search/whateverYouSearchFor when hitting enter or clicking search button
+  let navigate = useNavigate();
+  let inputValue;
+  function onChange(event) {
+    inputValue = event.target.value;
+  }
+  function onSubmit() {
+    navigate(`/search/${inputValue}/most-recent/all-types`);
+  }
+
+  //navbuttons to conditionally render based on whether you're logged in or not
+  let signInButton;
+  let signUpButton;
+  let accButton;
+  let smallUploadButton;
+  let uploadButton;
+
+  //hamburger menu button that is rendered in the DOM
+  let hamburgerButton;
+
+  //hamburger icon. either bars or x depending on whether it is open or closed
+  let hamIcon;
+  const [hamIconOpen, setHamIconOpen] = useState(false);
+  if (hamIconOpen) {
+    hamIcon = (
+      <FontAwesomeIcon icon={faXmark} className="navbar__hamburger-icon-x" />
+    );
+    document.body.classList.add("overflowYHidden");
+  } else if (!hamIconOpen) {
+    hamIcon = (
+      <FontAwesomeIcon icon={faBars} className="navbar__hamburger-icon-bars" />
+    );
+    document.body.classList.remove("overflowYHidden");
+  }
+
+  //When accButton is hovered, changes isHovered to true and vice versa. When isHovered is false, it's a down arrow. When isHovered is true, it's an up arrow.
+  const [isHovered, setIsHovered] = useState(false);
+  let accButtonArrowIcon;
+  if (isHovered) {
+    accButtonArrowIcon = (
       <FontAwesomeIcon
         className="navbar__up-arrow-icon"
         icon={faChevronUp}
@@ -112,7 +103,7 @@ const MainPageNavBar = ({
       />
     );
   } else {
-    icon = (
+    accButtonArrowIcon = (
       <FontAwesomeIcon
         className="navbar__down-arrow-icon"
         icon={faChevronDown}
@@ -120,22 +111,27 @@ const MainPageNavBar = ({
       />
     );
   }
+
+  //Changes isHovered to true or false which changes the arrow icon to either an up or down arrow. Has a timer so it doesn't change as soon as you hover over the account button.
+  //Clears timer so the menu doesn't appear if you just quickly pass the cursor over it.
+  let onHoverTimer; //when accbutton is hovered, start timer to change isHovered to true
+  let offHoverTimer; //when accbutton is not hovered, start timer to change isHovered to false
   if (loggedIn) {
     accButton = (
       <div
         className="navbar__account-button-and-list-container"
         onMouseEnter={() => {
-          clearTimeout(leaveTimer);
-          timer = setTimeout(() => {
-            setHoverClass(true);
-            icon = faChevronUp;
+          clearTimeout(offHoverTimer);
+          onHoverTimer = setTimeout(() => {
+            setIsHovered(true);
+            accButtonArrowIcon = faChevronUp;
           }, 175);
         }}
         onMouseLeave={() => {
-          clearTimeout(timer);
-          leaveTimer = setTimeout(() => {
-            setHoverClass(false);
-            icon = faChevronDown;
+          clearTimeout(onHoverTimer);
+          offHoverTimer = setTimeout(() => {
+            setIsHovered(false);
+            accButtonArrowIcon = faChevronDown;
           }, 175);
         }}
       >
@@ -146,11 +142,11 @@ const MainPageNavBar = ({
           <div className="navbar__account-button-hover-overlay-div">
             <img src={userPFP} className="profile-pic__small" />
           </div>
-          {icon}
+          {accButtonArrowIcon}
         </a>
         <div
           className={
-            hoverClass
+            isHovered
               ? `navbar__dropdown-menu-container`
               : `navbar__dropdown-menu-container displayNone`
           }
@@ -189,29 +185,29 @@ const MainPageNavBar = ({
       </a>
     );
 
-    siButton = null;
-    suButton = null;
+    signInButton = null;
+    signUpButton = null;
     hamburgerButton = (
       <div
         className="navbar__hamburger-icon-bars"
-        onClick={() => setHamIsOpen(!hamIsOpen)}
+        onClick={() => setHamDataIsOpen(!hamDataIsOpen)}
       >
         <button
           className="navbarDropButton"
           onClick={() => setHamIconOpen(!hamIconOpen)}
         >
-          <div>{hamIconOrX}</div>
+          <div>{hamIcon}</div>
         </button>
       </div>
     );
   } else {
     accButton = null;
-    siButton = (
+    signInButton = (
       <a href="/SignIn" className="navbar__login-button">
         Log In
       </a>
     );
-    suButton = (
+    signUpButton = (
       <a href="/SignUp" className="navbar__CTA-button-1">
         Join
       </a>
@@ -224,7 +220,6 @@ const MainPageNavBar = ({
       headers: { "Content-type": "application/json" },
     });
   }
-  console.log(hamOpenOrClosed);
   return (
     <div
       data-hamOpenOrClosed={hamOpenOrClosed}
@@ -249,8 +244,8 @@ const MainPageNavBar = ({
           </button>
         </form>
         <div className="navbar__buttons-container">
-          {siButton}
-          {suButton}
+          {signInButton}
+          {signUpButton}
           {accButton}
           {smallUploadButton}
           {uploadButton}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import NavBar from "../components/NavBar";
+// import NavBar from "../components/NavBar";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import ImageGallery from "../components/ImageGallery";
@@ -50,7 +50,7 @@ const UserPage = ({ curUser, loggedIn }) => {
 
   return (
     <div>
-      <NavBar curUser={curUser} loggedIn={loggedIn} />
+      {/* <NavBar curUser={curUser} loggedIn={loggedIn} /> */}
 
       <div className="galleryContainer">
         <div className="galleryHeadingAndSortContainer">

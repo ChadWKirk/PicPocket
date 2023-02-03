@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import NavBar from "../../components/NavBar";
+// import NavBar from "../../components/NavBar";
 import ChangePFPBtn from "../../components/ChangePFPBtn";
 import Toast from "../../components/Toast";
 import { useNavigate } from "react-router-dom";
@@ -202,7 +202,7 @@ const UserSettingsPage = ({ curUser, loggedIn }) => {
 
   return (
     <div>
-      <NavBar curUser={curUser} loggedIn={loggedIn} />
+      {/* <NavBar curUser={curUser} loggedIn={loggedIn} /> */}
       <div>
         <img src={userPFP} className="profilePicBig" />
         <div>

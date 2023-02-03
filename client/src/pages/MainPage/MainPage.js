@@ -7,7 +7,6 @@ import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import WhiteNavBar from "../../components/WhiteNavBar";
 
 const MainPage = ({ curUser, loggedIn }) => {
   //sticky nav bar
