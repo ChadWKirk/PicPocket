@@ -66,22 +66,22 @@ const UserPage = ({ curUser, loggedIn }) => {
           </div>
         </div>
 
-        <div className="imgGalleryCont1">
-          <div className="photosByContainer">
-            <h1 className="freeStockPhotosHeading">Photos By {username}</h1>
-            <ImageGallerySortFilterAndSubheadingComponent
-              sort={sort}
-              setSort={setSort}
-              sortTitle={sortTitle}
-              setSortTitle={setSortTitle}
-              filter={filter}
-              setFilter={setFilter}
-              filterTitle={filterTitle}
-              setFilterTitle={setFilterTitle}
-              imgGalleryLength={imgGalleryLength}
-              page={"userPage"}
-            />
-          </div>
+        <div className="image-gallery__container">
+          {/* <div className="image-gallery__dropdown-and-subheading-container"> */}
+          <ImageGallerySortFilterAndSubheadingComponent
+            sort={sort}
+            setSort={setSort}
+            sortTitle={sortTitle}
+            setSortTitle={setSortTitle}
+            filter={filter}
+            setFilter={setFilter}
+            filterTitle={filterTitle}
+            setFilterTitle={setFilterTitle}
+            imgGalleryLength={imgGalleryLength}
+            username={username}
+            page={"userPage"}
+          />
+          {/* </div> */}
           <ImageGallery
             curUser={curUser}
             loggedIn={loggedIn}

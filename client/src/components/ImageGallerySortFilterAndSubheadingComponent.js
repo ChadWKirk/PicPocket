@@ -14,109 +14,132 @@ const ImageGallerySortFilterAndSubheadingComponent = ({
   setFilterTitle,
   imgGalleryLength,
   searchQuery,
+  pfp,
+  username,
   page,
 }) => {
   let subHeading;
   if (page == "searchPage") {
+    subHeading = <h1>{imgGalleryLength} results</h1>;
+  } else if (page == "likesPage") {
     subHeading = (
-      <div>
-        <h4>{imgGalleryLength} results</h4>
-      </div>
+      <h1 className="image-gallery__likes-page-subheading-container">
+        <div className="image-gallery__likes-page-hover-div">
+          <a
+            href={`http://localhost:3000/User/${username}`}
+            className="image-gallery__likes-page-subheading-img"
+          >
+            <img src={pfp} className="profilePic" />
+          </a>
+        </div>
+
+        <a
+          href={`http://localhost:3000/User/${username}`}
+          className="image-gallery__likes-page-subheading-username-link"
+        >
+          {username}
+        </a>
+      </h1>
     );
+  } else if (page == "userPage") {
+    subHeading = <h1>Photos By {username}</h1>;
   }
   return (
-    <div className="image-gallery__sort-filter-dropdown-container d-flex">
-      <DropdownButton
-        className="image-gallery__dropdown-button"
-        title={`${sortTitle}`}
-      >
-        <Dropdown.Item
-          className="image-gallery__dropdown-item"
-          onClick={() => {
-            setSort("most-recent");
-            setSortTitle("Most Recent");
-          }}
+    <div className="image-gallery__dropdown-and-subheading-container">
+      {subHeading}
+      <div className="image-gallery__sort-filter-dropdown-container d-flex">
+        <DropdownButton
+          className="image-gallery__dropdown-button"
+          title={`${sortTitle}`}
         >
-          Most Recent
-        </Dropdown.Item>
-        <Dropdown.Item
-          className="image-gallery__dropdown-item"
-          onClick={() => {
-            setSort("oldest");
-            setSortTitle("Oldest");
-          }}
+          <Dropdown.Item
+            className="image-gallery__dropdown-item"
+            onClick={() => {
+              setSort("most-recent");
+              setSortTitle("Most Recent");
+            }}
+          >
+            Most Recent
+          </Dropdown.Item>
+          <Dropdown.Item
+            className="image-gallery__dropdown-item"
+            onClick={() => {
+              setSort("oldest");
+              setSortTitle("Oldest");
+            }}
+          >
+            Oldest
+          </Dropdown.Item>
+          <Dropdown.Item
+            className="image-gallery__dropdown-item"
+            onClick={() => {
+              setSort("aToz");
+              setSortTitle("A - Z");
+            }}
+          >
+            A - Z
+          </Dropdown.Item>
+          <Dropdown.Item
+            className="image-gallery__dropdown-item"
+            onClick={() => {
+              setSort("zToa");
+              setSortTitle("Z - A");
+            }}
+          >
+            Z - A
+          </Dropdown.Item>
+          <Dropdown.Item
+            className="image-gallery__dropdown-item"
+            onClick={() => {
+              setSort("leastLikes");
+              setSortTitle("Least Popular");
+            }}
+          >
+            Least Popular
+          </Dropdown.Item>
+          <Dropdown.Item
+            className="image-gallery__dropdown-item"
+            onClick={() => {
+              setSort("mostLikes");
+              setSortTitle("Popular");
+            }}
+          >
+            Popular
+          </Dropdown.Item>
+        </DropdownButton>
+        <DropdownButton
+          className="image-gallery__dropdown-button"
+          title={`${filterTitle}`}
         >
-          Oldest
-        </Dropdown.Item>
-        <Dropdown.Item
-          className="image-gallery__dropdown-item"
-          onClick={() => {
-            setSort("aToz");
-            setSortTitle("A - Z");
-          }}
-        >
-          A - Z
-        </Dropdown.Item>
-        <Dropdown.Item
-          className="image-gallery__dropdown-item"
-          onClick={() => {
-            setSort("zToa");
-            setSortTitle("Z - A");
-          }}
-        >
-          Z - A
-        </Dropdown.Item>
-        <Dropdown.Item
-          className="image-gallery__dropdown-item"
-          onClick={() => {
-            setSort("leastLikes");
-            setSortTitle("Least Popular");
-          }}
-        >
-          Least Popular
-        </Dropdown.Item>
-        <Dropdown.Item
-          className="image-gallery__dropdown-item"
-          onClick={() => {
-            setSort("mostLikes");
-            setSortTitle("Popular");
-          }}
-        >
-          Popular
-        </Dropdown.Item>
-      </DropdownButton>
-      <DropdownButton
-        className="image-gallery__dropdown-button"
-        title={`${filterTitle}`}
-      >
-        <Dropdown.Item
-          className="image-gallery__dropdown-item"
-          onClick={() => {
-            setFilter("all-types");
-            setFilterTitle("All Types");
-          }}
-        >
-          All types
-        </Dropdown.Item>
-        <Dropdown.Item
-          className="image-gallery__dropdown-item"
-          onClick={() => {
-            setFilter("Photo");
-            setFilterTitle("Photo");
-          }}
-        >
-          Photo
-        </Dropdown.Item>
-        <Dropdown.Item
-          className="image-gallery__dropdown-item"
-          onClick={() => {
-            setFilter("Illustration");
-            setFilterTitle("Illustration");
-          }}
-        >
-          Illustration
-        </Dropdown.Item>
-      </DropdownButton>
+          <Dropdown.Item
+            className="image-gallery__dropdown-item"
+            onClick={() => {
+              setFilter("all-types");
+              setFilterTitle("All Types");
+            }}
+          >
+            All types
+          </Dropdown.Item>
+          <Dropdown.Item
+            className="image-gallery__dropdown-item"
+            onClick={() => {
+              setFilter("Photo");
+              setFilterTitle("Photo");
+            }}
+          >
+            Photo
+          </Dropdown.Item>
+          <Dropdown.Item
+            className="image-gallery__dropdown-item"
+            onClick={() => {
+              setFilter("Illustration");
+              setFilterTitle("Illustration");
+            }}
+          >
+            Illustration
+          </Dropdown.Item>
+        </DropdownButton>
+      </div>
     </div>
   );
 };

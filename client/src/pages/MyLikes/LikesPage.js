@@ -76,8 +76,8 @@ const LikesPage = ({ curUser, loggedIn }) => {
         </div>
 
         <div className="image-gallery__container">
-          <div className="image-gallery__dropdown-and-subheading-container">
-            <h1 className="image-gallery__likes-page-subheading-container">
+          {/* <div className="image-gallery__dropdown-and-subheading-container"> */}
+          {/* <h1 className="image-gallery__likes-page-subheading-container">
               <div className="image-gallery__likes-page-hover-div">
                 <a
                   href={`http://localhost:3000/User/${username}`}
@@ -93,20 +93,22 @@ const LikesPage = ({ curUser, loggedIn }) => {
               >
                 {username}
               </a>
-            </h1>
-            <ImageGallerySortFilterAndSubheadingComponent
-              sort={sort}
-              setSort={setSort}
-              sortTitle={sortTitle}
-              setSortTitle={setSortTitle}
-              filter={filter}
-              setFilter={setFilter}
-              filterTitle={filterTitle}
-              setFilterTitle={setFilterTitle}
-              imgGalleryLength={imgGalleryLength}
-              page={"likesPage"}
-            />
-          </div>
+            </h1> */}
+          <ImageGallerySortFilterAndSubheadingComponent
+            sort={sort}
+            setSort={setSort}
+            sortTitle={sortTitle}
+            setSortTitle={setSortTitle}
+            filter={filter}
+            setFilter={setFilter}
+            filterTitle={filterTitle}
+            setFilterTitle={setFilterTitle}
+            imgGalleryLength={imgGalleryLength}
+            pfp={pfp}
+            username={username}
+            page={"likesPage"}
+          />
+          {/* </div> */}
           {/* {resultsMap} */}
           <ImageGallery
             curUser={curUser}

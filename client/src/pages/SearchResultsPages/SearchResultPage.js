@@ -38,24 +38,24 @@ const SearchResultsPage = ({ curUser, loggedIn }) => {
         <h1 className="image-gallery__searchquery-heading">
           {searchQuery} Images
         </h1>
-        <div
+        {/* <div
           className="image-gallery__dropdown-and-subheading-container"
           style={{ height: "20px", marginBottom: "27px" }}
-        >
-          <h1>{imgGalleryLength} results</h1>
-          <ImageGallerySortFilterAndSubheadingComponent
-            sort={sort}
-            setSort={setSort}
-            sortTitle={sortTitle}
-            setSortTitle={setSortTitle}
-            filter={filter}
-            setFilter={setFilter}
-            filterTitle={filterTitle}
-            setFilterTitle={setFilterTitle}
-            imgGalleryLength={imgGalleryLength}
-            page={"searchPage"}
-          />
-        </div>
+        > */}
+
+        <ImageGallerySortFilterAndSubheadingComponent
+          sort={sort}
+          setSort={setSort}
+          sortTitle={sortTitle}
+          setSortTitle={setSortTitle}
+          filter={filter}
+          setFilter={setFilter}
+          filterTitle={filterTitle}
+          setFilterTitle={setFilterTitle}
+          imgGalleryLength={imgGalleryLength}
+          page={"searchPage"}
+        />
+        {/* </div> */}
         <ImageGallery
           curUser={curUser}
           loggedIn={loggedIn}
