@@ -306,7 +306,7 @@ const ImageViewPage = ({ curUser, loggedIn }) => {
       <div className="subBarCont1">
         <div className="subBarAuthor1">
           <img
-            src={require("./nature-4k-pc-full-hd-wallpaper-preview.jpg")}
+            // src={require("./nature-4k-pc-full-hd-wallpaper-preview.jpg")}
             className="profilePic"
           ></img>
           <h5>{curUser}</h5>

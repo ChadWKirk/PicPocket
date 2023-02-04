@@ -51,35 +51,37 @@ const Footer = ({ curUser, loggedIn }) => {
   }
   return (
     <div className="footerContainer">
-      {footerPicPocketContent}
-      <div>
-        <h4>Company</h4>
-        <div className="footerUnderline"> </div>
-        <ul>
-          <li>
-            <a href="/About">About Us</a>
-          </li>
-          <li>
-            <a href="/Privacy-Policy">Privacy Policy</a>
-          </li>
-          <li>
-            <a href="/Terms-And-Conditions">Terms And Conditions</a>
-          </li>
-          <li>
-            <a href="/Disclaimer">Disclaimer</a>
-          </li>
-          <li>
-            <a href="/Contact">Contact Us</a>
-          </li>
-        </ul>
-      </div>
-      <div className="footerText">
-        <i>
-          "This is a website I made to display my skills with the MERN stack. I
-          used several different websites for design and implementation
-          inspiration." - The Creator
-        </i>
-        <div>Copyright © 2023 PicPocket</div>
+      <div className="footer__contents-container">
+        {footerPicPocketContent}
+        <div>
+          <h4>Company</h4>
+          <div className="footerUnderline"> </div>
+          <ul>
+            <li>
+              <a href="/About">About Us</a>
+            </li>
+            <li>
+              <a href="/Privacy-Policy">Privacy Policy</a>
+            </li>
+            <li>
+              <a href="/Terms-And-Conditions">Terms And Conditions</a>
+            </li>
+            <li>
+              <a href="/Disclaimer">Disclaimer</a>
+            </li>
+            <li>
+              <a href="/Contact">Contact Us</a>
+            </li>
+          </ul>
+        </div>
+        <div className="footerText">
+          <i>
+            "This is a website I made to display my skills with the MERN stack.
+            I used several different websites for design and implementation
+            inspiration." - The Creator
+          </i>
+          <div>Copyright © 2023 PicPocket</div>
+        </div>
       </div>
     </div>
   );

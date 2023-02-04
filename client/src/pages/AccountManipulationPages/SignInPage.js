@@ -1,9 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-// import NavBar from "../../components/NavBar";
-import Logo from "../../components/Logo";
-import SearchBar from "../../components/SearchBar";
+import signInPageCollageImg from "../../images/PicPocket-SignIn-Collage2.png";
 
 const SignInPage = ({ curUser, loggedIn }) => {
   var [curUser2, setCurUser] = useState({
@@ -96,7 +94,12 @@ const SignInPage = ({ curUser, loggedIn }) => {
             </button>
           </form>
         </div>
-        <div className="signInPage--rightImgCont">img</div>
+        <div className="sign-in-page__collage-image-container">
+          <img
+            className="sign-in-page__collage-image"
+            src={signInPageCollageImg}
+          ></img>
+        </div>
       </div>
     </div>
   );
