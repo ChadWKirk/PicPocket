@@ -4,6 +4,18 @@
   box-sizing: border-box;
 }
 
+:root {
+  --siteContentsMaxWidth: 1510px;
+  --siteContentsMidWidth: 1400px;
+  --siteContentsLeastWidth: 1200px;
+  /* imgGalleryMarginBetweenImages is the Image Gallery's margin that separates each image. */
+  /* Use double that value to get side padding for other elements like navbar etc because each image in the gallery has the value on left AND right, so it makes it double when separating the images */
+  --imgGalleryMarginBetweenImages: 0.93rem;
+  --sideSpaceMargin: 0.93rem;
+  --sideSpaceMarginHalf: calc(var(--sideSpaceMargin) / 2);
+  --sideSpacePadding: 1.875rem;
+}
+
 [data-hamOpenOrClosed="closed"] {
   --navSearchDisplay: none;
   --hamburgerIconFontSize: 1rem;
@@ -104,8 +116,9 @@ button {
   z-index: 99999999999999999999999999;
 }
 .navbar__contents {
-  width: 95vw;
-  max-width: 1510px;
+  padding: 0 var(--sideSpacePadding);
+  width: 100vw;
+  max-width: var(--siteContentsMaxWidth);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -477,11 +490,12 @@ button {
 
 /* Image Gallery CSS */
 .image-gallery__container {
-  max-width: 1467px;
+  max-width: var(--siteContentsMidWidth);
   margin: auto;
   margin-top: 0.6rem;
   margin-bottom: 4.25rem;
-  padding: 0px 6px 0px 6px;
+  /* padding: 0px 6px 0px 6px; */
+  padding: 0 var(--sideSpaceMargin);
 }
 .image-gallery__searchquery-heading {
   margin-left: 15px;
@@ -504,7 +518,7 @@ button {
 }
 .image-gallery__main-page-subheading {
   padding: 1.65rem 0px 0.275rem 0px;
-  margin-left: 15px;
+  margin-left: var(--sideSpaceMargin);
   font-size: 1.7rem;
   display: flex;
   align-items: center;
@@ -592,7 +606,7 @@ button {
   background-color: rgb(248, 245, 235);
   overflow: hidden;
   overflow-y: hidden;
-  margin: 15px;
+  margin: var(--imgGalleryMarginBetweenImages);
 }
 .image-gallery__image-container:hover::after {
   opacity: 1;
@@ -708,10 +722,10 @@ button {
 }
 @media (width < 901px) {
   .image-gallery__image-container {
-    margin: 7px;
+    margin: var(--sideSpaceMarginHalf);
   }
   .freeStockPhotosHeading {
-    margin-left: 6px;
+    margin-left: var(--sideSpaceMarginHalf);
   }
 }
 @media (width < 900px) {
@@ -724,7 +738,7 @@ button {
   .image-gallery__main-page-subheading {
     padding-top: 2.45rem;
     padding-bottom: 1rem;
-    margin-left: 5.25px;
+    margin-left: calc(var(--sideSpaceMarginHalf) - 1.75px);
   }
 }
 @media (width < 825px) {
@@ -2086,7 +2100,7 @@ button {
 
 @media (width > 1500px) {
   .footerContainer {
-    padding: 2rem 0px 2rem 4.5rem !important;
+    /* padding: 2rem 0px 2rem 4.5rem !important; */
   }
 }
 
@@ -2095,16 +2109,21 @@ button {
   background-color: rgb(45, 45, 45);
   font-size: 1rem;
   height: 10%;
-  padding: 2rem 0px 2rem 0px;
+  padding: 2rem var(--sideSpacePadding);
+  margin: auto;
   /* margin-top: 6.5rem; */
 }
-
+@media (width < 650px) {
+  .footerContainer {
+  }
+}
 .footer__contents-container {
+  /* background-color: rebeccapurple; */
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   margin: auto;
-  max-width: 1700px;
+  max-width: var(--siteContentsMidWidth);
 }
 
 .footerContainer h4 {
@@ -2732,6 +2751,9 @@ button {
 }
 
 @media (width < 900px) {
+  .footerContainer {
+    padding: 2rem calc(var(--sideSpaceMarginHalf) - 11px);
+  }
   .footer__contents-container {
     flex-direction: column;
     gap: 2.5rem;
