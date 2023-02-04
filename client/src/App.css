@@ -332,6 +332,7 @@ button {
 }
 .navbar__hamburger-icon-x {
   font-size: 1.41rem;
+  color: #f1f1f1;
 }
 .navbar__hamburger-icon-x:focus {
   color: rgb(209, 209, 209) !important;
@@ -357,6 +358,8 @@ button {
 }
 .navbar__hamburger-list-container ul {
   margin-top: 1rem;
+  padding-bottom: 1rem;
+  padding: 0px 1rem;
 }
 .navbar__hamburger-list-container li {
   padding: 0 0.4rem !important;
@@ -371,12 +374,20 @@ button {
 .navbar__hamburger-list-container ul li {
   background-color: black !important;
 }
+.navbar__hamburger-list-grey-divider {
+  border-top: 1px solid rgb(61, 61, 61);
+  margin: 30px 0 16px 0.45rem;
+  width: 98%;
+}
 
 @media (width < 900px) {
   .navbar__hamburger-icon-bars {
     display: inline;
     position: inherit;
     font-size: 1.41rem;
+  }
+  .navbar__login-button {
+    display: none;
   }
 }
 
@@ -665,6 +676,7 @@ button {
 }
 .image-gallery__image-author-link-container:hover {
   color: #f1f1f1;
+  text-decoration: underline;
 }
 .image-gallery__image-author-name-link:hover {
   background: none;

@@ -73,9 +73,6 @@ const NavbarComponent = ({
   let smallUploadButton;
   let uploadButton;
 
-  //hamburger menu button that is rendered in the DOM
-  let hamburgerButton;
-
   //hamburger icon. either bars or x depending on whether it is open or closed
   let hamIcon;
   const [hamIconOpen, setHamIconOpen] = useState(false);
@@ -90,6 +87,21 @@ const NavbarComponent = ({
     );
     document.body.classList.remove("overflowYHidden");
   }
+
+  //hamburger menu button that is rendered in the DOM
+  let hamburgerButton = (
+    <div
+      className="navbar__hamburger-icon-bars"
+      onClick={() => setHamDataIsOpen(!hamDataIsOpen)}
+    >
+      <button
+        className="navbarDropButton"
+        onClick={() => setHamIconOpen(!hamIconOpen)}
+      >
+        <div>{hamIcon}</div>
+      </button>
+    </div>
+  );
 
   //When accButton is hovered, changes isHovered to true and vice versa. When isHovered is false, it's a down arrow. When isHovered is true, it's an up arrow.
   const [isHovered, setIsHovered] = useState(false);
@@ -187,19 +199,6 @@ const NavbarComponent = ({
 
     signInButton = null;
     signUpButton = null;
-    hamburgerButton = (
-      <div
-        className="navbar__hamburger-icon-bars"
-        onClick={() => setHamDataIsOpen(!hamDataIsOpen)}
-      >
-        <button
-          className="navbarDropButton"
-          onClick={() => setHamIconOpen(!hamIconOpen)}
-        >
-          <div>{hamIcon}</div>
-        </button>
-      </div>
-    );
   } else {
     accButton = null;
     signInButton = (

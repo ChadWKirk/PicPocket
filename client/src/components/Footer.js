@@ -1,29 +1,9 @@
 import React from "react";
 
 const Footer = ({ curUser, loggedIn }) => {
-  return (
-    <div className="footerContainer">
-      <div>
-        <h4>Company</h4>
-        <div className="footerUnderline"> </div>
-        <ul>
-          <li>
-            <a href="/About">About Us</a>
-          </li>
-          <li>
-            <a href="/Privacy-Policy">Privacy Policy</a>
-          </li>
-          <li>
-            <a href="/Terms-And-Conditions">Terms And Conditions</a>
-          </li>
-          <li>
-            <a href="/Disclaimer">Disclaimer</a>
-          </li>
-          <li>
-            <a href="/Contact">Contact Us</a>
-          </li>
-        </ul>
-      </div>
+  let footerPicPocketContent;
+  if (loggedIn) {
+    footerPicPocketContent = (
       <div>
         <h4>PicPocket</h4>
         <div className="footerUnderline2"> </div>
@@ -46,6 +26,50 @@ const Footer = ({ curUser, loggedIn }) => {
           </li>
           <li>
             <a href={`/Account/${curUser}`}>User Settings</a>
+          </li>
+        </ul>
+      </div>
+    );
+  } else if (!loggedIn) {
+    footerPicPocketContent = (
+      <div>
+        <h4>PicPocket</h4>
+        <div className="footerUnderline2"> </div>
+        <ul>
+          <li>
+            <a href="/">Home</a>
+          </li>
+          <li>
+            <a href="/SignUp">Join</a>
+          </li>
+          <li>
+            <a href={`/SignIn`}>Log In</a>
+          </li>
+        </ul>
+      </div>
+    );
+  }
+  return (
+    <div className="footerContainer">
+      {footerPicPocketContent}
+      <div>
+        <h4>Company</h4>
+        <div className="footerUnderline"> </div>
+        <ul>
+          <li>
+            <a href="/About">About Us</a>
+          </li>
+          <li>
+            <a href="/Privacy-Policy">Privacy Policy</a>
+          </li>
+          <li>
+            <a href="/Terms-And-Conditions">Terms And Conditions</a>
+          </li>
+          <li>
+            <a href="/Disclaimer">Disclaimer</a>
+          </li>
+          <li>
+            <a href="/Contact">Contact Us</a>
           </li>
         </ul>
       </div>

@@ -31,19 +31,13 @@ TASKS:
 
 styling:
 
-put drop down menu for likes, user and search page into a component
-
 search page - put drop down menu and results count under search query heading and make it responsive
 
-footer - make about us page - make conditional renders for if logged out or logged in
+footer - make about us page
 
 sign in page - create collage of stock photos to have as img on the right, get facebook and google auth svg's for oauth buttons
 
-put drop down buttons to the right aligned with "Photos By curuser" for likes page
-
 create sign up now section - have pic of female photographer to the right or left and have it fade to just a solid background color (darker yellow) and have the text and join now button on the empty side
-
-make hamburger list conditionals if not logged in don't show likes, user settings, upload, etc.
 
 ---
 
@@ -51,15 +45,9 @@ make it so that duplicate public ID's get named something else in cloudinary
 
 contact us page backend once site is hosted and get website email
 
-fix all sorting and routes -- maybe figure out a way to make it so you don't need a ton of routes for likes sort, search sort, etc.
-
-copy over mainpage to mainpage most popular
-
 create image view page - pull in synonym tags to click to search
 
 create image view modal
-
-style account page for other users
 
 edit account settings page
 

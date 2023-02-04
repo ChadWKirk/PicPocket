@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 
 const HamburgerList = ({ curUser, loggedIn, signOut }) => {
-  return (
-    <div className="navbar__hamburger-list-container">
+  let hamburgerPicPocketList;
+  if (loggedIn) {
+    hamburgerPicPocketList = (
       <ul>
         <li>
           <a href="/">Home</a>
@@ -25,6 +26,43 @@ const HamburgerList = ({ curUser, loggedIn, signOut }) => {
           <a href="/" onClick={signOut}>
             Sign Out
           </a>
+        </li>
+      </ul>
+    );
+  } else if (!loggedIn) {
+    hamburgerPicPocketList = (
+      <ul>
+        <li>
+          <a href="/">Home</a>
+        </li>
+        <li>
+          <a href={`/SignIn`}>Log In</a>
+        </li>
+        <li>
+          <a href="/SignUp">Join</a>
+        </li>
+        <li>
+          <a href="/About">About Us</a>
+        </li>
+        <li>
+          <a href="/Contact">Contact Us</a>
+        </li>
+      </ul>
+    );
+  }
+  return (
+    <div className="navbar__hamburger-list-container">
+      {hamburgerPicPocketList}
+      <ul>
+        <li className="navbar__hamburger-list-grey-divider"></li>
+        <li>
+          <a href="Terms-And-Conditions">Terms And Conditions</a>
+        </li>
+        <li>
+          <a href="/Disclaimer">Disclaimer</a>
+        </li>
+        <li>
+          <a href="/Privacy-Policy">Privacy Policy</a>
         </li>
       </ul>
     </div>
