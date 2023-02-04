@@ -42,7 +42,7 @@ const ImageGallerySortFilterAndSubheadingComponent = ({
       </h1>
     );
   } else if (page == "userPage") {
-    subHeading = <h1>Photos By {username}</h1>;
+    subHeading = <h1>Pics By {username}</h1>;
   }
   return (
     <div className="image-gallery__dropdown-and-subheading-container">

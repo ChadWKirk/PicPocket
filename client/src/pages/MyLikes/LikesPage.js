@@ -69,7 +69,7 @@ const LikesPage = ({ curUser, loggedIn }) => {
         <div className="galleryHeadingAndSortContainer">
           <div className="galleryHeading">
             {whosLikesIsItHeading}
-            <p>
+            <p style={{ marginBottom: "45px" }}>
               {imgGalleryLength} images liked by {username}
             </p>
           </div>
