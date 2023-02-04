@@ -113,7 +113,7 @@ const LikesPage = ({ curUser, loggedIn }) => {
           <ImageGallery
             curUser={curUser}
             loggedIn={loggedIn}
-            type={"likes"}
+            page={"likesPage"}
             filter={filter}
             sort={sort}
             imgGalleryLength={imgGalleryLength}

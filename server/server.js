@@ -864,7 +864,17 @@ app.get("/most-popular", (req, res) => {
 
   db_connect
     .collection("picpocket-images")
-    .find()
+    .aggregate([
+      //use $lookup to pull user info tied to image for profile pic on overlay
+      {
+        $lookup: {
+          from: "picpocket-users",
+          localField: "uploadedBy",
+          foreignField: "username",
+          as: "test",
+        },
+      },
+    ])
     .sort({ likes: -1 })
     // .limit(12)
     .toArray(function (err, result) {
@@ -872,7 +882,7 @@ app.get("/most-popular", (req, res) => {
         res.status(400).send("Error fetching listings!");
       } else {
         res.json(result);
-        // console.log(result);
+        console.log(result);
       }
     });
 });

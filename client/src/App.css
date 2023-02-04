@@ -104,8 +104,8 @@ button {
   z-index: 99999999999999999999999999;
 }
 .navbar__contents {
-  width: 90vw;
-  max-width: 1535px;
+  width: 95vw;
+  max-width: 1510px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -113,6 +113,7 @@ button {
 }
 .navbar__logo {
   margin: 0;
+  margin-bottom: 1.5px;
   line-height: 1.2;
   display: flex;
   align-items: center;
@@ -371,22 +372,35 @@ button {
   background-color: black !important;
 }
 
-@media (width < 310px) {
-  .navbar__CTA-button-1 {
-    display: none;
-    position: relative;
-  }
-  [data-hamOpenOrClosed="closed"] .navbar__smallUploadButton {
+@media (width < 900px) {
+  .navbar__hamburger-icon-bars {
     display: inline;
     position: inherit;
-  }
-  .navbar__buttons-container {
-    gap: 0.725rem;
+    font-size: 1.41rem;
   }
 }
 
 @media (width < 650px) {
-  .navbar__CTA-button-1 {
+  .navbar__container {
+    height: 70px;
+  }
+  .navbar__hamburger-list-container {
+    height: calc(100vh - 70px);
+    top: 70px;
+  }
+  .navbar__contents {
+    gap: 1rem;
+  }
+  .navbar__logo h1 {
+    font-size: 1.35rem;
+  }
+  [data-navTheme="white"] .navbar__CTA-button-1 {
+    display: none;
+  }
+  [data-navTheme="black"] .navbar__CTA-button-1 {
+    display: none;
+  }
+  [data-navTheme="transparent"] .navbar__CTA-button-1 {
     padding: 0.48rem 1.4rem;
     border-radius: 4px;
   }
@@ -397,17 +411,16 @@ button {
   .navbar__search-bar,
   .navbar__search-button {
     height: 35px !important;
+    font-size: 0.8rem;
+    font-weight: 700;
   }
   .navbar__search-icon {
-    font-size: 1rem !important;
+    font-size: 0.85rem !important;
     top: 27% !important;
     left: 18% !important;
   }
   [data-hamOpenOrClosed="open"] .navbar-contents {
     gap: 1.5625rem; /*25px*/
-  }
-  .navbar__logo h1 {
-    font-size: 1.35rem;
   }
   .navbar__account-button-and-list-container {
     display: none;
@@ -419,13 +432,24 @@ button {
   [data-hamOpenOrClosed="open"] .navbar__buttons-container {
     gap: 0.3rem;
   }
+  .navbar__hamburger-icon-bars,
+  .navbar__hamburger-icon-x {
+    font-size: 1.1rem !important;
+    margin-bottom: 0.5px;
+  }
 }
 
-@media (width < 900px) {
-  .navbar__hamburger-icon-bars {
+@media (width < 310px) {
+  /* .navbar__CTA-button-1 {
+    display: none;
+    position: relative;
+  } */
+  [data-hamOpenOrClosed="closed"] .navbar__smallUploadButton {
     display: inline;
     position: inherit;
-    font-size: 1.41rem;
+  }
+  .navbar__buttons-container {
+    gap: 0.725rem;
   }
 }
 
@@ -450,6 +474,14 @@ button {
 }
 .image-gallery__dropdown-and-subheading-container h1 {
   padding: 1.65rem 0px 1.3rem 0px;
+  margin-left: 15px;
+  font-size: 1.7rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.image-gallery__main-page-subheading {
+  padding: 1.65rem 0px 0.275rem 0px;
   margin-left: 15px;
   font-size: 1.7rem;
   display: flex;
@@ -631,6 +663,9 @@ button {
   align-items: center;
   gap: 0.425rem;
 }
+.image-gallery__image-author-link-container:hover {
+  color: #f1f1f1;
+}
 .image-gallery__image-author-name-link:hover {
   background: none;
   color: #f1f1f1;
@@ -663,6 +698,11 @@ button {
   .image-gallery__dropdown-and-subheading-container h1 {
     margin-left: 8px;
   }
+  .image-gallery__main-page-subheading {
+    padding-top: 2.45rem;
+    padding-bottom: 1rem;
+    margin-left: 5.25px;
+  }
 }
 @media (width < 825px) {
   .image-gallery__dropdown-button .btn-primary {
@@ -672,6 +712,9 @@ button {
 @media (width < 800px) {
   .sortingBarCont1 {
     border-bottom: 1px solid rgb(228, 228, 228);
+  }
+  .image-gallery__main-page-subheading {
+    padding-bottom: 0.275rem;
   }
 }
 @media (width < 710px) {
@@ -1081,6 +1124,7 @@ button {
   max-width: 1500px;
   width: 100%;
   margin: auto;
+  /* margin-bottom: 3.95rem; */
 }
 
 .sortingBarCont1 button {
@@ -1208,11 +1252,18 @@ button {
   padding: 0.75rem;
 }
 
+.buttonClicked:hover {
+  color: white;
+}
+
 .buttonNotClicked {
-  /* color: white;
-  background-color: black; */
+  color: black;
   border-radius: 25px;
   padding: 0.75rem;
+}
+
+.buttonNotClicked:hover {
+  color: black;
 }
 
 .paperWorkButtons--container {
@@ -2618,6 +2669,7 @@ button {
 @media (width < 800px) {
   .sortingBarCont1 {
     border-bottom: 1px solid rgb(228, 228, 228);
+    padding: 1.5rem 0px 1rem 0px;
   }
 }
 

@@ -10,10 +10,19 @@ const ImageGallery = ({
   loggedIn,
   sort,
   filter,
-  type,
+  page,
   imgGalleryLength,
   setImgGalleryLength,
 }) => {
+  //subheading for Main Page
+  let mainPageSubheading;
+  if (page == "mainPageMostRecent" || page == "mainPageMostPopular") {
+    mainPageSubheading = (
+      <h1 className="image-gallery__main-page-subheading">Free Stock Photos</h1>
+    );
+  } else {
+    mainPageSubheading = <div className="displayNone"></div>;
+  }
   //username for user page (not current logged in user's username)
   const { username } = useParams();
   //the thing you searched to use for fetch request (if being used for search results page)
@@ -32,14 +41,17 @@ const ImageGallery = ({
   useEffect(() => {
     //depending on what the type prop is set to, use one of these routes to fetch img data
     let fetchRoute;
-    if (type == "userPage") {
+    if (page == "userPage") {
       fetchRoute = `http://localhost:5000/${username}/${sort}/${filter}`;
-    } else if (type == "likes") {
+    } else if (page == "likesPage") {
       fetchRoute = `http://localhost:5000/${username}/likes/${sort}/${filter}`;
-    } else if (type == "search") {
+    } else if (page == "searchPage") {
       fetchRoute = `http://localhost:5000/search/${searchQuery}/${sort}/${filter}`;
+    } else if (page == "mainPageMostRecent") {
+      fetchRoute = "http://localhost:5000/most-recent-images";
+    } else if (page == "mainPageMostPopular") {
+      fetchRoute = "http://localhost:5000/most-popular";
     }
-    console.log(fetchRoute);
     async function fetchImgData() {
       await fetch(fetchRoute, {
         method: "GET",
@@ -181,6 +193,7 @@ const ImageGallery = ({
         columnsCountBreakPoints={{ 900: 2, 901: 3 }}
         // className="imgGalleryCont1"
       >
+        {mainPageSubheading}
         <Masonry>{imgGallery}</Masonry>
       </ResponsiveMasonry>
     </div>

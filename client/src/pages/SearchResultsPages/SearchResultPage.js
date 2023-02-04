@@ -63,7 +63,7 @@ const SearchResultsPage = ({ curUser, loggedIn }) => {
           filter={filter}
           imgGalleryLength={imgGalleryLength}
           setImgGalleryLength={setImgGalleryLength}
-          type={"search"}
+          page={"searchPage"}
         />
       </div>
     </div>

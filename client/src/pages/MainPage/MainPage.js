@@ -7,8 +7,13 @@ import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import ImageGallery from "../../components/ImageGallery";
 
 const MainPage = ({ curUser, loggedIn }) => {
+  //to get number of images in array for "x pics liked by user" or "x search results" heading
+  //really just a placeholder so I can use the ImageGallery component. It doesn't get used on this page
+  const [imgGalleryLength, setImgGalleryLength] = useState();
+
   //sticky nav bar
   const [navPositionClass, setNavPositionClass] = useState();
   const [navColorClass, setNavColorClass] = useState("transparent");
@@ -45,151 +50,151 @@ const MainPage = ({ curUser, loggedIn }) => {
   let pfpArray = [];
 
   //get images
-  useEffect(() => {
-    console.log("run");
+  // useEffect(() => {
+  //   console.log("run");
 
-    async function getImages() {
-      fetch("http://localhost:5000/most-recent-images", {
-        method: "GET",
-        headers: { "Content-type": "application/json" },
-      }).then((response) =>
-        response
-          .json()
-          .then((resJSON) => JSON.stringify(resJSON))
-          .then((stringJSON) => JSON.parse(stringJSON))
-          .then((parsedJSON) => {
-            setFetchArr(parsedJSON);
-            console.log(parsedJSON);
-          })
-      );
-    }
-    getImages();
-  }, []);
-  //map over img array
-  useEffect(() => {
-    mapArr = fetchArr.map((element, index) => {
-      var likeButton;
-      console.log(fetchArr[index].uploadedBy);
-      if (element.likedBy.includes(curUser)) {
-        likeButton = (
-          <div>
-            <FontAwesomeIcon
-              icon={faHeart}
-              className="likeButtonHeart1 likeButtonLikedFill1"
-            ></FontAwesomeIcon>
-          </div>
-        );
-      } else {
-        likeButton = (
-          <div>
-            <FontAwesomeIcon
-              icon={farHeart}
-              className="likeButtonHeart1"
-            ></FontAwesomeIcon>
-          </div>
-        );
-      }
+  //   async function getImages() {
+  //     fetch("http://localhost:5000/most-recent-images", {
+  //       method: "GET",
+  //       headers: { "Content-type": "application/json" },
+  //     }).then((response) =>
+  //       response
+  //         .json()
+  //         .then((resJSON) => JSON.stringify(resJSON))
+  //         .then((stringJSON) => JSON.parse(stringJSON))
+  //         .then((parsedJSON) => {
+  //           setFetchArr(parsedJSON);
+  //           console.log(parsedJSON);
+  //         })
+  //     );
+  //   }
+  //   getImages();
+  // }, []);
+  // //map over img array
+  // useEffect(() => {
+  //   mapArr = fetchArr.map((element, index) => {
+  //     var likeButton;
+  //     console.log(fetchArr[index].uploadedBy);
+  //     if (element.likedBy.includes(curUser)) {
+  //       likeButton = (
+  //         <div>
+  //           <FontAwesomeIcon
+  //             icon={faHeart}
+  //             className="likeButtonHeart1 likeButtonLikedFill1"
+  //           ></FontAwesomeIcon>
+  //         </div>
+  //       );
+  //     } else {
+  //       likeButton = (
+  //         <div>
+  //           <FontAwesomeIcon
+  //             icon={farHeart}
+  //             className="likeButtonHeart1"
+  //           ></FontAwesomeIcon>
+  //         </div>
+  //       );
+  //     }
 
-      return (
-        <div key={index} className="imgGalleryImgCont1">
-          <a
-            href={
-              element.secure_url.slice(0, 50) +
-              "q_60/c_scale,w_1600/dpr_auto/" +
-              element.secure_url.slice(
-                50,
-                element.secure_url.lastIndexOf(".")
-              ) +
-              ".jpg"
-            }
-          >
-            <img
-              src={
-                element.secure_url.slice(0, 50) +
-                "q_60/c_scale,w_1600/dpr_auto/" +
-                element.secure_url.slice(
-                  50,
-                  element.secure_url.lastIndexOf(".")
-                ) +
-                ".jpg"
-              }
-              className="imgGalleryImg1"
-            ></img>
-          </a>
+  //     return (
+  //       <div key={index} className="imgGalleryImgCont1">
+  //         <a
+  //           href={
+  //             element.secure_url.slice(0, 50) +
+  //             "q_60/c_scale,w_1600/dpr_auto/" +
+  //             element.secure_url.slice(
+  //               50,
+  //               element.secure_url.lastIndexOf(".")
+  //             ) +
+  //             ".jpg"
+  //           }
+  //         >
+  //           <img
+  //             src={
+  //               element.secure_url.slice(0, 50) +
+  //               "q_60/c_scale,w_1600/dpr_auto/" +
+  //               element.secure_url.slice(
+  //                 50,
+  //                 element.secure_url.lastIndexOf(".")
+  //               ) +
+  //               ".jpg"
+  //             }
+  //             className="imgGalleryImg1"
+  //           ></img>
+  //         </a>
 
-          <div className="imgGalleryImgOverlay1">
-            <a
-              className="likeButtonContainer1"
-              onClick={(e) => handleLike(e, element, index)}
-            >
-              {likeButton}
-            </a>
-            <a
-              className="downloadButtonCont1"
-              href={
-                element.secure_url.slice(0, 50) +
-                "q_100/fl_attachment/" +
-                element.secure_url.slice(
-                  50,
-                  element.secure_url.lastIndexOf(".")
-                )
-              }
-            >
-              <FontAwesomeIcon
-                icon={faDownload}
-                className="downloadButton1"
-              ></FontAwesomeIcon>
-            </a>
-            <div>
-              <a
-                className="imgAuthor1"
-                href={`http://localhost:3000/User/${element.uploadedBy}`}
-              >
-                <img src={element.test[0].pfp} className="profilePicSmall" />
-                {element.uploadedBy}
-              </a>
-            </div>
-          </div>
-        </div>
-      );
-    });
-    setImgGallery(mapArr);
-  }, [fetchArr, userPFP, isLiked]);
+  //         <div className="imgGalleryImgOverlay1">
+  //           <a
+  //             className="likeButtonContainer1"
+  //             onClick={(e) => handleLike(e, element, index)}
+  //           >
+  //             {likeButton}
+  //           </a>
+  //           <a
+  //             className="downloadButtonCont1"
+  //             href={
+  //               element.secure_url.slice(0, 50) +
+  //               "q_100/fl_attachment/" +
+  //               element.secure_url.slice(
+  //                 50,
+  //                 element.secure_url.lastIndexOf(".")
+  //               )
+  //             }
+  //           >
+  //             <FontAwesomeIcon
+  //               icon={faDownload}
+  //               className="downloadButton1"
+  //             ></FontAwesomeIcon>
+  //           </a>
+  //           <div>
+  //             <a
+  //               className="imgAuthor1"
+  //               href={`http://localhost:3000/User/${element.uploadedBy}`}
+  //             >
+  //               <img src={element.test[0].pfp} className="profilePicSmall" />
+  //               {element.uploadedBy}
+  //             </a>
+  //           </div>
+  //         </div>
+  //       </div>
+  //     );
+  //   });
+  //   setImgGallery(mapArr);
+  // }, [fetchArr, userPFP, isLiked]);
 
-  async function handleLike(e, element, index) {
-    var fetchArrCopy = fetchArr;
+  // async function handleLike(e, element, index) {
+  //   var fetchArrCopy = fetchArr;
 
-    if (fetchArrCopy[index].likedBy.includes(curUser)) {
-      await fetch(
-        `http://localhost:5000/removeLikedBy/${element.asset_id}/${curUser}`,
-        {
-          method: "POST",
-          headers: { "Content-type": "application/json" },
-        }
-      ).then((res) => {
-        fetchArrCopy[index].likedBy = fetchArrCopy[index].likedBy.filter(
-          (user) => {
-            return user !== curUser;
-          }
-        );
-        setFetchArr(fetchArrCopy);
-        console.log("run 3");
-      });
-    } else if (!fetchArrCopy[index].likedBy.includes(curUser)) {
-      await fetch(
-        `http://localhost:5000/addLikedBy/${element.asset_id}/${curUser}`,
-        {
-          method: "POST",
-          headers: { "Content-type": "application/json" },
-        }
-      ).then((res) => {
-        fetchArrCopy[index].likedBy.push(curUser);
-        setFetchArr(fetchArrCopy);
-        console.log("run 4");
-      });
-    }
-    setIsLiked(!isLiked);
-  }
+  //   if (fetchArrCopy[index].likedBy.includes(curUser)) {
+  //     await fetch(
+  //       `http://localhost:5000/removeLikedBy/${element.asset_id}/${curUser}`,
+  //       {
+  //         method: "POST",
+  //         headers: { "Content-type": "application/json" },
+  //       }
+  //     ).then((res) => {
+  //       fetchArrCopy[index].likedBy = fetchArrCopy[index].likedBy.filter(
+  //         (user) => {
+  //           return user !== curUser;
+  //         }
+  //       );
+  //       setFetchArr(fetchArrCopy);
+  //       console.log("run 3");
+  //     });
+  //   } else if (!fetchArrCopy[index].likedBy.includes(curUser)) {
+  //     await fetch(
+  //       `http://localhost:5000/addLikedBy/${element.asset_id}/${curUser}`,
+  //       {
+  //         method: "POST",
+  //         headers: { "Content-type": "application/json" },
+  //       }
+  //     ).then((res) => {
+  //       fetchArrCopy[index].likedBy.push(curUser);
+  //       setFetchArr(fetchArrCopy);
+  //       console.log("run 4");
+  //     });
+  //   }
+  //   setIsLiked(!isLiked);
+  // }
 
   return (
     <div>
@@ -203,16 +208,21 @@ const MainPage = ({ curUser, loggedIn }) => {
         <MainPageHeroImage />
       </div>
       <div className="sortingBarCont1">
-        <a>
-          <button className="buttonClicked">Most Recent</button>
+        <a href="/" className="buttonClicked">
+          Most Recent
         </a>
-        <a href="/most-popular">
-          <button className="buttonNotClicked">Most Popular</button>
+        <a href="/most-popular" className="buttonNotClicked">
+          Most Popular
         </a>
       </div>
-      <div className="imgGallerySectionCont1">
+      <div className="image-gallery__container">
         {/* <div className="imgGalleryCont1">{imgGallery}</div> */}
-        <MainPageImageGallery curUser={curUser} loggedIn={loggedIn} />
+        <ImageGallery
+          curUser={curUser}
+          loggedIn={loggedIn}
+          setImgGalleryLength={setImgGalleryLength}
+          page={"mainPageMostRecent"}
+        />
       </div>
 
       <div className="joinNowContainer">

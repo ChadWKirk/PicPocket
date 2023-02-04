@@ -89,7 +89,7 @@ const UserPage = ({ curUser, loggedIn }) => {
             filter={filter}
             imgGalleryLength={imgGalleryLength}
             setImgGalleryLength={setImgGalleryLength}
-            type={"userPage"}
+            page={"userPage"}
           />
         </div>
       </div>

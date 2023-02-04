@@ -245,7 +245,7 @@ const NavbarComponent = ({
             {signInButton}
             {signUpButton}
             {accButton}
-            {smallUploadButton}
+            {/* {smallUploadButton} */}
             {uploadButton}
             {hamburgerButton}
           </div>
