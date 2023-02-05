@@ -20,7 +20,11 @@ const ImageGallerySortFilterAndSubheadingComponent = ({
 }) => {
   let subHeading;
   if (page == "searchPage") {
-    subHeading = <h1>{imgGalleryLength} results</h1>;
+    subHeading = (
+      <h1 className="image-gallery__search-results-length-subheading">
+        {imgGalleryLength} results
+      </h1>
+    );
   } else if (page == "likesPage") {
     subHeading = (
       <h1 className="image-gallery__likes-page-subheading-container">

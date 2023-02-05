@@ -67,9 +67,9 @@ const SignInPage = ({ curUser, loggedIn }) => {
       {/* <NavBar curUser={curUser} loggedIn={loggedIn} /> */}
       <div className="signInPage--contentsContainer">
         <div className="signInPage--formContainer">
-          <div style={{ fontSize: "1rem" }}>PicPocket</div>
+          <div style={{ fontSize: "1rem", fontWeight: "300" }}>PicPocket</div>
           <div
-            style={{ fontSize: "2rem", color: "#c6ac28", fontWeight: "500" }}
+            style={{ fontSize: "2rem", color: "#f5c000", fontWeight: "500" }}
           >
             Log in to your account
           </div>

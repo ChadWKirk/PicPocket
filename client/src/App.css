@@ -5,8 +5,11 @@
 }
 
 :root {
+  /* navbar */
   --siteContentsMaxWidth: 1510px;
+  /* everything else for the most part */
   --siteContentsMidWidth: 1400px;
+  /* not sure yet */
   --siteContentsLeastWidth: 1200px;
   /* imgGalleryMarginBetweenImages is the Image Gallery's margin that separates each image. */
   /* Use imgGalleryMarginBetweenImages on image-gallery__container and image gallery subheading's padding left/right to get equal to other elements' side spacing. */
@@ -14,6 +17,17 @@
   --imgGalleryMarginBetweenImages: 0.93rem;
   --sideSpacePadding: 1.875rem;
   --sideSpacePaddingSmallScreen: calc(var(--imgGalleryMarginBetweenImages) / 2);
+  /* colors */
+  --dark1: #000;
+  --dark2: #2c343e;
+  --dark3: #4a4a4a;
+  --dark4: #7f7f7f;
+  --dark5: #bfbfbf;
+  --greyBorder1: #dfdfe0;
+  --offWhite: #f7f7f7;
+  --white: #fff;
+  --ctaYellow: #f5c000;
+  --ctaYellowDark: hsl(47, 100%, 47%);
 }
 
 [data-hamOpenOrClosed="closed"] {
@@ -323,16 +337,16 @@ button {
 }
 .navbar__CTA-button-1 {
   padding: 0.83rem 1.4rem;
-  background-color: #debb0c;
+  background-color: var(--ctaYellow);
   color: rgb(25, 25, 25);
   font-weight: 500;
   border-radius: 6px;
   font-size: 1rem;
-  box-shadow: 0px 0px 0px 1px #d8b60a;
+  box-shadow: 0px 0px 0px 1px var(--ctaYellow);
   transition: box-shadow 0.1s ease-out;
 }
 .navbar__CTA-button-1:hover {
-  box-shadow: 0px 0px 0px 0px #debb0c;
+  box-shadow: 0px 0px 0px 0px var(--ctaYellow);
   color: rgb(25, 25, 25);
 }
 .navbar__CTA-button-1:focus {
@@ -346,7 +360,7 @@ button {
   margin-right: 1rem;
 }
 .navbar__smallUploadButton:hover {
-  color: #debb0c;
+  color: var(--ctaYellow);
 }
 .navbar__hamburger-icon-bars {
   display: none;
@@ -498,19 +512,27 @@ button {
   padding: 0 var(--imgGalleryMarginBetweenImages);
 }
 .image-gallery__searchquery-heading {
-  margin-left: 15px;
+  margin-top: 2.35rem;
+  margin-left: var(--imgGalleryMarginBetweenImages);
+  color: #3c3c3c;
+}
+.image-gallery__search-results-length-subheading {
+  font-weight: 300;
+  color: var(--dark3);
 }
 .image-gallery__dropdown-and-subheading-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 100%;
+  max-width: var(--siteContentsMidWidth);
+  padding: 0 var(--imgGalleryMarginBetweenImages);
+  /* background-color: rebeccapurple; */
   margin: auto;
-  margin-right: 18px;
+  /* margin-right: var(--sideSpacePaddingSmallScreen); */
 }
 .image-gallery__dropdown-and-subheading-container h1 {
   padding: 1.65rem 0px 1.3rem 0px;
-  margin-left: 15px;
+  /* margin-left: 15px; */
   font-size: 1.7rem;
   display: flex;
   align-items: center;
@@ -523,6 +545,7 @@ button {
   display: flex;
   align-items: center;
   gap: 1rem;
+  color: var(--dark2);
 }
 .image-gallery__likes-page-subheading-container {
   padding: 1.65rem 0px 1.3rem 0px;
@@ -582,9 +605,9 @@ button {
 }
 .image-gallery__dropdown-button .btn-primary {
   background-color: white;
-  color: gray;
+  color: #808080;
   border: none;
-  outline: 1px solid rgba(179, 179, 179, 0.412);
+  outline: 1px solid var(--greyBorder1);
   border-radius: 4px;
   padding: 0.5rem 1rem;
   font-weight: 500;
@@ -727,18 +750,22 @@ button {
   .freeStockPhotosHeading {
     margin-left: var(--sideSpacePaddingSmallScreen);
   }
+  .image-gallery__searchquery-heading {
+    margin-left: var(--sideSpacePaddingSmallScreen);
+  }
 }
 @media (width < 900px) {
   .image-gallery__dropdown-and-subheading-container {
-    margin-right: 9px;
-  }
-  .image-gallery__dropdown-and-subheading-container h1 {
-    margin-left: 8px;
+    padding: 0 var(--sideSpacePaddingSmallScreen);
   }
   .image-gallery__main-page-subheading {
     padding-top: 2.45rem;
     padding-bottom: 1rem;
     margin-left: calc(var(--sideSpacePaddingSmallScreen) - 1.75px);
+  }
+  .image-gallery__search-results-length-subheading {
+    font-size: 1.35rem !important;
+    padding-top: 1rem !important;
   }
 }
 @media (width < 825px) {
@@ -763,7 +790,6 @@ button {
     margin-bottom: 0;
   }
   .image-gallery__dropdown-and-subheading-container h1 {
-    margin-left: 8px;
     padding-bottom: 1rem;
   }
   .image-gallery__sort-filter-dropdown-container {
@@ -782,12 +808,15 @@ button {
     margin-top: 2.75rem;
   }
   .image-gallery__dropdown-button {
-    margin-left: 6px !important;
+    margin-left: -2.5px !important;
   }
   .image-gallery__dropdown-button .btn-primary {
     font-size: 0.75rem;
     border-radius: 10px;
     width: 95vw;
+  }
+  .image-gallery__dropdown-item {
+    width: 88vw;
   }
 }
 @media (width < 650px) {
@@ -944,13 +973,13 @@ button {
 
 /* .navbar__CTA-button-1--hamopen {
   padding: 0.83rem 1.4rem;
-  background-color: #debb0c;
+  background-color: var(--ctaYellow);
   color: rgb(25, 25, 25);
   font-weight: 500;
   border-radius: 6px;
   font-size: 1rem;
 
-  box-shadow: 0px 0px 0px 1px #debb0c;
+  box-shadow: 0px 0px 0px 1px var(--ctaYellow);
   transition: box-shadow 0.1s ease-out;
 } */
 
@@ -2098,12 +2127,6 @@ button {
   outline: none;
 }
 
-@media (width > 1500px) {
-  .footerContainer {
-    /* padding: 2rem 0px 2rem 4.5rem !important; */
-  }
-}
-
 .footerContainer {
   color: grey;
   background-color: rgb(45, 45, 45);
@@ -2111,8 +2134,8 @@ button {
   height: 10%;
   padding: 2rem var(--sideSpacePadding);
   margin: auto;
-  /* margin-top: 6.5rem; */
 }
+
 @media (width < 650px) {
   .footerContainer {
   }
@@ -2350,7 +2373,7 @@ button {
 .changePFPBtn {
   position: relative;
   padding: 0.8rem;
-  background-color: #debb0c;
+  background-color: var(--ctaYellow);
   color: rgb(25, 25, 25);
   font-weight: bold;
   border: none;
@@ -2545,12 +2568,12 @@ button {
   justify-content: center;
   height: 100%;
   margin: auto;
-  max-width: 1500px;
+  max-width: var(--siteContentsMaxWidth);
 }
 
 .signInPage--formContainer {
-  width: 35.25rem;
-  padding: 2.1rem 3rem;
+  width: 47.25rem;
+  padding: 2.5rem 3rem 2.1rem var(--sideSpacePadding);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -2577,13 +2600,13 @@ button {
   padding: 0rem 0.5rem;
   margin-bottom: 1rem;
   font-weight: 500;
-  background-color: #debb0c;
+  background-color: var(--ctaYellow);
   color: black;
 }
 
 .signInPage--signInBtn:hover {
-  box-shadow: 0px 0px 5px 1px rgb(214, 187, 136);
-  background-color: #d7b408;
+  box-shadow: 0px 0px 10px 0.5px rgb(214, 187, 136);
+  background-color: var(--ctaYellowDark);
   transition: 0.1s;
 }
 
@@ -2621,9 +2644,9 @@ button {
 }
 
 .sign-in-page__collage-image-container {
-  max-height: 575px;
+  max-height: 590px;
   width: 100%;
-  max-width: 700px;
+  max-width: 800px;
   flex: 1;
   z-index: -10;
 }
