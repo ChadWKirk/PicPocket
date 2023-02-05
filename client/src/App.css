@@ -891,6 +891,106 @@ button {
   }
 }
 
+/* User Settings Page */
+.user-settings-page__contents-container {
+  padding-top: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 3rem;
+  max-width: 500px;
+  margin: auto;
+  /* background-color: rebeccapurple; */
+}
+.user-settings-page__contents-container h1 {
+  margin: auto;
+}
+.user-settings-page__change-pfp-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  gap: 2.15rem;
+}
+.user-settings-page__change-pfp-input {
+  opacity: 0;
+  font-size: 0px;
+  cursor: pointer;
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  /* margin: -125px 0 0 -300px; */
+  width: 100%;
+  height: 100%;
+  z-index: 1001;
+  background-color: red;
+  border-radius: 10px;
+}
+.user-settings-page__change-pfp-btn {
+  position: relative;
+  padding: 0.8rem;
+  background-color: var(--ctaYellow);
+  color: rgb(25, 25, 25);
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+.user-settings-page__bio-textarea {
+  width: 500px;
+  border-radius: 4px;
+  border: 1px solid lightgray;
+  font-size: 0.85rem;
+  /* font-weight: 600; */
+  padding: 0.35rem;
+  padding-left: 0.65rem;
+  margin-top: 0.6rem;
+  height: 5rem;
+  resize: none;
+}
+.user-settings-page__email-input {
+  font-size: 0.85rem;
+  padding: 0.35rem 0.65rem;
+  border-radius: 4px;
+  border: 1px solid lightgray;
+}
+.user-settings-page__change-bio-email-btn {
+  padding: 0.5rem 0.75rem;
+  margin-top: 0.5rem;
+  background-color: var(--offWhite);
+  color: rgb(25, 25, 25);
+  font-weight: 300;
+  border: none;
+  border-radius: 3px;
+  font-size: 1rem;
+}
+.user-settings-page__change-pw-del-acc-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+.changePWBtn {
+  padding: 0.8rem;
+  background-color: #d4d4d4;
+  color: rgb(25, 25, 25);
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+.deleteAccountBtn {
+  padding: 0.8rem;
+  background-color: #de0c0c;
+  color: var(--offWhite);
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
 /* .logo h1 {
   font-size: 1.5rem;
 }
@@ -1032,26 +1132,6 @@ button {
 .signUpPage {
   height: 100vh;
   /* background: url("C:\Users\Chad Kirk\Documents\mern-stuff\mern-ecommerce\client\src\pexels-jakub-novacek-924824.jpg"); */
-}
-
-.changePWBtn {
-  padding: 0.8rem;
-  background-color: #d4d4d4;
-  color: rgb(25, 25, 25);
-  font-weight: bold;
-  border: none;
-  border-radius: 10px;
-  font-size: 1rem;
-}
-
-.deleteAccountBtn {
-  padding: 0.8rem;
-  background-color: #de0c0c;
-  color: rgb(252, 252, 252);
-  font-weight: bold;
-  border: none;
-  border-radius: 10px;
-  font-size: 1rem;
 }
 
 /* Home Page Navbar Searchbar */
@@ -2384,32 +2464,6 @@ button {
   to {
     opacity: 1;
   }
-}
-
-.changePFPInput {
-  opacity: 0;
-  font-size: 0px;
-  cursor: pointer;
-  position: absolute;
-  top: 0%;
-  left: 0%;
-  /* margin: -125px 0 0 -300px; */
-  width: 100%;
-  height: 100%;
-  z-index: 1001;
-  background-color: red;
-  border-radius: 10px;
-}
-
-.changePFPBtn {
-  position: relative;
-  padding: 0.8rem;
-  background-color: var(--ctaYellow);
-  color: rgb(25, 25, 25);
-  font-weight: bold;
-  border: none;
-  border-radius: 10px;
-  font-size: 1rem;
 }
 
 .dragOverCSS {

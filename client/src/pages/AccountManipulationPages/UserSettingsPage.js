@@ -203,19 +203,19 @@ const UserSettingsPage = ({ curUser, loggedIn }) => {
 
   return (
     <div>
-      {/* <NavBar curUser={curUser} loggedIn={loggedIn} /> */}
       <NavbarComponent
         curUser={curUser}
         loggedIn={loggedIn}
         navPositionClass={"fixed"}
         navColorClass={"white"}
       />
-      <div>
-        <img src={userPFP} className="profilePicBig" />
-        <div>
-          <button className="changePFPBtn">
+      <div className="user-settings-page__contents-container">
+        <h1>Profile Settings</h1>
+        <div className="user-settings-page__change-pfp-container">
+          <img src={userPFP} className="profilePicBig" />
+          <button className="user-settings-page__change-pfp-btn">
             <input
-              className="changePFPInput"
+              className="user-settings-page__change-pfp-input"
               type="file"
               onChange={(e) => uploadHandler(e)}
             />
@@ -230,22 +230,36 @@ const UserSettingsPage = ({ curUser, loggedIn }) => {
             closeToast={closeToast}
           />
         </div>
+        <div>
+          <h2>Short Bio:</h2>
+          <textarea
+            className="user-settings-page__bio-textarea"
+            placeholder={bio}
+          ></textarea>
+          <button className="user-settings-page__change-bio-email-btn">
+            Change Bio
+          </button>
+        </div>
+        <div>
+          <h2>Email:</h2>
+          <input
+            placeholder={email}
+            className="user-settings-page__email-input"
+          ></input>
+          <button
+            style={{ marginLeft: "1rem" }}
+            className="user-settings-page__change-bio-email-btn"
+          >
+            Change Email
+          </button>
+        </div>
+        <div className="user-settings-page__change-pw-del-acc-container">
+          <button className="changePWBtn">Change Password</button>
+          <a href="" onClick={delAcc}>
+            <button className="deleteAccountBtn">Delete account</button>
+          </a>
+        </div>
       </div>
-      <div>
-        <h2>bio:</h2>
-        <textarea className="textArea1" placeholder={bio}></textarea>
-        <button className="navbarClickThisButton">Change bio</button>
-      </div>
-      <div>
-        <h2>Email:</h2>
-        <input placeholder={email}></input>
-        <button className="navbarClickThisButton">Change Email</button>
-      </div>
-
-      <button className="changePWBtn">Change Password</button>
-      <a href="" onClick={delAcc}>
-        <button className="deleteAccountBtn">Delete account</button>
-      </a>
     </div>
   );
 };
