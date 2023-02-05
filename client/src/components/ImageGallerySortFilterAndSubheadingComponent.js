@@ -33,7 +33,10 @@ const ImageGallerySortFilterAndSubheadingComponent = ({
             href={`http://localhost:3000/User/${username}`}
             className="image-gallery__likes-page-subheading-img"
           >
-            <img src={pfp} className="profilePic" />
+            <img
+              src={pfp}
+              className="image-gallery__likes-page-subheading-img"
+            />
           </a>
         </div>
 

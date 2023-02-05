@@ -2,6 +2,8 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import signInPageCollageImg from "../../images/PicPocket-SignIn-Collage2.png";
+import googleOAuthIcon from "../../images/google-logo-oauth.png";
+import facebookOauthIcon from "../../images/facebook-logo-oauth.png";
 
 const SignInPage = ({ curUser, loggedIn }) => {
   var [curUser2, setCurUser] = useState({
@@ -73,8 +75,17 @@ const SignInPage = ({ curUser, loggedIn }) => {
           >
             Log in to your account
           </div>
-          <button>Google</button>
-          <button>Facebook</button>
+          <button className="sign-in-page__oauth-button">
+            <div>
+              <img src={googleOAuthIcon}></img>
+              Google
+            </div>
+          </button>
+          <button className="sign-in-page__oauth-button">
+            <div>
+              <img src={facebookOauthIcon}></img>Facebook
+            </div>
+          </button>
           <div className="signInPage--or">
             <div className="orLine"></div>
             <div>or</div>

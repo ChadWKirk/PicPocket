@@ -31,11 +31,7 @@ TASKS:
 
 styling:
 
-search page - put drop down menu and results count under search query heading and make it responsive
-
 footer - make about us page
-
-sign in page - get facebook and google auth svg's for oauth buttons
 
 create sign up now section - have pic of female photographer to the right or left and have it fade to just a solid background color (darker yellow) and have the text and join now button on the empty side
 
