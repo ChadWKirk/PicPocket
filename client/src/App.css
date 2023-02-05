@@ -9,11 +9,11 @@
   --siteContentsMidWidth: 1400px;
   --siteContentsLeastWidth: 1200px;
   /* imgGalleryMarginBetweenImages is the Image Gallery's margin that separates each image. */
+  /* Use imgGalleryMarginBetweenImages on image-gallery__container and image gallery subheading's padding left/right to get equal to other elements' side spacing. */
   /* Use double that value to get side padding for other elements like navbar etc because each image in the gallery has the value on left AND right, so it makes it double when separating the images */
   --imgGalleryMarginBetweenImages: 0.93rem;
-  --sideSpaceMargin: 0.93rem;
-  --sideSpaceMarginHalf: calc(var(--sideSpaceMargin) / 2);
   --sideSpacePadding: 1.875rem;
+  --sideSpacePaddingSmallScreen: calc(var(--imgGalleryMarginBetweenImages) / 2);
 }
 
 [data-hamOpenOrClosed="closed"] {
@@ -495,7 +495,7 @@ button {
   margin-top: 0.6rem;
   margin-bottom: 4.25rem;
   /* padding: 0px 6px 0px 6px; */
-  padding: 0 var(--sideSpaceMargin);
+  padding: 0 var(--imgGalleryMarginBetweenImages);
 }
 .image-gallery__searchquery-heading {
   margin-left: 15px;
@@ -518,7 +518,7 @@ button {
 }
 .image-gallery__main-page-subheading {
   padding: 1.65rem 0px 0.275rem 0px;
-  margin-left: var(--sideSpaceMargin);
+  margin-left: var(--imgGalleryMarginBetweenImages);
   font-size: 1.7rem;
   display: flex;
   align-items: center;
@@ -722,10 +722,10 @@ button {
 }
 @media (width < 901px) {
   .image-gallery__image-container {
-    margin: var(--sideSpaceMarginHalf);
+    margin: var(--sideSpacePaddingSmallScreen);
   }
   .freeStockPhotosHeading {
-    margin-left: var(--sideSpaceMarginHalf);
+    margin-left: var(--sideSpacePaddingSmallScreen);
   }
 }
 @media (width < 900px) {
@@ -738,7 +738,7 @@ button {
   .image-gallery__main-page-subheading {
     padding-top: 2.45rem;
     padding-bottom: 1rem;
-    margin-left: calc(var(--sideSpaceMarginHalf) - 1.75px);
+    margin-left: calc(var(--sideSpacePaddingSmallScreen) - 1.75px);
   }
 }
 @media (width < 825px) {
@@ -2752,7 +2752,7 @@ button {
 
 @media (width < 900px) {
   .footerContainer {
-    padding: 2rem calc(var(--sideSpaceMarginHalf) - 11px);
+    padding: 2rem calc(var(--sideSpacePaddingSmallScreen) - 11px);
   }
   .footer__contents-container {
     flex-direction: column;
