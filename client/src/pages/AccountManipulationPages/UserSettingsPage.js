@@ -5,7 +5,12 @@ import ChangePFPBtn from "../../components/ChangePFPBtn";
 import Toast from "../../components/Toast";
 import { useNavigate } from "react-router-dom";
 
-const UserSettingsPage = ({ curUser, loggedIn }) => {
+const UserSettingsPage = ({
+  curUser,
+  loggedIn,
+  isJustDeleted,
+  setIsJustDeleted,
+}) => {
   const [toastMessage, setToastMessage] = useState();
   const [toastStatus, setToastStatus] = useState("Invisible");
   function toastDissappear() {
@@ -32,7 +37,8 @@ const UserSettingsPage = ({ curUser, loggedIn }) => {
         headers: { "Content-type": "application/json" },
       }).then(() =>
         setTimeout(() => {
-          window.location.href = "/delSuccess";
+          setIsJustDeleted(true);
+          navigate("/");
         }, 500)
       );
     } else {

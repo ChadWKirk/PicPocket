@@ -26,6 +26,11 @@ import ContactUsPage from "./pages/ContactUsPage";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
+  //When someone deletes their account, they will be navigated back to main page
+  //and a red banner will show saying their account has successfully been deleted
+  //until they refresh or go to a different page to reset the state to false.
+  const [isJustDeleted, setIsJustDeleted] = useState(false);
+
   const [curUser, setCurUser] = useState();
   const [loggedIn, setLoggedIn] = useState();
   console.log("render");
@@ -67,7 +72,14 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={<MainPage curUser={curUser} loggedIn={loggedIn} />}
+            element={
+              <MainPage
+                curUser={curUser}
+                loggedIn={loggedIn}
+                isJustDeleted={isJustDeleted}
+                setIsJustDeleted={setIsJustDeleted}
+              />
+            }
           ></Route>
           <Route
             path="/most-popular"
@@ -89,7 +101,14 @@ function App() {
           <Route path="/like-test" element={<LikeTestPage />}></Route>
           <Route
             path={`/Account/${curUser}`}
-            element={<UserSettingsPage curUser={curUser} loggedIn={loggedIn} />}
+            element={
+              <UserSettingsPage
+                curUser={curUser}
+                loggedIn={loggedIn}
+                isJustDeleted={isJustDeleted}
+                setIsJustDeleted={setIsJustDeleted}
+              />
+            }
           ></Route>
           <Route
             path={`/User/:username`}

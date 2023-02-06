@@ -8,8 +8,19 @@ import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import ImageGallery from "../../components/ImageGallery";
+import RedBanner from "../../components/RedBanner";
 
-const MainPage = ({ curUser, loggedIn }) => {
+const MainPage = ({ curUser, loggedIn, isJustDeleted, setIsJustDeleted }) => {
+  //if account has just been deleted, render RedBanner. See comment in App.js for more.
+  let redBanner;
+  if (isJustDeleted) {
+    redBanner = (
+      <RedBanner Message={"Your account has been successfully deleted."} />
+    );
+  } else if (!isJustDeleted) {
+    redBanner = null;
+  }
+
   //to get number of images in array for "x pics liked by user" or "x search results" heading
   //really just a placeholder so I can use the ImageGallery component. It doesn't get used on this page
   const [imgGalleryLength, setImgGalleryLength] = useState();
@@ -205,6 +216,7 @@ const MainPage = ({ curUser, loggedIn }) => {
           navPositionClass={navPositionClass}
           navColorClass={navColorClass}
         />
+        {redBanner}
         <MainPageHeroImage />
       </div>
       <div className="sortingBarCont1">

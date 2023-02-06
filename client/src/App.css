@@ -1012,6 +1012,30 @@ button {
   font-size: 1rem;
 }
 
+/* Red Banner CSS */
+.red-banner__container {
+  width: 100%;
+  height: 40px;
+  background-color: #b20000;
+}
+.red-banner__contents-container {
+  width: var(--siteContentsMidWidth);
+  height: 40px;
+  padding-left: var(--sideSpacePadding);
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.8rem;
+  margin: auto;
+}
+.red-banner__exclamation-icon {
+  font-size: 1.5rem;
+  color: #7f0000;
+}
+.red-banner__contents-container div {
+  color: rgb(241, 241, 241);
+}
+
 /* .logo h1 {
   font-size: 1.5rem;
 }
