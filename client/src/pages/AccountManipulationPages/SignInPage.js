@@ -65,8 +65,7 @@ const SignInPage = ({ curUser, loggedIn }) => {
   }
 
   return (
-    <div>
-      {/* <NavBar curUser={curUser} loggedIn={loggedIn} /> */}
+    <div className="sign-in-page__container">
       <div className="signInPage--contentsContainer">
         <div className="signInPage--formContainer">
           <div style={{ fontSize: "1rem", fontWeight: "300" }}>PicPocket</div>

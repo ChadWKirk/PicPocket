@@ -105,6 +105,7 @@ function App() {
               <UserSettingsPage
                 curUser={curUser}
                 loggedIn={loggedIn}
+                setLoggedIn={setLoggedIn}
                 isJustDeleted={isJustDeleted}
                 setIsJustDeleted={setIsJustDeleted}
               />

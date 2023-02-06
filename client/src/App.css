@@ -1014,12 +1014,12 @@ button {
 
 /* Red Banner CSS */
 .red-banner__container {
-  width: 100%;
+  max-width: 100vw;
   height: 40px;
   background-color: #b20000;
 }
 .red-banner__contents-container {
-  width: var(--siteContentsMidWidth);
+  max-width: var(--siteContentsMidWidth);
   height: 40px;
   padding-left: var(--sideSpacePadding);
   display: flex;
@@ -1036,6 +1036,18 @@ button {
   color: rgb(241, 241, 241);
 }
 
+@media (width < 650px) {
+  .red-banner__container,
+  .red-banner__contents-container {
+    height: 30px;
+  }
+  .red-banner__exclamation-icon {
+    font-size: 0.85rem;
+  }
+  .red-banner__contents-container div {
+    font-size: 0.75rem;
+  }
+}
 /* .logo h1 {
   font-size: 1.5rem;
 }
@@ -2696,16 +2708,23 @@ button {
   transition: 0.2s;
 }
 
+.sign-in-page__container {
+}
+
 .signInPage--contentsContainer {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
   height: 100%;
   margin: auto;
+  width: 100vw;
   max-width: var(--siteContentsMaxWidth);
 }
 
 .signInPage--formContainer {
+  margin-bottom: 3.75rem;
+  max-height: 590px;
   width: 37.25rem;
   /* max-width: 47.25rem !important; */
   padding: 2.5rem 3rem 2.1rem var(--sideSpacePadding);
@@ -2808,9 +2827,10 @@ button {
 }
 
 .sign-in-page__collage-image-container {
-  max-height: 590px;
-  width: 100%;
-  max-width: 800px;
+  height: 100vh;
+  max-height: 1080px;
+  /* flex: 1; */
+  max-width: 1000px;
   flex: 1;
   z-index: -10;
 }

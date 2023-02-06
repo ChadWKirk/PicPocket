@@ -10,6 +10,7 @@ const UserSettingsPage = ({
   loggedIn,
   isJustDeleted,
   setIsJustDeleted,
+  setLoggedIn,
 }) => {
   const [toastMessage, setToastMessage] = useState();
   const [toastStatus, setToastStatus] = useState("Invisible");
@@ -38,6 +39,7 @@ const UserSettingsPage = ({
       }).then(() =>
         setTimeout(() => {
           setIsJustDeleted(true);
+          setLoggedIn(false);
           navigate("/");
         }, 500)
       );
