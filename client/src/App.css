@@ -47,7 +47,7 @@
 
 [data-navTheme="white"] {
   --navBGColor: white;
-  --navLogoColor: #4a4a4a;
+  --navLogoColor: var(--dark2);
   --navArrowIconColor: #a0a0a0;
   --navArrowIconColorHover: rgb(116, 116, 116);
   --navSearchDisplay: flex;
@@ -893,7 +893,7 @@ button {
 
 /* User Settings Page */
 .user-settings-page__contents-container {
-  padding-top: 3rem;
+  padding: 3rem var(--sideSpacePadding) 0px var(--sideSpacePadding);
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -901,16 +901,17 @@ button {
   gap: 3rem;
   max-width: 500px;
   margin: auto;
-  /* background-color: rebeccapurple; */
 }
 .user-settings-page__contents-container h1 {
   margin: auto;
+  color: var(--dark2);
 }
 .user-settings-page__change-pfp-container {
   display: flex;
   justify-content: center;
   align-items: center;
   align-self: center;
+  flex-wrap: wrap;
   gap: 2.15rem;
 }
 .user-settings-page__change-pfp-input {
@@ -937,23 +938,41 @@ button {
   border-radius: 6px;
   font-size: 1rem;
 }
+.user-settings-page__contents-container h2 {
+  color: var(--dark2);
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+.user-settings-page__change-bio-container {
+  width: 100%;
+}
 .user-settings-page__bio-textarea {
-  width: 500px;
+  width: 100%;
   border-radius: 4px;
   border: 1px solid lightgray;
   font-size: 0.85rem;
-  /* font-weight: 600; */
   padding: 0.35rem;
   padding-left: 0.65rem;
   margin-top: 0.6rem;
   height: 5rem;
   resize: none;
 }
+.user-settings-page__bio-textarea:focus {
+  outline: 1px solid #06acca;
+}
+.user-settings-page__change-email-container {
+  width: 100%;
+}
 .user-settings-page__email-input {
+  width: 100%;
   font-size: 0.85rem;
   padding: 0.35rem 0.65rem;
   border-radius: 4px;
+  margin-bottom: 6px;
   border: 1px solid lightgray;
+}
+.user-settings-page__email-input:focus {
+  outline: 1px solid #06acca;
 }
 .user-settings-page__change-bio-email-btn {
   padding: 0.5rem 0.75rem;
@@ -965,10 +984,11 @@ button {
   border-radius: 3px;
   font-size: 1rem;
 }
-.user-settings-page__change-pw-del-acc-container {
+.user-settings-page__change-pw-del-acc-btn-container {
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
+  flex-wrap: wrap;
   gap: 1rem;
   margin-bottom: 3rem;
 }
@@ -982,6 +1002,7 @@ button {
   font-size: 1rem;
 }
 .deleteAccountBtn {
+  width: 157px;
   padding: 0.8rem;
   background-color: #de0c0c;
   color: var(--offWhite);
@@ -2533,6 +2554,10 @@ button {
 
 /* toast css */
 
+.toastInvisible {
+  display: none;
+}
+
 .toastSuccess {
   width: 400px;
   max-height: 80px;
@@ -2890,12 +2915,11 @@ button {
 
 @media (width < 900px) {
   .footerContainer {
-    padding: 2rem calc(var(--sideSpacePaddingSmallScreen) - 11px);
+    padding: 2rem var(--sideSpacePadding);
   }
   .footer__contents-container {
     flex-direction: column;
     gap: 2.5rem;
-    margin-left: 15px;
   }
 }
 

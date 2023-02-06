@@ -7,10 +7,10 @@ import { useNavigate } from "react-router-dom";
 
 const UserSettingsPage = ({ curUser, loggedIn }) => {
   const [toastMessage, setToastMessage] = useState();
-  const [toastStatus, setToastStatus] = useState();
+  const [toastStatus, setToastStatus] = useState("Invisible");
   function toastDissappear() {
     setTimeout(() => {
-      setToastStatus();
+      setToastStatus("Invisible");
       setToastMessage();
     }, 3000);
   }
@@ -42,7 +42,8 @@ const UserSettingsPage = ({ curUser, loggedIn }) => {
 
   const [userInfo, setUserInfo] = useState();
   const [userPFP, setPFP] = useState();
-
+  const [emailValue, setEmailValue] = useState("");
+  const [bioValue, setBioValue] = useState("");
   useEffect(() => {
     console.log(process.env);
     async function userInfoFetch() {
@@ -56,6 +57,8 @@ const UserSettingsPage = ({ curUser, loggedIn }) => {
           .then((stringJSON) => JSON.parse(stringJSON))
           .then((parsedJSON) => {
             setUserInfo(parsedJSON[0]);
+            setEmailValue(parsedJSON[0].email);
+            setBioValue(parsedJSON[0].bio);
             setPFP(parsedJSON[0].pfp);
           })
       );
@@ -65,10 +68,9 @@ const UserSettingsPage = ({ curUser, loggedIn }) => {
   }, []);
 
   let bio;
-  let email;
+
   if (userInfo) {
     bio = userInfo.bio;
-    email = userInfo.email;
   }
   //slicing secure url to exclude the picpocket part and the extension at the end
   //to add picpocket/ back to in the back end. had to remove the slash part because it messed up the route
@@ -201,6 +203,11 @@ const UserSettingsPage = ({ curUser, loggedIn }) => {
     setToastStatus();
   }
 
+  // let emailValue = email;
+  // function onChangeEmail(e) {
+  //   emailValue = e.target.value;
+  // }
+
   return (
     <div>
       <NavbarComponent
@@ -230,30 +237,37 @@ const UserSettingsPage = ({ curUser, loggedIn }) => {
             closeToast={closeToast}
           />
         </div>
-        <div>
+        <div className="user-settings-page__change-bio-container">
           <h2>Short Bio:</h2>
           <textarea
             className="user-settings-page__bio-textarea"
-            placeholder={bio}
+            value={bioValue}
+            onChange={(e) => setBioValue(e.target.value)}
           ></textarea>
-          <button className="user-settings-page__change-bio-email-btn">
+          <button
+            className="user-settings-page__change-bio-email-btn"
+            onClick={() => console.log(bioValue)}
+          >
             Change Bio
           </button>
         </div>
-        <div>
+        <div className="user-settings-page__change-email-container">
           <h2>Email:</h2>
           <input
-            placeholder={email}
+            value={emailValue}
             className="user-settings-page__email-input"
+            onChange={(e) => {
+              setEmailValue(e.target.value);
+            }}
           ></input>
           <button
-            style={{ marginLeft: "1rem" }}
             className="user-settings-page__change-bio-email-btn"
+            onClick={() => console.log(emailValue)}
           >
             Change Email
           </button>
         </div>
-        <div className="user-settings-page__change-pw-del-acc-container">
+        <div className="user-settings-page__change-pw-del-acc-btn-container">
           <button className="changePWBtn">Change Password</button>
           <a href="" onClick={delAcc}>
             <button className="deleteAccountBtn">Delete account</button>
