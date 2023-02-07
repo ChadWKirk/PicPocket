@@ -2718,12 +2718,11 @@ button {
   align-items: center;
   height: 100%;
   margin: auto;
-  width: 100vw;
+  /* width: 100vw; */
   max-width: var(--siteContentsMaxWidth);
 }
 
 .signInPage--formContainer {
-  margin-bottom: 3.75rem;
   max-height: 590px;
   width: 37.25rem;
   /* max-width: 47.25rem !important; */
@@ -2829,7 +2828,6 @@ button {
 .sign-in-page__collage-image-container {
   height: 100vh;
   max-height: 1080px;
-  /* flex: 1; */
   max-width: 1000px;
   flex: 1;
   z-index: -10;
@@ -2858,6 +2856,12 @@ button {
   height: 1px;
   background-color: rgb(222, 222, 222);
   width: 100px;
+}
+
+@media (height > 1000px) {
+  .signInPage--formContainer {
+    margin-top: -2rem;
+  }
 }
 
 /* .image-gallery__dropdown-and-subheading-container {
