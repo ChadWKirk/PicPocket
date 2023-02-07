@@ -1917,7 +1917,10 @@ button {
 }
 
 /*My Pics gallery CSS*/
-
+.myPicsGalleryMainContainer {
+  overflow: hidden;
+  margin-bottom: 5.5rem;
+}
 .mypics-page__heading {
   font-size: 2rem;
   text-align: center;
@@ -1936,10 +1939,12 @@ button {
   margin-top: -1.6rem;
   color: rgb(118, 118, 118);
 }
-
-.myPicsGalleryMainContainer {
-  overflow: hidden;
-  margin-bottom: 5.5rem;
+.myPicsGalleryAndEditorContainer {
+  display: grid;
+  grid-template-columns: 70% 1fr;
+  grid-template-rows: auto;
+  max-width: var(--siteContentsMidWidth);
+  margin: auto;
 }
 
 .myPicsGalleryContainer {
@@ -2231,12 +2236,6 @@ button {
   padding-top: 0.6rem;
   border-top: 2px solid rgba(169, 169, 169, 0.21);
   background-color: #f2f2f2;
-}
-
-.myPicsGalleryAndEditorContainer {
-  display: grid;
-  grid-template-columns: 70% 1fr;
-  grid-template-rows: auto;
 }
 
 /* mypics gallery scrollbar */
