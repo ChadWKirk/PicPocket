@@ -13,6 +13,8 @@ import { faDownload } from "@fortawesome/free-solid-svg-icons";
 const MyPicsPage = ({ curUser, loggedIn }) => {
   const [massDlLink, setMassDlLink] = useState();
 
+  //toast stuff
+  //set toast to invisible until it is called by either error or success function
   const [toastMessage, setToastMessage] = useState();
   const [toastStatus, setToastStatus] = useState("Invisible");
   function toastDissappear() {
@@ -25,29 +27,29 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
     setToastMessage();
     setToastStatus();
   }
+
   let navigate = useNavigate();
 
-  //image array to display in the HTML
-  const [myPicsArr, setMyPicsArr] = useState([]);
-  //array to fetch images to
-  const [fetchArr, setFetchArr] = useState([]);
-  //put mapped over fetchArr in here
-  var mapArr;
-  //put true or false values in here for individual checkboxes
-  var checkboxArr = [];
-  //checkbox state
-  const [checkboxState, setCheckboxState] = useState(checkboxArr);
-  //Editor array for mass delete / mass download
-  var massArr = useRef([]);
-  //to reset array to see checkbox result
-  const [tf, setTf] = useState(false);
-  //to do select/deselect all
-  var selectAll = useRef(false);
+  //img array to display
+  const [imgGallery, setImgGallery] = useState([]);
+  //fetch img array to map over
+  const [imgData, setImgData] = useState([]);
+  //put mapped over imgData in here
+  let imgDataMapOutcome;
 
-  const [selectAllState, setSelectAllState] = useState(false);
+  //put true or false values in here for individual checkboxes
+  let isCheckedArr = [];
+  //checkbox state
+  const [isCheckedArrState, setIsCheckedArrState] = useState(isCheckedArr);
+
+  //Editor array for mass delete / mass download
+  let bulkArr = useRef([]);
+
+  //to do select/deselect all
+  let isSelectAll = useRef(false);
+  const [isSelectAllState, setIsSelectAllState] = useState(false);
 
   //values to set editor form fields to
-  const [picture, setPicture] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [tags, setTags] = useState("");
@@ -61,18 +63,18 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
   const [filterTitle, setFilterTitle] = useState("All Types");
 
   //change this state when deleting or downloading
-  const [delOrDownFunc, setDelOrDownFunc] = useState(false);
+  const [isDeletingOrDownloading, setIsDeletingOrDownloading] = useState(false);
 
   //get images
   useEffect(() => {
-    console.log("run");
-    //reset massArr when changing sort/filter
-    massArr.current = [];
-    displayEditorInfo();
+    //reset bulkArr when changing sort/filter
+    bulkArr.current = [];
+
+    // displayEditorInfo();
 
     //reset select all when changing sort/filter
-    selectAll.current = false;
-    setSelectAllState(false);
+    isSelectAll.current = false;
+    setIsSelectAllState(false);
 
     navigate(`/Account/${curUser}/My-Pics/${sort}/${filter}`);
 
@@ -81,105 +83,40 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
         method: "GET",
         headers: { "Content-type": "application/json" },
       }).then((response) =>
-        response.json().then((resJSON) => setFetchArr(resJSON))
+        response.json().then((resJSON) => setImgData(resJSON))
       );
     }
     myPicsFetch();
-    for (var k = 0; k < fetchArr.length; k++) {
-      checkboxArr[k] = false;
+
+    //set all checkboxes to false by default
+    for (let i = 0; i < imgData.length; i++) {
+      isCheckedArr[i] = false;
     }
-    setCheckboxState(checkboxArr);
-  }, [sort, filter, delOrDownFunc]);
+    setIsCheckedArrState(isCheckedArr);
+  }, [sort, filter, isDeletingOrDownloading]);
 
-  function handleCheck(position) {
-    var boxes = [...checkboxState];
-    for (var t = 0; t < fetchArr.length; t++) {
-      if (t === position) {
-        boxes[t] = true;
-      } else {
-        boxes[t] = false;
-      }
-    }
-
-    setCheckboxState(boxes);
-  }
-
-  //handle push / filter massArr when clicking checkbox (for mass download/delete)
-  //if it is already in massArr, remove it from massArr. If it is not, push it to massArr.
-  //(mimics check / uncheck behavior on screen)
-  function handleMassArrCheck(element, index) {
-    if (massArr.current.indexOf(element) >= 0) {
-      massArr.current = massArr.current.filter((item) => {
-        return item !== element;
-      });
-      console.log("pull");
-    } else if (massArr.current.indexOf(element.asset_id) == -1) {
-      massArr.current.push(element);
-      console.log("push");
-    }
-    console.log(massArr.current);
-  }
-
-  //handle push / filter massArr when clicking label (for mass download/delete)
-  //clears massArr and puts only the selected img in the massArr (mimics check/uncheck behavior on screen)
-  function handleMassArrLabel(element, index) {
-    massArr.current = [];
-    massArr.current.push(element);
-    console.log(massArr.current);
-  }
-
-  //set editor info
-  function displayEditorInfo() {
-    if (massArr.current.length > 0) {
-      console.log(massArr.current[0].title + " this");
-      document.querySelector("#titleInputID").value = massArr.current[0].title;
-      setTitle(massArr.current[0].title);
-      document.querySelector("#tagsInputID").value =
-        massArr.current[0].tags.join(", "); //makes the tags array display with ", " separating items instead of just a comma. To play nice with split to create array on submit
-      setTags(massArr.current[0].tags.join(", "));
-      document.querySelector("#descriptionInputID").value =
-        massArr.current[0].description;
-      setDescription(massArr.current[0].description);
-      document.querySelector("#imageTypeInputID").value =
-        massArr.current[0].imageType;
-      setImageType(massArr.current[0].imageType);
-      document.querySelector("#previewImageForEditor").src =
-        massArr.current[0].secure_url.slice(0, 50) +
-        "q_60/c_scale,w_600/dpr_auto/" +
-        massArr.current[0].secure_url.slice(
-          50,
-          massArr.current[0].secure_url.lastIndexOf(".")
-        ) +
-        ".jpg";
-    } else {
-      document.querySelector("#titleInputID").value = null;
-      document.querySelector("#tagsInputID").value = null;
-      document.querySelector("#descriptionInputID").value = null;
-      document.querySelector("#imageTypeInputID").value = null;
-      document.querySelector("#previewImageForEditor").src = null;
-    }
-  }
-
-  //create inputs
+  //Create Image Gallery
   useEffect(() => {
-    mapArr = fetchArr.map((element, index) => {
+    imgDataMapOutcome = imgData.map((element, index) => {
       // let parts = element.public_id.split("/");  --SPLIT NOT WORKING DUE TO MESSED UP UPLOADS EARLIER. JUST NEED TO DELETE THEM
       // let result = parts[parts.length - 1];
       let assetId = element.asset_id;
-      var checkbox;
+      let checkbox;
 
-      if (checkboxState[index]) {
+      //set if checkbox is checked or not based on isCheckedArrState
+      //need to turn the onchange into a function
+      if (isCheckedArrState[index]) {
         checkbox = (
           <input
             type="checkbox"
-            checked={checkboxState[index]}
+            checked={isCheckedArrState[index]}
             onChange={() => {
-              let boxes = [...checkboxState];
-              let box = checkboxState[index];
+              let boxes = [...isCheckedArrState];
+              let box = isCheckedArrState[index];
               box = false;
               boxes[index] = box;
-              handleMassArrCheck(element, index);
-              setCheckboxState(boxes);
+              handleBulkArrCheck(element, index);
+              setIsCheckedArrState(boxes);
               displayEditorInfo();
             }}
             id={`checkbox${index}`}
@@ -190,14 +127,14 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
         checkbox = (
           <input
             type="checkbox"
-            checked={checkboxState[index]}
+            checked={isCheckedArrState[index]}
             onChange={() => {
-              let boxes = [...checkboxState];
-              let box = checkboxState[index];
+              let boxes = [...isCheckedArrState];
+              let box = isCheckedArrState[index];
               box = true;
               boxes[index] = box;
-              handleMassArrCheck(element, index);
-              setCheckboxState(boxes);
+              handleBulkArrCheck(element, index);
+              setIsCheckedArrState(boxes);
               displayEditorInfo();
             }}
             id={`checkbox${index}`}
@@ -215,7 +152,7 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
           }}
           key={element.asset_id}
           className={`${
-            checkboxState[index]
+            isCheckedArrState[index]
               ? "mypics-image-gallery__img-and-info-container border"
               : "mypics-image-gallery__img-and-info-container"
           }`}
@@ -227,7 +164,7 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
             }}
             onClick={() => {
               handleCheck(index);
-              handleMassArrLabel(element, index);
+              handleBulkArrLabel(element, index);
             }}
           >
             <div
@@ -251,7 +188,7 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
             </div>
             <div className="mypics-image-gallery__img-info-container">
               <div className="mypics-image-gallery__img-info-title">
-                {fetchArr[index].title}
+                {imgData[index].title}
               </div>
               <div className="mypics-img-gallery__img-info-size-container">
                 <p>123 x 321</p>
@@ -262,25 +199,95 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
         </div>
       );
     });
-    setMyPicsArr(mapArr);
-  }, [fetchArr, sort, filter, tf, checkboxState]);
+    setImgGallery(imgDataMapOutcome);
+  }, [imgData, sort, filter, isCheckedArrState]);
+
+  //handle push / filter bulkArr when clicking checkbox (for mass download/delete)
+  //if it is already in bulkArr, remove it from bulkArr. If it is not, push it to bulkArr.
+  //(mimics check / uncheck behavior on screen)
+  function handleBulkArrCheck(element, index) {
+    if (bulkArr.current.indexOf(element) >= 0) {
+      bulkArr.current = bulkArr.current.filter((item) => {
+        return item !== element;
+      });
+      console.log("pull");
+    } else if (bulkArr.current.indexOf(element.asset_id) == -1) {
+      bulkArr.current.push(element);
+      console.log("push");
+    }
+    console.log(bulkArr.current);
+  }
+
+  //handle push / filter bulkArr when clicking label (for mass download/delete)
+  //clears bulkArr and puts only the selected img in the bulkArr (mimics check/uncheck behavior on screen)
+  function handleBulkArrLabel(element, index) {
+    bulkArr.current = [];
+    bulkArr.current.push(element);
+    console.log(bulkArr.current);
+  }
+
+  //set editor info
+  function displayEditorInfo() {
+    if (bulkArr.current.length > 0) {
+      console.log(bulkArr.current[0].title + " this");
+      document.querySelector("#titleInputID").value = bulkArr.current[0].title;
+      setTitle(bulkArr.current[0].title);
+      document.querySelector("#tagsInputID").value =
+        bulkArr.current[0].tags.join(", "); //makes the tags array display with ", " separating items instead of just a comma. To play nice with split to create array on submit
+      setTags(bulkArr.current[0].tags.join(", "));
+      document.querySelector("#descriptionInputID").value =
+        bulkArr.current[0].description;
+      setDescription(bulkArr.current[0].description);
+      document.querySelector("#imageTypeInputID").value =
+        bulkArr.current[0].imageType;
+      setImageType(bulkArr.current[0].imageType);
+      document.querySelector("#previewImageForEditor").src =
+        bulkArr.current[0].secure_url.slice(0, 50) +
+        "q_60/c_scale,w_600/dpr_auto/" +
+        bulkArr.current[0].secure_url.slice(
+          50,
+          bulkArr.current[0].secure_url.lastIndexOf(".")
+        ) +
+        ".jpg";
+    } else {
+      document.querySelector("#titleInputID").value = null;
+      document.querySelector("#tagsInputID").value = null;
+      document.querySelector("#descriptionInputID").value = null;
+      document.querySelector("#imageTypeInputID").value = null;
+      document.querySelector("#previewImageForEditor").src = null;
+    }
+  }
+
+  //when a box is checked or unchecked, change isCheckedArrState accordingly
+  function handleCheck(position) {
+    let boxes = [...isCheckedArrState];
+    for (let i = 0; i < imgData.length; i++) {
+      if (i === position) {
+        boxes[i] = true;
+      } else {
+        boxes[i] = false;
+      }
+    }
+
+    setIsCheckedArrState(boxes);
+  }
 
   async function submitForm(e) {
     e.preventDefault();
     if (titleClass == "editorFormDetailsSubContainerInputRed") {
       return;
     }
-    massArr.current[0].title = title;
-    massArr.current[0].description = description;
-    massArr.current[0].tags = tags.split(", "); //turn string into array
-    massArr.current[0].imageType = imageType;
+    bulkArr.current[0].title = title;
+    bulkArr.current[0].description = description;
+    bulkArr.current[0].tags = tags.split(", "); //turn string into array
+    bulkArr.current[0].imageType = imageType;
     console.log("submit attempt");
     await fetch(`http://localhost:5000/update/${curUser}`, {
       method: "PUT",
       headers: { "Content-type": "application/json" },
-      body: JSON.stringify(massArr.current[0]),
+      body: JSON.stringify(bulkArr.current[0]),
     }).then((res) => {
-      setDelOrDownFunc(!delOrDownFunc);
+      setIsDeletingOrDownloading(!isDeletingOrDownloading);
       setToastStatus("Success");
       setToastMessage("Your pic was updated successfully.");
       toastDissappear();
@@ -288,10 +295,11 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
     // .catch((err) => notify_edit_failure);
   }
 
+  //single delete button in editor form function
   async function deleteImageFromBackEnd() {
-    var publicIdArr = [];
-    for (var p = 0; p < massArr.current.length + 1; p++) {
-      // publicIdArr.push(massArr.current[p].public_id);
+    let publicIdArr = [];
+    for (let p = 0; p < bulkArr.current.length + 1; p++) {
+      // publicIdArr.push(bulkArr.current[p].public_id);
 
       // console.log(publicIdArr);
 
@@ -300,10 +308,10 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
       await fetch(`http://localhost:5000/deleteImage/`, {
         method: "POST",
         headers: { "Content-type": "application/json" },
-        body: JSON.stringify({ public_id: massArr.current[p].public_id }),
+        body: JSON.stringify({ public_id: bulkArr.current[p].public_id }),
       })
         .then((res) => {
-          setDelOrDownFunc(!delOrDownFunc);
+          setIsDeletingOrDownloading(!isDeletingOrDownloading);
           setToastStatus("Success");
           setToastMessage("Pic(s) successfully deleted.");
           toastDissappear();
@@ -319,7 +327,7 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
 
   //mass delete images
   async function massDeleteImages() {
-    let publicIDArr = massArr.current.map((a) => a.public_id);
+    let publicIDArr = bulkArr.current.map((a) => a.public_id);
     console.log(publicIDArr);
     await fetch(`http://localhost:5000/massDeleteImages`, {
       method: "POST",
@@ -327,7 +335,7 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
       body: JSON.stringify(publicIDArr),
     })
       .then((res) => {
-        setDelOrDownFunc(!delOrDownFunc);
+        setIsDeletingOrDownloading(!isDeletingOrDownloading);
         setToastStatus("Success");
         setToastMessage("Pic(s) successfully deleted.");
         toastDissappear();
@@ -342,7 +350,7 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
 
   //mass download images
   async function massDownloadImages() {
-    let publicIDArr = massArr.current.map((a) =>
+    let publicIDArr = bulkArr.current.map((a) =>
       a.public_id.replace("/", "%2F")
     );
     console.log(publicIDArr);
@@ -355,17 +363,19 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
         .then((resJSON) => JSON.stringify(resJSON))
         .then((stringJSON) => JSON.parse(stringJSON))
         .then((parsedJSON) => (window.location.href = parsedJSON));
-      setDelOrDownFunc(!delOrDownFunc);
+      setIsDeletingOrDownloading(!isDeletingOrDownloading);
     });
   }
 
-  let massButtons;
+  let bulkButtons;
 
-  const [hoverClassDel, setHoverClassDel] = useState(false);
-  const [hoverClassDown, setHoverClassDown] = useState(false);
+  const [isHoveredMassDeleteButton, setIsHoveredMassDeleteButton] =
+    useState(false);
+  const [isHoveredMassDownloadButton, setIsHoveredMassDownloadButton] =
+    useState(false);
 
-  if (massArr.current.length > 0) {
-    massButtons = (
+  if (bulkArr.current.length > 0) {
+    bulkButtons = (
       <div className="mypics-image-gallery__sort-bar__download-delete-all-btn-container">
         <div style={{ position: "relative" }}>
           <FontAwesomeIcon
@@ -374,16 +384,18 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
             onClick={() => massDeleteImages()}
             onMouseEnter={() => {
               setTimeout(() => {
-                setHoverClassDel(true);
+                setIsHoveredMassDeleteButton(true);
               }, 0);
             }}
             onMouseLeave={() => {
               setTimeout(() => {
-                setHoverClassDel(false);
+                setIsHoveredMassDeleteButton(false);
               }, 100);
             }}
           />
-          <div className={`${hoverClassDel ? "massIconText" : "gone"}`}>
+          <div
+            className={`${isHoveredMassDeleteButton ? "massIconText" : "gone"}`}
+          >
             Delete Selected
           </div>
         </div>
@@ -394,16 +406,20 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
             onClick={() => massDownloadImages()}
             onMouseEnter={() => {
               setTimeout(() => {
-                setHoverClassDown(true);
+                setIsHoveredMassDownloadButton(true);
               }, 0);
             }}
             onMouseLeave={() => {
               setTimeout(() => {
-                setHoverClassDown(false);
+                setIsHoveredMassDownloadButton(false);
               }, 100);
             }}
           />
-          <div className={`${hoverClassDown ? "massIconText" : "gone"}`}>
+          <div
+            className={`${
+              isHoveredMassDownloadButton ? "massIconText" : "gone"
+            }`}
+          >
             Download Selected
           </div>
         </div>
@@ -447,7 +463,7 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
           <div className="mypics-page__heading">
             <h2>Your Pics</h2>
             <p>
-              {fetchArr.length} images uploaded by {curUser}
+              {imgData.length} images uploaded by {curUser}
               {/* <a href={`"/Account/${curUser}"`}>{curUser}</a> */}
             </p>
           </div>
@@ -459,33 +475,33 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
             <div className="mypics-image-gallery__sort-bar__sort-filter-dropdown-checkbox-container">
               <input
                 type="checkbox"
-                checked={selectAllState}
-                onClick={() => setSelectAllState(!selectAllState)}
+                checked={isSelectAllState}
+                onClick={() => setIsSelectAllState(!isSelectAllState)}
                 onChange={() => {
-                  let boxes = [...checkboxState];
-                  let massCopy = [...massArr.current];
-                  console.log(selectAll.current);
-                  if (selectAll.current == false) {
-                    for (var r = 0; r < fetchArr.length; r++) {
+                  let boxes = [...isCheckedArrState];
+                  let massCopy = [...bulkArr.current];
+                  console.log(isSelectAll.current);
+                  if (isSelectAll.current == false) {
+                    for (let r = 0; r < imgData.length; r++) {
                       boxes[r] = true;
-                      massCopy.push(fetchArr[r]);
+                      massCopy.push(imgData[r]);
                     }
-                    selectAll.current = true;
-                  } else if (selectAll.current == true) {
-                    for (var r = 0; r < fetchArr.length; r++) {
+                    isSelectAll.current = true;
+                  } else if (isSelectAll.current == true) {
+                    for (let r = 0; r < imgData.length; r++) {
                       boxes[r] = false;
                       massCopy = [];
                     }
-                    selectAll.current = false;
+                    isSelectAll.current = false;
                     console.log("deselect");
                   }
 
-                  setCheckboxState(boxes);
-                  massArr.current = massCopy;
-                  // let box = checkboxState[index];
+                  setIsCheckedArrState(boxes);
+                  bulkArr.current = massCopy;
+                  // let box = isCheckedArrState[index];
                   // box = false;
                   // boxes[index] = box;
-                  // handleMassArrCheck(element, index);
+                  // handleBulkArrCheck(element, index);
 
                   // displayEditorInfo();
                 }}
@@ -586,21 +602,21 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
               </DropdownButton>
             </div>
 
-            {massButtons}
+            {bulkButtons}
           </div>
-          <div className="myPicsGallery">{myPicsArr}</div>
+          <div className="myPicsGallery">{imgGallery}</div>
         </div>
 
         <div className="myPicsGalleryEditorContainer">
           <div
-            className={`${massArr.current.length != 1 ? "previewDiv" : "gone"}`}
+            className={`${bulkArr.current.length != 1 ? "previewDiv" : "gone"}`}
           >
             <FontAwesomeIcon icon={faEye} className="eyeIcon" />
             <p>Select a single image to edit it here.</p>
           </div>
           <form
             className={`${
-              massArr.current.length == 1 ? "editorFormContainer" : "gone"
+              bulkArr.current.length == 1 ? "editorFormContainer" : "gone"
             }`}
             onSubmit={(e) => submitForm(e)}
           >
