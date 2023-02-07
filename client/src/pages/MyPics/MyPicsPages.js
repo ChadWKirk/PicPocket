@@ -147,8 +147,6 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
         <div
           onClick={(e) => {
             displayEditorInfo();
-
-            // e.currentTarget.classList = "border";
           }}
           key={element.asset_id}
           className={`${
@@ -161,6 +159,8 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
           <label
             style={{
               cursor: "pointer",
+              display: "flex",
+              flexDirection: "column",
             }}
             onClick={() => {
               handleCheck(index);
@@ -184,7 +184,6 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
                 alt="img"
                 className="mypics-image-gallery__img"
               ></img>
-              <div className="myPicsGallery__imageOverlay-container"></div>
             </div>
             <div className="mypics-image-gallery__img-info-container">
               <div className="mypics-image-gallery__img-info-title">
