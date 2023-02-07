@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import WhiteNavBar from "../components/WhiteNavBar";
-import DropDown from "../components/DropDown";
+import NavbarComponent from "../components/NavbarComponent";
 import UploadForm from "../components/UploadForm";
 import FileList from "../components/FileList";
 
@@ -16,9 +15,12 @@ const UploadPage = ({ curUser, loggedIn }) => {
 
   return (
     <div>
-      <div className="navContainer">
-        <WhiteNavBar curUser={curUser} loggedIn={loggedIn} />
-      </div>
+      <NavbarComponent
+        curUser={curUser}
+        loggedIn={loggedIn}
+        navPositionClass={"fixed"}
+        navColorClass={"white"}
+      />
       <div className="uploadPageContainer">
         <div className="uploadPageTitle">Upload Your Pics</div>
         <div className="uploadFormListContainer">

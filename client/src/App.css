@@ -2040,11 +2040,14 @@ button {
   box-shadow: 0px 2px 3px 0px rgba(190, 190, 190, 0.673);
   position: relative;
   transition: box-shadow 0.2s !important;
-  display: flex;
+  /* display: flex;
   flex-direction: column;
   justify-content: space-between;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: nowrap; */
+  /* text-overflow: ellipsis; */
+  /* white-space: nowrap; */
+  /* overflow: hidden; */
 }
 .mypics-image-gallery__img-and-info-container:hover {
   background-color: #f3f3f3;
@@ -2053,6 +2056,13 @@ button {
 }
 .mypics-image-gallery__img-and-info-container:hover .checkbox {
   display: block;
+}
+.mypics-image-gallery__img-label {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
 }
 .checkbox {
   width: 25px;
@@ -2079,7 +2089,7 @@ button {
 .mypics-image-gallery__img {
   width: 100%;
   display: block;
-  object-fit: cover;
+  object-fit: contain;
 }
 .mypics-image-gallery__img-info-container {
   width: 320px;
@@ -2089,14 +2099,17 @@ button {
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 .mypics-image-gallery__img-info-title {
+  padding-top: 1.35rem;
+  margin-bottom: 0.275rem;
+  width: 290px;
   font-weight: 500;
   font-size: 1.15rem;
-  text-overflow: ellipsis;
+  display: block;
+  text-overflow: ellipsis !important;
   white-space: nowrap;
+  overflow: hidden;
 }
 .mypics-img-gallery__img-info-size-container {
   display: flex;

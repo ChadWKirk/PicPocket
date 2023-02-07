@@ -157,15 +157,11 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
         >
           {checkbox}
           <label
-            style={{
-              cursor: "pointer",
-              display: "flex",
-              flexDirection: "column",
-            }}
             onClick={() => {
               handleCheck(index);
               handleBulkArrLabel(element, index);
             }}
+            className="mypics-image-gallery__img-label"
           >
             <div
               className="mypics-image-gallery__img-container"
@@ -186,8 +182,10 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
               ></img>
             </div>
             <div className="mypics-image-gallery__img-info-container">
-              <div className="mypics-image-gallery__img-info-title">
-                {imgData[index].title}
+              <div>
+                <p className="mypics-image-gallery__img-info-title">
+                  {imgData[index].title}
+                </p>
               </div>
               <div className="mypics-img-gallery__img-info-size-container">
                 <p>123 x 321</p>
