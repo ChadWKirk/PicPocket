@@ -116,6 +116,30 @@ button {
   display: none;
 }
 
+/* Gallery Heading CSS */
+.galleryHeadingAndSortContainer {
+  margin-top: 3rem;
+  margin-bottom: 5rem;
+}
+.galleryHeading {
+  font-size: 2rem;
+  text-align: center;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.galleryHeading h2 {
+  font-size: 3.125rem;
+}
+.galleryHeading p {
+  font-size: 1rem;
+  margin-top: -1.6rem;
+  color: rgb(118, 118, 118);
+}
+
 /* NavBar CSS */
 .navbar__height-margin {
   height: var(--navbarHeightMargin);
@@ -1770,31 +1794,6 @@ button {
 .galleryContainer {
 }
 
-.galleryHeadingAndSortContainer {
-  margin-top: 3rem;
-}
-
-.galleryHeading {
-  font-size: 2rem;
-  text-align: center;
-  margin: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  gap: 1.25rem;
-}
-
-.galleryHeading h2 {
-  font-size: 3.125rem;
-}
-
-.galleryHeading p {
-  font-size: 1rem;
-  margin-top: -1.6rem;
-  color: rgb(118, 118, 118);
-}
-
 .gallery {
   display: flex;
   flex-wrap: wrap;
@@ -1919,8 +1918,28 @@ button {
 
 /*My Pics gallery CSS*/
 
+.mypics-page__heading {
+  font-size: 2rem;
+  text-align: center;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.mypics-page__heading h2 {
+  font-size: 3.125rem;
+}
+.mypics-page__heading p {
+  font-size: 1rem;
+  margin-top: -1.6rem;
+  color: rgb(118, 118, 118);
+}
+
 .myPicsGalleryMainContainer {
   overflow: hidden;
+  margin-bottom: 5.5rem;
 }
 
 .myPicsGalleryContainer {
@@ -1958,7 +1977,7 @@ button {
   margin-top: 2rem;
 } */
 
-.myPicsimage-gallery__sort-filter-dropdown-container {
+.mypics-image-gallery__sort-bar-container {
   gap: 20px;
   padding: 1rem;
   padding-left: 1.5rem;
@@ -1968,19 +1987,115 @@ button {
   align-items: center;
   justify-content: space-between;
 }
-
-.myPicsimage-gallery__sort-filter-dropdown-container-leftContainer {
+.mypics-image-gallery__sort-bar__sort-filter-dropdown-checkbox-container {
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   gap: 0.5rem;
 }
+.mypics-image-gallery__checkbox-select-all {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+}
+.mypics-image-gallery__dropdown-button {
+  display: flex;
+  width: 125px !important;
+}
+.mypics-image-gallery__dropdown-button .btn-primary {
+  background-color: white;
+  color: #808080;
+  border: none;
+  outline: 1px solid var(--greyBorder1);
+  border-radius: 4px;
+  padding: 0.25rem 1rem;
+  font-weight: 300;
+  font-size: 0.75rem;
+  width: 120px;
+  height: 25px;
+  margin: 0;
+}
+.mypics-image-gallery__dropdown-button .btn-primary:hover {
+  color: gray;
+  border: none;
+  outline: 1.5px solid rgba(94, 94, 94, 0.412);
+  background-color: white;
+}
 
-.myPicsimage-gallery__sort-filter-dropdown-container-rightContainer {
+.mypics-image-gallery__sort-bar__download-delete-all-btn-container {
   display: flex;
   align-items: center;
   gap: 1.65rem;
   margin-right: 2.5rem;
   font-size: 1.14rem;
+}
+.mypics-image-gallery__img-and-info-container {
+  width: 320px;
+  height: 280px;
+  background-color: #fff;
+  box-shadow: 0px 2px 3px 0px rgba(190, 190, 190, 0.673);
+  position: relative;
+  transition: box-shadow 0.2s !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.mypics-image-gallery__img-and-info-container:hover {
+  background-color: #f3f3f3;
+  box-shadow: 0px 5px 8px 0px rgba(85, 85, 85, 0.673);
+  transition: 0.3s ease-in-out;
+}
+.mypics-image-gallery__img-and-info-container:hover .checkbox {
+  display: block;
+}
+.checkbox {
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  cursor: pointer;
+  display: none;
+}
+.border {
+  outline: 2px solid rgba(15, 15, 199, 0.641);
+  box-shadow: 0px 5px 8px 0px rgba(85, 85, 85, 0.673);
+  margin: 0;
+  padding: 0;
+  border: none !important;
+}
+.mypics-image-gallery__img-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.mypics-image-gallery__img {
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+  object-fit: cover;
+}
+.mypics-image-gallery__img-info-container {
+  width: 320px;
+  height: 70px;
+  padding: 0rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+.mypics-image-gallery__img-info-title {
+  font-weight: 500;
+  font-size: 1.15rem;
+}
+.mypics-img-gallery__img-info-size-container {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.875rem;
 }
 
 .massIcon {
@@ -2021,47 +2136,6 @@ button {
   overflow: scroll;
 }
 
-.myPicsDiv {
-  width: 200px;
-  height: 225px;
-  outline: 2px solid #e7e7e7;
-  background-color: lightblue;
-  border-radius: 10px;
-  position: relative;
-  padding: 0;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
-
-.myPicsGallery__img-title {
-  background-color: rgb(241, 241, 241);
-  font-weight: bold;
-  padding: 1rem;
-  padding-top: 0.6rem;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  width: 200px;
-}
-
-.checkbox {
-  width: 25px;
-  height: 25px;
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  cursor: pointer;
-}
-
-.checkboxSelectAll {
-  width: 25px;
-  height: 25px;
-  cursor: pointer;
-}
-
 .myPicsGallery__imageOverlay-container {
 }
 
@@ -2082,26 +2156,7 @@ button {
   opacity: 0.4;
 }
 
-.border {
-  outline: 2px solid rgba(15, 15, 199, 0.641);
-  box-shadow: 0px 5px 6px rgba(85, 85, 85, 0.673);
-}
-
-.myPicsGallery-img {
-  width: 200px;
-  height: 180px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  display: block;
-  object-fit: cover;
-}
-
-.myPicsDiv:hover {
-  box-shadow: 0px 5px 6px rgba(85, 85, 85, 0.673);
-  transition: 0.1s ease-in-out;
-}
-
-.myPicsDiv:hover .myPicsGallery-img {
+.mypics-image-gallery__img-container:hover .myPicsGallery-img {
 }
 
 .image-overlay-container {

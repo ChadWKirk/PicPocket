@@ -4,6 +4,7 @@ import { Navigate, useNavigate, useParams } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Toast from "../../components/Toast";
+import NavbarComponent from "../../components/NavbarComponent";
 //font awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
@@ -13,10 +14,10 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
   const [massDlLink, setMassDlLink] = useState();
 
   const [toastMessage, setToastMessage] = useState();
-  const [toastStatus, setToastStatus] = useState();
+  const [toastStatus, setToastStatus] = useState("Invisible");
   function toastDissappear() {
     setTimeout(() => {
-      setToastStatus();
+      setToastStatus("Invisible");
       setToastMessage();
     }, 3000);
   }
@@ -130,6 +131,7 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
   //set editor info
   function displayEditorInfo() {
     if (massArr.current.length > 0) {
+      console.log(massArr.current[0].title + " this");
       document.querySelector("#titleInputID").value = massArr.current[0].title;
       setTitle(massArr.current[0].title);
       document.querySelector("#tagsInputID").value =
@@ -206,41 +208,57 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
 
       return (
         <div
-          className={`${
-            checkboxState[index] ? "myPicsDiv border" : "myPicsDiv"
-          }`}
-          key={element.asset_id}
           onClick={(e) => {
             displayEditorInfo();
 
             // e.currentTarget.classList = "border";
           }}
-          // href={`/image/${result.replaceAll(" ", "-")}`}
+          key={element.asset_id}
+          className={`${
+            checkboxState[index]
+              ? "mypics-image-gallery__img-and-info-container border"
+              : "mypics-image-gallery__img-and-info-container"
+          }`}
         >
           {checkbox}
           <label
-            style={{ cursor: "pointer" }}
+            style={{
+              cursor: "pointer",
+            }}
             onClick={() => {
               handleCheck(index);
               handleMassArrLabel(element, index);
             }}
           >
-            <img
-              src={
-                element.secure_url.slice(0, 50) +
-                "q_60/c_scale,w_600/dpr_auto/" +
-                element.secure_url.slice(
-                  50,
-                  element.secure_url.lastIndexOf(".")
-                ) +
-                ".jpg"
-              } //how the images come in. uses slice to input quality into url and change everything to jpg
-              alt="img"
-              className="myPicsGallery-img"
-            ></img>
-            <p className="myPicsGallery__img-title">{fetchArr[index].title}</p>
+            <div
+              className="mypics-image-gallery__img-container"
+              // href={`/image/${result.replaceAll(" ", "-")}`}
+            >
+              <img
+                src={
+                  element.secure_url.slice(0, 50) +
+                  "q_60/c_scale,w_600/dpr_auto/" +
+                  element.secure_url.slice(
+                    50,
+                    element.secure_url.lastIndexOf(".")
+                  ) +
+                  ".jpg"
+                } //how the images come in. uses slice to input quality into url and change everything to jpg
+                alt="img"
+                className="mypics-image-gallery__img"
+              ></img>
+              <div className="myPicsGallery__imageOverlay-container"></div>
+            </div>
+            <div className="mypics-image-gallery__img-info-container">
+              <div className="mypics-image-gallery__img-info-title">
+                {fetchArr[index].title}
+              </div>
+              <div className="mypics-img-gallery__img-info-size-container">
+                <p>123 x 321</p>
+                <p>800kb</p>
+              </div>
+            </div>
           </label>
-          <div className="myPicsGallery__imageOverlay-container"></div>
         </div>
       );
     });
@@ -348,7 +366,7 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
 
   if (massArr.current.length > 0) {
     massButtons = (
-      <div className="myPicsGallerySortBar-rightContainer">
+      <div className="mypics-image-gallery__sort-bar__download-delete-all-btn-container">
         <div style={{ position: "relative" }}>
           <FontAwesomeIcon
             icon={faTrash}
@@ -413,8 +431,12 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
 
   return (
     <div style={{ overflow: "hidden" }}>
-      <WhiteNavBar curUser={curUser} loggedIn={loggedIn} />
-      {/* <DropDown /> */}
+      <NavbarComponent
+        curUser={curUser}
+        loggedIn={loggedIn}
+        navPositionClass={"fixed"}
+        navColorClass={"white"}
+      />
       <div className="myPicsGalleryMainContainer">
         <Toast
           status={toastStatus}
@@ -422,7 +444,7 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
           closeToast={closeToast}
         />
         <div className="myPicsGalleryHeadingAndSortContainer">
-          <div className="galleryHeading">
+          <div className="mypics-page__heading">
             <h2>Your Pics</h2>
             <p>
               {fetchArr.length} images uploaded by {curUser}
@@ -433,8 +455,8 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
       </div>
       <div className="myPicsGalleryAndEditorContainer">
         <div>
-          <div className="myPicsGallerySortBar">
-            <div className="myPicsGallerySortBar-leftContainer">
+          <div className="mypics-image-gallery__sort-bar-container">
+            <div className="mypics-image-gallery__sort-bar__sort-filter-dropdown-checkbox-container">
               <input
                 type="checkbox"
                 checked={selectAllState}
@@ -467,14 +489,15 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
 
                   // displayEditorInfo();
                 }}
-                className="checkboxSelectAll"
+                className="mypics-image-gallery__checkbox-select-all"
               />
               <DropdownButton
-                className="galleryDropDownButton"
+                className="mypics-image-gallery__dropdown-button"
                 title={`${sortTitle}`}
+                style={{ width: "150px" }}
               >
                 <Dropdown.Item
-                  className="galleryDropDownItem"
+                  className="mypics-image-gallery__dropdown-item"
                   onClick={() => {
                     setSort("most-recent");
                     setSortTitle("Most Recent");
@@ -483,7 +506,7 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
                   Most Recent
                 </Dropdown.Item>
                 <Dropdown.Item
-                  className="galleryDropDownItem"
+                  className="mypics-image-gallery__dropdown-item"
                   onClick={() => {
                     setSort("oldest");
                     setSortTitle("Oldest");
@@ -492,7 +515,7 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
                   Oldest
                 </Dropdown.Item>
                 <Dropdown.Item
-                  className="galleryDropDownItem"
+                  className="mypics-image-gallery__dropdown-item"
                   onClick={() => {
                     setSort("aToz");
                     setSortTitle("A - Z");
@@ -501,7 +524,7 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
                   A - Z
                 </Dropdown.Item>
                 <Dropdown.Item
-                  className="galleryDropDownItem"
+                  className="mypics-image-gallery__dropdown-item"
                   onClick={() => {
                     setSort("zToa");
                     setSortTitle("Z - A");
@@ -510,7 +533,7 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
                   Z - A
                 </Dropdown.Item>
                 <Dropdown.Item
-                  className="galleryDropDownItem"
+                  className="mypics-image-gallery__dropdown-item"
                   onClick={() => {
                     setSort("leastLikes");
                     setSortTitle("Least Popular");
@@ -519,7 +542,7 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
                   Least Popular
                 </Dropdown.Item>
                 <Dropdown.Item
-                  className="galleryDropDownItem"
+                  className="mypics-image-gallery__dropdown-item"
                   onClick={() => {
                     setSort("mostLikes");
                     setSortTitle("Popular");
@@ -529,11 +552,12 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
                 </Dropdown.Item>
               </DropdownButton>
               <DropdownButton
-                className="galleryDropDownButton"
+                className="mypics-image-gallery__dropdown-button"
                 title={`${filterTitle}`}
+                style={{ width: "150px" }}
               >
                 <Dropdown.Item
-                  className="galleryDropDownItem"
+                  className="mypics-image-gallery__dropdown-item"
                   onClick={() => {
                     setFilter("all-types");
                     setFilterTitle("All Types");
@@ -542,7 +566,7 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
                   All types
                 </Dropdown.Item>
                 <Dropdown.Item
-                  className="galleryDropDownItem"
+                  className="mypics-image-gallery__dropdown-item"
                   onClick={() => {
                     setFilter("Photo");
                     setFilterTitle("Photo");
@@ -551,7 +575,7 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
                   Photo
                 </Dropdown.Item>
                 <Dropdown.Item
-                  className="galleryDropDownItem"
+                  className="mypics-image-gallery__dropdown-item"
                   onClick={() => {
                     setFilter("Illustration");
                     setFilterTitle("Illustration");
