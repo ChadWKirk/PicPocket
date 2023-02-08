@@ -1987,9 +1987,9 @@ button {
   gap: 20px;
   padding: 1rem;
   padding-left: 1.5rem;
-  background-color: rgba(174, 196, 212, 0.545);
+  /* background-color: rgba(174, 196, 212, 0.545); */
   /* background-color: #fff; */
-  border-top: 2px solid rgba(169, 169, 169, 0.21);
+  /* border-top: 2px solid rgba(169, 169, 169, 0.21); */
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -2035,11 +2035,23 @@ button {
   margin-right: 2.5rem;
   font-size: 1.14rem;
 }
+.myPicsGallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding-left: 20px;
+  padding-right: 40px;
+  padding-top: 1rem;
+  /* background-color: rgba(174, 196, 212, 0.545); */
+  /* border-top: 2px solid rgba(169, 169, 169, 0.21); */
+  height: 100vh;
+  overflow: scroll;
+}
 .mypics-image-gallery__img-and-info-container {
   width: 320px;
   height: 280px;
-  background-color: #fff;
-  box-shadow: 0px 2px 3px 0px rgba(190, 190, 190, 0.673);
+  background-color: #ffffff;
+  /* box-shadow: 0px 2px 3px 0px rgba(190, 190, 190, 0.673); */
   position: relative;
   transition: box-shadow 0.2s !important;
   /* display: flex;
@@ -2149,19 +2161,6 @@ button {
 /* .image-gallery__dropdown-button {
   display: flex;
 } */
-
-.myPicsGallery {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  padding-left: 20px;
-  padding-right: 40px;
-  padding-top: 1rem;
-  background-color: rgba(174, 196, 212, 0.545);
-  border-top: 2px solid rgba(169, 169, 169, 0.21);
-  height: 100vh;
-  overflow: scroll;
-}
 
 .previewDiv {
   display: flex;
