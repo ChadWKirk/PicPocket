@@ -5,10 +5,17 @@ import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import WhiteNavBar from "../components/WhiteNavBar";
 import { useParams } from "react-router-dom";
+import Modal__ImageSelect from "../components/Modal__ImageSelect";
 
 import { AiFillLike } from "react-icons/ai";
 
-const ImageViewPage = ({ curUser, loggedIn }) => {
+const ImageViewPage = ({
+  curUser,
+  loggedIn,
+  isShowingImageSelectModal,
+  setIsShowingImageSelectModal,
+  imgTitleArrState,
+}) => {
   const { imageTitle } = useParams();
 
   //sticky nav bar
@@ -299,6 +306,10 @@ const ImageViewPage = ({ curUser, loggedIn }) => {
 
   return (
     <div>
+      {/* conditionally render modal based on state of isShowingImageSelectModal in app.js */}
+      {isShowingImageSelectModal && (
+        <Modal__ImageSelect imgTitleArrState={imgTitleArrState} />
+      )}
       <WhiteNavBar curUser={curUser} loggedIn={loggedIn} />
       <div className="fixed">
         <WhiteNavBar curUser={curUser} loggedIn={loggedIn} />

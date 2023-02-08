@@ -11,7 +11,16 @@ import ImageGallery from "../../components/ImageGallery";
 import RedBanner from "../../components/RedBanner";
 import Modal__ImageSelect from "../../components/Modal__ImageSelect";
 
-const MainPage = ({ curUser, loggedIn, isJustDeleted, setIsJustDeleted }) => {
+const MainPage = ({
+  curUser,
+  loggedIn,
+  isJustDeleted,
+  setIsJustDeleted,
+  isShowingImageSelectModal,
+  setIsShowingImageSelectModal,
+  setImgTitleArrState,
+  imgTitleArrState,
+}) => {
   //if account has just been deleted, render RedBanner. See comment in App.js for more.
   let redBanner;
   if (isJustDeleted) {
@@ -219,7 +228,7 @@ const MainPage = ({ curUser, loggedIn, isJustDeleted, setIsJustDeleted }) => {
         />
         {redBanner}
         <MainPageHeroImage />
-        <Modal__ImageSelect />
+        {/* <Modal__ImageSelect /> */}
       </div>
       <div className="sortingBarCont1">
         <a href="/" className="buttonClicked">
@@ -236,6 +245,10 @@ const MainPage = ({ curUser, loggedIn, isJustDeleted, setIsJustDeleted }) => {
           loggedIn={loggedIn}
           setImgGalleryLength={setImgGalleryLength}
           page={"mainPageMostRecent"}
+          isShowingImageSelectModal={isShowingImageSelectModal}
+          setIsShowingImageSelectModal={setIsShowingImageSelectModal}
+          imgTitleArrState={imgTitleArrState}
+          setImgTitleArrState={setImgTitleArrState}
         />
       </div>
 

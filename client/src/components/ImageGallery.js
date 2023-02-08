@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from "react";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faDownload } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
@@ -13,7 +13,14 @@ const ImageGallery = ({
   page,
   imgGalleryLength,
   setImgGalleryLength,
+  isShowingImageSelectModal,
+  setIsShowingImageSelectModal,
+  setImgTitleArrState,
+  imgTitleArrState,
 }) => {
+  // used to navigate to imageViewPage and isShowingImageSelectModal state to show modal on first navigate
+  let navigate = useNavigate();
+
   //subheading for Main Page
   let mainPageSubheading;
   if (page == "mainPageMostRecent" || page == "mainPageMostPopular") {
@@ -68,8 +75,15 @@ const ImageGallery = ({
   }, [sort, filter]);
 
   //map over image data to create img items for img gallery
+  // array to put all img titles into to use for imageSelectModal to be able to get img src
+  // and be able to go to previous or next img by altering the url with the next or previous
+  // title in array. put array in state const once map is done that is in app.js to give to
+  // imageviewpage
+  let titleArr = [];
   useEffect(() => {
     imgDataMapOutcome = imgData.map((element, index) => {
+      //create array of titles to use for imageSelectModal
+      titleArr.push(element.title);
       let likeButton;
 
       if (element.likedBy.includes(curUser)) {
@@ -91,10 +105,22 @@ const ImageGallery = ({
           </div>
         );
       }
+
+      // function navigateToImageViewPage() {
+      //   navigate(`/image/${element.title}`);
+      // }
+
       return (
         //each of these is one image item in the image gallery. Includes overlay with like, download and pfp buttons
         <div key={index} className="image-gallery__image-container">
-          <a href={`http://localhost:3000/image/${element.title}`}>
+          <a
+            onClick={() => {
+              setIsShowingImageSelectModal(true);
+              navigate(`/image/${element.title}`);
+            }}
+            //  href={`http://localhost:3000/image/${element.title}`}
+            style={{ cursor: "pointer" }}
+          >
             <img
               src={
                 element.secure_url.slice(0, 50) +
@@ -149,6 +175,7 @@ const ImageGallery = ({
       );
     });
     setImgGallery(imgDataMapOutcome);
+    setImgTitleArrState(titleArr);
   }, [sort, filter, isLiked, imgData]);
 
   //set this to get the amount of results to use in headings like "x search results" or "x images liked by user". It's being sent up to whatever parent page is using this component.

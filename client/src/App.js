@@ -31,6 +31,14 @@ function App() {
   //until they refresh or go to a different page to reset the state to false.
   const [isJustDeleted, setIsJustDeleted] = useState(false);
 
+  //used to show image select modal or not
+  const [isShowingImageSelectModal, setIsShowingImageSelectModal] =
+    useState(false);
+
+  //used to give array of img titles to imageview page to use for imageSelectModal
+  //to fetch img src and to go to previous or next image
+  const [imgTitleArrState, setImgTitleArrState] = useState();
+
   const [curUser, setCurUser] = useState();
   const [loggedIn, setLoggedIn] = useState();
   console.log("render");
@@ -78,6 +86,10 @@ function App() {
                 loggedIn={loggedIn}
                 isJustDeleted={isJustDeleted}
                 setIsJustDeleted={setIsJustDeleted}
+                isShowingImageSelectModal={isShowingImageSelectModal}
+                setIsShowingImageSelectModal={setIsShowingImageSelectModal}
+                imgTitleArrState={imgTitleArrState}
+                setImgTitleArrState={setImgTitleArrState}
               />
             }
           ></Route>
@@ -96,7 +108,16 @@ function App() {
           ></Route>
           <Route
             path="/image/:imageTitle"
-            element={<ImageViewPage curUser={curUser} loggedIn={loggedIn} />}
+            element={
+              <ImageViewPage
+                curUser={curUser}
+                loggedIn={loggedIn}
+                isShowingImageSelectModal={isShowingImageSelectModal}
+                setIsShowingImageSelectModal={setIsShowingImageSelectModal}
+                imgTitleArrState={imgTitleArrState}
+                setImgTitleArrState={setImgTitleArrState}
+              />
+            }
           ></Route>
           <Route path="/like-test" element={<LikeTestPage />}></Route>
           <Route
