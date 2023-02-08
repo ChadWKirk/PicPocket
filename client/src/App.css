@@ -2930,6 +2930,67 @@ button {
   width: 100px;
 }
 
+/* Image Select Modal CSS */
+
+.image-select-modal__container {
+  background-color: #000;
+  z-index: 100000000000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100vh;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.image-select-modal__contents-container {
+  margin: auto;
+  position: relative;
+  width: 84vw;
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 1.75rem 1.2rem;
+  margin-top: 2.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  justify-content: center;
+  align-items: center;
+}
+.image-select-modal__x-icon {
+  color: #fff;
+  font-size: 2rem;
+  position: absolute;
+  top: 0;
+  left: -65px;
+}
+.image-select-modal__left-arrow-icon {
+  color: #fff;
+  font-size: 2rem;
+  position: absolute;
+  top: 30vh;
+  left: -70px;
+}
+.image-select-modal__right-arrow-icon {
+  color: #fff;
+  font-size: 2rem;
+  position: absolute;
+  top: 30vh;
+  right: -70px;
+}
+.image-select-modal__top-bar-container {
+  width: 100%;
+  display: flex;
+}
+.image-select-modal__author-info-container {
+}
+.image-select-modal__top-bar-buttons-container {
+}
+.image-select-modal__img-container {
+}
+
 @media (height > 1000px) {
   .signInPage--formContainer {
     margin-top: -2rem;

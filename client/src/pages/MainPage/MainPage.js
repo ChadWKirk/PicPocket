@@ -9,6 +9,7 @@ import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import ImageGallery from "../../components/ImageGallery";
 import RedBanner from "../../components/RedBanner";
+import Modal__ImageSelect from "../../components/Modal__ImageSelect";
 
 const MainPage = ({ curUser, loggedIn, isJustDeleted, setIsJustDeleted }) => {
   //if account has just been deleted, render RedBanner. See comment in App.js for more.
@@ -218,6 +219,7 @@ const MainPage = ({ curUser, loggedIn, isJustDeleted, setIsJustDeleted }) => {
         />
         {redBanner}
         <MainPageHeroImage />
+        <Modal__ImageSelect />
       </div>
       <div className="sortingBarCont1">
         <a href="/" className="buttonClicked">
