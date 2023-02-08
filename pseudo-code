@@ -30,7 +30,7 @@ TASKS:
 
 styling:
 
-mypics - loading for submit/delete/massdelete, make it so that if all checkboxes are checked, selectall box checked = true and if not all of them are checked then select all checkbox checked = false.
+mypics - loading for submit/delete/massdelete, make it so that if all checkboxes are checked, selectall box checked = true and if not all of them are checked then select all checkbox checked = false, make page responsive.
 
 footer - make about us page
 
