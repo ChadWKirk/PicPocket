@@ -1943,6 +1943,7 @@ button {
   display: grid;
   grid-template-columns: 70% 1fr;
   grid-template-rows: auto;
+  /* width: 93vw; */
   max-width: var(--siteContentsMidWidth);
   margin: auto;
 }
@@ -1987,6 +1988,7 @@ button {
   padding: 1rem;
   padding-left: 1.5rem;
   background-color: rgba(174, 196, 212, 0.545);
+  /* background-color: #fff; */
   border-top: 2px solid rgba(169, 169, 169, 0.21);
   display: flex;
   align-items: center;
@@ -2071,6 +2073,12 @@ button {
   top: 10px;
   left: 10px;
   cursor: pointer;
+}
+/* in my pics page, if an image is checked/selected, show all remaining checkboxes without having to hover over them */
+[data-isACheckboxChecked="true"] .checkbox {
+  display: block;
+}
+[data-isACheckboxChecked="false"] .checkbox {
   display: none;
 }
 .border {

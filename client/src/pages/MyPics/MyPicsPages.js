@@ -41,6 +41,8 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
   let isCheckedArr = [];
   //checkbox state
   const [isCheckedArrState, setIsCheckedArrState] = useState(isCheckedArr);
+  //if a checkbox is checked, set checkedIsVisible to true to show all checkboxes rather than only on hover (css)
+  const [isACheckboxChecked, setIsACheckboxChecked] = useState(false);
 
   //Editor array for mass delete / mass download
   let bulkArr = useRef([]);
@@ -154,6 +156,7 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
               ? "mypics-image-gallery__img-and-info-container border"
               : "mypics-image-gallery__img-and-info-container"
           }`}
+          data-isACheckboxChecked={isACheckboxChecked}
         >
           {checkbox}
           <label
@@ -212,6 +215,12 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
       bulkArr.current.push(element);
       console.log("push");
     }
+    //if an image is checked, show all checkboxes without hovering
+    if (bulkArr.current.length > 0) {
+      setIsACheckboxChecked(true);
+    } else if (bulkArr.current.length <= 0) {
+      setIsACheckboxChecked(false);
+    }
     console.log(bulkArr.current);
   }
 
@@ -220,6 +229,12 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
   function handleBulkArrLabel(element, index) {
     bulkArr.current = [];
     bulkArr.current.push(element);
+    //if an image is checked, show all checkboxes without hovering
+    if (bulkArr.current.length > 0) {
+      setIsACheckboxChecked(true);
+    } else if (bulkArr.current.length <= 0) {
+      setIsACheckboxChecked(false);
+    }
     console.log(bulkArr.current);
   }
 
@@ -265,7 +280,6 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
         boxes[i] = false;
       }
     }
-
     setIsCheckedArrState(boxes);
   }
 
