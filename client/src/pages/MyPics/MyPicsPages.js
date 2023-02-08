@@ -496,6 +496,7 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
                     for (let r = 0; r < imgData.length; r++) {
                       boxes[r] = true;
                       massCopy.push(imgData[r]);
+                      setIsACheckboxChecked(true);
                     }
                     isSelectAll.current = true;
                   } else if (isSelectAll.current == true) {
@@ -504,6 +505,7 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
                       massCopy = [];
                     }
                     isSelectAll.current = false;
+                    setIsACheckboxChecked(false);
                     console.log("deselect");
                   }
 
