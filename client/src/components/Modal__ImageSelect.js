@@ -17,6 +17,36 @@ const Modal__ImageSelect = ({
   //to navigate
   let navigate = useNavigate();
 
+  //arrows for tag scrolling
+  const [tagLeftArrowClass, setTagLeftArrowClass] = useState("opacity0");
+  const [tagRightArrowClass, setTagRightArrowClass] = useState(
+    "image-select-modal__img-tags-overflowArrowRight"
+  );
+
+  function scrollPos(tagListScrollPosition, tagListMaxScroll) {
+    if (tagListScrollPosition == 0) {
+      setTagLeftArrowClass(
+        "image-select-modal__img-tags-overflowArrowLeft opacity0"
+      );
+    } else {
+      setTagLeftArrowClass("image-select-modal__img-tags-overflowArrowLeft");
+    }
+    if (tagListScrollPosition > tagListMaxScroll) {
+      setTagRightArrowClass(
+        "image-select-modal__img-tags-overflowArrowRight opacity0"
+      );
+    } else if (tagListScrollPosition < tagListMaxScroll) {
+      setTagRightArrowClass("image-select-modal__img-tags-overflowArrowRight");
+    }
+  }
+
+  //change state of tag list arrow class every time tag list scroll position changes
+  const [tagListScrollPosition, setTagListScrollPosition] = useState(0);
+  const [tagListMaxScroll, setTagListMaxScroll] = useState();
+  useEffect(() => {
+    scrollPos(tagListScrollPosition, tagListMaxScroll);
+  }, [tagListScrollPosition]);
+
   //img info
   const { imageTitle } = useParams();
   const [imgInfo, setImgInfo] = useState();
@@ -241,10 +271,32 @@ const Modal__ImageSelect = ({
             {imgDescription}
           </div>
         </div>
-        <div className="image-select-modal__img-tags-container">
-          {/* <div className="image-select-modal__img-tags-heading">Tags:</div> */}
-          <div className="image-select-modal__img-tags-list">
-            <ul>{imgTags}</ul>
+        <div style={{ width: "100%", position: "relative" }}>
+          <div className={tagLeftArrowClass}>
+            <FontAwesomeIcon
+              icon={faChevronLeft}
+              className="image-select-modal__img-tags-arrowIcon"
+            />
+          </div>
+          <div className={tagRightArrowClass}>
+            <FontAwesomeIcon
+              icon={faChevronRight}
+              className="image-select-modal__img-tags-arrowIcon"
+            />
+          </div>
+          <div
+            id="tagListID"
+            className="image-select-modal__img-tags-container"
+            onScroll={(e) => {
+              setTagListScrollPosition(e.target.scrollLeft);
+              setTagListMaxScroll(
+                e.target.scrollWidth - e.target.clientWidth - 1
+              );
+            }}
+          >
+            <div className="image-select-modal__img-tags-list">
+              <ul>{imgTags}</ul>
+            </div>
           </div>
         </div>
       </div>
