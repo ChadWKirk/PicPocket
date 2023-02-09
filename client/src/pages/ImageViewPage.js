@@ -128,7 +128,9 @@ const ImageViewPage = ({
     for (let i = 0; i < imgInfo.tags.length; i++) {
       imgTags.push(
         <li>
-          <a href={`/search/${imgInfo.tags[i]}`}>{imgInfo.tags[i]}</a>
+          <a href={`/search/${imgInfo.tags[i]}/most-recent/all-types`}>
+            {imgInfo.tags[i]}
+          </a>
         </li>
       );
     }
@@ -422,44 +424,49 @@ const ImageViewPage = ({
         navPositionClass={"fixed"}
         navColorClass={"white"}
       />
-      <div className="subBarCont1">
-        <div className="subBarAuthor1">
-          <a href={`http://localhost:3000/User/${imgAuthorName}`}>
-            <img src={imgAuthorPFP} className="profilePic"></img>
-          </a>
-          <a href={`http://localhost:3000/User/${imgAuthorName}`}>
-            <h5>{imgAuthorName}</h5>
-          </a>
-        </div>
-        <div className="subBarLikeDownload1">
-          {mainImgLikeBtn}
-          <a className="imgViewDLBtn" href={imgDownloadURL}>
-            <button>Download</button>
-          </a>
-        </div>
-      </div>
-
-      <div className="imageViewContainer">
-        <div className="imageViewDetailsContainer">
-          <img className="imageViewPageMainImg" alt="broken" src={imgSrc}></img>
-          <div className="imgViewPageTitleLikesCont">
-            <div className="imgViewPageTitle">{imgTitle}</div>
-            <div className="imgViewPageLikes">
-              <div className="likeCounter">♥ {imgLikes} Likes</div>
-            </div>
+      <div className="image-view-page__container">
+        <div className="image-view-page__top-bar-container">
+          <div className="image-view-page__author-info-container">
+            <a
+              className="image-view-page__image-author-link-container"
+              href={`http://localhost:3000/User/${imgAuthorName}`}
+            >
+              <img
+                src={imgAuthorPFP}
+                className="image-view-page__image-author-pfp"
+              />
+              {imgAuthorName}
+            </a>
           </div>
-          <div className="imgViewPageDescription">{imgDescription}</div>
+          <div className="image-view-page__top-bar-buttons-container">
+            {mainImgLikeBtn}
+            <a className="imgViewDLBtn" href={imgDownloadURL}>
+              Download
+            </a>
+          </div>
         </div>
-      </div>
-      <div className="relatedImagesContainer">
-        <div className="relatedImagesTitle">Related Images</div>
-        <div className="image-select-modal__img-tags-container">
+        <div className="image-view-page__img-container">
+          <img src={imgSrc}></img>
+        </div>
+        <div className="image-view-page__img-info-container">
+          <div className="image-view-page__img-title">{imgTitle}</div>
+          <div className="image-view-page__img-description">
+            {imgDescription}
+          </div>
+          <div className="imgViewPageLikes">
+            <div className="likeCounter">♥ {imgLikes} Likes</div>
+          </div>
+        </div>
+        <div className="image-view-page__img-tags-container">
           {/* <div className="image-select-modal__img-tags-heading">Tags:</div> */}
-          <div className="image-select-modal__img-tags-list">
+          <div className="image-view-page__img-tags-list">
             <ul>{imgTags}</ul>
           </div>
         </div>
-        <div className="imgGalleryCont1">{resultsMap}</div>
+        <div className="relatedImagesContainer">
+          <div className="relatedImagesTitle">Related Images</div>
+          <div className="imgGalleryCont1">{resultsMap}</div>
+        </div>
       </div>
     </div>
   );
