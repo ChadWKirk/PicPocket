@@ -17,13 +17,36 @@ const Modal__ImageSelect = ({
   //to navigate
   let navigate = useNavigate();
 
-  //arrows for tag scrolling
-  const [tagLeftArrowClass, setTagLeftArrowClass] = useState("opacity0");
-  const [tagRightArrowClass, setTagRightArrowClass] = useState(
-    "image-select-modal__img-tags-overflowArrowRight"
-  );
+  //tag list scrolling
+  //every time tag list is scrolled, fire useEffect to decide whether to show arrows or not
+  //left arrow only shows when not at scroll position 0 (all the way to the left)
+  //right arrow only shows when scroll position is under max scroll
+  const [tagListScrollPosition, setTagListScrollPosition] = useState(0);
+  const [tagListMaxScroll, setTagListMaxScroll] = useState();
+  //if tag list is scrollable, show right arrow. by default right arrow is opacity0.
+  useEffect(() => {
+    if (
+      document.querySelector("#tagListID").clientWidth <
+      document.querySelector("#tagListID").scrollWidth
+    ) {
+      setTagRightArrowClass("image-select-modal__img-tags-overflowArrowRight");
+    }
+  }, []);
 
-  function scrollPos(tagListScrollPosition, tagListMaxScroll) {
+  useEffect(() => {
+    showTagListArrowsBasedOnScrollPosition(
+      tagListScrollPosition,
+      tagListMaxScroll
+    );
+  }, [tagListScrollPosition]);
+
+  const [tagLeftArrowClass, setTagLeftArrowClass] = useState("opacity0");
+  const [tagRightArrowClass, setTagRightArrowClass] = useState("opacity0");
+
+  function showTagListArrowsBasedOnScrollPosition(
+    tagListScrollPosition,
+    tagListMaxScroll
+  ) {
     if (tagListScrollPosition == 0) {
       setTagLeftArrowClass(
         "image-select-modal__img-tags-overflowArrowLeft opacity0"
@@ -39,13 +62,6 @@ const Modal__ImageSelect = ({
       setTagRightArrowClass("image-select-modal__img-tags-overflowArrowRight");
     }
   }
-
-  //change state of tag list arrow class every time tag list scroll position changes
-  const [tagListScrollPosition, setTagListScrollPosition] = useState(0);
-  const [tagListMaxScroll, setTagListMaxScroll] = useState();
-  useEffect(() => {
-    scrollPos(tagListScrollPosition, tagListMaxScroll);
-  }, [tagListScrollPosition]);
 
   //img info
   const { imageTitle } = useParams();
@@ -137,7 +153,9 @@ const Modal__ImageSelect = ({
     for (let i = 0; i < imgInfo.tags.length; i++) {
       imgTags.push(
         <li>
-          <a href={`/search/${imgInfo.tags[i]}`}>{imgInfo.tags[i]}</a>
+          <a href={`/search/${imgInfo.tags[i]}/most-recent/all-types`}>
+            {imgInfo.tags[i]}
+          </a>
         </li>
       );
     }
@@ -272,13 +290,27 @@ const Modal__ImageSelect = ({
           </div>
         </div>
         <div style={{ width: "100%", position: "relative" }}>
-          <div className={tagLeftArrowClass}>
+          <div
+            className={tagLeftArrowClass}
+            onClick={() =>
+              (document.querySelector("#tagListID").scrollLeft =
+                tagListScrollPosition -
+                document.querySelector("#tagListID").clientWidth)
+            }
+          >
             <FontAwesomeIcon
               icon={faChevronLeft}
               className="image-select-modal__img-tags-arrowIcon"
             />
           </div>
-          <div className={tagRightArrowClass}>
+          <div
+            className={tagRightArrowClass}
+            onClick={() =>
+              (document.querySelector("#tagListID").scrollLeft =
+                document.querySelector("#tagListID").clientWidth +
+                tagListScrollPosition)
+            }
+          >
             <FontAwesomeIcon
               icon={faChevronRight}
               className="image-select-modal__img-tags-arrowIcon"
