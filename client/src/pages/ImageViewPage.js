@@ -6,7 +6,7 @@ import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import WhiteNavBar from "../components/WhiteNavBar";
 import { useParams } from "react-router-dom";
 import Modal__ImageSelect from "../components/Modal__ImageSelect";
-
+import NavbarComponent from "../components/NavbarComponent";
 import { AiFillLike } from "react-icons/ai";
 
 const ImageViewPage = ({
@@ -18,23 +18,6 @@ const ImageViewPage = ({
 }) => {
   const { imageTitle } = useParams();
 
-  //sticky nav bar
-  const [navPosition, setNavPosition] = useState("gone");
-
-  useEffect(() => {
-    window.addEventListener("scroll", setNavToFixed);
-
-    return () => {
-      window.removeEventListener("scroll", setNavToFixed);
-    };
-  }, []);
-
-  function setNavToFixed() {
-    if (window !== undefined) {
-      let windowHeight = window.scrollY;
-      windowHeight > 0 ? setNavPosition("fixed") : setNavPosition("gone");
-    }
-  }
   //variables
   let imageSRC;
   let imageTitlee;
@@ -316,10 +299,12 @@ const ImageViewPage = ({
           imageURL={imageURL}
         />
       )}
-      <WhiteNavBar curUser={curUser} loggedIn={loggedIn} />
-      <div className="fixed">
-        <WhiteNavBar curUser={curUser} loggedIn={loggedIn} />
-      </div>
+      <NavbarComponent
+        curUser={curUser}
+        loggedIn={loggedIn}
+        navPositionClass={"fixed"}
+        navColorClass={"white"}
+      />
       <div className="subBarCont1">
         <div className="subBarAuthor1">
           <img
