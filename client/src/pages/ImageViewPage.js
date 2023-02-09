@@ -16,8 +16,6 @@ const ImageViewPage = ({
   setIsShowingImageSelectModal,
   imgTitleArrState,
 }) => {
-  const { imageTitle } = useParams();
-
   //variables
   let imageSRC;
   let imageTitlee;
@@ -28,12 +26,21 @@ const ImageViewPage = ({
   let imageURL;
   const [imageFetchID, setImageFetchID] = useState();
 
+  //img info
+  const { imageTitle } = useParams();
+  const [imgInfo, setImgInfo] = useState();
+
+  //user info to get author name and pfp
+  const [userInfo, setUserInfo] = useState();
+
+  //refetch img info to update like button to either liked or not liked
+  const [isLiked, setIsLiked] = useState();
+
   //img array to display
   const [imgGallery, setImgGallery] = useState([]);
   //fetch img array
   const [fetchArr, setFetchArr] = useState([]);
-  //isLiked just to re render array
-  const [isLiked, setIsLiked] = useState(false);
+
   //array of results from mongoDB that you can grab stuff from like title or likedBy etc.
   const [searchArr, setSearchArr] = useState([]);
   //array of stuff you decide to keep from mongoDB search (push from searchArr into resultsArr)
@@ -45,12 +52,9 @@ const ImageViewPage = ({
 
   let mainLikeBtn;
 
-  //on load, pull image using public id in url
+  //on load, pull img from url parameter :imageTitle (see app.js), and get user info for img author pfp and name
   useEffect(() => {
-    console.log("run");
-    console.log(imageTitle);
-
-    async function getImages() {
+    async function fetchImgInfo() {
       await fetch(`http://localhost:5000/image/${imageTitle}`, {
         method: "GET",
         headers: { "Content-type": "application/json" },
@@ -59,62 +63,201 @@ const ImageViewPage = ({
           .json()
           .then((resJSON) => JSON.stringify(resJSON))
           .then((stringJSON) => JSON.parse(stringJSON))
-          .then((parsedJSON) => setImageFetchID(parsedJSON))
+          .then((parsedJSON) => setImgInfo(parsedJSON[0]))
       );
     }
-    getImages();
-  }, []);
+    fetchImgInfo();
+  }, [isLiked]);
 
-  useEffect(() => {}, [imageFetchID, isLiked]);
+  //fetch user info for pfp and author name
+  useEffect(() => {
+    if (imgInfo) {
+      async function fetchUserInfo() {
+        await fetch(`http://localhost:5000/${imgInfo.uploadedBy}/info`, {
+          method: "GET",
+          headers: { "Content-type": "application/json" },
+        }).then((response) =>
+          response
+            .json()
+            .then((resJSON) => JSON.stringify(resJSON))
+            .then((stringJSON) => JSON.parse(stringJSON))
+            .then((parsedJSON) => setUserInfo(parsedJSON[0]))
+        );
+      }
 
-  //wait for fetch to be true (or complete) before assigning to variable
-  if (imageFetchID) {
-    imageSRC = imageFetchID[0].secure_url;
-    imageTitlee = imageFetchID[0].title;
-    if (imageFetchID[0].description == "") {
-      imageDescription = <em>No Description Given</em>;
+      fetchUserInfo();
+    }
+  }, [imgInfo]);
+
+  //assigning user info to variables
+  let imgAuthorPFP;
+  let imgAuthorName;
+  if (userInfo) {
+    imgAuthorPFP =
+      userInfo.pfp.slice(0, 50) +
+      "q_60/c_scale,w_200/dpr_auto/" +
+      userInfo.pfp.slice(50, userInfo.pfp.lastIndexOf(".")) +
+      ".jpg";
+    imgAuthorName = userInfo.username;
+  }
+
+  //assigning img info to variables
+  let imgSrc;
+  let imgTitle;
+  let imgDescription;
+  let imgLikes;
+  let imgDownloadURL;
+  let imgTags = [];
+  let mainImgLikeBtn;
+  if (imgInfo) {
+    imgSrc = imgInfo.secure_url;
+    imgTitle = imgInfo.title;
+    if (imgInfo.description == "") {
+      imgDescription = <em>No Description Given</em>;
     } else {
-      imageDescription = imageFetchID[0].description;
+      imgDescription = imgInfo.description;
     }
 
-    imageLikes = imageFetchID[0].likes;
+    imgLikes = imgInfo.likes;
 
-    imageURL =
-      imageFetchID[0].secure_url.slice(0, 50) +
+    imgDownloadURL =
+      imgInfo.secure_url.slice(0, 50) +
       "q_100/fl_attachment/" +
-      imageFetchID[0].secure_url.slice(
-        50,
-        imageFetchID[0].secure_url.lastIndexOf(".")
+      imgInfo.secure_url.slice(50, imgInfo.secure_url.lastIndexOf("."));
+
+    for (let i = 0; i < imgInfo.tags.length; i++) {
+      imgTags.push(
+        <li>
+          <a href={`/search/${imgInfo.tags[i]}`}>{imgInfo.tags[i]}</a>
+        </li>
       );
+    }
 
-    imageTags = imageFetchID[0].tags;
+    // searchQuery = imageTags.join(" ") + " " + imageTitlee;
 
-    searchQuery = imageTags.join(" ") + " " + imageTitlee;
-
-    if (imageFetchID[0].likedBy.includes(curUser)) {
-      mainLikeBtn = (
+    if (imgInfo.likedBy.includes(curUser)) {
+      mainImgLikeBtn = (
         <button className="imgViewLikeBtn" onClick={(e) => handleMainLike(e)}>
           <FontAwesomeIcon
             icon={faHeart}
             className="likeButtonHeart2 likeButtonLikedFill2"
           ></FontAwesomeIcon>
           <div>Unlike</div>
-          <div>{imageFetchID[0].likedBy.length}</div>
+          <div>{imgInfo.likedBy.length}</div>
         </button>
       );
     } else {
-      mainLikeBtn = (
+      mainImgLikeBtn = (
         <button className="imgViewLikeBtn" onClick={(e) => handleMainLike(e)}>
           <FontAwesomeIcon
             icon={farHeart}
             className="likeButtonHeart2"
           ></FontAwesomeIcon>
           <div>Like</div>
-          <div>{imageFetchID[0].likedBy.length}</div>
+          <div>{imgInfo.likedBy.length}</div>
         </button>
       );
     }
   }
+
+  //handle like for main image
+  async function handleMainLike(e) {
+    if (imgInfo.likedBy.includes(curUser)) {
+      await fetch(
+        `http://localhost:5000/removeLikedBy/${imgInfo.asset_id}/${curUser}`,
+        {
+          method: "POST",
+          headers: { "Content-type": "application/json" },
+        }
+      ).then((res) => {
+        imgInfo.likedBy = imgInfo.likedBy.filter((user) => {
+          return user !== curUser;
+        });
+      });
+    } else if (!imgInfo.likedBy.includes(curUser)) {
+      await fetch(
+        `http://localhost:5000/addLikedBy/${imgInfo.asset_id}/${curUser}`,
+        {
+          method: "POST",
+          headers: { "Content-type": "application/json" },
+        }
+      ).then((res) => {
+        imgInfo.likedBy.push(curUser);
+      });
+    }
+    setIsLiked(!isLiked);
+  }
+
+  //on load, pull image using public id in url
+  // useEffect(() => {
+  //   console.log("run");
+  //   console.log(imageTitle);
+
+  //   async function getImages() {
+  //     await fetch(`http://localhost:5000/image/${imageTitle}`, {
+  //       method: "GET",
+  //       headers: { "Content-type": "application/json" },
+  //     }).then((response) =>
+  //       response
+  //         .json()
+  //         .then((resJSON) => JSON.stringify(resJSON))
+  //         .then((stringJSON) => JSON.parse(stringJSON))
+  //         .then((parsedJSON) => setImageFetchID(parsedJSON))
+  //     );
+  //   }
+  //   getImages();
+  // }, []);
+
+  // useEffect(() => {}, [imageFetchID, isLiked]);
+
+  //wait for fetch to be true (or complete) before assigning to variable
+  // if (imageFetchID) {
+  //   imageSRC = imageFetchID[0].secure_url;
+  //   imageTitlee = imageFetchID[0].title;
+  //   if (imageFetchID[0].description == "") {
+  //     imageDescription = <em>No Description Given</em>;
+  //   } else {
+  //     imageDescription = imageFetchID[0].description;
+  //   }
+
+  //   imageLikes = imageFetchID[0].likes;
+
+  //   imageURL =
+  //     imageFetchID[0].secure_url.slice(0, 50) +
+  //     "q_100/fl_attachment/" +
+  //     imageFetchID[0].secure_url.slice(
+  //       50,
+  //       imageFetchID[0].secure_url.lastIndexOf(".")
+  //     );
+
+  //   imageTags = imageFetchID[0].tags;
+
+  //   searchQuery = imageTags.join(" ") + " " + imageTitlee;
+
+  //   if (imageFetchID[0].likedBy.includes(curUser)) {
+  //     mainLikeBtn = (
+  //       <button className="imgViewLikeBtn" onClick={(e) => handleMainLike(e)}>
+  //         <FontAwesomeIcon
+  //           icon={faHeart}
+  //           className="likeButtonHeart2 likeButtonLikedFill2"
+  //         ></FontAwesomeIcon>
+  //         <div>Unlike</div>
+  //         <div>{imageFetchID[0].likedBy.length}</div>
+  //       </button>
+  //     );
+  //   } else {
+  //     mainLikeBtn = (
+  //       <button className="imgViewLikeBtn" onClick={(e) => handleMainLike(e)}>
+  //         <FontAwesomeIcon
+  //           icon={farHeart}
+  //           className="likeButtonHeart2"
+  //         ></FontAwesomeIcon>
+  //         <div>Like</div>
+  //         <div>{imageFetchID[0].likedBy.length}</div>
+  //       </button>
+  //     );
+  //   }
+  // }
 
   //get related images
   //perform a search for title and tags and return an array of results
@@ -224,6 +367,7 @@ const ImageViewPage = ({
     setResultsMap(mapArr);
   }, [searchArr, isLiked]);
 
+  //handle likes for related images
   async function handleLike(e, element, index) {
     var searchArrCopy = searchArr;
     console.log(searchArrCopy);
@@ -260,33 +404,6 @@ const ImageViewPage = ({
     setIsLiked(!isLiked);
   }
 
-  async function handleMainLike(e) {
-    if (imageFetchID[0].likedBy.includes(curUser)) {
-      await fetch(
-        `http://localhost:5000/removeLikedBy/${imageFetchID[0].asset_id}/${curUser}`,
-        {
-          method: "POST",
-          headers: { "Content-type": "application/json" },
-        }
-      ).then((res) => {
-        imageFetchID[0].likedBy = imageFetchID[0].likedBy.filter((user) => {
-          return user !== curUser;
-        });
-      });
-    } else if (!imageFetchID[0].likedBy.includes(curUser)) {
-      await fetch(
-        `http://localhost:5000/addLikedBy/${imageFetchID[0].asset_id}/${curUser}`,
-        {
-          method: "POST",
-          headers: { "Content-type": "application/json" },
-        }
-      ).then((res) => {
-        imageFetchID[0].likedBy.push(curUser);
-      });
-    }
-    setIsLiked(!isLiked);
-  }
-
   return (
     <div>
       {/* conditionally render modal based on state of isShowingImageSelectModal in app.js */}
@@ -307,15 +424,16 @@ const ImageViewPage = ({
       />
       <div className="subBarCont1">
         <div className="subBarAuthor1">
-          <img
-            // src={require("./nature-4k-pc-full-hd-wallpaper-preview.jpg")}
-            className="profilePic"
-          ></img>
-          <h5>{curUser}</h5>
+          <a href={`http://localhost:3000/User/${imgAuthorName}`}>
+            <img src={imgAuthorPFP} className="profilePic"></img>
+          </a>
+          <a href={`http://localhost:3000/User/${imgAuthorName}`}>
+            <h5>{imgAuthorName}</h5>
+          </a>
         </div>
         <div className="subBarLikeDownload1">
-          {mainLikeBtn}
-          <a className="imgViewDLBtn" href={imageURL}>
+          {mainImgLikeBtn}
+          <a className="imgViewDLBtn" href={imgDownloadURL}>
             <button>Download</button>
           </a>
         </div>
@@ -323,23 +441,24 @@ const ImageViewPage = ({
 
       <div className="imageViewContainer">
         <div className="imageViewDetailsContainer">
-          <img
-            className="imageViewPageMainImg"
-            alt="broken"
-            src={imageSRC}
-          ></img>
+          <img className="imageViewPageMainImg" alt="broken" src={imgSrc}></img>
           <div className="imgViewPageTitleLikesCont">
-            <div className="imgViewPageTitle">{imageTitlee}</div>
+            <div className="imgViewPageTitle">{imgTitle}</div>
             <div className="imgViewPageLikes">
-              <div className="likeCounter">♥ {imageLikes} Likes</div>
+              <div className="likeCounter">♥ {imgLikes} Likes</div>
             </div>
           </div>
-          <div className="imgViewPageDescription">{imageDescription}</div>
+          <div className="imgViewPageDescription">{imgDescription}</div>
         </div>
       </div>
       <div className="relatedImagesContainer">
         <div className="relatedImagesTitle">Related Images</div>
-        <div>Tags</div>
+        <div className="image-select-modal__img-tags-container">
+          {/* <div className="image-select-modal__img-tags-heading">Tags:</div> */}
+          <div className="image-select-modal__img-tags-list">
+            <ul>{imgTags}</ul>
+          </div>
+        </div>
         <div className="imgGalleryCont1">{resultsMap}</div>
       </div>
     </div>

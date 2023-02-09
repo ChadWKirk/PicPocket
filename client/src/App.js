@@ -104,7 +104,16 @@ function App() {
           ></Route>
           <Route
             path="/search/:searchQuery/:sort/:filter"
-            element={<SearchResultPage curUser={curUser} loggedIn={loggedIn} />}
+            element={
+              <SearchResultPage
+                curUser={curUser}
+                loggedIn={loggedIn}
+                isShowingImageSelectModal={isShowingImageSelectModal}
+                setIsShowingImageSelectModal={setIsShowingImageSelectModal}
+                imgTitleArrState={imgTitleArrState}
+                setImgTitleArrState={setImgTitleArrState}
+              />
+            }
           ></Route>
           <Route
             path="/image/:imageTitle"

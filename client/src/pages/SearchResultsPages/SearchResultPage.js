@@ -6,7 +6,14 @@ import { useParams } from "react-router-dom";
 
 import ImageGallery from "../../components/ImageGallery";
 
-const SearchResultsPage = ({ curUser, loggedIn }) => {
+const SearchResultsPage = ({
+  curUser,
+  loggedIn,
+  isShowingImageSelectModal,
+  setIsShowingImageSelectModal,
+  imgTitleArrState,
+  setImgTitleArrState,
+}) => {
   //to get number of images in array for "x pics liked by user" or "x search results" heading
   const [imgGalleryLength, setImgGalleryLength] = useState();
 
@@ -63,6 +70,10 @@ const SearchResultsPage = ({ curUser, loggedIn }) => {
           filter={filter}
           imgGalleryLength={imgGalleryLength}
           setImgGalleryLength={setImgGalleryLength}
+          isShowingImageSelectModal={isShowingImageSelectModal}
+          setIsShowingImageSelectModal={setIsShowingImageSelectModal}
+          imgTitleArrState={imgTitleArrState}
+          setImgTitleArrState={setImgTitleArrState}
           page={"searchPage"}
         />
       </div>

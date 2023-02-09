@@ -48,6 +48,7 @@ const Modal__ImageSelect = ({
     fetchImgInfo();
   }, [isPrevOrNextClicked, isLiked]);
 
+  //fetch user info for pfp and author name
   useEffect(() => {
     if (imgInfo) {
       async function fetchUserInfo() {
