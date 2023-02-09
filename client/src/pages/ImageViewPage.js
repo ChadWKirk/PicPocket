@@ -308,7 +308,10 @@ const ImageViewPage = ({
     <div>
       {/* conditionally render modal based on state of isShowingImageSelectModal in app.js */}
       {isShowingImageSelectModal && (
-        <Modal__ImageSelect imgTitleArrState={imgTitleArrState} />
+        <Modal__ImageSelect
+          imgTitleArrState={imgTitleArrState}
+          setIsShowingImageSelectModal={setIsShowingImageSelectModal}
+        />
       )}
       <WhiteNavBar curUser={curUser} loggedIn={loggedIn} />
       <div className="fixed">

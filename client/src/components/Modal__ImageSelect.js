@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronLeft,
@@ -9,11 +9,21 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 
-const Modal__ImageSelect = ({ imgTitleArrState }) => {
+const Modal__ImageSelect = ({
+  imgTitleArrState,
+  setIsShowingImageSelectModal,
+}) => {
+  //to navigate
+  let navigate = useNavigate();
   const { imageTitle } = useParams();
   const [imgSrc, setImgSrc] = useState();
+
+  //to rerender modal on prev or next img arrow click
+  const [isPrevOrNextClicked, setIsPrevOrNextClicked] = useState(false);
+
   //on load, pull img from url
   useEffect(() => {
+    document.body.classList.add("overflowYHidden");
     async function getImage() {
       await fetch(`http://localhost:5000/image/${imageTitle}`, {
         method: "GET",
@@ -27,24 +37,50 @@ const Modal__ImageSelect = ({ imgTitleArrState }) => {
       );
     }
     getImage();
-  }, []);
+  }, [isPrevOrNextClicked]);
 
   let currentImgIndex = imgTitleArrState.indexOf(`${imageTitle}`);
+
   return (
     <div className="image-select-modal__container">
+      <div
+        className="image-select-modal__background"
+        onClick={() => navigate("/")}
+      ></div>
       <div className="image-select-modal__contents-container">
         <FontAwesomeIcon
           icon={faXmark}
           className="image-select-modal__x-icon"
         />
-        <FontAwesomeIcon
-          icon={faChevronLeft}
-          className="image-select-modal__left-arrow-icon"
-        />
-        <FontAwesomeIcon
-          icon={faChevronRight}
-          className="image-select-modal__right-arrow-icon"
-        />
+        {currentImgIndex > 0 && (
+          <a
+            onClick={() => {
+              navigate(`/image/${imgTitleArrState[currentImgIndex - 1]}`);
+              setIsPrevOrNextClicked(!isPrevOrNextClicked);
+            }}
+            style={{ cursor: "pointer" }}
+          >
+            <FontAwesomeIcon
+              icon={faChevronLeft}
+              className="image-select-modal__left-arrow-icon"
+            />
+          </a>
+        )}
+        {currentImgIndex < imgTitleArrState.length - 1 && (
+          <a
+            onClick={() => {
+              navigate(`/image/${imgTitleArrState[currentImgIndex + 1]}`);
+              setIsPrevOrNextClicked(!isPrevOrNextClicked);
+            }}
+            style={{ cursor: "pointer" }}
+          >
+            <FontAwesomeIcon
+              icon={faChevronRight}
+              className="image-select-modal__right-arrow-icon"
+            />
+          </a>
+        )}
+
         <div className="image-select-modal__top-bar-container">
           <div className="image-select-modal__author-info-container">
             {/* <a
