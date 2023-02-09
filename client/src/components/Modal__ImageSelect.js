@@ -17,52 +17,6 @@ const Modal__ImageSelect = ({
   //to navigate
   let navigate = useNavigate();
 
-  //tag list scrolling
-  //every time tag list is scrolled, fire useEffect to decide whether to show arrows or not
-  //left arrow only shows when not at scroll position 0 (all the way to the left)
-  //right arrow only shows when scroll position is under max scroll
-  const [tagListScrollPosition, setTagListScrollPosition] = useState(0);
-  const [tagListMaxScroll, setTagListMaxScroll] = useState();
-  //if tag list is scrollable, show right arrow. by default right arrow is opacity0.
-  useEffect(() => {
-    if (
-      document.querySelector("#tagListID").clientWidth <
-      document.querySelector("#tagListID").scrollWidth
-    ) {
-      setTagRightArrowClass("image-select-modal__img-tags-overflowArrowRight");
-    }
-  }, []);
-
-  useEffect(() => {
-    showTagListArrowsBasedOnScrollPosition(
-      tagListScrollPosition,
-      tagListMaxScroll
-    );
-  }, [tagListScrollPosition]);
-
-  const [tagLeftArrowClass, setTagLeftArrowClass] = useState("opacity0");
-  const [tagRightArrowClass, setTagRightArrowClass] = useState("opacity0");
-
-  function showTagListArrowsBasedOnScrollPosition(
-    tagListScrollPosition,
-    tagListMaxScroll
-  ) {
-    if (tagListScrollPosition == 0) {
-      setTagLeftArrowClass(
-        "image-select-modal__img-tags-overflowArrowLeft opacity0"
-      );
-    } else {
-      setTagLeftArrowClass("image-select-modal__img-tags-overflowArrowLeft");
-    }
-    if (tagListScrollPosition > tagListMaxScroll) {
-      setTagRightArrowClass(
-        "image-select-modal__img-tags-overflowArrowRight opacity0"
-      );
-    } else if (tagListScrollPosition < tagListMaxScroll) {
-      setTagRightArrowClass("image-select-modal__img-tags-overflowArrowRight");
-    }
-  }
-
   //img info
   const { imageTitle } = useParams();
   const [imgInfo, setImgInfo] = useState();
@@ -184,6 +138,54 @@ const Modal__ImageSelect = ({
           <div>{imgInfo.likedBy.length}</div>
         </button>
       );
+    }
+  }
+
+  //tag list scrolling
+  //every time tag list is scrolled, fire useEffect to decide whether to show arrows or not
+  //left arrow only shows when not at scroll position 0 (all the way to the left)
+  //right arrow only shows when scroll position is under max scroll
+  const [tagListScrollPosition, setTagListScrollPosition] = useState(0);
+  const [tagListMaxScroll, setTagListMaxScroll] = useState();
+
+  useEffect(() => {
+    showTagListArrowsBasedOnScrollPosition(
+      tagListScrollPosition,
+      tagListMaxScroll
+    );
+  }, [tagListScrollPosition]);
+
+  const [tagLeftArrowClass, setTagLeftArrowClass] = useState("opacity0");
+  const [tagRightArrowClass, setTagRightArrowClass] = useState("opacity0");
+
+  //if tag list is scrollable, show right arrow. by default right arrow is opacity0.
+  //fires once imgInfo is done fetching, therefore tag list actually exists
+  useEffect(() => {
+    const tagListID = document.querySelector("#tagListID");
+    if (tagListID.clientWidth < tagListID.scrollWidth) {
+      setTagRightArrowClass("image-select-modal__img-tags-overflowArrowRight");
+    } else {
+      setTagRightArrowClass("opacity0");
+    }
+  }, [imgInfo]);
+
+  function showTagListArrowsBasedOnScrollPosition(
+    tagListScrollPosition,
+    tagListMaxScroll
+  ) {
+    if (tagListScrollPosition == 0) {
+      setTagLeftArrowClass(
+        "image-select-modal__img-tags-overflowArrowLeft opacity0"
+      );
+    } else {
+      setTagLeftArrowClass("image-select-modal__img-tags-overflowArrowLeft");
+    }
+    if (tagListScrollPosition > tagListMaxScroll) {
+      setTagRightArrowClass(
+        "image-select-modal__img-tags-overflowArrowRight opacity0"
+      );
+    } else {
+      setTagRightArrowClass("image-select-modal__img-tags-overflowArrowRight");
     }
   }
 
