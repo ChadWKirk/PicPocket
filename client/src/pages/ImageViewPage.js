@@ -309,8 +309,11 @@ const ImageViewPage = ({
       {/* conditionally render modal based on state of isShowingImageSelectModal in app.js */}
       {isShowingImageSelectModal && (
         <Modal__ImageSelect
+          curUser={curUser}
           imgTitleArrState={imgTitleArrState}
           setIsShowingImageSelectModal={setIsShowingImageSelectModal}
+          mainLikeBtn={mainLikeBtn}
+          imageURL={imageURL}
         />
       )}
       <WhiteNavBar curUser={curUser} loggedIn={loggedIn} />
