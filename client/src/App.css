@@ -3073,12 +3073,24 @@ button {
   margin-top: 1rem;
   margin-bottom: 2rem;
   display: flex;
+  overflow: hidden;
 }
-.image-select-modal__img-container img {
+.image-select-modal__img-zoomed-out {
   margin: auto;
   max-height: 500px;
   max-width: 80%;
   object-fit: contain;
+  cursor: zoom-in;
+}
+.image-select-modal__img-zoomed-in {
+  transform: scale(3);
+  transform-origin: center center;
+  /* transform: translate3d(250px, 200px, 0); */
+  margin: auto;
+  max-height: 500px;
+  max-width: 80%;
+  object-fit: cover;
+  cursor: zoom-out;
 }
 .image-select-modal__img-info-container {
   display: flex;

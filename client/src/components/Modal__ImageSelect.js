@@ -14,6 +14,21 @@ const Modal__ImageSelect = ({
   imgTitleArrState,
   setIsShowingImageSelectModal,
 }) => {
+  //to get mouse x and y coordinates for when image is zoomed in it changes the translate coords to the curosr coords so you can move around the image as it is zoomed in
+  const [mousePos, setMousePos] = useState({});
+
+  useEffect(() => {
+    const handleMouseMove = (event) => {
+      setMousePos({ x: event.clientX, y: event.clientY });
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, []);
+
   //to navigate
   let navigate = useNavigate();
 
@@ -282,6 +297,15 @@ const Modal__ImageSelect = ({
     setIsLiked(!isLiked);
   }
 
+  //change this on click of the main img to change it's class to either zoomed in or zoomed out class
+  //zoomed out by default
+  const [isImgZoomedIn, setIsImgZoomedIn] = useState(false);
+
+  //grab cursor coordinates to translate/move image when zoomed in and moving cursor around
+  let imgZoomInCoordinates = {
+    transform: `translate3d(${mousePos.x}px, ${mousePos.y}px, 0)`,
+  };
+
   //index of current img in title array to get prev and next links for next and previous arrow links (see html conditional rendering)
   let currentImgIndex = imgTitleArrState.indexOf(`${imageTitle}`);
 
@@ -356,7 +380,18 @@ const Modal__ImageSelect = ({
           </div>
         </div>
         <div className="image-select-modal__img-container">
-          <img src={imgSrc}></img>
+          <img
+            src={imgSrc}
+            className={`${
+              isImgZoomedIn
+                ? "image-select-modal__img-zoomed-in"
+                : "image-select-modal__img-zoomed-out"
+            }`}
+            onClick={() => setIsImgZoomedIn(!isImgZoomedIn)}
+            style={{
+              imgZoomInCoordinates,
+            }}
+          ></img>
         </div>
         <div className="image-select-modal__img-info-container">
           <div className="image-select-modal__img-title">{imgTitle}</div>
