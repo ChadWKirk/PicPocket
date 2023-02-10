@@ -88,6 +88,11 @@ const Modal__ImageSelect = ({
   let imgDownloadURL;
   let imgTags = [];
   let imageSelectModalLikeBtn;
+  //for tag list scroll animation
+  let tagListIDWidth;
+  let scrollByPxAmount;
+  const [tagListScrollPosition, setTagListScrollPosition] = useState(0);
+
   if (imgInfo) {
     imgSrc = imgInfo.secure_url;
     imgTitle = imgInfo.title;
@@ -139,13 +144,15 @@ const Modal__ImageSelect = ({
         </button>
       );
     }
+    //for tag list scroll animation
+    tagListIDWidth = document.querySelector("#tagListID").clientWidth;
+    scrollByPxAmount = tagListIDWidth + tagListScrollPosition;
   }
 
   //tag list scrolling
   //every time tag list is scrolled, fire useEffect to decide whether to show arrows or not
   //left arrow only shows when not at scroll position 0 (all the way to the left)
   //right arrow only shows when scroll position is under max scroll
-  const [tagListScrollPosition, setTagListScrollPosition] = useState(0);
   const [tagListMaxScroll, setTagListMaxScroll] = useState();
 
   useEffect(() => {
@@ -162,6 +169,7 @@ const Modal__ImageSelect = ({
   //fires once imgInfo is done fetching, therefore tag list actually exists
   useEffect(() => {
     const tagListID = document.querySelector("#tagListID");
+
     if (tagListID.clientWidth < tagListID.scrollWidth) {
       setTagRightArrowClass("image-select-modal__img-tags-overflowArrowRight");
     } else {
@@ -173,7 +181,8 @@ const Modal__ImageSelect = ({
     tagListScrollPosition,
     tagListMaxScroll
   ) {
-    if (tagListScrollPosition == 0) {
+    //set to < 1 rather than == 0 because when using the left arrow button it would sit at 0.6666777 for some reason
+    if (tagListScrollPosition < 1) {
       setTagLeftArrowClass(
         "image-select-modal__img-tags-overflowArrowLeft opacity0"
       );
@@ -186,6 +195,62 @@ const Modal__ImageSelect = ({
       );
     } else {
       setTagRightArrowClass("image-select-modal__img-tags-overflowArrowRight");
+    }
+  }
+
+  //tag list scroll animation
+
+  //left animation
+  const element_left = document.querySelector("#tagListID");
+  let start_left, previousTimeStamp_left;
+  let done_left = false;
+
+  function step_left(timestamp_left) {
+    if (start_left === undefined) {
+      start_left = timestamp_left;
+    }
+    const elapsed_left = timestamp_left - start_left;
+
+    if (previousTimeStamp_left !== timestamp_left) {
+      const count_left = Math.min(0.1 * elapsed_left, scrollByPxAmount);
+      element_left.scrollBy(-count_left, 0);
+      if (count_left === 1000) {
+        done_left = true;
+      }
+    }
+
+    if (elapsed_left < 1000) {
+      previousTimeStamp_left = timestamp_left;
+      if (!done_left) {
+        window.requestAnimationFrame(step_left);
+      }
+    }
+  }
+
+  //right animation
+  const element = document.querySelector("#tagListID");
+  let start, previousTimeStamp;
+  let done = false;
+
+  function step(timestamp) {
+    if (start === undefined) {
+      start = timestamp;
+    }
+    const elapsed = timestamp - start;
+
+    if (previousTimeStamp !== timestamp) {
+      const count = Math.min(0.1 * elapsed, scrollByPxAmount);
+      element.scrollBy(count, 0);
+      if (count === scrollByPxAmount) {
+        done = true;
+      }
+    }
+
+    if (elapsed < 1000) {
+      previousTimeStamp = timestamp;
+      if (!done) {
+        window.requestAnimationFrame(step);
+      }
     }
   }
 
@@ -294,11 +359,7 @@ const Modal__ImageSelect = ({
         <div style={{ width: "100%", position: "relative" }}>
           <div
             className={tagLeftArrowClass}
-            onClick={() =>
-              (document.querySelector("#tagListID").scrollLeft =
-                tagListScrollPosition -
-                document.querySelector("#tagListID").clientWidth)
-            }
+            onClick={() => window.requestAnimationFrame(step_left)}
           >
             <FontAwesomeIcon
               icon={faChevronLeft}
@@ -307,11 +368,7 @@ const Modal__ImageSelect = ({
           </div>
           <div
             className={tagRightArrowClass}
-            onClick={() =>
-              (document.querySelector("#tagListID").scrollLeft =
-                document.querySelector("#tagListID").clientWidth +
-                tagListScrollPosition)
-            }
+            onClick={() => window.requestAnimationFrame(step)}
           >
             <FontAwesomeIcon
               icon={faChevronRight}
