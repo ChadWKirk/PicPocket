@@ -328,15 +328,23 @@ const Modal__ImageSelect = ({
         )}
 
         <div className="image-select-modal__top-bar-container">
-          <div className="image-select-modal__author-info-container">
-            <a
-              className="image-select-modal__image-author-link-container"
-              href={`http://localhost:3000/User/${imgAuthorName}`}
-            >
-              <img
-                src={imgAuthorPFP}
+          <div className="image-select-modal__image-author-link-container">
+            <div className="image-select-modal__image-author-pfp-div">
+              <a
                 className="image-select-modal__image-author-pfp"
-              />
+                href={`http://localhost:3000/User/${imgAuthorName}`}
+              >
+                <img
+                  src={imgAuthorPFP}
+                  className="image-select-modal__image-author-pfp"
+                />
+              </a>
+            </div>
+
+            <a
+              href={`http://localhost:3000/User/${imgAuthorName}`}
+              className="image-select-modal__image-author-name"
+            >
               {imgAuthorName}
             </a>
           </div>

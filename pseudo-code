@@ -30,7 +30,7 @@ TASKS:
 
 styling:
 
-image select modal - copy overflow-x stuff from paper work buttons to tags list, make image zoomable, make author name hover not change color, make pfp hover go dark
+image select modal - make image zoomable - when clicking on image, scale it by 3x with origin center. when moving the cursor, translate to cursor coordinates relative to image position
 
 mypics - loading for submit/delete/massdelete, make it so that if all checkboxes are checked, selectall box checked = true and if not all of them are checked then select all checkbox checked = false, make page responsive.
 
