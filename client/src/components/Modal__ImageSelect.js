@@ -14,21 +14,6 @@ const Modal__ImageSelect = ({
   imgTitleArrState,
   setIsShowingImageSelectModal,
 }) => {
-  //to get mouse x and y coordinates for when image is zoomed in it changes the translate coords to the curosr coords so you can move around the image as it is zoomed in
-  const [mousePos, setMousePos] = useState({});
-
-  useEffect(() => {
-    const handleMouseMove = (event) => {
-      setMousePos({ x: event.clientX, y: event.clientY });
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-    };
-  }, []);
-
   //to navigate
   let navigate = useNavigate();
 
@@ -297,14 +282,40 @@ const Modal__ImageSelect = ({
     setIsLiked(!isLiked);
   }
 
+  //to get mouse x and y coordinates for when image is zoomed in it changes the translate coords to the curosr coords so you can move around the image as it is zoomed in
+  const [mousePos, setMousePos] = useState({});
+
+  useEffect(() => {
+    const handleMouseMove = (event) => {
+      setMousePos({ x: event.clientX, y: event.clientY });
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, []);
+
+  //set transform origin to mousePos and set translate to transform origin - mousePos
+
+  //coordinates to translate img with when it is zoomed in
+  //updates every time mouse moves
+  const [zoomedInImgTranslateCoordinates, setZoomedInImgTranslateCoordinates] =
+    useState();
+  useEffect(() => {
+    setZoomedInImgTranslateCoordinates(
+      `translate3d(${mousePos.x - 750}px, ${mousePos.y - 400}px, 0)`
+    );
+    console.log(zoomedInImgTranslateCoordinates);
+  }, [mousePos]);
+
   //change this on click of the main img to change it's class to either zoomed in or zoomed out class
   //zoomed out by default
   const [isImgZoomedIn, setIsImgZoomedIn] = useState(false);
 
-  //grab cursor coordinates to translate/move image when zoomed in and moving cursor around
-  let imgZoomInCoordinates = {
-    transform: `translate3d(${mousePos.x}px, ${mousePos.y}px, 0)`,
-  };
+  if (isImgZoomedIn) {
+  }
 
   //index of current img in title array to get prev and next links for next and previous arrow links (see html conditional rendering)
   let currentImgIndex = imgTitleArrState.indexOf(`${imageTitle}`);
@@ -389,7 +400,9 @@ const Modal__ImageSelect = ({
             }`}
             onClick={() => setIsImgZoomedIn(!isImgZoomedIn)}
             style={{
-              imgZoomInCoordinates,
+              transform: isImgZoomedIn
+                ? `scale(3) ${zoomedInImgTranslateCoordinates}`
+                : "scale(1)",
             }}
           ></img>
         </div>
