@@ -52,7 +52,7 @@ const ImageViewPage = ({
 
   let mainLikeBtn;
 
-  //to refetch imgInfo and userInfo for modal on prev or next img arrow click
+  //to rerender modal on prev or next img arrow click
   const [isPrevOrNextClicked, setIsPrevOrNextClicked] = useState(false);
 
   //on load, pull img from url parameter :imageTitle (see app.js), and get user info for img author pfp and name
@@ -416,11 +416,12 @@ const ImageViewPage = ({
         <Modal__ImageSelect
           curUser={curUser}
           imgTitleArrState={imgTitleArrState}
+          isShowingImageSelectModal={isShowingImageSelectModal}
           setIsShowingImageSelectModal={setIsShowingImageSelectModal}
-          imgInfo={imgInfo}
-          userInfo={userInfo}
           mainLikeBtn={mainLikeBtn}
           imageURL={imageURL}
+          imgInfo={imgInfo}
+          userInfo={userInfo}
           isPrevOrNextClicked={isPrevOrNextClicked}
           setIsPrevOrNextClicked={setIsPrevOrNextClicked}
         />

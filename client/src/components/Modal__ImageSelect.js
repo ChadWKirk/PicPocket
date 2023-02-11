@@ -12,61 +12,65 @@ import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 const Modal__ImageSelect = ({
   curUser,
   imgTitleArrState,
+  isShowingImageSelectModal,
   setIsShowingImageSelectModal,
+  imgInfo,
+  userInfo,
+  setIsPrevOrNextClicked,
+  isPrevOrNextClicked,
 }) => {
+  //when modal is open, set body overflow to hidden. for some reason classlist.add wasn't working it was glitching on and off
+  document.body.style.overflow = "hidden";
+
   //to navigate
   let navigate = useNavigate();
 
   //img info
   const { imageTitle } = useParams();
-  const [imgInfo, setImgInfo] = useState();
+  // const [imgInfo, setImgInfo] = useState();
 
   //user info to get author name and pfp
-  const [userInfo, setUserInfo] = useState();
-
-  //to rerender modal on prev or next img arrow click
-  const [isPrevOrNextClicked, setIsPrevOrNextClicked] = useState(false);
+  // const [userInfo, setUserInfo] = useState();
 
   //refetch img info to update like button to either liked or not liked
   const [isLiked, setIsLiked] = useState();
 
   //on load, pull img from url parameter :imageTitle (see app.js), and get user info for img author pfp and name
-  useEffect(() => {
-    document.body.classList.add("overflowYHidden");
-    async function fetchImgInfo() {
-      await fetch(`http://localhost:5000/image/${imageTitle}`, {
-        method: "GET",
-        headers: { "Content-type": "application/json" },
-      }).then((response) =>
-        response
-          .json()
-          .then((resJSON) => JSON.stringify(resJSON))
-          .then((stringJSON) => JSON.parse(stringJSON))
-          .then((parsedJSON) => setImgInfo(parsedJSON[0]))
-      );
-    }
-    fetchImgInfo();
-  }, [isPrevOrNextClicked, isLiked]);
+  // useEffect(() => {
+  //   async function fetchImgInfo() {
+  //     await fetch(`http://localhost:5000/image/${imageTitle}`, {
+  //       method: "GET",
+  //       headers: { "Content-type": "application/json" },
+  //     }).then((response) =>
+  //       response
+  //         .json()
+  //         .then((resJSON) => JSON.stringify(resJSON))
+  //         .then((stringJSON) => JSON.parse(stringJSON))
+  //         .then((parsedJSON) => setImgInfo(parsedJSON[0]))
+  //     );
+  //   }
+  //   fetchImgInfo();
+  // }, [isPrevOrNextClicked, isLiked]);
 
   //fetch user info for pfp and author name
-  useEffect(() => {
-    if (imgInfo) {
-      async function fetchUserInfo() {
-        await fetch(`http://localhost:5000/${imgInfo.uploadedBy}/info`, {
-          method: "GET",
-          headers: { "Content-type": "application/json" },
-        }).then((response) =>
-          response
-            .json()
-            .then((resJSON) => JSON.stringify(resJSON))
-            .then((stringJSON) => JSON.parse(stringJSON))
-            .then((parsedJSON) => setUserInfo(parsedJSON[0]))
-        );
-      }
+  // useEffect(() => {
+  //   if (imgInfo) {
+  //     async function fetchUserInfo() {
+  //       await fetch(`http://localhost:5000/${imgInfo.uploadedBy}/info`, {
+  //         method: "GET",
+  //         headers: { "Content-type": "application/json" },
+  //       }).then((response) =>
+  //         response
+  //           .json()
+  //           .then((resJSON) => JSON.stringify(resJSON))
+  //           .then((stringJSON) => JSON.parse(stringJSON))
+  //           .then((parsedJSON) => setUserInfo(parsedJSON[0]))
+  //       );
+  //     }
 
-      fetchUserInfo();
-    }
-  }, [imgInfo]);
+  //     fetchUserInfo();
+  //   }
+  // }, [imgInfo]);
 
   //assigning user info to variables
   let imgAuthorPFP;
@@ -362,13 +366,19 @@ const Modal__ImageSelect = ({
     >
       <div
         className="image-select-modal__background"
-        onClick={() => navigate("/")}
+        onClick={() => {
+          navigate("/");
+          document.body.style.overflow = "auto"; //set body overflow back to auto when closing modal
+        }}
       ></div>
       <div className="image-select-modal__contents-container">
         <FontAwesomeIcon
           icon={faXmark}
           className="image-select-modal__x-icon"
-          onClick={() => navigate("/")}
+          onClick={() => {
+            navigate("/");
+            document.body.style.overflow = "auto"; //set body overflow back to auto when closing modal
+          }}
           style={{ cursor: "pointer" }}
         />
         {currentImgIndex > 0 && (
@@ -376,6 +386,7 @@ const Modal__ImageSelect = ({
             onClick={() => {
               navigate(`/image/${imgTitleArrState[currentImgIndex - 1]}`);
               setIsPrevOrNextClicked(!isPrevOrNextClicked);
+              setIsShowingImageSelectModal(true);
             }}
             style={{ cursor: "pointer" }}
           >
@@ -390,6 +401,7 @@ const Modal__ImageSelect = ({
             onClick={() => {
               navigate(`/image/${imgTitleArrState[currentImgIndex + 1]}`);
               setIsPrevOrNextClicked(!isPrevOrNextClicked);
+              setIsShowingImageSelectModal(true);
             }}
             style={{ cursor: "pointer" }}
           >
