@@ -127,7 +127,10 @@ const Modal__ImageSelect = ({
 
     if (imgInfo.likedBy.includes(curUser)) {
       imageSelectModalLikeBtn = (
-        <button className="imgViewLikeBtn" onClick={(e) => handleMainLike(e)}>
+        <button
+          className="image-view-page__like-button"
+          onClick={(e) => handleMainLike(e)}
+        >
           <FontAwesomeIcon
             icon={faHeart}
             className="likeButtonHeart2 likeButtonLikedFill2"
@@ -138,7 +141,10 @@ const Modal__ImageSelect = ({
       );
     } else {
       imageSelectModalLikeBtn = (
-        <button className="imgViewLikeBtn" onClick={(e) => handleMainLike(e)}>
+        <button
+          className="image-view-page__like-button"
+          onClick={(e) => handleMainLike(e)}
+        >
           <FontAwesomeIcon
             icon={farHeart}
             className="likeButtonHeart2"
@@ -286,6 +292,7 @@ const Modal__ImageSelect = ({
     setIsLiked(!isLiked);
   }
 
+  //img zoom stuff
   //change this on click of the main img to change it's class to either zoomed in or zoomed out class and style ternary for transform
   //zoomed out by default
   const [isImgZoomedIn, setIsImgZoomedIn] = useState(false);
@@ -295,10 +302,15 @@ const Modal__ImageSelect = ({
   //uses useRef to maintain original (zoomed out) rect
   let imgRect = useRef();
   let imgRectVal;
+  //get modal contents container height to use for black background's height
+  let modal = useRef();
+  let modalVal;
   useEffect(() => {
     if (imgInfo) {
       imgRectVal = document.querySelector("#mainImg").getBoundingClientRect();
       imgRect.current = imgRectVal;
+      modalVal = document.querySelector("#modal").getBoundingClientRect();
+      modal.current = modalVal.height;
     }
   }, [imgInfo, isImgZoomedIn]);
 
@@ -370,8 +382,9 @@ const Modal__ImageSelect = ({
           navigate("/");
           document.body.style.overflow = "auto"; //set body overflow back to auto when closing modal
         }}
+        style={{ height: `${modal.current + 28}px` }} //get height of modal contents container and use that for height of black bg
       ></div>
-      <div className="image-select-modal__contents-container">
+      <div className="image-select-modal__contents-container" id="modal">
         <FontAwesomeIcon
           icon={faXmark}
           className="image-select-modal__x-icon"
@@ -435,7 +448,10 @@ const Modal__ImageSelect = ({
           </div>
           <div className="image-select-modal__top-bar-buttons-container">
             {imageSelectModalLikeBtn}
-            <a className="imgViewDLBtn" href={imgDownloadURL}>
+            <a
+              className="image-view-page__download-button"
+              href={imgDownloadURL}
+            >
               Download
             </a>
           </div>

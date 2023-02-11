@@ -145,23 +145,30 @@ const ImageViewPage = ({
 
     if (imgInfo.likedBy.includes(curUser)) {
       mainImgLikeBtn = (
-        <button className="imgViewLikeBtn" onClick={(e) => handleMainLike(e)}>
+        <button
+          className="image-view-page__like-button"
+          onClick={(e) => handleMainLike(e)}
+        >
           <FontAwesomeIcon
             icon={faHeart}
             className="likeButtonHeart2 likeButtonLikedFill2"
           ></FontAwesomeIcon>
-          <div>Unlike</div>
+          <div className="image-view-page__like-button-text">Unlike</div>
           <div>{imgInfo.likedBy.length}</div>
         </button>
       );
     } else {
       mainImgLikeBtn = (
-        <button className="imgViewLikeBtn" onClick={(e) => handleMainLike(e)}>
+        <button
+          className="image-view-page__like-button"
+          onClick={(e) => handleMainLike(e)}
+        >
           <FontAwesomeIcon
             icon={farHeart}
             className="likeButtonHeart2"
+            style={{ color: "#b4b4b4" }}
           ></FontAwesomeIcon>
-          <div>Like</div>
+          <div className="image-view-page__like-button-text">Like</div>
           <div>{imgInfo.likedBy.length}</div>
         </button>
       );
@@ -454,8 +461,73 @@ const ImageViewPage = ({
     setIsLiked(!isLiked);
   }
 
+  //img zoom stuff
+  //change this on click of the main img to change it's class to either zoomed in or zoomed out class and style ternary for transform
+  //zoomed out by default
+  const [isImgZoomedIn, setIsImgZoomedIn] = useState(false);
+
+  //get boundingclientrect of img when zoomed out and storing it so it doesn't change once it is zoomed in (scale 3)
+  //waits for imgInfo to fetch so img is actually there to get the rect from
+  //uses useRef to maintain original (zoomed out) rect
+  let imgRect = useRef();
+  let imgRectVal;
+  useEffect(() => {
+    if (imgInfo) {
+      imgRectVal = document.querySelector("#mainImg").getBoundingClientRect();
+      imgRect.current = imgRectVal;
+    }
+  }, [imgInfo, isImgZoomedIn]);
+
+  //set transformOrigin to click position relative to the image element by subtrcting width/height from click position when clicking. top left is 0,0
+  const [transformOriginState, setTransformOriginState] = useState();
+  useEffect(() => {}, [imgInfo]);
+  function handleImgClick(event) {
+    setIsImgZoomedIn(!isImgZoomedIn);
+    setTransformOriginState(
+      `${event.clientX - imgRect.current.left}px ${
+        event.clientY - imgRect.current.top
+      }px`
+    );
+    console.log(event);
+  }
+
+  //get mouse position for inital transformOriginState
+  const [mousePos, setMousePos] = useState({});
+  function handleMouseMoveInitialOriginState(event) {
+    setMousePos({ X: event.clientX, y: event.clientY });
+  }
+
+  //reset rect when zooming out so the img doesn't fly off the screen
+  //set transformOrigin for first click using mousePos
+  useEffect(() => {
+    if (!isImgZoomedIn) {
+      imgRect.current = document
+        .querySelector("#mainImg")
+        .getBoundingClientRect();
+    } else if (isImgZoomedIn) {
+      setTransformOriginState(
+        `${mousePos.X - imgRect.current.left}px ${
+          mousePos.y - imgRect.current.top
+        }px`
+      );
+      imgRect.current = document
+        .querySelector("#mainImg")
+        .getBoundingClientRect();
+    }
+  }, [isImgZoomedIn]);
+
+  //set transformOrigin once image is clicked (zoomed in) when mouse moves. this makes you able to look over the image with moving the mouse
+  function handleMouseMove(event) {
+    setTransformOriginState(
+      `${event.clientX - imgRect.current.left}px ${
+        event.clientY - imgRect.current.top
+      }px`
+    );
+    // console.log(event.target.clientWidth);
+  }
+
   return (
-    <div>
+    <div onMouseMove={(event) => handleMouseMove(event)}>
       {/* conditionally render modal based on state of isShowingImageSelectModal in app.js */}
       {isShowingImageSelectModal && (
         <Modal__ImageSelect
@@ -493,22 +565,43 @@ const ImageViewPage = ({
           </div>
           <div className="image-view-page__top-bar-buttons-container">
             {mainImgLikeBtn}
-            <a className="imgViewDLBtn" href={imgDownloadURL}>
+            <a
+              className="image-view-page__download-button"
+              href={imgDownloadURL}
+            >
               Download
             </a>
           </div>
         </div>
         <div className="image-view-page__img-container">
-          <img src={imgSrc}></img>
+          <img
+            id="mainImg"
+            src={imgSrc}
+            className={`${
+              isImgZoomedIn
+                ? "image-view-page__img-zoomed-in"
+                : "image-view-page__img-zoomed-out"
+            }`}
+            onClick={(event) => {
+              handleImgClick(event);
+            }}
+            onMouseMove={(event) => {
+              handleMouseMoveInitialOriginState(event);
+            }}
+            style={{
+              // transform: isImgZoomedIn ? `scale(3)` : "scale(1)",
+              transformOrigin: transformOriginState,
+            }}
+          ></img>
         </div>
         <div className="image-view-page__img-info-container">
           <div className="image-view-page__img-title">{imgTitle}</div>
           <div className="image-view-page__img-description">
             {imgDescription}
           </div>
-          <div className="imgViewPageLikes">
+          {/* <div className="imgViewPageLikes">
             <div className="likeCounter">♥ {imgLikes} Likes</div>
-          </div>
+          </div> */}
         </div>
         <div className={`image-view-page__tag-arrow-bounds padding-left-0`}>
           <div
