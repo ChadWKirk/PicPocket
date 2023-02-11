@@ -5,7 +5,14 @@ import NavbarComponent from "../../components/NavbarComponent";
 import ImageGallerySortFilterAndSubheadingComponent from "../../components/ImageGallerySortFilterAndSubheadingComponent";
 import ImageGallery from "../../components/ImageGallery";
 
-const LikesPage = ({ curUser, loggedIn }) => {
+const LikesPage = ({
+  curUser,
+  loggedIn,
+  isShowingImageSelectModal,
+  setIsShowingImageSelectModal,
+  imgTitleArrState,
+  setImgTitleArrState,
+}) => {
   const { username } = useParams();
 
   //to get profile picture of user's like page you are seeing
@@ -118,6 +125,10 @@ const LikesPage = ({ curUser, loggedIn }) => {
             sort={sort}
             imgGalleryLength={imgGalleryLength}
             setImgGalleryLength={setImgGalleryLength}
+            isShowingImageSelectModal={isShowingImageSelectModal}
+            setIsShowingImageSelectModal={setIsShowingImageSelectModal}
+            imgTitleArrState={imgTitleArrState}
+            setImgTitleArrState={setImgTitleArrState}
           />
         </div>
       </div>

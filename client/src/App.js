@@ -143,15 +143,42 @@ function App() {
           ></Route>
           <Route
             path={`/User/:username`}
-            element={<UserPage curUser={curUser} loggedIn={loggedIn} />}
+            element={
+              <UserPage
+                curUser={curUser}
+                loggedIn={loggedIn}
+                isShowingImageSelectModal={isShowingImageSelectModal}
+                setIsShowingImageSelectModal={setIsShowingImageSelectModal}
+                imgTitleArrState={imgTitleArrState}
+                setImgTitleArrState={setImgTitleArrState}
+              />
+            }
           ></Route>
           <Route
             path={`/Account/${curUser}/My-Pics/:sort/:filter`}
-            element={<MyPicsPage curUser={curUser} loggedIn={loggedIn} />}
+            element={
+              <MyPicsPage
+                curUser={curUser}
+                loggedIn={loggedIn}
+                isShowingImageSelectModal={isShowingImageSelectModal}
+                setIsShowingImageSelectModal={setIsShowingImageSelectModal}
+                imgTitleArrState={imgTitleArrState}
+                setImgTitleArrState={setImgTitleArrState}
+              />
+            }
           ></Route>
           <Route
             path={`/Account/:username/Likes/:sort/:filter`}
-            element={<LikesPage curUser={curUser} loggedIn={loggedIn} />}
+            element={
+              <LikesPage
+                curUser={curUser}
+                loggedIn={loggedIn}
+                isShowingImageSelectModal={isShowingImageSelectModal}
+                setIsShowingImageSelectModal={setIsShowingImageSelectModal}
+                imgTitleArrState={imgTitleArrState}
+                setImgTitleArrState={setImgTitleArrState}
+              />
+            }
           ></Route>
           <Route
             path={`/${curUser}/upload`}

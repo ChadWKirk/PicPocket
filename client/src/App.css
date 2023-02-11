@@ -458,6 +458,9 @@ button {
   .navbar__container {
     height: 70px;
   }
+  .navbar__height-margin {
+    height: 70px;
+  }
   .navbar__hamburger-list-container {
     height: calc(100vh - 70px);
     top: 70px;
@@ -3197,13 +3200,26 @@ button {
   justify-content: center;
   align-items: center; */
   margin: auto;
+  padding: 0 var(--imgGalleryMarginBetweenImages);
 }
 .image-view-page__top-bar-container {
-  width: 100%;
+  position: sticky;
   display: flex;
+  height: 80px;
+  top: 80px;
   justify-content: space-between;
   align-items: center;
-  height: 80px;
+  width: 100%;
+  max-width: var(--siteContentsMidWidth);
+  padding: 0 var(--imgGalleryMarginBetweenImages);
+  background-color: #ffffff;
+  margin: auto;
+}
+@media (width < 650px) {
+  .image-view-page__top-bar-container {
+    height: 70px;
+    top: 70px;
+  }
 }
 .image-view-page__author-info-container {
 }

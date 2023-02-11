@@ -16,12 +16,7 @@ const ImageViewPage = ({
   setIsShowingImageSelectModal,
   imgTitleArrState,
 }) => {
-  //variables
-  let imageSRC;
-  let imageTitlee;
-  let imageDescription;
-  let imageLikes;
-  let imageTags;
+  //variables for related images
   let searchQuery;
   let imageURL;
   const [imageFetchID, setImageFetchID] = useState();
@@ -193,77 +188,6 @@ const ImageViewPage = ({
     setIsLiked(!isLiked);
   }
 
-  //on load, pull image using public id in url
-  // useEffect(() => {
-  //   console.log("run");
-  //   console.log(imageTitle);
-
-  //   async function getImages() {
-  //     await fetch(`http://localhost:5000/image/${imageTitle}`, {
-  //       method: "GET",
-  //       headers: { "Content-type": "application/json" },
-  //     }).then((response) =>
-  //       response
-  //         .json()
-  //         .then((resJSON) => JSON.stringify(resJSON))
-  //         .then((stringJSON) => JSON.parse(stringJSON))
-  //         .then((parsedJSON) => setImageFetchID(parsedJSON))
-  //     );
-  //   }
-  //   getImages();
-  // }, []);
-
-  // useEffect(() => {}, [imageFetchID, isLiked]);
-
-  //wait for fetch to be true (or complete) before assigning to variable
-  // if (imageFetchID) {
-  //   imageSRC = imageFetchID[0].secure_url;
-  //   imageTitlee = imageFetchID[0].title;
-  //   if (imageFetchID[0].description == "") {
-  //     imageDescription = <em>No Description Given</em>;
-  //   } else {
-  //     imageDescription = imageFetchID[0].description;
-  //   }
-
-  //   imageLikes = imageFetchID[0].likes;
-
-  //   imageURL =
-  //     imageFetchID[0].secure_url.slice(0, 50) +
-  //     "q_100/fl_attachment/" +
-  //     imageFetchID[0].secure_url.slice(
-  //       50,
-  //       imageFetchID[0].secure_url.lastIndexOf(".")
-  //     );
-
-  //   imageTags = imageFetchID[0].tags;
-
-  //   searchQuery = imageTags.join(" ") + " " + imageTitlee;
-
-  //   if (imageFetchID[0].likedBy.includes(curUser)) {
-  //     mainLikeBtn = (
-  //       <button className="imgViewLikeBtn" onClick={(e) => handleMainLike(e)}>
-  //         <FontAwesomeIcon
-  //           icon={faHeart}
-  //           className="likeButtonHeart2 likeButtonLikedFill2"
-  //         ></FontAwesomeIcon>
-  //         <div>Unlike</div>
-  //         <div>{imageFetchID[0].likedBy.length}</div>
-  //       </button>
-  //     );
-  //   } else {
-  //     mainLikeBtn = (
-  //       <button className="imgViewLikeBtn" onClick={(e) => handleMainLike(e)}>
-  //         <FontAwesomeIcon
-  //           icon={farHeart}
-  //           className="likeButtonHeart2"
-  //         ></FontAwesomeIcon>
-  //         <div>Like</div>
-  //         <div>{imageFetchID[0].likedBy.length}</div>
-  //       </button>
-  //     );
-  //   }
-  // }
-
   //get related images
   //perform a search for title and tags and return an array of results
   //map over results array
@@ -433,7 +357,7 @@ const ImageViewPage = ({
         navColorClass={"white"}
       />
       <div className="image-view-page__container">
-        <div className="image-view-page__top-bar-container">
+        <div className="image-view-page__top-bar-container fixed2">
           <div className="image-view-page__author-info-container">
             <a
               className="image-view-page__image-author-link-container"
