@@ -1,5 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faChevronLeft,
+  faChevronRight,
+} from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
@@ -107,6 +111,10 @@ const ImageViewPage = ({
   let imgDownloadURL;
   let imgTags = [];
   let mainImgLikeBtn;
+  //for tag list scroll animation
+  let tagListIDWidth;
+  let scrollByPxAmount;
+  const [tagListScrollPosition, setTagListScrollPosition] = useState(0);
   if (imgInfo) {
     imgSrc = imgInfo.secure_url;
     imgTitle = imgInfo.title;
@@ -158,6 +166,10 @@ const ImageViewPage = ({
         </button>
       );
     }
+
+    //for tag list scroll animation
+    tagListIDWidth = document.querySelector("#tagListID").clientWidth;
+    scrollByPxAmount = tagListIDWidth + tagListScrollPosition;
   }
 
   //handle like for main image
@@ -186,6 +198,115 @@ const ImageViewPage = ({
       });
     }
     setIsLiked(!isLiked);
+  }
+
+  //tag list scrolling
+  //every time tag list is scrolled, fire useEffect to decide whether to show arrows or not
+  //left arrow only shows when not at scroll position 0 (all the way to the left)
+  //right arrow only shows when scroll position is under max scroll
+  const [tagListMaxScroll, setTagListMaxScroll] = useState();
+
+  useEffect(() => {
+    showTagListArrowsBasedOnScrollPosition(
+      tagListScrollPosition,
+      tagListMaxScroll
+    );
+  }, [tagListScrollPosition]);
+
+  const [tagLeftArrowClass, setTagLeftArrowClass] = useState("opacity0");
+  const [tagRightArrowClass, setTagRightArrowClass] = useState("opacity0");
+
+  //if tag list is scrollable, show right arrow. by default right arrow is opacity0.
+  //fires once imgInfo is done fetching, therefore tag list actually exists
+  useEffect(() => {
+    const tagListID = document.querySelector("#tagListID");
+
+    if (tagListID.clientWidth < tagListID.scrollWidth) {
+      setTagRightArrowClass("image-view-page__img-tags-overflowArrowRight");
+    } else {
+      setTagRightArrowClass("opacity0");
+    }
+  }, [imgInfo]);
+
+  const [tagsPaddingLeft, setTagsPaddingLeft] = useState();
+
+  function showTagListArrowsBasedOnScrollPosition(
+    tagListScrollPosition,
+    tagListMaxScroll
+  ) {
+    //set to < 1 rather than == 0 because when using the left arrow button it would sit at 0.6666777 for some reason
+    if (tagListScrollPosition < 1) {
+      setTagLeftArrowClass(
+        "image-view-page__img-tags-overflowArrowLeft opacity0"
+      );
+      setTagsPaddingLeft("padding-left-0");
+    } else {
+      setTagLeftArrowClass("image-view-page__img-tags-overflowArrowLeft");
+      setTagsPaddingLeft();
+    }
+    if (tagListScrollPosition > tagListMaxScroll) {
+      setTagRightArrowClass(
+        "image-view-page__img-tags-overflowArrowRight opacity0"
+      );
+    } else {
+      setTagRightArrowClass("image-view-page__img-tags-overflowArrowRight");
+    }
+  }
+
+  //tag list scroll animation
+
+  //left animation
+  const element_left = document.querySelector("#tagListID");
+  let start_left, previousTimeStamp_left;
+  let done_left = false;
+
+  function step_left(timestamp_left) {
+    if (start_left === undefined) {
+      start_left = timestamp_left;
+    }
+    const elapsed_left = timestamp_left - start_left;
+
+    if (previousTimeStamp_left !== timestamp_left) {
+      const count_left = Math.min(0.1 * elapsed_left, scrollByPxAmount);
+      element_left.scrollBy(-count_left, 0);
+      if (count_left === 1000) {
+        done_left = true;
+      }
+    }
+
+    if (elapsed_left < 1000) {
+      previousTimeStamp_left = timestamp_left;
+      if (!done_left) {
+        window.requestAnimationFrame(step_left);
+      }
+    }
+  }
+
+  //right animation
+  const element = document.querySelector("#tagListID");
+  let start, previousTimeStamp;
+  let done = false;
+
+  function step(timestamp) {
+    if (start === undefined) {
+      start = timestamp;
+    }
+    const elapsed = timestamp - start;
+
+    if (previousTimeStamp !== timestamp) {
+      const count = Math.min(0.1 * elapsed, scrollByPxAmount);
+      element.scrollBy(count, 0);
+      if (count === scrollByPxAmount) {
+        done = true;
+      }
+    }
+
+    if (elapsed < 1000) {
+      previousTimeStamp = timestamp;
+      if (!done) {
+        window.requestAnimationFrame(step);
+      }
+    }
   }
 
   //get related images
@@ -357,7 +478,7 @@ const ImageViewPage = ({
         navColorClass={"white"}
       />
       <div className="image-view-page__container">
-        <div className="image-view-page__top-bar-container fixed2">
+        <div className="image-view-page__top-bar-container">
           <div className="image-view-page__author-info-container">
             <a
               className="image-view-page__image-author-link-container"
@@ -389,10 +510,38 @@ const ImageViewPage = ({
             <div className="likeCounter">♥ {imgLikes} Likes</div>
           </div>
         </div>
-        <div className="image-view-page__img-tags-container">
-          {/* <div className="image-select-modal__img-tags-heading">Tags:</div> */}
-          <div className="image-view-page__img-tags-list">
-            <ul>{imgTags}</ul>
+        <div className={`image-view-page__tag-arrow-bounds padding-left-0`}>
+          <div
+            className={tagLeftArrowClass}
+            onClick={() => window.requestAnimationFrame(step_left)}
+          >
+            <FontAwesomeIcon
+              icon={faChevronLeft}
+              className="image-view-page__img-tags-arrowIcon"
+            />
+          </div>
+          <div
+            className={tagRightArrowClass}
+            onClick={() => window.requestAnimationFrame(step)}
+          >
+            <FontAwesomeIcon
+              icon={faChevronRight}
+              className="image-view-page__img-tags-arrowIcon"
+            />
+          </div>
+          <div
+            id="tagListID"
+            className="image-view-page__img-tags-container"
+            onScroll={(e) => {
+              setTagListScrollPosition(e.target.scrollLeft);
+              setTagListMaxScroll(
+                e.target.scrollWidth - e.target.clientWidth - 1
+              );
+            }}
+          >
+            <div className="image-select-modal__img-tags-list">
+              <ul>{imgTags}</ul>
+            </div>
           </div>
         </div>
         <div className="relatedImagesContainer">
