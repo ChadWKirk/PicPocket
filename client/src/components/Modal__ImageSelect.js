@@ -309,9 +309,9 @@ const Modal__ImageSelect = ({
     if (imgInfo) {
       imgRectVal = document.querySelector("#mainImg").getBoundingClientRect();
       imgRect.current = imgRectVal;
-      modalVal = document.querySelector("#modal").getBoundingClientRect();
-      modal.current = modalVal.height;
     }
+    modalVal = document.querySelector("#modal").getBoundingClientRect();
+    modal.current = modalVal.height;
   }, [imgInfo, isImgZoomedIn]);
 
   //set transformOrigin to click position relative to the image element by subtrcting width/height from click position when clicking. top left is 0,0
@@ -382,7 +382,7 @@ const Modal__ImageSelect = ({
           navigate("/");
           document.body.style.overflow = "auto"; //set body overflow back to auto when closing modal
         }}
-        style={{ height: `${modal.current + 28}px` }} //get height of modal contents container and use that for height of black bg
+        style={{ height: `${modal.current + 58}px` }} //get height of modal contents container and use that for height of black bg
       ></div>
       <div className="image-select-modal__contents-container" id="modal">
         <FontAwesomeIcon

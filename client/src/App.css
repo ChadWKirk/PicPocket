@@ -2927,6 +2927,7 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: rgba(0, 0, 0, 0.9);
 }
 /* .image-select-modal__container::-webkit-scrollbar {
   display: none;
@@ -2940,7 +2941,7 @@ button {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.9);
+  /* background-color: rgba(0, 0, 0, 0.9); */
 }
 .image-select-modal__contents-container {
   z-index: 100000000000000;
