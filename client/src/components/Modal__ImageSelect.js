@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -282,40 +282,62 @@ const Modal__ImageSelect = ({
     setIsLiked(!isLiked);
   }
 
-  //to get mouse x and y coordinates for when image is zoomed in it changes the translate coords to the curosr coords so you can move around the image as it is zoomed in
-  const [mousePos, setMousePos] = useState({});
-
-  useEffect(() => {
-    const handleMouseMove = (event) => {
-      setMousePos({ x: event.clientX, y: event.clientY });
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-    };
-  }, []);
-
-  //set transform origin to mousePos and set translate to transform origin - mousePos
-
-  //coordinates to translate img with when it is zoomed in
-  //updates every time mouse moves
-  const [zoomedInImgTranslateCoordinates, setZoomedInImgTranslateCoordinates] =
-    useState();
-  useEffect(() => {
-    setZoomedInImgTranslateCoordinates(
-      `translate3d(${mousePos.x - 750}px, ${mousePos.y - 400}px, 0)`
-    );
-    console.log(zoomedInImgTranslateCoordinates);
-  }, [mousePos]);
-
-  //change this on click of the main img to change it's class to either zoomed in or zoomed out class
+  //change this on click of the main img to change it's class to either zoomed in or zoomed out class and style ternary for transform
   //zoomed out by default
   const [isImgZoomedIn, setIsImgZoomedIn] = useState(false);
 
-  if (isImgZoomedIn) {
+  //get boundingclientrect of img when zoomed out and storing it so it doesn't change once it is zoomed in (scale 3)
+  //waits for imgInfo to fetch so img is actually there to get the rect from
+  //uses useRef to maintain original (zoomed out) rect
+  let imgRect = useRef();
+  let imgRectVal;
+  useEffect(() => {
+    if (imgInfo) {
+      imgRectVal = document.querySelector("#mainImg").getBoundingClientRect();
+      imgRect.current = imgRectVal;
+    }
+  }, [imgInfo, isImgZoomedIn]);
+
+  //set transformOrigin to click position relative to the image element by subtrcting width/height from click position when clicking. top left is 0,0
+  const [transformOriginState, setTransformOriginState] = useState();
+  function handleImgClick(event) {
+    setIsImgZoomedIn(!isImgZoomedIn);
+    setTransformOriginState(
+      `${event.clientX - imgRect.current.left}px ${
+        event.clientY - imgRect.current.top
+      }px`
+    );
+    console.log(event);
   }
+
+  //reset rect when zooming out so the img doesn't fly off the screen
+  useEffect(() => {
+    if (!isImgZoomedIn) {
+      imgRect.current = document
+        .querySelector("#mainImg")
+        .getBoundingClientRect();
+    } else if (isImgZoomedIn) {
+      imgRect.current = document
+        .querySelector("#mainImg")
+        .getBoundingClientRect();
+    }
+  }, [isImgZoomedIn]);
+
+  //set transformOrigin once image is clicked (zoomed in) when mouse moves. this makes you able to look over the image with moving the mouse
+  function handleMouseMove(event) {
+    setTransformOriginState(
+      `${event.clientX - imgRect.current.left}px ${
+        event.clientY - imgRect.current.top
+      }px`
+    );
+    // console.log(event.target.clientWidth);
+  }
+
+  //reset zoom stuff when prev or next arrow is clicked to go to a different image
+  useEffect(() => {
+    setIsImgZoomedIn(false);
+    setTransformOriginState();
+  }, [isPrevOrNextClicked]);
 
   //index of current img in title array to get prev and next links for next and previous arrow links (see html conditional rendering)
   let currentImgIndex = imgTitleArrState.indexOf(`${imageTitle}`);
@@ -392,17 +414,22 @@ const Modal__ImageSelect = ({
         </div>
         <div className="image-select-modal__img-container">
           <img
+            id="mainImg"
             src={imgSrc}
             className={`${
               isImgZoomedIn
                 ? "image-select-modal__img-zoomed-in"
                 : "image-select-modal__img-zoomed-out"
             }`}
-            onClick={() => setIsImgZoomedIn(!isImgZoomedIn)}
+            onClick={(event) => {
+              handleImgClick(event);
+            }}
+            onMouseMove={(event) => {
+              handleMouseMove(event);
+            }}
             style={{
-              transform: isImgZoomedIn
-                ? `scale(3) ${zoomedInImgTranslateCoordinates}`
-                : "scale(1)",
+              // transform: isImgZoomedIn ? `scale(3)` : "scale(1)",
+              transformOrigin: transformOriginState,
             }}
           ></img>
         </div>

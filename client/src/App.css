@@ -3084,7 +3084,8 @@ button {
 }
 .image-select-modal__img-zoomed-in {
   transform: scale(3);
-  transform-origin: center center;
+  transition: transform 0.1s;
+  /* transform-origin: center center; */
   /* transform: translate3d(250px, 200px, 0); */
   margin: auto;
   max-height: 500px;
