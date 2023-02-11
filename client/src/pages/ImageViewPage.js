@@ -52,6 +52,9 @@ const ImageViewPage = ({
 
   let mainLikeBtn;
 
+  //to refetch imgInfo and userInfo for modal on prev or next img arrow click
+  const [isPrevOrNextClicked, setIsPrevOrNextClicked] = useState(false);
+
   //on load, pull img from url parameter :imageTitle (see app.js), and get user info for img author pfp and name
   useEffect(() => {
     async function fetchImgInfo() {
@@ -67,7 +70,7 @@ const ImageViewPage = ({
       );
     }
     fetchImgInfo();
-  }, [isLiked]);
+  }, [isLiked, isPrevOrNextClicked]);
 
   //fetch user info for pfp and author name
   useEffect(() => {
@@ -414,8 +417,12 @@ const ImageViewPage = ({
           curUser={curUser}
           imgTitleArrState={imgTitleArrState}
           setIsShowingImageSelectModal={setIsShowingImageSelectModal}
+          imgInfo={imgInfo}
+          userInfo={userInfo}
           mainLikeBtn={mainLikeBtn}
           imageURL={imageURL}
+          isPrevOrNextClicked={isPrevOrNextClicked}
+          setIsPrevOrNextClicked={setIsPrevOrNextClicked}
         />
       )}
       <NavbarComponent

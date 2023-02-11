@@ -300,6 +300,7 @@ const Modal__ImageSelect = ({
 
   //set transformOrigin to click position relative to the image element by subtrcting width/height from click position when clicking. top left is 0,0
   const [transformOriginState, setTransformOriginState] = useState();
+  useEffect(() => {}, [imgInfo]);
   function handleImgClick(event) {
     setIsImgZoomedIn(!isImgZoomedIn);
     setTransformOriginState(
@@ -310,13 +311,25 @@ const Modal__ImageSelect = ({
     console.log(event);
   }
 
+  //get mouse position for inital transformOriginState
+  const [mousePos, setMousePos] = useState({});
+  function handleMouseMoveInitialOriginState(event) {
+    setMousePos({ X: event.clientX, y: event.clientY });
+  }
+
   //reset rect when zooming out so the img doesn't fly off the screen
+  //set transformOrigin for first click using mousePos
   useEffect(() => {
     if (!isImgZoomedIn) {
       imgRect.current = document
         .querySelector("#mainImg")
         .getBoundingClientRect();
     } else if (isImgZoomedIn) {
+      setTransformOriginState(
+        `${mousePos.X - imgRect.current.left}px ${
+          mousePos.y - imgRect.current.top
+        }px`
+      );
       imgRect.current = document
         .querySelector("#mainImg")
         .getBoundingClientRect();
@@ -343,7 +356,10 @@ const Modal__ImageSelect = ({
   let currentImgIndex = imgTitleArrState.indexOf(`${imageTitle}`);
 
   return (
-    <div className="image-select-modal__container">
+    <div
+      className="image-select-modal__container"
+      onMouseMove={(event) => handleMouseMove(event)}
+    >
       <div
         className="image-select-modal__background"
         onClick={() => navigate("/")}
@@ -425,7 +441,7 @@ const Modal__ImageSelect = ({
               handleImgClick(event);
             }}
             onMouseMove={(event) => {
-              handleMouseMove(event);
+              handleMouseMoveInitialOriginState(event);
             }}
             style={{
               // transform: isImgZoomedIn ? `scale(3)` : "scale(1)",
