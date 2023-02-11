@@ -30,6 +30,10 @@ TASKS:
 
 styling:
 
+image view page - make responsive
+
+image modal - make responsive
+
 mypics - loading for submit/delete/massdelete, make it so that if all checkboxes are checked, selectall box checked = true and if not all of them are checked then select all checkbox checked = false, make page responsive.
 
 footer - make about us page
