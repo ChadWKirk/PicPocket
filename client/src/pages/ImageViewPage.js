@@ -146,30 +146,33 @@ const ImageViewPage = ({
     if (imgInfo.likedBy.includes(curUser)) {
       mainImgLikeBtn = (
         <button
-          className="image-view-page__like-button"
+          className="image-view-page__main-like-button"
           onClick={(e) => handleMainLike(e)}
         >
           <FontAwesomeIcon
             icon={faHeart}
-            className="likeButtonHeart2 likeButtonLikedFill2"
+            className="image-view-page__main-like-button-icon-unliked image-view-page__main-like-button-icon-liked"
           ></FontAwesomeIcon>
-          <div className="image-view-page__like-button-text">Unlike</div>
-          <div>{imgInfo.likedBy.length}</div>
+          <div className="image-view-page__main-like-button-text">Unlike</div>
+          <div className="image-view-page__main-like-button-text">
+            {imgInfo.likedBy.length}
+          </div>
         </button>
       );
     } else {
       mainImgLikeBtn = (
         <button
-          className="image-view-page__like-button"
+          className="image-view-page__main-like-button"
           onClick={(e) => handleMainLike(e)}
         >
           <FontAwesomeIcon
             icon={farHeart}
-            className="likeButtonHeart2"
-            style={{ color: "#b4b4b4" }}
+            className="image-view-page__main-like-button-icon-unliked"
           ></FontAwesomeIcon>
-          <div className="image-view-page__like-button-text">Like</div>
-          <div>{imgInfo.likedBy.length}</div>
+          <div className="image-view-page__main-like-button-text">Like</div>
+          <div className="image-view-page__main-like-button-text">
+            {imgInfo.likedBy.length}
+          </div>
         </button>
       );
     }
@@ -491,25 +494,32 @@ const ImageViewPage = ({
     console.log(event);
   }
 
-  //get mouse position for inital transformOriginState
-  const [mousePos, setMousePos] = useState({});
+  //get click position for inital transformOriginState
+  const [clickPos, setClickPos] = useState({});
   function handleMouseMoveInitialOriginState(event) {
-    setMousePos({ X: event.clientX, y: event.clientY });
+    setClickPos({ X: event.clientX, y: event.clientY });
   }
 
   //reset rect when zooming out so the img doesn't fly off the screen
-  //set transformOrigin for first click using mousePos
+  //set transformOrigin for first click using clickPos
   useEffect(() => {
     if (!isImgZoomedIn) {
       imgRect.current = document
         .querySelector("#mainImg")
         .getBoundingClientRect();
-    } else if (isImgZoomedIn) {
       setTransformOriginState(
-        `${mousePos.X - imgRect.current.left}px ${
-          mousePos.y - imgRect.current.top
+        `${clickPos.X - imgRect.current.left}px ${
+          clickPos.y - imgRect.current.top
         }px`
       );
+      console.log("zoomed out");
+    } else if (isImgZoomedIn) {
+      setTransformOriginState(
+        `${clickPos.X - imgRect.current.left}px ${
+          clickPos.y - imgRect.current.top
+        }px`
+      );
+      console.log("zomed in");
       imgRect.current = document
         .querySelector("#mainImg")
         .getBoundingClientRect();
@@ -549,17 +559,26 @@ const ImageViewPage = ({
         navPositionClass={"fixed"}
         navColorClass={"white"}
       />
-      <div className="image-view-page__container">
-        <div className="image-view-page__top-bar-container">
-          <div className="image-view-page__author-info-container">
-            <a
-              className="image-view-page__image-author-link-container"
-              href={`http://localhost:3000/User/${imgAuthorName}`}
-            >
-              <img
-                src={imgAuthorPFP}
+      <div className="image-view-page__top-bar-height-margin">margin</div>
+      <div className="image-view-page__top-bar-container">
+        <div className="image-view-page__top-bar-contents">
+          <div className="image-view-page__image-author-link-container">
+            <div className="image-view-page__image-author-pfp-div">
+              <a
                 className="image-view-page__image-author-pfp"
-              />
+                href={`http://localhost:3000/User/${imgAuthorName}`}
+              >
+                <img
+                  src={imgAuthorPFP}
+                  className="image-view-page__image-author-pfp"
+                />
+              </a>
+            </div>
+
+            <a
+              href={`http://localhost:3000/User/${imgAuthorName}`}
+              className="image-view-page__image-author-name"
+            >
               {imgAuthorName}
             </a>
           </div>
@@ -569,10 +588,12 @@ const ImageViewPage = ({
               className="image-view-page__download-button"
               href={imgDownloadURL}
             >
-              Download
+              Free Download
             </a>
           </div>
         </div>
+      </div>
+      <div className="image-view-page__container">
         <div className="image-view-page__img-container">
           <img
             id="mainImg"
@@ -584,10 +605,11 @@ const ImageViewPage = ({
             }`}
             onClick={(event) => {
               handleImgClick(event);
-            }}
-            onMouseMove={(event) => {
               handleMouseMoveInitialOriginState(event);
             }}
+            // onClick={(event) => {
+
+            // }}
             style={{
               // transform: isImgZoomedIn ? `scale(3)` : "scale(1)",
               transformOrigin: transformOriginState,
@@ -632,15 +654,15 @@ const ImageViewPage = ({
               );
             }}
           >
-            <div className="image-select-modal__img-tags-list">
+            <div className="image-view-page__img-tags-list">
               <ul>{imgTags}</ul>
             </div>
           </div>
         </div>
-        <div className="relatedImagesContainer">
+        {/* <div className="relatedImagesContainer">
           <div className="relatedImagesTitle">Related Images</div>
           <div className="imgGalleryCont1">{resultsMap}</div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
