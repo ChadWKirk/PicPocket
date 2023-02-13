@@ -458,9 +458,9 @@ button {
   .navbar__container {
     height: 70px;
   }
-  .navbar__height-margin {
+  /* .navbar__height-margin {
     height: 70px;
-  }
+  } */
   .navbar__hamburger-list-container {
     height: calc(100vh - 70px);
     top: 70px;
