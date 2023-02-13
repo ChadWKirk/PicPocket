@@ -30,29 +30,35 @@ TASKS:
 
 styling:
 
-image view page / modal - make tag arrow have background when you click it
+paperwork pages - make responsive and adjust arrows
+
+sign up page - copy sign in page front end to sign up page
+
+make red banner for upload page that says you can't upload until you confirm your email address
+
+make upload page responsive
+
+make main page navbar not go down when zoomed out
+
+copy mainpage stuff to mainpagemostpopular
 
 image view modal - adjust the way tag arrows sit, like image view page & make black background height adjust on resize
 
-mypics - loading for submit/delete/massdelete, make it so that if all checkboxes are checked, selectall box checked = true and if not all of them are checked then select all checkbox checked = false, make page responsive.
+mypics - loading for submit/delete/massdelete, make it so that if all checkboxes are checked, selectall box checked = true and if not all of them are checked then select all checkbox checked = false, general styling, make page responsive.
 
-footer - make about us page
+make about us page
 
 create sign up now section - have pic of female photographer to the right or left and have it fade to just a solid background color (darker yellow) and have the text and join now button on the empty side
 
 ---
+
+handle errors for blank fields etc.
 
 back end for change bio and change email
 
 make it so that duplicate public ID's get named something else in cloudinary
 
 contact us page backend once site is hosted and get website email
-
-create image view page - pull in synonym tags to click to search
-
-create image view modal
-
-edit account settings page
 
 create change password page
 
