@@ -32,7 +32,7 @@ styling:
 
 image view page / modal - make tag arrow have background when you click it
 
-image view modal - adjust the way tag arrows sit, like image view page
+image view modal - adjust the way tag arrows sit, like image view page & make black background height adjust on resize
 
 mypics - loading for submit/delete/massdelete, make it so that if all checkboxes are checked, selectall box checked = true and if not all of them are checked then select all checkbox checked = false, make page responsive.
 
