@@ -393,7 +393,7 @@ const Modal__ImageSelect = ({
           navigate("/");
           document.body.style.overflow = "auto"; //set body overflow back to auto when closing modal
         }}
-        style={{ height: `${modal.current + 58}px` }} //get height of modal contents container and use that for height of black bg
+        style={{ height: `100vh` }} //get height of modal contents container and use that for height of black bg
       ></div>
       <div className="image-select-modal__contents-container" id="modal">
         <FontAwesomeIcon

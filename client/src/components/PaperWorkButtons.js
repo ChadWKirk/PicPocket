@@ -64,7 +64,7 @@ const PaperWorkButtons = ({ whatPage }) => {
   }
   return (
     <div>
-      <div className={leftArrowClass}>
+      {/* <div className={leftArrowClass}>
         <FontAwesomeIcon
           icon={faChevronLeft}
           className="paperWorkButtons-arrowIcon"
@@ -75,7 +75,7 @@ const PaperWorkButtons = ({ whatPage }) => {
           icon={faChevronRight}
           className="paperWorkButtons-arrowIcon"
         />
-      </div>
+      </div> */}
       <div
         className="paperWorkButtons--container"
         onScroll={(e) => scrollPos(e)}

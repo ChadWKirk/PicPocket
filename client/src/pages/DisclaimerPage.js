@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-import WhiteNavBar from "../components/WhiteNavBar";
+import NavbarComponent from "../components/NavbarComponent";
 import PaperWorkButtons from "../components/PaperWorkButtons";
 
-const DisclaimerPage = () => {
+const DisclaimerPage = ({ curUser, loggedIn }) => {
   let disclaimerID = process.env.REACT_APP_TERMLY_DISCLAIMER_ID;
 
   useEffect(() => {
@@ -14,7 +14,12 @@ const DisclaimerPage = () => {
 
   return (
     <div>
-      <WhiteNavBar />
+      <NavbarComponent
+        curUser={curUser}
+        loggedIn={loggedIn}
+        navPositionClass={"fixed"}
+        navColorClass={"white"}
+      />
       <PaperWorkButtons whatPage={"disclaimer"} />
       <div name="termly-embed" data-id={disclaimerID} data-type="iframe"></div>
     </div>

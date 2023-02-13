@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-import WhiteNavBar from "../components/WhiteNavBar";
+import NavbarComponent from "../components/NavbarComponent";
 import PaperWorkButtons from "../components/PaperWorkButtons";
 
-const TOSPage = () => {
+const TOSPage = ({ curUser, loggedIn }) => {
   let TOSID = process.env.REACT_APP_TERMLY_TOS_ID;
 
   useEffect(() => {
@@ -14,7 +14,12 @@ const TOSPage = () => {
 
   return (
     <div>
-      <WhiteNavBar />
+      <NavbarComponent
+        curUser={curUser}
+        loggedIn={loggedIn}
+        navPositionClass={"fixed"}
+        navColorClass={"white"}
+      />
       <PaperWorkButtons whatPage={"tos"} />
       <div name="termly-embed" data-id={TOSID} data-type="iframe"></div>
     </div>

@@ -1539,6 +1539,16 @@ button {
 .paperWorkButtons--container::-webkit-scrollbar {
   display: none;
 }
+@media (width < 455px) {
+  .paperWorkButtons--container {
+    font-size: 0.8rem;
+  }
+}
+@media (width < 355px) {
+  .paperWorkButtons--container {
+    flex-direction: column;
+  }
+}
 
 .paperWorkButtons-overflowArrowLeft {
   z-index: 999999;
@@ -1599,6 +1609,15 @@ button {
   padding: 0.5rem;
   border-radius: 5px;
   font-weight: 500;
+}
+
+@media (width > 400px) {
+  .paperWorkButtons-overflowArrowLeft {
+    display: none;
+  }
+  .paperWorkButtons-overflowArrowRight {
+    display: none;
+  }
 }
 
 /* .image-gallery__image {
@@ -2957,7 +2976,7 @@ button {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  min-height: 100vh;
+  /* min-height: 100vh; */
 }
 
 .image-select-modal__x-icon {
@@ -3793,21 +3812,12 @@ button {
   }
 }
 
-@media (width > 400px) {
-  .paperWorkButtons-overflowArrowLeft {
-    display: none;
-  }
-  .paperWorkButtons-overflowArrowRight {
-    display: none;
-  }
-}
-
-@media (width < 420px) {
+/* @media (width < 420px) {
   .paperWorkButtons--container {
     overflow-x: scroll;
     justify-content: flex-start;
   }
-}
+} */
 
 @media (width < 430px) {
   .mainPage__heroPicture {
