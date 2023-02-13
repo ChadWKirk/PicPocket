@@ -2432,19 +2432,24 @@ button {
   margin-top: 140px;
 }
 
+/* Upload Page CSS */
+
 .uploadPageTitle {
   font-size: 36px;
   font-weight: 700;
 }
 
 .uploadForm {
-  background-color: rgb(221, 224, 224);
-  border: 6px dashed rgb(171, 172, 172);
-  width: 600px;
-  height: 250px;
+  background-color: rgba(255, 255, 255, 0);
+  border: 2px dashed rgb(171, 172, 172);
+  border-radius: 30px;
+  width: 100vw;
+  max-width: var(--siteContentsLeastWidth);
+  /* height: 250px; */
   display: flex;
   /* flex-direction: column; */
   justify-content: center;
+  padding: 1rem;
   margin-top: 80px;
   /* position: relative; */
   transition: 0.1s ease;
@@ -2452,7 +2457,8 @@ button {
 
 .uploadForm:hover {
   background-color: rgba(186, 207, 251, 0.918);
-  border: 6px dashed rgb(55, 137, 209);
+  border: 2px dashed rgb(55, 137, 209);
+  transition: 0.2s;
 }
 
 .uploadForm:hover .addUploadButton {
@@ -2484,10 +2490,17 @@ button {
 .uploadFormInputButtonAndCaptions {
   display: flex;
   flex-direction: column;
-  height: 200px;
+  /* height: 200px; */
   justify-content: center;
   align-items: center;
-  margin-top: 50px;
+  margin-top: 16px;
+}
+
+.upload-page__upload-form-heading {
+  max-width: 250px;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 500;
 }
 
 .addUploadButton {
@@ -2502,7 +2515,7 @@ button {
   color: gray;
   width: 200px;
   height: 80px;
-  border-radius: 3px;
+  border-radius: 6px;
   border: 1px solid black;
   margin-top: 25px;
 }
@@ -2513,7 +2526,8 @@ button {
 }
 
 .uploadFormCaption {
-  margin-top: 55px;
+  margin-top: 45px;
+  /* margin-bottom: 1rem; */
   font-weight: 400;
   opacity: 0.5;
 }

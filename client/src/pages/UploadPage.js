@@ -22,7 +22,6 @@ const UploadPage = ({ curUser, loggedIn }) => {
         navColorClass={"white"}
       />
       <div className="uploadPageContainer">
-        <div className="uploadPageTitle">Upload Your Pics</div>
         <div className="uploadFormListContainer">
           <UploadForm
             curUser={curUser}

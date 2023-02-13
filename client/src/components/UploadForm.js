@@ -99,6 +99,9 @@ const UploadForm = ({
         <div className="uploadFormContents">
           <input type="file" multiple onChange={(e) => uploadHandler(e)} />
           <div className="uploadFormInputButtonAndCaptions">
+            <div className="upload-page__upload-form-heading">
+              Drag and drop to upload, or
+            </div>
             <button className="addUploadButton">
               <FontAwesomeIcon
                 fontSize={24}
