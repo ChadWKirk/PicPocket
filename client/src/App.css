@@ -2955,10 +2955,11 @@ button {
   margin-top: 1.75rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   min-height: 100vh;
 }
+
 .image-select-modal__x-icon {
   color: #fff;
   font-size: 2rem;
@@ -2995,6 +2996,38 @@ button {
   color: var(--dark5);
   transition: 0.2s;
 }
+@media (width < 650px) {
+  .image-select-modal__contents-container {
+    width: 100vw;
+    margin-top: 4rem;
+    border-radius: 0;
+    padding: 0.95rem 0.5rem 1.5rem 0.5rem;
+  }
+  .image-select-modal__x-icon {
+    color: #ffffff;
+    font-size: 2rem;
+    position: absolute;
+    top: -50px;
+    left: 20px;
+    transition: 0.2s;
+  }
+  .image-select-modal__left-arrow-icon {
+    top: 95px;
+    left: 20px;
+    color: rgba(255, 255, 255, 0.329);
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    padding: 0.25rem 0.445rem;
+  }
+  .image-select-modal__right-arrow-icon {
+    top: 95px;
+    right: 20px;
+    color: rgba(255, 255, 255, 0.329);
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    padding: 0.25rem 0.445rem;
+  }
+}
 .image-select-modal__top-bar-container {
   width: 100%;
   display: flex;
@@ -3002,6 +3035,28 @@ button {
   align-items: center;
   height: 80px;
 }
+@media (width < 650px) {
+  .image-select-modal__top-bar-container {
+    /* padding: 0 1rem 0 0.25rem; */
+  }
+}
+/* @media (width < 375px) {
+  .image-view-page__top-bar-container {
+    height: 110px;
+    top: 70px;
+  }
+  .image-view-page__top-bar-height-margin {
+    height: 110px;
+  }
+  .image-select-modal__top-bar-container {
+    height: 120px;
+    padding-top: 0.75rem;
+    padding-bottom: 1rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+} */
 .image-select-modal__image-author-link-container {
   cursor: pointer;
   text-decoration: none;
@@ -3049,24 +3104,122 @@ button {
 .image-select-modal__image-author-name:hover {
   color: var(--dark2);
 }
+/* @media (width < 650px) {
+  .image-select-modal__image-author-pfp {
+    width: 35px;
+    height: 35px;
+  }
+  .image-select-modal__image-author-pfp::after {
+    width: 35px;
+    height: 35px;
+  }
+  .image-select-modal__image-author-link-container {
+    font-size: 0.75rem;
+  }
+} */
 .image-select-modal__top-bar-buttons-container {
   display: flex;
   gap: 0.75rem;
 }
+.image-select-modal__main-like-button {
+  display: flex;
+  outline: 1px var(--greyBorder1) solid;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  gap: 0.5rem;
+  font-size: 1.2rem;
+  transition: outline 0.2s;
+}
+.image-select-modal__main-like-button:hover {
+  outline: 1px var(--dark3) solid;
+  transition: outline 0.2s;
+}
+.image-select-modal__main-like-button-icon-unliked {
+  border-radius: 10px;
+  pointer-events: none;
+  z-index: 100;
+  color: #b4b4b4;
+}
+.image-select-modal__main-like-button-icon-liked {
+  color: red;
+  z-index: 105;
+  position: relative;
+  animation: image-view-page__main-like-button-animation-big 0.4s;
+}
+@keyframes image-view-page__main-like-button-animation-big {
+  from {
+    transform: scale(1.2);
+    color: rgb(234, 1, 1);
+  }
+  to {
+    transform: scale(1);
+    color: red;
+  }
+}
+@keyframes image-view-page__main-like-button-animation-small {
+  from {
+    transform: scale(1.3);
+    color: rgb(234, 1, 1);
+  }
+  to {
+    transform: scale(1);
+    color: red;
+  }
+}
+.image-select-modal__download-button {
+  display: flex;
+  background-color: rgb(13, 149, 127);
+  color: white;
+  justify-content: center;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  gap: 0.2rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+  transition: background-color 0.1s;
+}
+.image-select-modal__download-button:hover {
+  color: #fff;
+  background-color: rgb(16, 138, 117);
+  transition: background-color 0.2s;
+}
+@media (width < 650px) {
+  .image-select-modal__main-like-button {
+    font-size: 1rem;
+  }
+  .image-select-modal__main-like-button-icon-liked {
+    animation: image-view-page__main-like-button-animation-small 0.4s;
+  }
+  .image-select-modal__main-like-button-text {
+    display: none;
+  }
+  /* .image-select-modal__download-button {
+    font-size: 0.8rem;
+    padding: 0.25rem 0.75rem;
+  } */
+}
 .image-select-modal__img-container {
-  width: 100%;
-  height: 500px;
+  /* width: 100%; */
+  max-width: 100%;
+  /* min-height: 500px; */
   max-height: 500px;
   margin: auto;
   margin-top: 1rem;
   margin-bottom: 2rem;
   display: flex;
+  justify-content: center;
   overflow: hidden;
+  /* background-color: rebeccapurple; */
+}
+.image-select-modal__img-height-spacing {
+  height: 500px;
 }
 .image-select-modal__img-zoomed-out {
-  margin: auto;
+  /* margin: auto; */
   max-height: 500px;
-  max-width: 80%;
+  max-width: 100%;
   object-fit: contain;
   cursor: zoom-in;
 }
@@ -3075,11 +3228,24 @@ button {
   transition: transform 0.1s;
   /* transform-origin: center center; */
   /* transform: translate3d(250px, 200px, 0); */
-  margin: auto;
+  /* margin: auto; */
   max-height: 500px;
-  max-width: 80%;
+  max-width: 100%;
   object-fit: cover;
   cursor: zoom-out;
+}
+@media (width < 900px) {
+  .image-select-modal__img-container {
+    max-height: 100%;
+    height: 100%;
+  }
+  .image-select-modal__img-container img {
+    max-height: 100%;
+    max-width: 100%;
+  }
+  .image-select-modal__img-height-spacing {
+    display: none;
+  }
 }
 .image-select-modal__img-info-container {
   display: flex;
@@ -3087,11 +3253,32 @@ button {
   align-items: center;
   width: 100%;
 }
+@media (width < 650px) {
+  .image-select-modal__img-info-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+}
 .image-select-modal__img-title {
+  width: 100%;
   font-size: 2.25rem;
   font-weight: 500;
+  word-wrap: break-word;
+  max-width: 48%;
 }
 .image-select-modal__img-description {
+  color: var(--dark4);
+  font-weight: 500;
+  font-style: italic;
+  max-width: 48%;
+  /* margin-top: 0.72rem; */
+}
+@media (width < 650px) {
+  .image-select-modal__img-title,
+  .image-select-modal__img-description {
+    max-width: 100%;
+  }
 }
 .image-select-modal__img-tags-container {
   width: 100%;

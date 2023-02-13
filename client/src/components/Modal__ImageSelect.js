@@ -128,29 +128,35 @@ const Modal__ImageSelect = ({
     if (imgInfo.likedBy.includes(curUser)) {
       imageSelectModalLikeBtn = (
         <button
-          className="image-view-page__like-button"
+          className="image-select-modal__main-like-button"
           onClick={(e) => handleMainLike(e)}
         >
           <FontAwesomeIcon
             icon={faHeart}
-            className="likeButtonHeart2 likeButtonLikedFill2"
+            className="image-select-modal__main-like-button-icon-unliked image-select-modal__main-like-button-icon-liked"
           ></FontAwesomeIcon>
-          <div>Unlike</div>
-          <div>{imgInfo.likedBy.length}</div>
+          <div className="image-select-modal__main-like-button-text">
+            Unlike
+          </div>
+          <div className="image-select-modal__main-like-button-text">
+            {imgInfo.likedBy.length}
+          </div>
         </button>
       );
     } else {
       imageSelectModalLikeBtn = (
         <button
-          className="image-view-page__like-button"
+          className="image-select-modal__main-like-button"
           onClick={(e) => handleMainLike(e)}
         >
           <FontAwesomeIcon
             icon={farHeart}
-            className="likeButtonHeart2"
+            className="image-select-modal__main-like-button-icon-unliked"
           ></FontAwesomeIcon>
-          <div>Like</div>
-          <div>{imgInfo.likedBy.length}</div>
+          <div className="image-select-modal__main-like-button-text">Like</div>
+          <div className="image-select-modal__main-like-button-text">
+            {imgInfo.likedBy.length}
+          </div>
         </button>
       );
     }
@@ -327,23 +333,28 @@ const Modal__ImageSelect = ({
     console.log(event);
   }
 
-  //get mouse position for inital transformOriginState
-  const [mousePos, setMousePos] = useState({});
+  //get click position for inital transformOriginState
+  const [clickPos, setClickPos] = useState({});
   function handleMouseMoveInitialOriginState(event) {
-    setMousePos({ X: event.clientX, y: event.clientY });
+    setClickPos({ X: event.clientX, y: event.clientY });
   }
 
   //reset rect when zooming out so the img doesn't fly off the screen
-  //set transformOrigin for first click using mousePos
+  //set transformOrigin for first click using clickPos
   useEffect(() => {
     if (!isImgZoomedIn) {
       imgRect.current = document
         .querySelector("#mainImg")
         .getBoundingClientRect();
+      setTransformOriginState(
+        `${clickPos.X - imgRect.current.left}px ${
+          clickPos.y - imgRect.current.top
+        }px`
+      );
     } else if (isImgZoomedIn) {
       setTransformOriginState(
-        `${mousePos.X - imgRect.current.left}px ${
-          mousePos.y - imgRect.current.top
+        `${clickPos.X - imgRect.current.left}px ${
+          clickPos.y - imgRect.current.top
         }px`
       );
       imgRect.current = document
@@ -449,14 +460,16 @@ const Modal__ImageSelect = ({
           <div className="image-select-modal__top-bar-buttons-container">
             {imageSelectModalLikeBtn}
             <a
-              className="image-view-page__download-button"
+              className="image-select-modal__download-button"
               href={imgDownloadURL}
             >
-              Download
+              Free Download
             </a>
           </div>
         </div>
+
         <div className="image-select-modal__img-container">
+          <div className="image-select-modal__img-height-spacing"></div>
           <img
             id="mainImg"
             src={imgSrc}
@@ -467,10 +480,11 @@ const Modal__ImageSelect = ({
             }`}
             onClick={(event) => {
               handleImgClick(event);
-            }}
-            onMouseMove={(event) => {
               handleMouseMoveInitialOriginState(event);
             }}
+            // onMouseMove={(event) => {
+            //   handleMouseMoveInitialOriginState(event);
+            // }}
             style={{
               // transform: isImgZoomedIn ? `scale(3)` : "scale(1)",
               transformOrigin: transformOriginState,
