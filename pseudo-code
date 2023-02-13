@@ -30,9 +30,9 @@ TASKS:
 
 styling:
 
-image view page - make responsive
+image view page / modal - make tag arrow have background when you click it
 
-image modal - make responsive
+image view modal - adjust the way tag arrows sit, like image view page
 
 mypics - loading for submit/delete/massdelete, make it so that if all checkboxes are checked, selectall box checked = true and if not all of them are checked then select all checkbox checked = false, make page responsive.
 
