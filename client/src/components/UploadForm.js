@@ -2,6 +2,8 @@ import { React, useEffect, useState } from "react";
 //font awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+//images
+import uploadFormGalleryIcon from "../images/upload-page__image-gallery-icon.png";
 
 const UploadForm = ({
   curUser,
@@ -91,26 +93,30 @@ const UploadForm = ({
   }
 
   return (
-    <div>
-      <form className="uploadForm">
+    <div style={{ width: "100%" }}>
+      <form className="upload-page__upload-form">
         <div style={{ position: "absolute", top: -30, left: -7, fontSize: 16 }}>
           Upload
         </div>
-        <div className="uploadFormContents">
+        <div className="upload-page__upload-form-contents">
           <input type="file" multiple onChange={(e) => uploadHandler(e)} />
-          <div className="uploadFormInputButtonAndCaptions">
+          <div className="upload-page__upload-form-input-buttons-and-captions">
+            <img
+              src={uploadFormGalleryIcon}
+              className="upload-page__upload-form-gallery-icon"
+            />
             <div className="upload-page__upload-form-heading">
               Drag and drop to upload, or
             </div>
-            <button className="addUploadButton">
-              <FontAwesomeIcon
+            <button className="upload-page__add-upload-button">
+              {/* <FontAwesomeIcon
                 fontSize={24}
                 style={{ color: "white" }}
                 icon={faPlus}
-              />
-              <div style={{ color: "white", fontSize: 28 }}>Upload</div>
+              /> */}
+              <div>Browse</div>
             </button>
-            <div className="uploadFormCaption">
+            <div className="upload-page__upload-form-caption">
               Supported Files: JPEG, JPG, PNG
             </div>
           </div>

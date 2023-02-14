@@ -70,6 +70,9 @@ const Footer = ({ curUser, loggedIn }) => {
               <a href="/Disclaimer">Disclaimer</a>
             </li>
             <li>
+              <a href="/Credits">Credits</a>
+            </li>
+            <li>
               <a href="/Contact">Contact Us</a>
             </li>
           </ul>

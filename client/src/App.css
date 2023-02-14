@@ -375,7 +375,7 @@ button {
 }
 .navbar__CTA-button-1:focus {
   color: black !important;
-  outline: 2px solid black;
+  /* outline: 2px solid black; */
 }
 .navbar__smallUploadButton {
   color: white;
@@ -2434,46 +2434,59 @@ button {
 
 /* Upload Page CSS */
 
+.upload-page__container {
+  min-height: 550px;
+  background-color: purple;
+  width: 100%;
+}
+.upload-page__form-and-list-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+}
 .uploadPageTitle {
   font-size: 36px;
   font-weight: 700;
 }
-
-.uploadForm {
+.upload-page__upload-form {
+  border-radius: 25px;
+  margin: auto;
   background-color: rgba(255, 255, 255, 0);
-  border: 2px dashed rgb(171, 172, 172);
-  border-radius: 30px;
-  width: 100vw;
+  border: 4px dashed var(--dark5);
+  width: 85%;
   max-width: var(--siteContentsLeastWidth);
-  /* height: 250px; */
   display: flex;
-  /* flex-direction: column; */
   justify-content: center;
   padding: 1rem;
-  margin-top: 80px;
-  /* position: relative; */
+  margin-top: 3.25rem;
   transition: 0.1s ease;
 }
 
-.uploadForm:hover {
+.upload-page__upload-form:hover {
   background-color: rgba(186, 207, 251, 0.918);
-  border: 2px dashed rgb(55, 137, 209);
+  border: 4px dashed #3789d1;
   transition: 0.2s;
 }
+.upload-page__upload-form-gallery-icon {
+  width: 85px;
+}
 
-.uploadForm:hover .addUploadButton {
+.upload-page__upload-form .upload-page__add-upload-button {
   background-color: rgb(56, 104, 207);
 }
 
-.uploadFormContents {
+.upload-page__upload-form-contents {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  /* gap: 2rem; */
 }
 
-.uploadFormContents input {
+.upload-page__upload-form-contents input {
   opacity: 0;
   font-size: 0px;
   cursor: pointer;
@@ -2487,61 +2500,50 @@ button {
   background-color: red;
 }
 
-.uploadFormInputButtonAndCaptions {
+.upload-page__upload-form-input-buttons-and-captions {
   display: flex;
   flex-direction: column;
   /* height: 200px; */
   justify-content: center;
   align-items: center;
-  margin-top: 16px;
+  gap: 1.1rem;
+  margin-top: 1rem;
 }
 
 .upload-page__upload-form-heading {
   max-width: 250px;
   text-align: center;
-  font-size: 2rem;
+  font-size: 2.125rem;
   font-weight: 500;
+  line-height: 1.2;
 }
 
-.addUploadButton {
-  z-index: 1000;
+.upload-page__add-upload-button {
+  z-index: 10;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: space-around;
   background-color: rgb(60, 113, 226);
-  color: white;
+  color: #fff;
   cursor: pointer;
-  color: gray;
-  width: 200px;
-  height: 80px;
   border-radius: 6px;
-  border: 1px solid black;
   margin-top: 25px;
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
 }
 
-.addUploadButton:hover {
+.upload-page__add-upload-button:hover {
   background-color: rgb(53, 101, 204);
   transition: 0.1s ease;
 }
 
-.uploadFormCaption {
-  margin-top: 45px;
+.upload-page__upload-form-caption {
+  margin-top: 65px;
   /* margin-bottom: 1rem; */
   font-weight: 400;
   opacity: 0.5;
-}
-
-.uploadFormListContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.uploadPageContainer {
-  min-height: 550px;
 }
 
 .removeUploadIcon {

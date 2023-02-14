@@ -21,28 +21,28 @@ const UploadPage = ({ curUser, loggedIn }) => {
         navPositionClass={"fixed"}
         navColorClass={"white"}
       />
-      <div className="uploadPageContainer">
-        <div className="uploadFormListContainer">
-          <UploadForm
-            curUser={curUser}
-            imagesToUpload={imagesToUpload}
-            imageError={imageError}
-            setImageError={setImageError}
-            setImagesToUpload={setImagesToUpload}
-            removeImageFromUploadFrontEnd={removeImageFromUploadFrontEnd}
-          />
-          <FileList
-            imagesToUpload={imagesToUpload}
-            removeImageFromUploadFrontEnd={removeImageFromUploadFrontEnd}
-          />
-          <div>
-            All done? Edit in{" "}
-            <a href={`/Account/${curUser}/My-Pics/most-recent/all-types`}>
-              My Pics
-            </a>
-          </div>
+      {/* <div className="upload-page__container"> */}
+      <div className="upload-page__form-and-list-container">
+        <UploadForm
+          curUser={curUser}
+          imagesToUpload={imagesToUpload}
+          imageError={imageError}
+          setImageError={setImageError}
+          setImagesToUpload={setImagesToUpload}
+          removeImageFromUploadFrontEnd={removeImageFromUploadFrontEnd}
+        />
+        <FileList
+          imagesToUpload={imagesToUpload}
+          removeImageFromUploadFrontEnd={removeImageFromUploadFrontEnd}
+        />
+        <div>
+          All done? Edit in{" "}
+          <a href={`/Account/${curUser}/My-Pics/most-recent/all-types`}>
+            My Pics
+          </a>
         </div>
       </div>
+      {/* </div> */}
     </div>
   );
 };

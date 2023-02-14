@@ -22,6 +22,7 @@ import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import TOSPage from "./pages/TOSPage";
 import DisclaimerPage from "./pages/DisclaimerPage";
 import ContactUsPage from "./pages/ContactUsPage";
+import CreditsPage from "./pages/CreditsPage";
 //bootstrap
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -213,6 +214,10 @@ function App() {
           <Route
             path="/Disclaimer"
             element={<DisclaimerPage curUser={curUser} loggedIn={loggedIn} />}
+          ></Route>
+          <Route
+            path="/Credits"
+            element={<CreditsPage curUser={curUser} loggedIn={loggedIn} />}
           ></Route>
           <Route
             path="/Contact"
