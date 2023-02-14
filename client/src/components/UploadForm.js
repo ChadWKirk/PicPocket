@@ -108,7 +108,24 @@ const UploadForm = ({
           Upload
         </div>
         <div className="upload-page__upload-form-contents">
-          <input type="file" multiple onChange={(e) => uploadHandler(e)} />
+          <input
+            type="file"
+            multiple
+            onChange={(e) => uploadHandler(e)}
+            onClick={(e) => (e.target.value = null)}
+            onDragEnter={(e) => (e.target.value = null)}
+            className="upload-page__upload-form-contents-input-for-click"
+            title={""}
+          />
+          <input
+            type="file"
+            multiple
+            onClick={(e) => e.preventDefault()} //this input is only for drag n drop. disable clicking
+            onChange={(e) => uploadHandler(e)}
+            onDragEnter={(e) => (e.target.value = null)}
+            className="upload-page__upload-form-contents-input-for-drag"
+            title={""}
+          />
           <div className="upload-page__upload-form-input-buttons-and-captions">
             <img
               src={uploadFormGalleryIcon}

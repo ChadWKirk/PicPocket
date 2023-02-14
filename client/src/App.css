@@ -2460,15 +2460,16 @@ button {
   max-width: var(--siteContentsLeastWidth);
   display: flex;
   justify-content: center;
-  padding: 1rem;
+  padding: 1rem 0;
   margin-top: 3.25rem;
   transition: 0.1s ease;
+  /* background-color: red; */
 }
-.upload-page__upload-form:hover {
+/* .upload-page__upload-form:hover {
   background-color: rgba(186, 207, 251, 0.918);
   border: 4px dashed #3789d1;
   transition: 0.2s;
-}
+} */
 .upload-page__upload-form-drag-enter {
   background-color: rgba(186, 207, 251, 0.918);
   border: 4px dashed #3789d1;
@@ -2487,21 +2488,37 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  /* background-color: blue; */
   /* gap: 2rem; */
 }
 
-.upload-page__upload-form-contents input {
+.upload-page__upload-form-contents-input-for-click {
   opacity: 0;
   font-size: 0px;
   cursor: pointer;
   position: absolute;
-  top: -20px;
-  left: -412px;
+  top: 242px;
+  left: 75px;
   /* margin: -125px 0 0 -300px; */
-  width: 429%;
-  height: 110%;
-  z-index: 1001;
+  width: 100px;
+  height: 40px;
+  z-index: 999;
   background-color: rgb(255, 0, 0);
+}
+.upload-page__upload-form-contents-input-for-drag {
+  opacity: 0;
+  font-size: 0px;
+  /* cursor: pointer; */
+  position: absolute;
+  top: -20px;
+  left: 0px;
+  /* margin: -125px 0 0 -300px; */
+  width: 100%;
+  max-width: var(--siteContentsLeastWidth);
+  height: 110%;
+  z-index: 998;
+  background-color: rgb(68, 28, 28);
 }
 
 .upload-page__upload-form-input-buttons-and-captions {
@@ -2538,7 +2555,8 @@ button {
   font-weight: 500;
 }
 
-.upload-page__add-upload-button:hover {
+.upload-page__upload-form-contents-input-for-click:hover
+  .upload-page__add-upload-button {
   background-color: rgb(53, 101, 204);
   transition: 0.1s ease;
 }
@@ -2548,6 +2566,7 @@ button {
   /* margin-bottom: 1rem; */
   font-weight: 400;
   opacity: 0.5;
+  text-align: center;
 }
 
 .removeUploadIcon {
