@@ -30,11 +30,13 @@ TASKS:
 
 styling:
 
+footer - make footer stay at bottom of page https://www.freecodecamp.org/news/how-to-keep-your-footer-where-it-belongs-59c6aa05c59c/
+
 sign up page - copy sign in page front end to sign up page
 
 make red banner for upload page that says you can't upload until you confirm your email address
 
-upload page - make it so that when you hover between button and drag input it doesn't go white, make file list responsive (when < 900px, turn file list into two columns instead of one and make each image item li about 150px tall and shrink img and title and trash icon), create little banner that sticks the the bottom of the viewport that uses light green background and says "All done uploading? Edit title, description and tags in the My Pics Page." with a button that says "Edit Images"
+upload page - make it so that when you hover between button and drag input it doesn't go white
 
 copy mainpage stuff to mainpagemostpopular
 
