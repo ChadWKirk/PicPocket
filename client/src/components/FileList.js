@@ -14,8 +14,9 @@ const FileList = ({ imagesToUpload, removeImageFromUploadFrontEnd }) => {
 
   return (
     <ul className="upload-page__file-list">
-      {imagesToUpload?.map((image) => (
+      {imagesToUpload?.map((image, index) => (
         <ImageItem
+          identifier={index}
           key={Math.random(100)}
           image={image}
           deleteImageFromBackEnd={deleteImageFromBackEnd}

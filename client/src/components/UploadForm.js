@@ -12,7 +12,7 @@ const UploadForm = ({
   curUser,
   imagesToUpload,
   setImagesToUpload,
-  removeImageFromUpload,
+  removeImageFromUploadFrontEnd,
   setImageError,
   imageError,
 }) => {
@@ -85,7 +85,7 @@ const UploadForm = ({
           })
           .catch((err) => {
             console.error(err);
-            removeImageFromUpload(image.name);
+            removeImageFromUploadFrontEnd(image.name);
           });
       } else {
         image.isError = true;
@@ -97,6 +97,25 @@ const UploadForm = ({
   //add class to form when dragged over, same styling as when hovering over it
   const [uploadFormDragStyle, setUploadFormDragStyle] = useState();
 
+  //when scrolled past regular upload form, show side bar upload form
+  // const [isShowingSideBar, setIsShowingSideBar] = useState(false);
+
+  // useEffect(() => {
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => {
+  //     window.removeEventListener("scroll", handleScroll);
+  //   };
+  // }, []);
+
+  // function handleScroll() {
+  //   let windowHeight = window.scrollY;
+  //   if (windowHeight > 600) {
+  //     setIsShowingSideBar(true);
+  //   } else {
+  //     setIsShowingSideBar(false);
+  //   }
+  // }
+
   return (
     <div style={{ width: "100%" }}>
       <form
@@ -107,9 +126,11 @@ const UploadForm = ({
         onDragLeave={() => setUploadFormDragStyle()}
         onDrop={() => setUploadFormDragStyle()}
       >
-        <UploadFormSideBar imagesToUpload={imagesToUpload} />
-
         <div className="upload-page__upload-form-contents">
+          {/* <div className="upload-page__upload-form-side-bar-container">
+            <UploadFormSideBar imagesToUpload={imagesToUpload} />
+          </div> */}
+
           <input
             type="file"
             multiple
@@ -150,7 +171,7 @@ const UploadForm = ({
       </form>
       <FileList
         imagesToUpload={imagesToUpload}
-        // removeImageFromUploadFrontEnd={removeImageFromUploadFrontEnd}
+        removeImageFromUploadFrontEnd={removeImageFromUploadFrontEnd}
       />
     </div>
   );

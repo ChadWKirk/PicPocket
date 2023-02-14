@@ -8,14 +8,18 @@ import {
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 
-const ImageItem = ({ image, deleteImageFromBackEnd }) => {
+const ImageItem = ({ image, deleteImageFromBackEnd, identifier }) => {
   let imageStatusIcon;
   let imageBanner;
 
   if (image.isUploading) {
     imageStatusIcon = <FontAwesomeIcon icon={faSpinner} className="fa-spin" />;
     imageBanner = (
-      <li className="upload-page__image-item" key={image.name}>
+      <li
+        className="upload-page__image-item"
+        key={image.name}
+        id={`${identifier}`}
+      >
         <img src={image.secure_url}></img>
         <div>
           {image.name
@@ -29,14 +33,18 @@ const ImageItem = ({ image, deleteImageFromBackEnd }) => {
   } else if (!image.isUploading && !image.isError) {
     imageStatusIcon = (
       <FontAwesomeIcon
-        style={{ cursor: "pointer", marginRight: 10 }}
+        className="upload-page__trash-icon"
         icon={faTrash}
         fontSize={20}
         onClick={() => deleteImageFromBackEnd(image.name, image.publicId)}
       />
     );
     imageBanner = (
-      <li className="upload-page__image-item" key={image.name}>
+      <li
+        className="upload-page__image-item"
+        key={image.name}
+        id={`${identifier}`}
+      >
         <img
           src={
             image.secure_url.slice(0, 50) +
