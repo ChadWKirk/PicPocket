@@ -1,4 +1,7 @@
 import { React, useEffect, useState } from "react";
+//components
+import UploadFormSideBar from "./UploadFormSideBar";
+import FileList from "./FileList";
 //font awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -104,9 +107,8 @@ const UploadForm = ({
         onDragLeave={() => setUploadFormDragStyle()}
         onDrop={() => setUploadFormDragStyle()}
       >
-        <div style={{ position: "absolute", top: -30, left: -7, fontSize: 16 }}>
-          Upload
-        </div>
+        <UploadFormSideBar imagesToUpload={imagesToUpload} />
+
         <div className="upload-page__upload-form-contents">
           <input
             type="file"
@@ -146,6 +148,10 @@ const UploadForm = ({
           </div>
         </div>
       </form>
+      <FileList
+        imagesToUpload={imagesToUpload}
+        // removeImageFromUploadFrontEnd={removeImageFromUploadFrontEnd}
+      />
     </div>
   );
 };

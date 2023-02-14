@@ -2589,27 +2589,41 @@ button {
   pointer-events: none;
 }
 
-.fileList {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  width: 600px;
-  justify-content: center;
-  align-items: center;
+.upload-page__file-list {
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* gap: 10px; */
+  /* width: 100%; */
+  /* max-width: var(--siteContentsLeastWidth); */
+  /* justify-content: center;
+  align-items: flex-start;
   list-style: none;
-  padding-left: 0;
+  margin: auto;
+  background-color: purple; */
+  /* padding-left: 0; */
 }
 
-.imageItem {
+.upload-page__image-item {
+  margin: auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: rgb(54, 145, 185);
-  color: white;
-  width: 600px;
-  height: 120px;
-  padding: 10px;
+  background-color: var(--offWhite);
+  color: var(--dark2);
+  width: 100%;
+  max-width: var(--siteContentsLeastWidth);
+  max-height: 300px;
+  font-size: 1.8rem;
+  font-weight: 500;
+  /* height: 120px; */
+  padding: 2rem;
+  border-radius: 20px;
   animation: fadeIn 0.4s;
+}
+.upload-page__image-item img {
+  max-width: 300px;
+  height: 280px;
+  object-fit: contain;
 }
 
 .imageItemError {
@@ -2622,6 +2636,49 @@ button {
   height: 120px;
   padding: 10px;
   animation: fadeIn 0.4s;
+}
+.upload-page__upload-form-side-bar-container {
+  position: fixed;
+  left: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.7rem;
+}
+.upload-page__upload-form-side-bar-container button {
+  border-radius: 12px;
+  /* border: 6px solid var(--greyBorder1); */
+  width: 80px;
+  height: 80px;
+  background-color: var(--greyBorder1);
+}
+.upload-page__upload-form-side-bar-container a {
+  border-radius: 12px;
+  width: 80px;
+  height: 80px;
+  background-color: var(--greyBorder1);
+}
+.upload-page__upload-form-side-bar-container a img {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  object-fit: cover;
+}
+.upload-page__upload-form-side-bar-container a:focus {
+  border-radius: 12px;
+  border: 3px solid #fff;
+  outline: 4px solid green;
+  width: 85px;
+  height: 85px;
+  background-color: var(--greyBorder1);
+}
+/* .upload-page__upload-form-side-bar-container button img:focus {
+  border: 2px solid green;
+} */
+.upload-page__upload-form-side-bar-add-icon {
+  color: var(--dark4);
+  font-size: 2rem;
 }
 
 @keyframes fadeIn {

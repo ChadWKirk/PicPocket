@@ -34,7 +34,7 @@ sign up page - copy sign in page front end to sign up page
 
 make red banner for upload page that says you can't upload until you confirm your email address
 
-upload page - make it so that when you hover between button and drag input it doesn't go white, make it so upload file list looks better
+upload page - make it so that when you hover between button and drag input it doesn't go white, make file list items look better (same width as uploadForm, about 2x as tall), make it so when upload form is out of view, put an upload button on the side bar fixed.
 
 copy mainpage stuff to mainpagemostpopular
 

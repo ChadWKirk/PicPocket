@@ -15,8 +15,8 @@ const ImageItem = ({ image, deleteImageFromBackEnd }) => {
   if (image.isUploading) {
     imageStatusIcon = <FontAwesomeIcon icon={faSpinner} className="fa-spin" />;
     imageBanner = (
-      <li className="imageItem" key={image.name}>
-        <img src={image.secure_url} width={100} height={100}></img>
+      <li className="upload-page__image-item" key={image.name}>
+        <img src={image.secure_url}></img>
         <div>
           {image.name
             .replace(".jpg", "")
@@ -36,7 +36,7 @@ const ImageItem = ({ image, deleteImageFromBackEnd }) => {
       />
     );
     imageBanner = (
-      <li className="imageItem" key={image.name}>
+      <li className="upload-page__image-item" key={image.name}>
         <img
           src={
             image.secure_url.slice(0, 50) +
@@ -44,8 +44,6 @@ const ImageItem = ({ image, deleteImageFromBackEnd }) => {
             image.secure_url.slice(50, image.secure_url.lastIndexOf(".")) +
             ".jpg"
           }
-          width={100}
-          height={100}
         ></img>
         <div>
           {image.name

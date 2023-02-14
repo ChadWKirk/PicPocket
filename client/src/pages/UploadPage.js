@@ -31,10 +31,7 @@ const UploadPage = ({ curUser, loggedIn }) => {
           setImagesToUpload={setImagesToUpload}
           removeImageFromUploadFrontEnd={removeImageFromUploadFrontEnd}
         />
-        <FileList
-          imagesToUpload={imagesToUpload}
-          removeImageFromUploadFrontEnd={removeImageFromUploadFrontEnd}
-        />
+        
         <div>
           All done? Edit in{" "}
           <a href={`/Account/${curUser}/My-Pics/most-recent/all-types`}>
