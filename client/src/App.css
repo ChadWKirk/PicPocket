@@ -2464,8 +2464,12 @@ button {
   margin-top: 3.25rem;
   transition: 0.1s ease;
 }
-
 .upload-page__upload-form:hover {
+  background-color: rgba(186, 207, 251, 0.918);
+  border: 4px dashed #3789d1;
+  transition: 0.2s;
+}
+.upload-page__upload-form-drag-enter {
   background-color: rgba(186, 207, 251, 0.918);
   border: 4px dashed #3789d1;
   transition: 0.2s;
@@ -2491,13 +2495,13 @@ button {
   font-size: 0px;
   cursor: pointer;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  margin: -125px 0 0 -300px;
-  width: 600px;
-  height: 249.5px;
+  top: -20px;
+  left: -412px;
+  /* margin: -125px 0 0 -300px; */
+  width: 429%;
+  height: 110%;
   z-index: 1001;
-  background-color: red;
+  background-color: rgb(255, 0, 0);
 }
 
 .upload-page__upload-form-input-buttons-and-captions {

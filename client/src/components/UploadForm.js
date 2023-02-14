@@ -91,10 +91,19 @@ const UploadForm = ({
       }
     }
   }
+  //add class to form when dragged over, same styling as when hovering over it
+  const [uploadFormDragStyle, setUploadFormDragStyle] = useState();
 
   return (
     <div style={{ width: "100%" }}>
-      <form className="upload-page__upload-form">
+      <form
+        className={`upload-page__upload-form ${uploadFormDragStyle}`}
+        onDragEnter={() =>
+          setUploadFormDragStyle("upload-page__upload-form-drag-enter")
+        }
+        onDragLeave={() => setUploadFormDragStyle()}
+        onDrop={() => setUploadFormDragStyle()}
+      >
         <div style={{ position: "absolute", top: -30, left: -7, fontSize: 16 }}>
           Upload
         </div>
