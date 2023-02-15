@@ -77,7 +77,7 @@ function App() {
     return null;
   } else {
     return (
-      <div>
+      <div className="app">
         <Routes>
           <Route
             path="/"
@@ -225,6 +225,7 @@ function App() {
           ></Route>
         </Routes>
         <Footer curUser={curUser} loggedIn={loggedIn} />
+        
       </div>
     );
   }
