@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from "react";
+import { React, useEffect, useState, useRef } from "react";
 //components
 import UploadFormSideBar from "./UploadFormSideBar";
 import FileList from "./FileList";
@@ -21,12 +21,23 @@ const UploadForm = ({
   let CLOUDINARY_CLOUD_NAME = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
   var targetFilesArray = [];
 
+  //scroll to new upload
+  const newItemRef = useRef(); //every imageitem has a ref of newItemRef
+  const [isUploadingForRef, setIsUploadingForRef] = useState(false);
+  useEffect(() => {
+    //if there is actually an image in the array to scroll to
+    if (imagesToUpload.length > 0) {
+      newItemRef.current.scrollIntoView();
+    }
+  }, [isUploadingForRef]);
+
   async function uploadHandler(e) {
     e.preventDefault();
 
     for (var i = 0; i < e.target.files.length; i++) {
       const image = e.target.files[i];
       image.isUploading = true;
+      setIsUploadingForRef(!isUploadingForRef); //switch this every time upload begins to call useEffect
       targetFilesArray.push(image);
       setImagesToUpload((imagesToUpload) => [...imagesToUpload, image]);
       console.log(targetFilesArray + " target files");
@@ -127,9 +138,9 @@ const UploadForm = ({
         onDrop={() => setUploadFormDragStyle()}
       >
         <div className="upload-page__upload-form-contents">
-          {/* <div className="upload-page__upload-form-side-bar-container">
+          <div className="upload-page__upload-form-side-bar-container">
             <UploadFormSideBar imagesToUpload={imagesToUpload} />
-          </div> */}
+          </div>
 
           <input
             type="file"
@@ -172,6 +183,7 @@ const UploadForm = ({
       <FileList
         imagesToUpload={imagesToUpload}
         removeImageFromUploadFrontEnd={removeImageFromUploadFrontEnd}
+        newItemRef={newItemRef}
       />
     </div>
   );

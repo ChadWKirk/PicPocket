@@ -1,7 +1,11 @@
 import React from "react";
 import ImageItem from "./ImageItem";
 
-const FileList = ({ imagesToUpload, removeImageFromUploadFrontEnd }) => {
+const FileList = ({
+  imagesToUpload,
+  removeImageFromUploadFrontEnd,
+  newItemRef,
+}) => {
   async function deleteImageFromBackEnd(imageName, publicId) {
     await fetch(`http://localhost:5000/deleteImage/`, {
       method: "POST",
@@ -16,10 +20,11 @@ const FileList = ({ imagesToUpload, removeImageFromUploadFrontEnd }) => {
     <ul className="upload-page__file-list">
       {imagesToUpload?.map((image, index) => (
         <ImageItem
-          identifier={index}
+          identifierForScroll={index}
           key={Math.random(100)}
           image={image}
           deleteImageFromBackEnd={deleteImageFromBackEnd}
+          newItemRef={newItemRef}
         />
       ))}
     </ul>

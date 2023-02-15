@@ -16,7 +16,7 @@ const UploadFormSideBar = ({ imagesToUpload }) => {
 
   function handleScroll() {
     let windowHeight = window.scrollY;
-    if (windowHeight > 600) {
+    if (windowHeight > 400) {
       setIsShowingSideBar(true);
     } else {
       setIsShowingSideBar(false);
@@ -36,11 +36,11 @@ const UploadFormSideBar = ({ imagesToUpload }) => {
           className="upload-page__upload-form-side-bar-add-icon"
         />
       </button>
-      {imagesToUpload?.map((image, index) => (
+      {/* {imagesToUpload?.map((image, index) => (
         <a href={`#${index}`}>
           <img src={image.secure_url}></img>
         </a>
-      ))}
+      ))} */}
     </div>
   );
 };

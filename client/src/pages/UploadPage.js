@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import NavbarComponent from "../components/NavbarComponent";
 import UploadForm from "../components/UploadForm";
 import FileList from "../components/FileList";
+import RedBanner from "../components/RedBanner";
 
 const UploadPage = ({ curUser, loggedIn }) => {
   const [imagesToUpload, setImagesToUpload] = useState([]);
@@ -21,6 +22,7 @@ const UploadPage = ({ curUser, loggedIn }) => {
         navPositionClass={"fixed"}
         navColorClass={"white"}
       />
+      {/* <RedBanner Message={"Please confirm your email before uploading."} /> */}
       {/* <div className="upload-page__container"> */}
       <div className="upload-page__form-and-list-container">
         <UploadForm

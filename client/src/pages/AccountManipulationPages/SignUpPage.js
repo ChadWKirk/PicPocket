@@ -3,6 +3,9 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import SignUpNavBar from "../../components/SignUpNavBar";
 // import MainPageNavBar from "../../components/MainPageNavBar";
+import googleOAuthIcon from "../../images/google-logo-oauth.png";
+import facebookOauthIcon from "../../images/facebook-logo-oauth.png";
+import signInPageCollageImg from "../../images/PicPocket-SignIn-Collage2.png";
 
 const SignUpPage = ({ curUser, loggedIn }) => {
   let navigate = useNavigate();
@@ -88,34 +91,55 @@ const SignUpPage = ({ curUser, loggedIn }) => {
   }
 
   return (
-    <div className="signUpPage">
-      <div className="navContainer">
-        {/* <SignUpNavBar curUser={curUser} loggedIn={loggedIn} /> */}
-      </div>
-      <div className="signUpContainer">
-        <div className="signUpContainer__heading">Join PicPocket</div>
-        <div className="signUpContainer__p">
-          Download free photos powered by a community of photographers.
+    <div className="sign-in-page__container">
+      <div className="signInPage--contentsContainer">
+        <div className="signInPage--formContainer">
+          <div style={{ fontSize: "1rem", fontWeight: "300" }}>PicPocket</div>
+          <div
+            style={{ fontSize: "2rem", color: "#f5c000", fontWeight: "500" }}
+          >
+            Join PicPocket
+          </div>
+          <button className="sign-in-page__oauth-button">
+            <div>
+              <img src={googleOAuthIcon}></img>
+              Google
+            </div>
+          </button>
+          <button className="sign-in-page__oauth-button">
+            <div>
+              <img src={facebookOauthIcon}></img>Facebook
+            </div>
+          </button>
+          <div className="signInPage--or">
+            <div className="orLine"></div>
+            <div>or</div>
+            <div className="orLine"></div>
+          </div>
+          <form onSubmit={onSubmit}>
+            <div className="signInPage--inputBlock">
+              <label htmlFor="username">Username: </label>
+              <input id="username" onChange={onChangeName}></input>
+            </div>
+            <div className="signInPage--inputBlock">
+              <label htmlFor="email">Email: </label>
+              <input id="email" onChange={onChangeEmail}></input>
+            </div>
+            <div className="signInPage--inputBlock">
+              <label htmlFor="password">Password: </label>
+              <input id="password" onChange={onChangePW}></input>
+            </div>
+            <button type="submit" className="signInPage--signInBtn">
+              Sign Up
+            </button>
+          </form>
         </div>
-        <form onSubmit={onSubmit}>
-          <input
-            id="username"
-            onChange={onChangeName}
-            placeholder="Username"
-          ></input>
-          <input
-            id="email"
-            onChange={onChangeEmail}
-            placeholder="Email"
-          ></input>
-          <input
-            id="password"
-            // type="password"
-            onChange={onChangePW}
-            placeholder="Password"
-          ></input>
-          <button type="submit">Create New Account</button>
-        </form>
+        <div className="sign-in-page__collage-image-container">
+          <img
+            className="sign-in-page__collage-image"
+            src={signInPageCollageImg}
+          ></img>
+        </div>
       </div>
     </div>
   );

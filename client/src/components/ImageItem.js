@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useEffect, useState } from "react";
 //font awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -8,26 +8,27 @@ import {
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 
-const ImageItem = ({ image, deleteImageFromBackEnd, identifier }) => {
+const ImageItem = ({
+  image,
+  deleteImageFromBackEnd,
+  identifierForScroll,
+  newItemRef,
+}) => {
   let imageStatusIcon;
   let imageBanner;
 
   if (image.isUploading) {
     imageStatusIcon = <FontAwesomeIcon icon={faSpinner} className="fa-spin" />;
     imageBanner = (
-      <li
-        className="upload-page__image-item"
-        key={image.name}
-        id={`${identifier}`}
-      >
+      <li className="upload-page__image-item" key={image.name} ref={newItemRef}>
         <img src={image.secure_url}></img>
-        <div>
+        <div className="upload-page__image-item-title">
           {image.name
             .replace(".jpg", "")
             .replace(".png", "")
             .replace(".jpeg", "")}
         </div>
-        <div className="uploadingIcon">{imageStatusIcon}</div>
+        <div className="upload-page__uploading-icon">{imageStatusIcon}</div>
       </li>
     );
   } else if (!image.isUploading && !image.isError) {
@@ -40,11 +41,7 @@ const ImageItem = ({ image, deleteImageFromBackEnd, identifier }) => {
       />
     );
     imageBanner = (
-      <li
-        className="upload-page__image-item"
-        key={image.name}
-        id={`${identifier}`}
-      >
+      <li className="upload-page__image-item" key={image.name}>
         <img
           src={
             image.secure_url.slice(0, 50) +
@@ -53,35 +50,38 @@ const ImageItem = ({ image, deleteImageFromBackEnd, identifier }) => {
             ".jpg"
           }
         ></img>
-        <div>
+        <div className="upload-page__image-item-title">
           {image.name
             .replace(".jpg", "")
             .replace(".png", "")
             .replace(".jpeg", "")}
         </div>
-        <div className="uploadingIcon">{imageStatusIcon}</div>
+        <div className="upload-page__trash-icon">{imageStatusIcon}</div>
       </li>
     );
   } else if (!image.isUploading && image.isError) {
     imageStatusIcon = (
       <FontAwesomeIcon
-        style={{ cursor: "pointer", marginRight: 10, color: "red" }}
         icon={faXmark}
         fontSize={30}
         onClick={() => deleteImageFromBackEnd(image.name, image.publicId)}
+        className="upload-page__image-item-error-x-icon"
       />
     );
     imageBanner = (
-      <li className="imageItemError" key={image.name}>
+      <li
+        className="upload-page__image-item-error-helper upload-page__image-item"
+        key={image.name}
+      >
         {/* <img src={image.secure_url} width={100} height={100}></img> */}
         <div>JPG, JPEG or PNG Only</div>
-        <div>
+        <div className="upload-page__image-item-title">
           {image.name
             .replace(".jpg", "")
             .replace(".png", "")
             .replace(".jpeg", "")}
         </div>
-        <div className="uploadingIcon">{imageStatusIcon}</div>
+        <div className="upload-page__uploading-icon">{imageStatusIcon}</div>
       </li>
     );
   }
