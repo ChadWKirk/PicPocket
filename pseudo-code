@@ -30,8 +30,6 @@ TASKS:
 
 styling:
 
-sign up page - adjust styling to fit everything due to email field
-
 upload page - make it so that when you hover between button and drag input it doesn't go white, make side bar upload button not go over footer and make responsive and give it upload function, maybe make browse button a little bigger on bigger screen sizes/zoomed out
 
 copy mainpage stuff to mainpagemostpopular

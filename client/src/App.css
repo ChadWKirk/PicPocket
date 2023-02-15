@@ -3001,10 +3001,11 @@ button {
   transition: 0.2s;
 }
 
+/* Sign In Page CSS */
+
 .sign-in-page__container {
 }
-
-.signInPage--contentsContainer {
+.sign-in-page__contents-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -3014,9 +3015,9 @@ button {
   /* width: 100vw; */
   max-width: var(--siteContentsMaxWidth);
 }
-
-.signInPage--formContainer {
-  max-height: 590px;
+.sign-in-page__form-container {
+  /* max-height: 590px; */
+  /* height: 100vh; */
   width: 37.25rem;
   /* max-width: 47.25rem !important; */
   padding: 2.5rem 3rem 2.1rem var(--sideSpacePadding);
@@ -3025,11 +3026,7 @@ button {
   justify-content: flex-start;
   align-items: flex-start;
 }
-
-.sign-in-page__oauth-button {
-}
-
-.signInPage--formContainer button {
+.sign-in-page__form-container button {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -3044,14 +3041,7 @@ button {
   margin-top: 1rem;
   font-weight: 500;
 }
-
-.sign-in-page__oauth-button:hover {
-  outline: 2px solid rgba(128, 128, 128, 0.222);
-  box-shadow: 0px 0px 5px 5px rgba(128, 128, 128, 0.133);
-  transition: box-shadow 0.01s;
-}
-
-.signInPage--formContainer button div {
+.sign-in-page__form-container button div {
   width: 110px;
   height: 100%;
   display: flex;
@@ -3060,13 +3050,60 @@ button {
   gap: 1rem;
   margin: auto;
 }
-
-.signInPage--formContainer button img {
+.sign-in-page__form-container button img {
   /* width: 100%; */
   height: 50%;
 }
-
-.signInPage--signInBtn {
+.sign-in-page__oauth-button {
+}
+.sign-in-page__oauth-button:hover {
+  outline: 2px solid rgba(128, 128, 128, 0.222);
+  box-shadow: 0px 0px 5px 5px rgba(128, 128, 128, 0.133);
+  transition: box-shadow 0.01s;
+}
+.sign-in-page__or {
+  width: 100%;
+  margin-top: 1.25rem;
+  font-size: 0.8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+.sign-in-page__or-line {
+  height: 1px;
+  background-color: rgb(222, 222, 222);
+  width: 100px;
+}
+.sign-in-page__contents-container form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+}
+.sign-in-page__input-block {
+  margin-top: 1.25rem;
+  width: 100%;
+}
+.sign-in-page__input-block label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.sign-in-page__input-block input {
+  font-size: 1rem;
+  width: 100%;
+  height: 45px;
+  border: 2px solid rgb(228, 228, 228);
+  border-radius: 4px;
+  padding: 0rem 0.75rem;
+}
+.sign-in-page__input-block input:focus {
+  border: 2px solid black;
+}
+.sign-in-page__sign-in-button {
   font-size: 1rem;
   width: 100%;
   height: 50px;
@@ -3078,54 +3115,19 @@ button {
   background-color: var(--ctaYellow);
   color: black;
 }
-
-.signInPage--signInBtn:hover {
+.sign-in-page__sign-in-button:hover {
   box-shadow: 0px 0px 10px 0.5px rgb(214, 187, 136);
   background-color: var(--ctaYellowDark);
   transition: 0.1s;
 }
-
-.signInPage--contentsContainer form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  width: 100%;
-}
-
-.signInPage--inputBlock {
-  margin-top: 1.25rem;
-  width: 100%;
-}
-
-.signInPage--inputBlock label {
-  display: block;
-  font-size: 0.75rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-}
-
-.signInPage--inputBlock input {
-  font-size: 1rem;
-  width: 100%;
-  height: 45px;
-  border: 2px solid rgb(228, 228, 228);
-  border-radius: 4px;
-  padding: 0rem 0.75rem;
-}
-
-.signInPage--inputBlock input:focus {
-  border: 2px solid black;
-}
-
 .sign-in-page__collage-image-container {
   height: 100vh;
   max-height: 1080px;
   max-width: 1000px;
+  min-height: 660px;
   flex: 1;
   z-index: -10;
 }
-
 .sign-in-page__collage-image {
   width: 100%;
   height: 100%;
@@ -3135,20 +3137,26 @@ button {
 @media (width < 650px) {
 }
 
-.signInPage--or {
-  width: 100%;
-  margin-top: 1.25rem;
-  font-size: 0.8rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
+@media (width < 800px) {
+  .sign-in-page__contents-container {
+    flex-direction: column;
+  }
+  .sign-in-page__form-container {
+    width: 100% !important;
+    order: 2 !important;
+  }
+  .sign-in-page__collage-image-container {
+    width: 100%;
+    min-height: 0px;
+  }
+  .sign-in-page__collage-image {
+    height: 100px;
+  }
 }
-
-.orLine {
-  height: 1px;
-  background-color: rgb(222, 222, 222);
-  width: 100px;
+@media (height > 1000px) {
+  .sign-in-page__form-container {
+    margin-top: -2rem;
+  }
 }
 
 /* Image Select Modal CSS */
@@ -4028,12 +4036,6 @@ button {
   color: rgb(85, 85, 85);
 }
 
-@media (height > 1000px) {
-  .signInPage--formContainer {
-    margin-top: -2rem;
-  }
-}
-
 /* .image-gallery__dropdown-and-subheading-container {
   display: flex;
   justify-content: space-between;
@@ -4094,19 +4096,6 @@ button {
   /* .image-gallery__dropdown-button {
     margin-left: 6px !important;
   } */
-}
-
-@media (width < 800px) {
-  .signInPage--contentsContainer {
-    flex-direction: column;
-  }
-  .signInPage--formContainer {
-    width: 100% !important;
-    order: 2 !important;
-  }
-  .sign-in-page__collage-image {
-    height: 100px;
-  }
 }
 
 @media (width < 800px) {

@@ -92,8 +92,8 @@ const SignUpPage = ({ curUser, loggedIn }) => {
 
   return (
     <div className="sign-in-page__container">
-      <div className="signInPage--contentsContainer">
-        <div className="signInPage--formContainer">
+      <div className="sign-in-page__contents-container">
+        <div className="sign-in-page__form-container">
           <div style={{ fontSize: "1rem", fontWeight: "300" }}>PicPocket</div>
           <div
             style={{ fontSize: "2rem", color: "#f5c000", fontWeight: "500" }}
@@ -111,25 +111,25 @@ const SignUpPage = ({ curUser, loggedIn }) => {
               <img src={facebookOauthIcon}></img>Facebook
             </div>
           </button>
-          <div className="signInPage--or">
-            <div className="orLine"></div>
+          <div className="sign-in-page__or">
+            <div className="sign-in-page__or-line"></div>
             <div>or</div>
-            <div className="orLine"></div>
+            <div className="sign-in-page__or-line"></div>
           </div>
           <form onSubmit={onSubmit}>
-            <div className="signInPage--inputBlock">
+            <div className="sign-in-page__input-block">
               <label htmlFor="username">Username: </label>
               <input id="username" onChange={onChangeName}></input>
             </div>
-            <div className="signInPage--inputBlock">
+            <div className="sign-in-page__input-block">
               <label htmlFor="email">Email: </label>
               <input id="email" onChange={onChangeEmail}></input>
             </div>
-            <div className="signInPage--inputBlock">
+            <div className="sign-in-page__input-block">
               <label htmlFor="password">Password: </label>
               <input id="password" onChange={onChangePW}></input>
             </div>
-            <button type="submit" className="signInPage--signInBtn">
+            <button type="submit" className="sign-in-page__sign-in-button">
               Sign Up
             </button>
           </form>
