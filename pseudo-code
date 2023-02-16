@@ -36,7 +36,7 @@ upload page - make it so that when you hover between button and drag input it do
 
 copy mainpage stuff to mainpagemostpopular
 
-mypics - loading for submit/delete/massdelete, make it so that if all checkboxes are checked, selectall box checked = true and if not all of them are checked then select all checkbox checked = false, general styling, make page responsive.
+mypics - loading for submit/delete/massdelete (make loading/progress bar at top of the page), make it so that if all checkboxes are checked, selectall box checked = true and if not all of them are checked then select all checkbox checked = false, general styling, make page responsive.
 
 make about us page
 

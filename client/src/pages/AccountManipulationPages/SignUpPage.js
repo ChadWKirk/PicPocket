@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 //components
 import TooltipForInputField from "../../components/TooltipForInputField";
+import ModalForYesOrNo from "../../components/ModalForYesOrNo";
 //images
 import googleOAuthIcon from "../../images/google-logo-oauth.png";
 import facebookOauthIcon from "../../images/facebook-logo-oauth.png";
@@ -11,19 +12,11 @@ import signInPageCollageImg from "../../images/PicPocket-SignIn-Collage2.png";
 const SignUpPage = ({ curUser, loggedIn }) => {
   let navigate = useNavigate();
 
-  const [form, setForm] = useState({
-    username: "",
-    password: "",
-    email: "",
-    signedIn: false,
-  });
-
-  let newUser = {
-    username: form.username,
-    password: form.password,
-    email: form.email,
-    signedIn: false,
-  }; //blank newUser
+  useEffect(() => {
+    if (loggedIn) {
+      navigate(`/Account/${curUser}`);
+    }
+  }, []);
 
   //don't accept special characters for username
   const [username, setUsername] = useState("");
@@ -48,10 +41,10 @@ const SignUpPage = ({ curUser, loggedIn }) => {
     specialMessage = "";
   }
 
-  function onChangeName(event) {
-    //when name input changes,pass a para to be the event object then assign target.value to name. event parameter is always first parameter passed in a function called by an event.
-    newUser.username = event.target.value;
-  }
+  // function onChangeName(event) {
+  //   //when name input changes,pass a para to be the event object then assign target.value to name. event parameter is always first parameter passed in a function called by an event.
+  //   newUser.username = event.target.value;
+  // }
 
   function onChangePW(event) {
     newUser.password = event.target.value;
@@ -78,12 +71,30 @@ const SignUpPage = ({ curUser, loggedIn }) => {
     }
   }
 
+  const [yesOrNoModal, setYesOrNoModal] = useState();
+  const [yesOrNoModalAnswer, setYesOrNoModalAnswer] = useState();
+
+  const [form, setForm] = useState({
+    username: "",
+    password: "",
+    email: "",
+    signedIn: false,
+  });
+
+  let newUser = {
+    username: username,
+    password: form.password,
+    email: form.email,
+    signedIn: false,
+  }; //blank newUser
+
   async function onSubmit(e) {
     e.preventDefault();
     if (isSpecialCharacter) {
       return;
     }
-    console.log("submitted");
+    // setNewUser({})
+    console.log(newUser);
 
     setForm(newUser);
 
@@ -113,46 +124,22 @@ const SignUpPage = ({ curUser, loggedIn }) => {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify(newUser),
-      })
-        .then((response) => {
-          if (response.status === 500) {
-            //if already signed in
-            let yesOrNo = window.confirm(
-              `This will sign you out of your account, ${curUser}. Are you sure you want to continue signing up as ${newUser.username}?`
-            );
-            console.log(yesOrNo);
-            if (yesOrNo) {
-              console.log("yes");
-              fetch("http://localhost:5000/users", {
-                method: "POST",
-                headers: { "Content-type": "application/json" },
-                body: JSON.stringify({
-                  username: newUser.username,
-                  password: newUser.password,
-                  signedIn: false,
-                  try: "2",
-                }),
-              }).then(() => {
-                navigate(`/SignUp/${newUser.username}/Success`);
-              });
-            } else {
-              console.log("no");
-            }
-          } else if (response.ok) {
-            //if user is new
-            navigate(`/SignUp/${newUser.username}/Success`);
-          }
-        })
-        .catch(() => {
+      }).then((response) => {
+        if (response.ok) {
+          navigate(`/SignUp/${newUser.username}/Success`);
+        } else {
           window.alert("Username or email already exists. Sign up failed.");
-        }); //if sign up fails
+        }
+      });
+      // .catch(() => {
 
-      console.log(newUser);
+      // }); //if sign up fails
     }
   }
 
   return (
     <div className="sign-in-page__container" onClick={resetToolTipOnClick}>
+      {yesOrNoModal}
       <div className="sign-in-page__contents-container">
         <div className="sign-in-page__form-container">
           <div style={{ fontSize: "1rem", fontWeight: "300" }}>PicPocket</div>

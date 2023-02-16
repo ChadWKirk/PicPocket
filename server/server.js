@@ -80,7 +80,6 @@ app.get("/curUser", (req, res) => {
 app.post("/users", (req, response) => {
   let db_connect = dbo.getDb();
 
-  let tries = req.body.try;
   //get account of person you're signing up as
   let newUser = {
     username: req.body.username,
@@ -90,6 +89,7 @@ app.post("/users", (req, response) => {
     pfp: "https://res.cloudinary.com/dtyg4ctfr/image/upload/v1674238936/PicPocket/default_purple_pfp_ibof5p.jpg",
     signedIn: false,
   };
+  console.log(newUser);
   //find any users already signed in and push them to another array to access it
   var cursor = db_connect
     .collection("picpocket-users")
@@ -110,40 +110,10 @@ app.post("/users", (req, response) => {
       if (err) {
         response.status(400).send("error");
         console.log("to array error");
-      } else if (result.length > 1 && tries == null) {
+      } else if (result.length > 0) {
         //check if user already exists
+        response.status(400).send("Username already exists. Sign up failed.");
         console.log("Username already exists. Sign up failed.");
-        // console.log(result);
-      } else if (signedInArray.length > 0 && tries == null) {
-        //see if anyone else is signed in
-        response.sendStatus(500);
-        console.log("another user is already signed in.");
-      } else if (signedInArray.length > 0 && tries == 2) {
-        console.log("settofalse");
-        async function setToFalse() {
-          //if pressing OK on are you sure box:
-          //find user(s) that is signed in and sign it out
-          await db_connect
-            .collection("picpocket-users")
-            .updateMany({ signedIn: true }, { $set: { signedIn: false } });
-
-          //insertone as signedIn: true
-          await db_connect.collection("picpocket-users").insertOne(
-            {
-              username: req.body.username,
-              password: req.body.password,
-              email: req.body.email,
-              bio: "",
-              pfp: "https://res.cloudinary.com/dtyg4ctfr/image/upload/v1674238936/PicPocket/default_purple_pfp_ibof5p.jpg",
-              signedIn: true,
-            },
-            function (err, res) {
-              if (err) throw err;
-              response.json(res);
-            }
-          );
-        }
-        setToFalse();
       } else {
         //if user is new
         console.log("user is new");

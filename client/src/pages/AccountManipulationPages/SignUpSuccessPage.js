@@ -1,8 +1,15 @@
-import React from "react";
-import { useParams } from "react-router-dom";
+import { React, useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 
-const SignUpSuccessPage = () => {
+const SignUpSuccessPage = ({ curUser, loggedIn }) => {
+  let navigate = useNavigate();
   const { username } = useParams();
+
+  useEffect(() => {
+    if (loggedIn) {
+      navigate(`/Account/${curUser}`);
+    }
+  }, []);
 
   return (
     <div>

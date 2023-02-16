@@ -3228,6 +3228,51 @@ button {
   }
 }
 
+/* Yes Or No Modal CSS */
+
+.yes-or-no-modal__container {
+  position: absolute;
+  z-index: 9999999;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.yes-or-no-modal__background {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+.yes-or-no-modal__box {
+  width: 500px;
+  height: 250px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.25rem;
+  border-radius: 10px;
+  background-color: var(--offWhite);
+  text-align: center;
+  font-weight: 500;
+  font-size: 1.15rem;
+}
+.yes-or-no-modal__buttons-container {
+  display: flex;
+  gap: 1.5rem;
+}
+.yes-or-no-modal__buttons-container button {
+  background-color: #3b5998;
+  color: white;
+  font-weight: 500;
+  font-size: 1.1rem;
+  padding: 0.75rem 3rem;
+  /* width: 4rem; */
+  /* height: 2rem; */
+  border-radius: 3px;
+}
+
 /* Image Select Modal CSS */
 
 .image-select-modal__container {
