@@ -3083,9 +3083,11 @@ button {
   width: 100%;
 }
 .sign-in-page__input-block {
+  position: relative;
   margin-top: 1.25rem;
   width: 100%;
 }
+
 .sign-in-page__input-block label {
   display: block;
   font-size: 0.75rem;
@@ -3102,6 +3104,73 @@ button {
 }
 .sign-in-page__input-block input:focus {
   border: 2px solid black;
+}
+.sign-in-page__input-block-username-input-red {
+  border: 2px solid rgb(151, 0, 0) !important;
+  font-size: 1rem;
+  width: 100%;
+  height: 45px;
+  border-radius: 4px;
+  padding: 0rem 0.75rem;
+}
+.sign-in-page__input-block-username-input-red:focus {
+  border: 2px solid rgb(151, 0, 0) !important;
+}
+.sign-in-page__input-block-please-fill-out-field-tooltip {
+  position: absolute;
+  top: 82px;
+  left: 0;
+  border: 1px solid var(--dark2);
+  background-color: #fff;
+  border-radius: 5px;
+  width: 205px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.25rem;
+  z-index: 10;
+  box-shadow: 4px 4px 3px 0px rgba(131, 131, 131, 0.352);
+  animation: tooltipFadeIn 0.3s;
+}
+@keyframes tooltipFadeIn {
+  from {
+    opacity: 0;
+    width: 195px;
+  }
+  to {
+    opacity: 1;
+    width: 205px;
+  }
+}
+.sign-in-page__input-block-tooltip-exclamation-icon {
+  width: 15px;
+  height: 15px;
+  padding: 0.2rem;
+  color: white;
+}
+.sign-in-page__input-block-please-fill-out-field-tooltip div {
+  font-size: 0.9rem;
+  /* font-weight: 500; */
+}
+.sign-in-page__input-block-please-fill-out-field-tooltip::after {
+  content: "";
+  position: absolute;
+  border: 9px solid transparent;
+  border-top-color: #ffffff;
+  top: -17px;
+  left: 10px;
+  transform: rotate(180deg);
+}
+.sign-in-page__input-block-please-fill-out-field-tooltip::before {
+  content: "";
+  position: absolute;
+  border: 9px solid transparent;
+  border-top-color: var(--dark2);
+  top: -18px;
+  left: 10px;
+  transform: rotate(180deg);
 }
 .sign-in-page__sign-in-button {
   font-size: 1rem;
