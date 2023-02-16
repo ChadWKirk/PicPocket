@@ -41,6 +41,9 @@ const SignUpPage = ({ curUser, loggedIn }) => {
     specialMessage = "";
   }
 
+  //class for email field to put red border class on if email already exists
+  const [emailInputClass, setEmailInputClass] = useState();
+
   // function onChangeName(event) {
   //   //when name input changes,pass a para to be the event object then assign target.value to name. event parameter is always first parameter passed in a function called by an event.
   //   newUser.username = event.target.value;
@@ -88,6 +91,10 @@ const SignUpPage = ({ curUser, loggedIn }) => {
     signedIn: false,
   }; //blank newUser
 
+  const [redBorderInputClass, setRedBorderInputClass] = useState();
+  const [usernameAlreadyExistsText, setUsernameAlreadyExistsText] = useState();
+  const [emailAlreadyExistsText, setEmailAlreadyExistsText] = useState();
+
   async function onSubmit(e) {
     e.preventDefault();
     if (isSpecialCharacter) {
@@ -124,13 +131,51 @@ const SignUpPage = ({ curUser, loggedIn }) => {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify(newUser),
-      }).then((response) => {
-        if (response.ok) {
-          navigate(`/SignUp/${newUser.username}/Success`);
-        } else {
-          window.alert("Username or email already exists. Sign up failed.");
-        }
-      });
+      }).then(
+        (response) =>
+          response
+            .json()
+            .then((resJSON) => JSON.stringify(resJSON))
+            .then((stringJSON) => JSON.parse(stringJSON))
+            .then((parsedJSON) => {
+              if (parsedJSON == "Both") {
+                setRedBorderInputClass("red-input-border");
+                setUsernameAlreadyExistsText(
+                  <div className="sign-in-page__already-exists-message">
+                    Username already exists.
+                  </div>
+                );
+                setEmailAlreadyExistsText(
+                  <div className="sign-in-page__already-exists-message">
+                    Email already exists.
+                  </div>
+                );
+              } else if (parsedJSON == "Username") {
+                setUsernameInputClass(
+                  "sign-in-page__input-block-username-input-red"
+                );
+                setUsernameAlreadyExistsText(
+                  <div className="sign-in-page__already-exists-message">
+                    Username already exists.
+                  </div>
+                );
+              } else if (parsedJSON == "Email") {
+                setEmailInputClass("red-input-border");
+                setEmailAlreadyExistsText(
+                  <div className="sign-in-page__already-exists-message">
+                    Email already exists.
+                  </div>
+                );
+              } else {
+                navigate(`/SignUp/${newUser.username}/Success`);
+              }
+            })
+        //
+
+        //  else {
+        //   window.alert("Username or email already exists. Sign up failed.");
+        // }
+      );
       // .catch(() => {
 
       // }); //if sign up fails
@@ -138,7 +183,16 @@ const SignUpPage = ({ curUser, loggedIn }) => {
   }
 
   return (
-    <div className="sign-in-page__container" onClick={resetToolTipOnClick}>
+    <div
+      className="sign-in-page__container"
+      onClick={() => {
+        resetToolTipOnClick();
+        setEmailAlreadyExistsText();
+        setUsernameAlreadyExistsText();
+        setRedBorderInputClass();
+        setEmailInputClass();
+      }}
+    >
       {yesOrNoModal}
       <div className="sign-in-page__contents-container">
         <div className="sign-in-page__form-container">
@@ -192,8 +246,9 @@ const SignUpPage = ({ curUser, loggedIn }) => {
                 onChange={(event) => {
                   setUsername(event.target.value);
                 }}
-                className={usernameInputClass}
+                className={`${usernameInputClass} ${redBorderInputClass}`}
               ></input>
+              {usernameAlreadyExistsText}
               {usernameTooltip}
             </div>
             <div className="sign-in-page__input-block">
@@ -209,7 +264,12 @@ const SignUpPage = ({ curUser, loggedIn }) => {
                   *
                 </p>
               </label>
-              <input id="email" onChange={onChangeEmail}></input>
+              <input
+                id="email"
+                onChange={onChangeEmail}
+                className={emailInputClass}
+              ></input>
+              {emailAlreadyExistsText}
               {emailTooltip}
             </div>
             <div className="sign-in-page__input-block">

@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const router = express.Router();
 require("dotenv").config({ path: "./config.env" });
 const cors = require("cors");
 const port = process.env.PORT || 5000;
@@ -18,10 +19,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 const dbo = require("./db/conn");
-const { response, json } = require("express");
-const { ObjectID } = require("bson");
 const { ObjectId } = require("mongodb");
-const e = require("express");
 
 app.get("/", (req, res) => {
   res.send("ok");
@@ -77,45 +75,34 @@ app.get("/curUser", (req, res) => {
     });
 });
 //sign up post
+router.post("/signup", async (req, res) => {});
 app.post("/users", (req, response) => {
   let db_connect = dbo.getDb();
 
-  //get account of person you're signing up as
-  let newUser = {
-    username: req.body.username,
-    password: req.body.password,
-    email: req.body.email,
-    bio: "",
-    pfp: "https://res.cloudinary.com/dtyg4ctfr/image/upload/v1674238936/PicPocket/default_purple_pfp_ibof5p.jpg",
-    signedIn: false,
-  };
-  console.log(newUser);
-  //find any users already signed in and push them to another array to access it
-  var cursor = db_connect
-    .collection("picpocket-users")
-    .find({ signedIn: true });
-  var signedInArray;
-  async function getArr() {
-    signedInArray = [];
-    await cursor.forEach((user) => {
-      signedInArray.push(user);
-    });
-  }
-  getArr();
-
+  //check if username or email already exists
   db_connect
     .collection("picpocket-users")
-    .find({ username: req.body.username })
+    .find({ $or: [{ username: req.body.username }, { email: req.body.email }] })
     .toArray(function (err, result) {
       if (err) {
         response.status(400).send("error");
         console.log("to array error");
       } else if (result.length > 0) {
-        //check if user already exists
-        response.status(400).send("Username already exists. Sign up failed.");
-        console.log("Username already exists. Sign up failed.");
+        if (
+          //if both already exist
+          result.some((e) => e.username === req.body.username) &&
+          result.some((e) => e.email === req.body.email)
+        ) {
+          response.json("Both");
+          console.log("Username and Email already exist. Sign up failed.");
+        } else if (result.some((e) => e.email === req.body.email)) {
+          response.json("Email");
+          console.log("Email already exists. Sign up failed.");
+        } else if (result.some((e) => e.username === req.body.username)) {
+          response.json("Username");
+          console.log("Username already exists. Sign up failed.");
+        }
       } else {
-        //if user is new
         console.log("user is new");
         async function insertNew() {
           //insertone as signedIn: true
@@ -139,6 +126,7 @@ app.post("/users", (req, response) => {
     });
 });
 //user sign in post
+router.post("/login", async (req, res) => {});
 app.post("/SignIn", (req, res) => {
   let db_connect = dbo.getDb();
 

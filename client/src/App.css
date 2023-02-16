@@ -3116,6 +3116,14 @@ button {
 .sign-in-page__input-block-username-input-red:focus {
   border: 2px solid rgb(151, 0, 0) !important;
 }
+.red-input-border {
+  border: 2px solid rgb(173, 112, 112) !important;
+}
+.sign-in-page__already-exists-message {
+  color: darkred;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
 .sign-in-page__input-block-please-fill-out-field-tooltip {
   position: absolute;
   top: 82px;
