@@ -2829,6 +2829,25 @@ button {
   font-weight: 700;
   box-shadow: 0px -10px 15px -9px rgb(196, 196, 196);
 }
+.upload-page__all-done-banner-browse-button-container {
+  width: 100%;
+  max-width: var(--siteContentsMidWidth);
+  height: auto;
+  padding: 0;
+  margin: auto;
+  position: absolute;
+  top: -40px;
+  /* left: 13%; */
+  /* background-color: red; */
+}
+.upload-page__all-done-banner-container button {
+  font-size: clamp(2vw, 2rem, 1.25rem);
+  padding: 0 0.76rem;
+  background-color: rgb(56, 104, 207);
+  color: white;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+}
 .upload-page__all-done-banner-container a {
   padding: 0.5rem 1rem;
   color: #fff;

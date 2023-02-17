@@ -27,7 +27,10 @@ const UploadForm = ({
   useEffect(() => {
     //if there is actually an image in the array to scroll to
     if (imagesToUpload.length > 0) {
-      newItemRef.current.scrollIntoView();
+      newItemRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
     }
   }, [isUploadingForRef]);
 
@@ -153,9 +156,9 @@ const UploadForm = ({
           </div>
         )}
         <div className="upload-page__upload-form-contents">
-          <div className="upload-page__upload-form-side-bar-container">
+          {/* <div className="upload-page__upload-form-side-bar-container">
             <UploadFormSideBar imagesToUpload={imagesToUpload} />
-          </div>
+          </div> */}
 
           <input
             type="file"
