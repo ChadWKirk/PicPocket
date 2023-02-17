@@ -126,17 +126,32 @@ const UploadForm = ({
   //     setIsShowingSideBar(false);
   //   }
   // }
-
+  const [isDragActive, setIsDragActive] = useState(false);
   return (
     <div style={{ width: "100%" }}>
       <form
         className={`upload-page__upload-form ${uploadFormDragStyle}`}
-        onDragEnter={() =>
-          setUploadFormDragStyle("upload-page__upload-form-drag-enter")
-        }
-        onDragLeave={() => setUploadFormDragStyle()}
-        onDrop={() => setUploadFormDragStyle()}
+        onDragEnter={() => setIsDragActive(true)}
       >
+        {isDragActive && (
+          <div
+            className="upload-page__upload-form-hover-div"
+            onDragEnter={() =>
+              setUploadFormDragStyle("upload-page__upload-form-drag-enter")
+            }
+            onDragOver={() =>
+              setUploadFormDragStyle("upload-page__upload-form-drag-enter")
+            }
+            onDragLeave={() => {
+              setUploadFormDragStyle();
+              setIsDragActive(false);
+            }}
+            // onDragLeave={() => }
+            onDrop={() => setUploadFormDragStyle()}
+          >
+            fffffff
+          </div>
+        )}
         <div className="upload-page__upload-form-contents">
           <div className="upload-page__upload-form-side-bar-container">
             <UploadFormSideBar imagesToUpload={imagesToUpload} />

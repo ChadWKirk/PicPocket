@@ -2493,6 +2493,7 @@ button {
   font-weight: 700;
 }
 .upload-page__upload-form {
+  position: relative;
   border-radius: 25px;
   margin: auto;
   background-color: rgba(255, 255, 255, 0);
@@ -2506,11 +2507,17 @@ button {
   transition: 0.1s ease;
   /* background-color: red; */
 }
-/* .upload-page__upload-form:hover {
-  background-color: rgba(186, 207, 251, 0.918);
-  border: 4px dashed #3789d1;
-  transition: 0.2s;
-} */
+.upload-page__upload-form-hover-div {
+  position: absolute;
+  opacity: 0;
+  z-index: 100000000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  max-width: var(--siteContentsLeastWidth);
+  height: 100%;
+  background-color: red;
+}
 .upload-page__upload-form-drag-enter {
   background-color: rgba(186, 207, 251, 0.918);
   border: 4px dashed #3789d1;
@@ -2574,6 +2581,8 @@ button {
   justify-content: space-around;
   border-radius: 6px;
   margin-top: 25px;
+  width: 8.5rem;
+  height: 3.15rem;
 }
 .upload-page__upload-form-contents-input-for-click {
   opacity: 0;
@@ -2601,6 +2610,8 @@ button {
   padding: 0.5rem 1.5rem;
   font-size: 1rem;
   font-weight: 500;
+  width: 100%;
+  height: 100%;
 }
 
 .upload-page__upload-form-contents-input-for-click:hover
@@ -2732,8 +2743,8 @@ button {
 }
 .upload-page__upload-form-side-bar-contents {
   position: absolute;
-  left: 0px;
-  top: -70px;
+  left: -28px;
+  top: 115px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -2741,20 +2752,20 @@ button {
   gap: 0.7rem;
 }
 .upload-page__upload-form-side-bar-container button {
-  border-radius: 50%;
-  border: 3px solid rgb(202, 212, 242);
+  /* border-radius: 50%; */
+  border: 3px solid rgb(58, 132, 230);
   /* border: 6px solid var(--greyBorder1); */
-  width: 45px;
-  height: 45px;
+  width: 25px;
+  height: 25px;
   font-size: 1rem;
   margin-left: 1.75rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* background-color: var(--greyBorder1); */
+  background-color: rgb(58, 132, 230);
 }
 .upload-page__upload-form-side-bar-add-icon {
-  color: rgb(117, 152, 221);
+  color: var(--offWhite);
   font-size: 1rem;
 }
 .upload-page__upload-form-side-bar-container a {
@@ -2806,17 +2817,17 @@ button {
 .upload-page__all-done-banner-container {
   z-index: 999;
   position: sticky;
-  bottom: 1px;
+  bottom: 0px;
   width: 100%;
   padding: 1.25rem 0;
-  /* margin-bottom: 0.7rem; */
+  margin-top: 0.7rem;
   background-color: rgb(229, 238, 226);
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 1.75rem;
   font-weight: 700;
-  box-shadow: 0px 0px 15px 1px rgb(196, 196, 196);
+  box-shadow: 0px -10px 15px -9px rgb(196, 196, 196);
 }
 .upload-page__all-done-banner-container a {
   padding: 0.5rem 1rem;
@@ -2832,7 +2843,7 @@ button {
     padding: 0.75rem 0;
     font-size: 1.25rem;
     font-weight: 500;
-    box-shadow: 0px 0px 4px 0.5px rgb(196, 196, 196);
+    box-shadow: 0px -5px 4px -4.5px rgb(196, 196, 196);
   }
   .upload-page__all-done-banner-container a {
     padding: 0.25rem 0.5rem;
@@ -2844,7 +2855,7 @@ button {
     padding: 0.25rem 0;
     font-size: 1rem;
     font-weight: 500;
-    box-shadow: 0px 0px 4px 0.25px rgb(196, 196, 196);
+    box-shadow: 0px -5px 4px -4.75px rgb(196, 196, 196);
   }
   .upload-page__all-done-banner-container a {
     padding: 0.25rem 0.5rem;
