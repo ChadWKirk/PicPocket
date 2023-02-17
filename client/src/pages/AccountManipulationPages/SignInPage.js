@@ -1,22 +1,47 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import { React, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+//components
+import TooltipForInputField from "../../components/TooltipForInputField";
+//images
 import signInPageCollageImg from "../../images/PicPocket-SignIn-Collage2.png";
 import googleOAuthIcon from "../../images/google-logo-oauth.png";
 import facebookOauthIcon from "../../images/facebook-logo-oauth.png";
 
 const SignInPage = ({ curUser, loggedIn }) => {
+  let navigate = useNavigate();
+  //if user is already logged in, redirect to their account page
+  useEffect(() => {
+    if (loggedIn) {
+      navigate(`/Account/${curUser}`);
+    }
+  }, []);
+
+  //states for username, email and password input values
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [usernameTooltip, setUsernameTooltip] = useState();
+  const [passwordTooltip, setPasswordTooltip] = useState();
+
+  //if any tool tip is open, clicking anywhere makes it disappear
+  function resetToolTipOnClick() {
+    if (usernameTooltip !== undefined || passwordTooltip !== undefined) {
+      setUsernameTooltip();
+      setPasswordTooltip();
+    }
+  }
+
+  const [invalidCredentialstAlert, setInvalidCredentialsAlert] = useState();
+
   var [curUser2, setCurUser] = useState({
     username: "",
     password: "",
     signedIn: false,
   });
 
-  var navigate = useNavigate();
-
   let signInUser = {
-    username: "",
-    password: "",
+    username: username,
+    password: password,
     signedIn: false,
   }; //this is the user the customer is ATTEMPTING to sign in with (does not pass name as prop on fail)
 
@@ -34,10 +59,20 @@ const SignInPage = ({ curUser, loggedIn }) => {
     e.preventDefault();
     console.log("submitted");
 
-    if (signInUser.username.length === 0) {
-      window.alert("Name is blank. Sign in failed.");
-    } else if (signInUser.password.length === 0) {
-      window.alert("Password is blank. Sign in failed.");
+    if (username.length === 0) {
+      setUsernameTooltip(
+        <TooltipForInputField
+          Message={"Please fill out this field."}
+          Type={"Yellow Warning"}
+        />
+      );
+    } else if (password.length === 0) {
+      setPasswordTooltip(
+        <TooltipForInputField
+          Message={"Please fill out this field."}
+          Type={"Yellow Warning"}
+        />
+      );
     } else {
       console.log("Sign in fetch sent");
       await fetch("http://localhost:5000/SignIn", {
@@ -46,24 +81,34 @@ const SignInPage = ({ curUser, loggedIn }) => {
         body: JSON.stringify(signInUser),
       }).then((response) => {
         if (response.ok) {
-          setCurUser({
-            //set curUser (current signed in user since sign in was successful. passes name as prop to navbar)
-            username: signInUser.username,
-            password: signInUser.password,
-            signedIn: false,
-          });
+          // setCurUser({
+          //   //set curUser (current signed in user since sign in was successful. passes name as prop to navbar)
+          //   username: username,
+          //   password: password,
+          //   signedIn: false,
+          // });
           window.location.href = "/";
           //navigate("/");
         } else if (response.status === 404) {
           //if sign in fails
-          window.alert("Account does not exist. Sign in failed.");
+          setInvalidCredentialsAlert(
+            <div className="sign-in-page__invalid-username-or-password-alert-box">
+              Invalid username or password.
+            </div>
+          );
+          // window.alert("Account does not exist. Sign in failed.");
         }
       });
     }
   }
 
   return (
-    <div className="sign-in-page__container">
+    <div
+      className="sign-in-page__container"
+      onClick={() => {
+        resetToolTipOnClick();
+      }}
+    >
       <div className="sign-in-page__contents-container">
         <div className="sign-in-page__form-container">
           <div style={{ fontSize: "1rem", fontWeight: "300" }}>PicPocket</div>
@@ -88,14 +133,23 @@ const SignInPage = ({ curUser, loggedIn }) => {
             <div>or</div>
             <div className="sign-in-page__or-line"></div>
           </div>
+          {invalidCredentialstAlert}
           <form onSubmit={onSubmit}>
             <div className="sign-in-page__input-block">
               <label htmlFor="username">Username: </label>
-              <input id="username" onChange={onChangeName}></input>
+              <input
+                id="username"
+                onChange={(event) => setUsername(event.target.value)}
+              ></input>
+              {usernameTooltip}
             </div>
             <div className="sign-in-page__input-block">
               <label htmlFor="password">Password: </label>
-              <input id="password" onChange={onChangePW}></input>
+              <input
+                id="password"
+                onChange={(event) => setPassword(event.target.value)}
+              ></input>
+              {passwordTooltip}
             </div>
             <button type="submit" className="sign-in-page__sign-in-button">
               Sign In

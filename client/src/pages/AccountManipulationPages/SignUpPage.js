@@ -11,7 +11,7 @@ import signInPageCollageImg from "../../images/PicPocket-SignIn-Collage2.png";
 
 const SignUpPage = ({ curUser, loggedIn }) => {
   let navigate = useNavigate();
-
+  //if user is already logged in, redirect to their account page
   useEffect(() => {
     if (loggedIn) {
       navigate(`/Account/${curUser}`);

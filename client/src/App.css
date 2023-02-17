@@ -3075,6 +3075,14 @@ button {
   background-color: rgb(222, 222, 222);
   width: 100px;
 }
+.sign-in-page__invalid-username-or-password-alert-box {
+  background-color: red;
+  color: white;
+  padding: 1.7rem;
+  margin-top: 1rem;
+  width: 100%;
+  text-align: center;
+}
 .sign-in-page__contents-container form {
   display: flex;
   flex-direction: column;

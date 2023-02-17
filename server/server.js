@@ -144,11 +144,6 @@ app.post("/SignIn", (req, res) => {
         //if no user is found
         res.sendStatus(404);
         console.log("no user exists.");
-      }
-      if (user.signedIn === true) {
-        //if user is already signed in
-        console.log("user already signed in");
-        res.sendStatus(500);
       } else if (user.signedIn === false) {
         console.log("success");
         res.send({ "signed in": "yes" });
