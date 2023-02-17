@@ -252,12 +252,10 @@ const MainPage = ({
         />
       </div>
 
-      <div className="joinNowContainer">
+      <div className="joinNowContainer box">
         <h1>Want to contribute?</h1>
         <h3>Upload your own stock photos in minutes.</h3>
-        <button>
-          <a href="/signup">Join Now</a>
-        </button>
+        <a href="/signup">Join Now</a>
       </div>
     </div>
   );
