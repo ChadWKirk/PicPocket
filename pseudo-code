@@ -30,7 +30,7 @@ TASKS:
 
 styling:
 
-sign in page sing up page - when username or email already exists, highlight respective inputs with red border and put "username already exists." or "email already exists." in red below the input field
+sign in page - put tooltips on inputs for blank fields, make popup for when account doesn't exist that says "Invalid username or password."
 
 upload page - make it so that when you hover between button and drag input it doesn't go white, make side bar upload button not go over footer and make responsive and give it upload function, maybe make browse button a little bigger on bigger screen sizes/zoomed out
 

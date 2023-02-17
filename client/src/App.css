@@ -3122,7 +3122,9 @@ button {
 .sign-in-page__already-exists-message {
   color: darkred;
   font-weight: 500;
-  font-size: 0.95rem;
+  font-size: 0.75rem;
+  display: inline;
+  margin-left: 0.3rem;
 }
 .sign-in-page__input-block-please-fill-out-field-tooltip {
   position: absolute;

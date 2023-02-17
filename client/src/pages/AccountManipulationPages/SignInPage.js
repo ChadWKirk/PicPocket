@@ -57,8 +57,6 @@ const SignInPage = ({ curUser, loggedIn }) => {
         } else if (response.status === 404) {
           //if sign in fails
           window.alert("Account does not exist. Sign in failed.");
-        } else {
-          window.alert("User is already signed in. Sign in failed.");
         }
       });
     }

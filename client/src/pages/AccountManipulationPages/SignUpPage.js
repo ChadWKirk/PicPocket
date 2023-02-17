@@ -18,13 +18,20 @@ const SignUpPage = ({ curUser, loggedIn }) => {
     }
   }, []);
 
-  //don't accept special characters for username
+  //states for username, email and password input values
   const [username, setUsername] = useState("");
-  const [isSpecialCharacter, setIsSpecialCharacter] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  //classes for username and email input elements to switch to red border when using special chars in username or if username/email already exist
   const [usernameInputClass, setUsernameInputClass] = useState();
+  const [emailInputClass, setEmailInputClass] = useState();
+
+  //don't accept special characters for username
+  const [isSpecialCharacter, setIsSpecialCharacter] = useState(false);
   useEffect(() => {
     if (/[~`!#$%\^&*+=\\[\]\\;,/{}|\\":<>\?]/g.test(username)) {
-      setUsernameInputClass("sign-in-page__input-block-username-input-red");
+      setUsernameInputClass("red-input-border");
       setIsSpecialCharacter(true);
     } else {
       setUsernameInputClass("");
@@ -41,9 +48,6 @@ const SignUpPage = ({ curUser, loggedIn }) => {
     specialMessage = "";
   }
 
-  //class for email field to put red border class on if email already exists
-  const [emailInputClass, setEmailInputClass] = useState();
-
   // function onChangeName(event) {
   //   //when name input changes,pass a para to be the event object then assign target.value to name. event parameter is always first parameter passed in a function called by an event.
   //   newUser.username = event.target.value;
@@ -51,10 +55,6 @@ const SignUpPage = ({ curUser, loggedIn }) => {
 
   function onChangePW(event) {
     newUser.password = event.target.value;
-  }
-
-  function onChangeEmail(event) {
-    newUser.email = event.target.value;
   }
 
   const [usernameTooltip, setUsernameTooltip] = useState();
@@ -86,12 +86,11 @@ const SignUpPage = ({ curUser, loggedIn }) => {
 
   let newUser = {
     username: username,
-    password: form.password,
-    email: form.email,
+    password: password,
+    email: email,
     signedIn: false,
   }; //blank newUser
 
-  const [redBorderInputClass, setRedBorderInputClass] = useState();
   const [usernameAlreadyExistsText, setUsernameAlreadyExistsText] = useState();
   const [emailAlreadyExistsText, setEmailAlreadyExistsText] = useState();
 
@@ -112,7 +111,7 @@ const SignUpPage = ({ curUser, loggedIn }) => {
           Type={"Yellow Warning"}
         />
       );
-    } else if (newUser.email.length === 0) {
+    } else if (email.length === 0) {
       setEmailTooltip(
         <TooltipForInputField
           Message={"Please fill out this field."}
@@ -131,50 +130,43 @@ const SignUpPage = ({ curUser, loggedIn }) => {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify(newUser),
-      }).then(
-        (response) =>
-          response
-            .json()
-            .then((resJSON) => JSON.stringify(resJSON))
-            .then((stringJSON) => JSON.parse(stringJSON))
-            .then((parsedJSON) => {
-              if (parsedJSON == "Both") {
-                setRedBorderInputClass("red-input-border");
-                setUsernameAlreadyExistsText(
-                  <div className="sign-in-page__already-exists-message">
-                    Username already exists.
-                  </div>
-                );
-                setEmailAlreadyExistsText(
-                  <div className="sign-in-page__already-exists-message">
-                    Email already exists.
-                  </div>
-                );
-              } else if (parsedJSON == "Username") {
-                setUsernameInputClass(
-                  "sign-in-page__input-block-username-input-red"
-                );
-                setUsernameAlreadyExistsText(
-                  <div className="sign-in-page__already-exists-message">
-                    Username already exists.
-                  </div>
-                );
-              } else if (parsedJSON == "Email") {
-                setEmailInputClass("red-input-border");
-                setEmailAlreadyExistsText(
-                  <div className="sign-in-page__already-exists-message">
-                    Email already exists.
-                  </div>
-                );
-              } else {
-                navigate(`/SignUp/${newUser.username}/Success`);
-              }
-            })
-        //
-
-        //  else {
-        //   window.alert("Username or email already exists. Sign up failed.");
-        // }
+      }).then((response) =>
+        response
+          .json()
+          .then((resJSON) => JSON.stringify(resJSON))
+          .then((stringJSON) => JSON.parse(stringJSON))
+          .then((parsedJSON) => {
+            if (parsedJSON == "Both") {
+              setUsernameInputClass("red-input-border");
+              setEmailInputClass("red-input-border");
+              setUsernameAlreadyExistsText(
+                <p className="sign-in-page__already-exists-message">
+                  Username already exists.
+                </p>
+              );
+              setEmailAlreadyExistsText(
+                <p className="sign-in-page__already-exists-message">
+                  Email already exists.
+                </p>
+              );
+            } else if (parsedJSON == "Username") {
+              setUsernameInputClass("red-input-border");
+              setUsernameAlreadyExistsText(
+                <p className="sign-in-page__already-exists-message">
+                  Username already exists.
+                </p>
+              );
+            } else if (parsedJSON == "Email") {
+              setEmailInputClass("red-input-border");
+              setEmailAlreadyExistsText(
+                <div className="sign-in-page__already-exists-message">
+                  Email already exists.
+                </div>
+              );
+            } else {
+              navigate(`/SignUp/${newUser.username}/Success`);
+            }
+          })
       );
       // .catch(() => {
 
@@ -189,8 +181,10 @@ const SignUpPage = ({ curUser, loggedIn }) => {
         resetToolTipOnClick();
         setEmailAlreadyExistsText();
         setUsernameAlreadyExistsText();
-        setRedBorderInputClass();
         setEmailInputClass();
+        if (!isSpecialCharacter) {
+          setUsernameInputClass();
+        }
       }}
     >
       {yesOrNoModal}
@@ -240,15 +234,15 @@ const SignUpPage = ({ curUser, loggedIn }) => {
                 >
                   {specialMessage}
                 </p>
+                {usernameAlreadyExistsText}
               </label>
               <input
                 id="username"
                 onChange={(event) => {
                   setUsername(event.target.value);
                 }}
-                className={`${usernameInputClass} ${redBorderInputClass}`}
+                className={usernameInputClass}
               ></input>
-              {usernameAlreadyExistsText}
               {usernameTooltip}
             </div>
             <div className="sign-in-page__input-block">
@@ -263,13 +257,13 @@ const SignUpPage = ({ curUser, loggedIn }) => {
                 >
                   *
                 </p>
+                {emailAlreadyExistsText}
               </label>
               <input
                 id="email"
-                onChange={onChangeEmail}
+                onChange={(event) => setEmail(event.target.value)}
                 className={emailInputClass}
               ></input>
-              {emailAlreadyExistsText}
               {emailTooltip}
             </div>
             <div className="sign-in-page__input-block">
@@ -285,7 +279,10 @@ const SignUpPage = ({ curUser, loggedIn }) => {
                   *
                 </p>
               </label>
-              <input id="password" onChange={onChangePW}></input>
+              <input
+                id="password"
+                onChange={(event) => setPassword(event.target.value)}
+              ></input>
               {passwordTooltip}
             </div>
             <button type="submit" className="sign-in-page__sign-in-button">
