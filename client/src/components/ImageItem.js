@@ -25,12 +25,7 @@ const ImageItem = ({
           <img src={image.secure_url}></img>
         </div>
 
-        <div className="upload-page__image-item-title">
-          {image.name
-            .replace(".jpg", "")
-            .replace(".png", "")
-            .replace(".jpeg", "")}
-        </div>
+        <div className="upload-page__image-item-title-skeleton-loading"></div>
         <div className="upload-page__uploading-icon">{imageStatusIcon}</div>
       </li>
     );

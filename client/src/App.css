@@ -2689,6 +2689,14 @@ button {
   word-break: break-all;
   padding: 0rem 1.25rem;
 }
+.upload-page__image-item-title-skeleton-loading {
+  flex-grow: 1;
+  max-width: 400px;
+  height: 3rem;
+  border-radius: 10px;
+  background-color: #e9e9e9;
+  margin: 0 1.75rem;
+}
 
 .upload-page__image-item img {
   width: 100%;
@@ -2705,6 +2713,12 @@ button {
   .upload-page__image-item img {
     max-width: 150px;
     max-height: 130px;
+    margin-left: 0.5rem;
+  }
+  .upload-page__image-item-div {
+    width: 150px;
+    height: 130px;
+    margin-left: 0.5rem;
   }
   .upload-page__trash-icon {
     font-size: 2rem;
@@ -2719,6 +2733,12 @@ button {
   .upload-page__image-item img {
     max-width: 75px;
     max-height: 90px;
+    margin-left: 0.5rem;
+  }
+  .upload-page__image-item-div {
+    width: 75px;
+    height: 90px;
+    margin-left: 0.5rem;
   }
   .upload-page__trash-icon {
     font-size: 1rem;

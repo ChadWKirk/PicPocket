@@ -116,14 +116,17 @@ const UploadForm = ({
     e.preventDefault();
     setUploadFormDragStyle();
     setIsDragActive(false);
-
-    for (var i = 0; i < e.dataTransfer.files.length; i++) {
+    let dt = e.dataTransfer;
+    let files = dt.files;
+    let count = files.length;
+    for (let i = 0; i < count; i++) {
+      console.log(i);
       const image = e.dataTransfer.files[i];
       image.isUploading = true;
       setIsUploadingForRef(!isUploadingForRef); //switch this every time upload begins to call useEffect
-      targetFilesArray.push(image);
+      // targetFilesArray.push(image);
       setImagesToUpload((imagesToUpload) => [...imagesToUpload, image]);
-      console.log(targetFilesArray + " target files");
+      // console.log(targetFilesArray + " target files");
 
       //to send in fetch
       const formData = new FormData();
@@ -247,6 +250,8 @@ const UploadForm = ({
               }}
               // onDragLeave={() => }
               onDrop={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
                 uploadHandlerDrag(e);
               }}
             >
