@@ -33,18 +33,6 @@ const UploadPage = ({ curUser, loggedIn }) => {
           setImagesToUpload={setImagesToUpload}
           removeImageFromUploadFrontEnd={removeImageFromUploadFrontEnd}
         />
-
-        {imagesToUpload[0] && (
-          <div className="upload-page__all-done-banner-container">
-            <div className="upload-page__all-done-banner-browse-button-container">
-              <button>Browse</button>
-            </div>
-            All done?
-            <a href={`/Account/${curUser}/My-Pics/most-recent/all-types`}>
-              Edit Images
-            </a>
-          </div>
-        )}
       </div>
       {/* </div> */}
     </div>

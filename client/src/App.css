@@ -2510,7 +2510,7 @@ button {
 .upload-page__upload-form-hover-div {
   position: absolute;
   opacity: 0;
-  z-index: 100000000;
+  z-index: 100000000000;
   top: 0;
   left: 0;
   width: 100%;
@@ -2819,13 +2819,13 @@ button {
   position: sticky;
   bottom: 0px;
   width: 100%;
-  padding: 1.25rem 0;
+  padding: 0.75rem 0;
   margin-top: 0.7rem;
   background-color: rgb(229, 238, 226);
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.75rem;
+  font-size: 1rem;
   font-weight: 700;
   box-shadow: 0px -10px 15px -9px rgb(196, 196, 196);
 }
@@ -2836,49 +2836,87 @@ button {
   padding: 0;
   margin: auto;
   position: absolute;
-  top: -40px;
-  /* left: 13%; */
-  /* background-color: red; */
+  top: -30px;
+  font-size: 1.25rem;
+  /* padding-left: var(--sideSpacePadding); */
+}
+.upload-page__all-done-banner-upload-input {
+  opacity: 0;
+  font-size: 0px;
+  cursor: pointer;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 87px;
+  height: 100%;
+  z-index: 999;
+  background-color: rgb(89, 56, 56);
 }
 .upload-page__all-done-banner-container button {
-  font-size: clamp(2vw, 2rem, 1.25rem);
   padding: 0 0.76rem;
   background-color: rgb(56, 104, 207);
   color: white;
   border-top-right-radius: 5px;
-  border-top-left-radius: 5px;
 }
 .upload-page__all-done-banner-container a {
   padding: 0.5rem 1rem;
   color: #fff;
-  font-size: 1.45rem;
+  font-size: 0.9rem;
   font-weight: 500;
   background-color: rgb(78, 194, 32);
   border-radius: 4px;
   margin-left: 0.8rem;
 }
+@media (width > 1400px) {
+  .upload-page__all-done-banner-container button {
+    border-top-left-radius: 5px;
+  }
+}
 @media (width < 900px) {
   .upload-page__all-done-banner-container {
-    padding: 0.75rem 0;
-    font-size: 1.25rem;
-    font-weight: 500;
+    padding: 0.5rem 0;
+    font-size: 0.9rem;
+    /* font-weight: 500; */
     box-shadow: 0px -5px 4px -4.5px rgb(196, 196, 196);
+  }
+  .upload-page__all-done-banner-browse-button-container {
+    top: -28px;
+  }
+  .upload-page__all-done-banner-container button {
+    font-size: 1rem;
+  }
+  .upload-page__all-done-banner-upload-input {
+    top: 4px;
+    width: 75px;
+    height: 24px;
   }
   .upload-page__all-done-banner-container a {
     padding: 0.25rem 0.5rem;
-    font-size: 1rem;
+    font-size: 0.75rem;
   }
 }
 @media (width < 650px) {
   .upload-page__all-done-banner-container {
-    padding: 0.25rem 0;
-    font-size: 1rem;
-    font-weight: 500;
+    padding: 0.39rem 0;
+    font-size: 0.8rem;
+    bottom: -1px;
+    /* font-weight: 500; */
     box-shadow: 0px -5px 4px -4.75px rgb(196, 196, 196);
+  }
+  .upload-page__all-done-banner-browse-button-container {
+    top: -27px;
+  }
+  .upload-page__all-done-banner-container button {
+    font-size: 0.7rem;
+  }
+  .upload-page__all-done-banner-upload-input {
+    top: 10px;
+    width: 60px;
+    height: 17px;
   }
   .upload-page__all-done-banner-container a {
     padding: 0.25rem 0.5rem;
-    font-size: 0.95rem;
+    font-size: 0.6rem;
   }
 }
 /* SignUp CSS */

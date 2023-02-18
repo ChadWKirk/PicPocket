@@ -30,11 +30,11 @@ TASKS:
 
 styling:
 
-upload page - make side bar upload button not go over footer and make responsive and give it upload function
+upload page - make it so dragging over upload form doesn't rerender image items causing them to flicker
 
 copy mainpage stuff to mainpagemostpopular
 
-mypics - loading for submit/delete/massdelete (make loading/progress bar at top of the page), make it so that if all checkboxes are checked, selectall box checked = true and if not all of them are checked then select all checkbox checked = false, general styling, make page responsive.
+mypics - loading for submit/delete/massdelete (make loading/progress bar at top of the page like youtube), make it so that if all checkboxes are checked, selectall box checked = true and if not all of them are checked then select all checkbox checked = false, general styling, make page responsive.
 
 make about us page
 
