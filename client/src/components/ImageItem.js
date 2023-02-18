@@ -21,7 +21,10 @@ const ImageItem = ({
     imageStatusIcon = <FontAwesomeIcon icon={faSpinner} className="fa-spin" />;
     imageBanner = (
       <li className="upload-page__image-item" key={image.name} ref={newItemRef}>
-        <img src={image.secure_url}></img>
+        <div className="upload-page__image-item-div">
+          <img src={image.secure_url}></img>
+        </div>
+
         <div className="upload-page__image-item-title">
           {image.name
             .replace(".jpg", "")

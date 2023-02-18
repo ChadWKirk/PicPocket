@@ -2679,6 +2679,11 @@ button {
   border-radius: 20px;
   animation: fadeIn 0.4s;
 }
+.upload-page__image-item-div {
+  width: 300px;
+  height: 280px;
+  background-color: #e9e9e9;
+}
 .upload-page__image-item-title {
   -ms-word-break: break-all;
   word-break: break-all;
@@ -2854,8 +2859,10 @@ button {
 }
 .upload-page__all-done-banner-container button {
   padding: 0 0.76rem;
-  background-color: rgb(56, 104, 207);
-  color: white;
+  border: 2px dashed rgb(186, 186, 186);
+  border-bottom: none;
+  background-color: rgb(234, 243, 255);
+  color: rgb(60, 113, 226);
   border-top-right-radius: 5px;
 }
 .upload-page__all-done-banner-container a {
