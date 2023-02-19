@@ -18,7 +18,12 @@ const ImageItem = ({
   let imageBanner;
 
   if (image.isUploading) {
-    imageStatusIcon = <FontAwesomeIcon icon={faSpinner} className="fa-spin" />;
+    imageStatusIcon = (
+      <FontAwesomeIcon
+        icon={faSpinner}
+        className="fa-spin upload-page__uploading-spin-icon"
+      />
+    );
     imageBanner = (
       <li className="upload-page__image-item" key={image.name} ref={newItemRef}>
         <div className="upload-page__image-item-div">

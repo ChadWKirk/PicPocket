@@ -30,7 +30,9 @@ TASKS:
 
 styling:
 
-upload page - make it so dragging over upload form doesn't rerender image items causing them to flicker, skeleton load for image item
+upload page - make it so dragging over upload form doesn't rerender image items causing them to flicker
+
+lazy load images and put skeleton loading for all images
 
 copy mainpage stuff to mainpagemostpopular
 
