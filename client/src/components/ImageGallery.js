@@ -132,6 +132,7 @@ const ImageGallery = ({
                 ".jpg"
               }
               className="image-gallery__image"
+              loading="lazy"
             ></img>
           </a>
 
@@ -166,6 +167,7 @@ const ImageGallery = ({
                 <img
                   src={element.test[0].pfp}
                   className="image-gallery__image-author-profile-pic"
+                  loading="lazy"
                 />
                 {element.uploadedBy}
               </a>
