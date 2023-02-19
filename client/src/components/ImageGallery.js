@@ -124,7 +124,7 @@ const ImageGallery = ({
             <img
               src={
                 element.secure_url.slice(0, 50) +
-                "q_60/c_scale,w_1600/dpr_auto/" +
+                "q_60/c_scale,w_700/dpr_auto/" +
                 element.secure_url.slice(
                   50,
                   element.secure_url.lastIndexOf(".")
@@ -132,7 +132,6 @@ const ImageGallery = ({
                 ".jpg"
               }
               className="image-gallery__image"
-              loading="lazy"
             ></img>
           </a>
 
@@ -167,7 +166,6 @@ const ImageGallery = ({
                 <img
                   src={element.test[0].pfp}
                   className="image-gallery__image-author-profile-pic"
-                  loading="lazy"
                 />
                 {element.uploadedBy}
               </a>
