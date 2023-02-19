@@ -121,7 +121,7 @@ const UploadForm = ({
     let count = files.length;
     for (let i = 0; i < count; i++) {
       console.log(i);
-      const image = e.dataTransfer.files[i];
+      const image = files[i];
       image.isUploading = true;
       setIsUploadingForRef(!isUploadingForRef); //switch this every time upload begins to call useEffect
       // targetFilesArray.push(image);
@@ -212,6 +212,9 @@ const UploadForm = ({
   //     setIsShowingSideBar(false);
   //   }
   // }
+  const [browseButtonAllDoneClass, setBrowseButtonAllDoneClass] = useState(
+    "upload-page__all-done-banner-container-button"
+  );
   const [isDragActive, setIsDragActive] = useState(false);
   return (
     <div style={{ width: "100%" }}>
@@ -300,11 +303,26 @@ const UploadForm = ({
               multiple
               onChange={(e) => uploadHandlerClick(e)}
               onClick={(e) => (e.target.value = null)}
-              onDragEnter={(e) => (e.target.value = null)}
+              onDragEnter={(e) => {
+                e.target.value = null;
+                setBrowseButtonAllDoneClass(
+                  "upload-page__all-done-banner-container-button-dragover"
+                );
+              }}
+              onDragLeave={() =>
+                setBrowseButtonAllDoneClass(
+                  "upload-page__all-done-banner-container-button"
+                )
+              }
+              onDrop={() =>
+                setBrowseButtonAllDoneClass(
+                  "upload-page__all-done-banner-container-button"
+                )
+              }
               className="upload-page__all-done-banner-upload-input"
               title={""}
             />
-            <button>Browse</button>
+            <button className={browseButtonAllDoneClass}>Browse</button>
           </div>
           All done?
           <a href={`/Account/${curUser}/My-Pics/most-recent/all-types`}>

@@ -30,7 +30,7 @@ TASKS:
 
 styling:
 
-upload page - make it so dragging over upload form doesn't rerender image items causing them to flicker, make it so multiple drag works for main form, placeholder image/color, style all done browse button to look like drag n drop box
+upload page - make it so dragging over upload form doesn't rerender image items causing them to flicker, skeleton load for image item
 
 copy mainpage stuff to mainpagemostpopular
 

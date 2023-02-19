@@ -2677,7 +2677,7 @@ button {
   /* height: 120px; */
   padding: 2rem;
   border-radius: 20px;
-  animation: fadeIn 0.4s;
+  /* animation: fadeIn 0.4s; */
 }
 .upload-page__image-item-div {
   width: 300px;
@@ -2877,13 +2877,22 @@ button {
   z-index: 999;
   background-color: rgb(89, 56, 56);
 }
-.upload-page__all-done-banner-container button {
+.upload-page__all-done-banner-container-button {
   padding: 0 0.76rem;
   border: 2px dashed rgb(186, 186, 186);
   border-bottom: none;
   background-color: rgb(234, 243, 255);
   color: rgb(60, 113, 226);
   border-top-right-radius: 5px;
+}
+.upload-page__all-done-banner-container-button-dragover {
+  padding: 0 0.76rem;
+  border-top-right-radius: 5px;
+  background-color: rgba(186, 207, 251, 0.918);
+  border: 2px dashed #3789d1;
+  color: rgb(60, 113, 226);
+  border-bottom: none;
+  transition: 0.2s;
 }
 .upload-page__all-done-banner-container a {
   padding: 0.5rem 1rem;
