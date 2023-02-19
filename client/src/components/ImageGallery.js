@@ -132,6 +132,7 @@ const ImageGallery = ({
                 ".jpg"
               }
               className="image-gallery__image"
+              loading="lazy"
             ></img>
           </a>
 

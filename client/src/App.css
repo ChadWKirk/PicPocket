@@ -669,7 +669,7 @@ button {
   position: relative;
   font-size: 1rem;
   color: rgb(73, 73, 73);
-  /* background-color: rgb(248, 245, 235); */
+  background-color: rgb(248, 245, 235);
   overflow: hidden;
   overflow-y: hidden;
   margin: var(--imgGalleryMarginBetweenImages);
@@ -1721,6 +1721,7 @@ button {
 .joinNowContainer h3 {
   font-weight: 400;
   font-size: 1.5rem;
+  text-align: center;
 }
 
 .joinNowContainer a {
