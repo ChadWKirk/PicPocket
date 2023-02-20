@@ -6,6 +6,10 @@ const cors = require("cors");
 const port = process.env.PORT || 5000;
 const bcrypt = require("bcrypt");
 const validator = require("validator");
+const jwt = require("jsonwebtoken");
+const createToken = (_id) => {
+  jwt.sign({ _id: _id }, process.env.JWT_SECRET);
+};
 
 //cloudinary image hosting
 const cloudinary = require("cloudinary").v2;
@@ -49,33 +53,33 @@ app.get("/users", (req, res) => {
     });
 });
 //get currently signed in user
-app.get("/curUser", (req, res) => {
-  db_connect = dbo.getDb();
-  //see if any user has signedIn: true
-  db_connect
-    .collection("picpocket-users")
-    .findOne({ signedIn: true }, function (err, user) {
-      if (err) {
-        console.log(err);
-      }
-      if (user) {
-        console.log("user found");
-        res.json(user.username); //send username in resopnse to react fetch
-      }
-    });
+// app.get("/curUser", (req, res) => {
+//   db_connect = dbo.getDb();
+//   //see if any user has signedIn: true
+//   db_connect
+//     .collection("picpocket-users")
+//     .findOne({ signedIn: true }, function (err, user) {
+//       if (err) {
+//         console.log(err);
+//       }
+//       if (user) {
+//         console.log("user found");
+//         res.json(user.username); //send username in resopnse to react fetch
+//       }
+//     });
 
-  db_connect
-    .collection("picpocket-users")
-    .findOne({ signedIn: true }, function (err, user) {
-      if (err) {
-        console.log(err);
-      }
-      if (!user) {
-        console.log("user not found");
-        res.json("none"); //send username in resopnse to react fetch
-      }
-    });
-});
+//   db_connect
+//     .collection("picpocket-users")
+//     .findOne({ signedIn: true }, function (err, user) {
+//       if (err) {
+//         console.log(err);
+//       }
+//       if (!user) {
+//         console.log("user not found");
+//         res.json("none"); //send username in resopnse to react fetch
+//       }
+//     });
+// });
 
 //sign up post
 app.post("/users", async (req, response) => {
@@ -122,18 +126,22 @@ app.post("/users", async (req, response) => {
         console.log("user is new");
         async function insertNew() {
           //insertone as signedIn: true
-          await db_connect.collection("picpocket-users").insertOne(
+          db_connect.collection("picpocket-users").insertOne(
             {
               username: req.body.username,
               password: hash,
               email: req.body.email,
               bio: "",
               pfp: "https://res.cloudinary.com/dtyg4ctfr/image/upload/v1674238936/PicPocket/default_purple_pfp_ibof5p.jpg",
-              signedIn: true,
+              // signedIn: true,
             },
-            function (err, res) {
-              if (err) throw err;
-              response.json(res);
+            function (err, user) {
+              if (err) {
+                throw err;
+              } else {
+                const token = createToken(user._id);
+                response.status(200).json({ token });
+              }
             }
           );
         }
@@ -141,62 +149,69 @@ app.post("/users", async (req, response) => {
       }
     });
 });
+
 //user sign in post
-router.post("/login", async (req, res) => {});
-app.post("/SignIn", (req, res) => {
+app.post("/SignIn", async (req, res) => {
+  const passwordMatch = await bcrypt.compare(req.body.password, user.password);
   let db_connect = dbo.getDb();
 
-  db_connect.collection("picpocket-users").findOne(
-    //see if user exists via name and password
-    {
-      username: req.body.username,
-      password: req.body.password,
-    },
-    function (err, user) {
-      if (err) {
-        res.send("err");
-      }
-      if (!user) {
-        //if no user is found
-        res.sendStatus(404);
-        console.log("no user exists.");
-      } else if (user.signedIn === false) {
-        console.log("success");
-        res.send({ "signed in": "yes" });
-        db_connect.collection("picpocket-users").updateOne(
-          {
-            username: req.body.username,
-            password: req.body.password,
-            signedIn: false,
-          },
-          {
-            //change signedIn to true
-            $set: {
-              username: req.body.username,
-              password: req.body.password,
-              signedIn: true,
-            },
-          }
-        );
-      }
-    }
-  );
-});
-
-app.post("/SignOut", (req, res) => {
-  let db_connect = dbo.getDb();
-
-  db_connect
-    .collection("picpocket-users")
-    .updateMany(
-      { signedIn: true },
-      { $set: { signedIn: false } },
-      function (err, res) {
-        if (err) throw err;
-        console.log("signed out");
+  if (!passwordMatch) {
+    res.status(400);
+    console.log("invalid password");
+  } else if (passwordMatch) {
+    db_connect.collection("picpocket-users").findOne(
+      //see if user exists via name and password
+      {
+        username: req.body.username,
+      },
+      function (err, user) {
+        if (err) {
+          res.send("err");
+        }
+        if (!user) {
+          //if no user is found
+          res.status(404);
+          console.log("no user exists.");
+        } else {
+          console.log("success");
+          const token = createToken(user._id);
+          res.status(200).json({ token });
+          // res.send({ "signed in": "yes" });
+          // db_connect.collection("picpocket-users").updateOne(
+          //   {
+          //     username: req.body.username,
+          //     password: req.body.password,
+          //     signedIn: false,
+          //   },
+          //   {
+          //     //change signedIn to true
+          //     $set: {
+          //       username: req.body.username,
+          //       password: req.body.password,
+          //       signedIn: true,
+          //     },
+          //   }
+          // );
+        }
       }
     );
+  }
 });
+
+// app.post("/SignOut", (req, res) => {
+//   let db_connect = dbo.getDb();
+
+//   db_connect
+//     .collection("picpocket-users")
+//     .updateMany(
+//       { signedIn: true },
+//       { $set: { signedIn: false } },
+//       function (err, res) {
+//         if (err) throw err;
+//         console.log("signed out");
+//       }
+//     );
+// });
 
 app.delete("/Account/:username/delUser/:pfpID", (req, res) => {
   let db_connect = dbo.getDb();

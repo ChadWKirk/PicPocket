@@ -9,14 +9,14 @@ import googleOAuthIcon from "../../images/google-logo-oauth.png";
 import facebookOauthIcon from "../../images/facebook-logo-oauth.png";
 import signInPageCollageImg from "../../images/PicPocket-SignIn-Collage2.png";
 
-const SignUpPage = ({ curUser, loggedIn }) => {
+const SignUpPage = () => {
   let navigate = useNavigate();
   //if user is already logged in, redirect to their account page
-  useEffect(() => {
-    if (loggedIn) {
-      navigate(`/Account/${curUser}`);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (loggedIn) {
+  //     navigate(`/Account/user`);
+  //   }
+  // }, []);
 
   //states for username, email and password input values
   const [username, setUsername] = useState("");
@@ -82,14 +82,14 @@ const SignUpPage = ({ curUser, loggedIn }) => {
     username: "",
     password: "",
     email: "",
-    signedIn: false,
+    // signedIn: false,
   });
 
   let newUser = {
     username: username,
     password: password,
     email: email,
-    signedIn: false,
+    // signedIn: false,
   }; //blank newUser
 
   const [usernameAlreadyExistsText, setUsernameAlreadyExistsText] = useState();
