@@ -1,5 +1,6 @@
 import { React, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuthContext } from "../context/useAuthContext";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,7 +16,7 @@ import HamburgerList from "./HamburgerList";
 
 const NavbarComponent = ({
   curUser,
-  loggedIn,
+  isLoggedIn,
   navPositionClass,
   navColorClass,
 }) => {
@@ -44,8 +45,10 @@ const NavbarComponent = ({
           })
       );
     }
-    fetchUserInfo();
-  }, []);
+    if (curUser) {
+      fetchUserInfo();
+    }
+  }, [curUser]);
 
   //check if ham menu is open or closed. sets data-hamOpenOrClosed attribute to use appropriate CSS variable values for navbar
   const [hamDataIsOpen, setHamDataIsOpen] = useState(false);
@@ -128,7 +131,7 @@ const NavbarComponent = ({
   //Clears timer so the menu doesn't appear if you just quickly pass the cursor over it.
   let onHoverTimer; //when accbutton is hovered, start timer to change isHovered to true
   let offHoverTimer; //when accbutton is not hovered, start timer to change isHovered to false
-  if (loggedIn) {
+  if (isLoggedIn) {
     accButton = (
       <div
         className="navbar__account-button-and-list-container"
@@ -213,11 +216,18 @@ const NavbarComponent = ({
     );
   }
 
+  const { dispatch } = useAuthContext();
   async function signOut() {
-    await fetch("http://localhost:5000/SignOut", {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
-    });
+    // await fetch("http://localhost:5000/SignOut", {
+    //   method: "POST",
+    //   headers: { "Content-type": "application/json" },
+    // });
+
+    //remove user from local storage
+    localStorage.removeItem("user");
+
+    //dispatch logout action
+    dispatch({ type: "LOGOUT" });
   }
   return (
     <div data-hamOpenOrClosed={hamOpenOrClosed} data-navTheme={navColorClass}>
@@ -251,7 +261,7 @@ const NavbarComponent = ({
         </div>
         <HamburgerList
           curUser={curUser}
-          loggedIn={loggedIn}
+          isLoggedIn={isLoggedIn}
           signOut={signOut}
         />
       </div>

@@ -8,7 +8,7 @@ const bcrypt = require("bcrypt");
 const validator = require("validator");
 const jwt = require("jsonwebtoken");
 const createToken = (_id) => {
-  jwt.sign({ _id: _id }, process.env.JWT_SECRET);
+  return jwt.sign({ _id: _id }, process.env.JWT_SECRET);
 };
 
 //cloudinary image hosting
@@ -139,8 +139,9 @@ app.post("/users", async (req, response) => {
               if (err) {
                 throw err;
               } else {
-                const token = createToken(user._id);
-                response.status(200).json({ token });
+                const name = req.body.username;
+                const token = createToken(user.insertedId);
+                response.status(200).json({ name, token });
               }
             }
           );
@@ -152,50 +153,51 @@ app.post("/users", async (req, response) => {
 
 //user sign in post
 app.post("/SignIn", async (req, res) => {
-  const passwordMatch = await bcrypt.compare(req.body.password, user.password);
   let db_connect = dbo.getDb();
 
-  if (!passwordMatch) {
-    res.status(400);
-    console.log("invalid password");
-  } else if (passwordMatch) {
-    db_connect.collection("picpocket-users").findOne(
-      //see if user exists via name and password
-      {
-        username: req.body.username,
-      },
-      function (err, user) {
-        if (err) {
-          res.send("err");
-        }
-        if (!user) {
-          //if no user is found
-          res.status(404);
-          console.log("no user exists.");
-        } else {
-          console.log("success");
-          const token = createToken(user._id);
-          res.status(200).json({ token });
-          // res.send({ "signed in": "yes" });
-          // db_connect.collection("picpocket-users").updateOne(
-          //   {
-          //     username: req.body.username,
-          //     password: req.body.password,
-          //     signedIn: false,
-          //   },
-          //   {
-          //     //change signedIn to true
-          //     $set: {
-          //       username: req.body.username,
-          //       password: req.body.password,
-          //       signedIn: true,
-          //     },
-          //   }
-          // );
-        }
+  db_connect.collection("picpocket-users").findOne(
+    //see if user exists via name and password
+    {
+      username: req.body.username,
+    },
+    async function (err, user) {
+      const passwordMatch = await bcrypt.compare(
+        req.body.password,
+        user.password
+      );
+      if (err) {
+        res.send("err");
       }
-    );
-  }
+      if (!user) {
+        //if no user is found
+        res.status(404);
+        console.log("no user exists.");
+      } else if (!passwordMatch) {
+        res.status(404);
+      } else if (passwordMatch) {
+        console.log("success");
+        const name = req.body.username;
+        const token = createToken(user.insertedId);
+        res.status(200).json({ name, token });
+        // res.send({ "signed in": "yes" });
+        // db_connect.collection("picpocket-users").updateOne(
+        //   {
+        //     username: req.body.username,
+        //     password: req.body.password,
+        //     signedIn: false,
+        //   },
+        //   {
+        //     //change signedIn to true
+        //     $set: {
+        //       username: req.body.username,
+        //       password: req.body.password,
+        //       signedIn: true,
+        //     },
+        //   }
+        // );
+      }
+    }
+  );
 });
 
 // app.post("/SignOut", (req, res) => {

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 //components
 import TooltipForInputField from "../../components/TooltipForInputField";
 import ModalForYesOrNo from "../../components/ModalForYesOrNo";
+import { useAuthContext } from "../../context/useAuthContext";
 //images
 import googleOAuthIcon from "../../images/google-logo-oauth.png";
 import facebookOauthIcon from "../../images/facebook-logo-oauth.png";
@@ -11,6 +12,7 @@ import signInPageCollageImg from "../../images/PicPocket-SignIn-Collage2.png";
 
 const SignUpPage = () => {
   let navigate = useNavigate();
+  const { dispatch } = useAuthContext();
   //if user is already logged in, redirect to their account page
   // useEffect(() => {
   //   if (loggedIn) {
@@ -182,6 +184,11 @@ const SignUpPage = () => {
                 </div>
               );
             } else {
+              //save token to local storage
+              localStorage.setItem("user", JSON.stringify(parsedJSON));
+              //update useAuthContext
+              dispatch({ type: "LOGIN", payload: parsedJSON });
+              //navigate to success page
               navigate(`/SignUp/${newUser.username}/Success`);
             }
           })

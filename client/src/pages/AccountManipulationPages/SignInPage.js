@@ -2,19 +2,22 @@ import { React, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 //components
 import TooltipForInputField from "../../components/TooltipForInputField";
+import { useAuthContext } from "../../context/useAuthContext";
 //images
 import signInPageCollageImg from "../../images/PicPocket-SignIn-Collage2.png";
 import googleOAuthIcon from "../../images/google-logo-oauth.png";
 import facebookOauthIcon from "../../images/facebook-logo-oauth.png";
+import { parse } from "@fortawesome/fontawesome-svg-core";
 
-const SignInPage = ({ curUser, loggedIn }) => {
+const SignInPage = ({ curUser, isLoggedIn }) => {
+  const { dispatch } = useAuthContext();
   let navigate = useNavigate();
   //if user is already logged in, redirect to their account page
-  useEffect(() => {
-    if (loggedIn) {
-      navigate(`/Account/${curUser}`);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (loggedIn) {
+  //     navigate(`/Account/${curUser}`);
+  //   }
+  // }, []);
 
   //states for username, email and password input values
   const [username, setUsername] = useState("");
@@ -79,26 +82,28 @@ const SignInPage = ({ curUser, loggedIn }) => {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify(signInUser),
-      }).then((response) => {
-        if (response.ok) {
-          // setCurUser({
-          //   //set curUser (current signed in user since sign in was successful. passes name as prop to navbar)
-          //   username: username,
-          //   password: password,
-          //   signedIn: false,
-          // });
-          window.location.href = "/";
-          //navigate("/");
-        } else if (response.status === 404) {
-          //if sign in fails
-          setInvalidCredentialsAlert(
-            <div className="sign-in-page__invalid-username-or-password-alert-box">
-              Invalid username or password.
-            </div>
-          );
-          // window.alert("Account does not exist. Sign in failed.");
-        }
-      });
+      }).then((response) =>
+        response
+          .json()
+          .then((resJSON) => JSON.stringify(resJSON))
+          .then((stringJSON) => JSON.parse(stringJSON))
+          .then((parsedJSON) => {
+            if (parsedJSON.ok) {
+              localStorage.setItem("user", JSON.stringify(parsedJSON));
+              dispatch({ type: "LOGIN", payload: parsedJSON });
+              window.location.href = "/";
+              //navigate("/");
+            } else if (parsedJSON.status === 404) {
+              //if sign in fails
+              setInvalidCredentialsAlert(
+                <div className="sign-in-page__invalid-username-or-password-alert-box">
+                  Invalid username or password.
+                </div>
+              );
+              // window.alert("Account does not exist. Sign in failed.");
+            }
+          })
+      );
     }
   }
 

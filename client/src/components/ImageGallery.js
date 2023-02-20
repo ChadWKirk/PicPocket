@@ -7,7 +7,7 @@ import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 
 const ImageGallery = ({
   curUser,
-  loggedIn,
+  isLoggedIn,
   sort,
   filter,
   page,

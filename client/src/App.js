@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Routes, Route } from "react-router-dom";
+import { useAuthContext } from "./context/useAuthContext";
 //components
 import Footer from "./components/Footer";
 
@@ -77,6 +78,22 @@ function App() {
   // if (isLoading) {
   //   return null;
   // } else {
+
+  const { user } = useAuthContext();
+  console.log(user);
+  const [curUser, setCurUser] = useState();
+  const [isLoggedIn, setIsLoggedIn] = useState();
+  useEffect(() => {
+    if (user !== null) {
+      setCurUser(user.name);
+      setIsLoggedIn(true);
+      console.log(isLoggedIn);
+    } else {
+      setCurUser();
+      setIsLoggedIn(false);
+    }
+  }, [user]);
+
   return (
     <div className="app">
       <Routes>
@@ -84,8 +101,8 @@ function App() {
           path="/"
           element={
             <MainPage
-              // curUser={curUser}
-              // loggedIn={loggedIn}
+              curUser={curUser}
+              isLoggedIn={isLoggedIn}
               isJustDeleted={isJustDeleted}
               setIsJustDeleted={setIsJustDeleted}
               isShowingImageSelectModal={isShowingImageSelectModal}
@@ -99,8 +116,8 @@ function App() {
           path="/most-popular"
           element={
             <MainPageMostPopularImages
-            // curUser={curUser}
-            // loggedIn={loggedIn}
+              curUser={curUser}
+              isLoggedIn={isLoggedIn}
             />
           }
         ></Route>
@@ -108,8 +125,8 @@ function App() {
           path="/search/:searchQuery/:sort/:filter"
           element={
             <SearchResultPage
-              // curUser={curUser}
-              // loggedIn={loggedIn}
+              curUser={curUser}
+              isLoggedIn={isLoggedIn}
               isShowingImageSelectModal={isShowingImageSelectModal}
               setIsShowingImageSelectModal={setIsShowingImageSelectModal}
               imgTitleArrState={imgTitleArrState}
@@ -121,8 +138,8 @@ function App() {
           path="/image/:imageTitle"
           element={
             <ImageViewPage
-              // curUser={curUser}
-              // loggedIn={loggedIn}
+              curUser={curUser}
+              isLoggedIn={isLoggedIn}
               isShowingImageSelectModal={isShowingImageSelectModal}
               setIsShowingImageSelectModal={setIsShowingImageSelectModal}
               imgTitleArrState={imgTitleArrState}
@@ -132,12 +149,11 @@ function App() {
         ></Route>
         <Route path="/like-test" element={<LikeTestPage />}></Route>
         <Route
-          // path={`/Account/${curUser}`}
-          path={`/Account/user`}
+          path={`/Account/${curUser}`}
           element={
             <UserSettingsPage
-              // curUser={curUser}
-              // loggedIn={loggedIn}
+              curUser={curUser}
+              isLoggedIn={isLoggedIn}
               // setLoggedIn={setLoggedIn}
               isJustDeleted={isJustDeleted}
               setIsJustDeleted={setIsJustDeleted}
@@ -148,8 +164,8 @@ function App() {
           path={`/User/:username`}
           element={
             <UserPage
-              // curUser={curUser}
-              // loggedIn={loggedIn}
+              curUser={curUser}
+              isLoggedIn={isLoggedIn}
               isShowingImageSelectModal={isShowingImageSelectModal}
               setIsShowingImageSelectModal={setIsShowingImageSelectModal}
               imgTitleArrState={imgTitleArrState}
@@ -158,12 +174,11 @@ function App() {
           }
         ></Route>
         <Route
-          // path={`/Account/${curUser}/My-Pics/:sort/:filter`}
-          path={`/Account/user/My-Pics/:sort/:filter`}
+          path={`/Account/${curUser}/My-Pics/:sort/:filter`}
           element={
             <MyPicsPage
-              // curUser={curUser}
-              // loggedIn={loggedIn}
+              curUser={curUser}
+              // isLoggedIn={isLoggedIn}
               isShowingImageSelectModal={isShowingImageSelectModal}
               setIsShowingImageSelectModal={setIsShowingImageSelectModal}
               imgTitleArrState={imgTitleArrState}
@@ -175,8 +190,8 @@ function App() {
           path={`/Account/:username/Likes/:sort/:filter`}
           element={
             <LikesPage
-              // curUser={curUser}
-              // loggedIn={loggedIn}
+              curUser={curUser}
+              // isLoggedIn={isLoggedIn}
               isShowingImageSelectModal={isShowingImageSelectModal}
               setIsShowingImageSelectModal={setIsShowingImageSelectModal}
               imgTitleArrState={imgTitleArrState}
@@ -185,29 +200,16 @@ function App() {
           }
         ></Route>
         <Route
-          // path={`/${curUser}/upload`}
-          path={`/user/upload`}
-          element={
-            <UploadPage
-            // curUser={curUser} loggedIn={loggedIn}
-            />
-          }
+          path={`/${curUser}/upload`}
+          element={<UploadPage curUser={curUser} isLoggedIn={isLoggedIn} />}
         ></Route>
         <Route
           path="/SignIn"
-          element={
-            <SignInPage
-            // curUser={curUser} loggedIn={loggedIn}
-            />
-          }
+          element={<SignInPage curUser={curUser} isLoggedIn={isLoggedIn} />}
         ></Route>
         <Route
           path="/SignUp"
-          element={
-            <SignUpPage
-            //  curUser={curUser} loggedIn={loggedIn}
-            />
-          }
+          element={<SignUpPage curUser={curUser} isLoggedIn={isLoggedIn} />}
         ></Route>
         <Route
           path="/SignUp/:username/Success"
@@ -215,56 +217,32 @@ function App() {
         ></Route>
         <Route
           path="/delSuccess"
-          element={
-            <DelSuccessPage
-            // curUser={curUser} loggedIn={loggedIn}
-            />
-          }
+          element={<DelSuccessPage curUser={curUser} isLoggedIn={isLoggedIn} />}
         ></Route>
         <Route
           path="/Privacy-Policy"
           element={
-            <PrivacyPolicyPage
-            //  curUser={curUser} loggedIn={loggedIn}
-            />
+            <PrivacyPolicyPage curUser={curUser} isLoggedIn={isLoggedIn} />
           }
         ></Route>
         <Route
           path="/Terms-And-Conditions"
-          element={
-            <TOSPage
-            // curUser={curUser} loggedIn={loggedIn}
-            />
-          }
+          element={<TOSPage curUser={curUser} isLoggedIn={isLoggedIn} />}
         ></Route>
         <Route
           path="/Disclaimer"
-          element={
-            <DisclaimerPage
-            // curUser={curUser} loggedIn={loggedIn}
-            />
-          }
+          element={<DisclaimerPage curUser={curUser} isLoggedIn={isLoggedIn} />}
         ></Route>
         <Route
           path="/Credits"
-          element={
-            <CreditsPage
-            // curUser={curUser} loggedIn={loggedIn}
-            />
-          }
+          element={<CreditsPage curUser={curUser} isLoggedIn={isLoggedIn} />}
         ></Route>
         <Route
           path="/Contact"
-          element={
-            <ContactUsPage
-            //  curUser={curUser} loggedIn={loggedIn}
-            />
-          }
+          element={<ContactUsPage curUser={curUser} isLoggedIn={isLoggedIn} />}
         ></Route>
       </Routes>
-      <Footer
-      // curUser={curUser} loggedIn={loggedIn}
-      />
+      <Footer curUser={curUser} isLoggedIn={isLoggedIn} />
     </div>
   );
 }
