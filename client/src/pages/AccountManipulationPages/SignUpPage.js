@@ -177,7 +177,8 @@ const SignUpPage = ({ curUser, loggedIn }) => {
               setPasswordInputClass("red-input-border");
               setPasswordNotStrongEnoughText(
                 <div className="sign-in-page__already-exists-message">
-                  Password is not strong enough.
+                  Password is not strong enough. (Requirements - 8 characters,
+                  one uppercase letter, one number and one special character).
                 </div>
               );
             } else {
