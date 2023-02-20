@@ -104,6 +104,9 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
       // let result = parts[parts.length - 1];
       let assetId = element.asset_id;
       let checkbox;
+      let elBytes = element.bytes;
+      let elKilobytes = (elBytes / 1024).toFixed(2);
+      let elMegabytes = (elBytes / 1048576).toFixed(2);
 
       //set if checkbox is checked or not based on isCheckedArrState
       //need to turn the onchange into a function
@@ -191,8 +194,10 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
                 </p>
               </div>
               <div className="mypics-img-gallery__img-info-size-container">
-                <p>123 x 321</p>
-                <p>800kb</p>
+                <p>
+                  {element.width} x {element.height}
+                </p>
+                <p>{elMegabytes}Mb</p>
               </div>
             </div>
           </label>
@@ -253,7 +258,7 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
       document.querySelector("#imageTypeInputID").value =
         bulkArr.current[0].imageType;
       setImageType(bulkArr.current[0].imageType);
-      document.querySelector("#previewImageForEditor").src =
+      document.querySelector("#my-pics-editor__preview-image-for-editor").src =
         bulkArr.current[0].secure_url.slice(0, 50) +
         "q_60/c_scale,w_600/dpr_auto/" +
         bulkArr.current[0].secure_url.slice(
@@ -266,7 +271,8 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
       document.querySelector("#tagsInputID").value = null;
       document.querySelector("#descriptionInputID").value = null;
       document.querySelector("#imageTypeInputID").value = null;
-      document.querySelector("#previewImageForEditor").src = null;
+      document.querySelector("#my-pics-editor__preview-image-for-editor").src =
+        null;
     }
   }
 
@@ -285,7 +291,9 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
 
   async function submitForm(e) {
     e.preventDefault();
-    if (titleClass == "editorFormDetailsSubContainerInputRed") {
+    if (
+      titleClass == "my-pics-editor__editor-form-details-sub-containerInputRed"
+    ) {
       return;
     }
     bulkArr.current[0].title = title;
@@ -441,10 +449,10 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
   let titleClass;
   if (/[~`!#$%\^&*+=\\[\]\\;,/{}|\\":<>\?]/g.test(title)) {
     console.log("special");
-    titleClass = "editorFormDetailsSubContainerInputRed";
+    titleClass = "my-pics-editor__editor-form-details-sub-containerInputRed";
   } else {
     console.log("no special");
-    titleClass = "editorFormDetailsSubContainerInput";
+    titleClass = "my-pics-editor__editor-form-details-sub-containerInput";
   }
 
   let specialMessage;
@@ -620,16 +628,25 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
           <div className="myPicsGallery">{imgGallery}</div>
         </div>
 
-        <div className="myPicsGalleryEditorContainer">
+        <div className="my-pics-editor__container">
           <div
-            className={`${bulkArr.current.length != 1 ? "previewDiv" : "gone"}`}
+            className={`${
+              bulkArr.current.length != 1
+                ? "my-pics-editor__choose-image-div"
+                : "gone"
+            }`}
           >
-            <FontAwesomeIcon icon={faEye} className="eyeIcon" />
+            <FontAwesomeIcon
+              icon={faEye}
+              className="my-pics-editor__eye-icon"
+            />
             <p>Select a single image to edit it here.</p>
           </div>
           <form
             className={`${
-              bulkArr.current.length == 1 ? "editorFormContainer" : "gone"
+              bulkArr.current.length == 1
+                ? "my-pics-editor__editor-form-container"
+                : "gone"
             }`}
             onSubmit={(e) => submitForm(e)}
           >
@@ -662,12 +679,24 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
                   onChange={(e) => setTitle(e.target.value)}
                 ></input>
               </div>
-              <img id="previewImageForEditor" src={""}></img>
-              <div className="editorFormDetailsContainer">
-                <div className="editorFormDetailsSubContainer">
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <img
+                  id="my-pics-editor__preview-image-for-editor"
+                  src={""}
+                ></img>
+              </div>
+
+              <div className="my-pics-editor__editor-form-details-container">
+                <div className="my-pics-editor__editor-form-details-sub-container">
                   {/* don't allow anything but letters and numbers. no special characters */}
                 </div>
-                <div className="editorFormDetailsSubContainer">
+                <div className="my-pics-editor__editor-form-details-sub-container">
                   {/* copy how cloudinary lets you add tags. maybe bootstrap */}
                   <div style={{ fontSize: "0.75rem" }}>
                     Tags (Separate with commas. Ex: tag, tags)
@@ -679,7 +708,7 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
                     ></input>
                   </div>
                 </div>
-                <div className="editorFormDetailsSubContainer">
+                <div className="my-pics-editor__editor-form-details-sub-container">
                   {/* have max length of 500 characters */}
                   <div style={{ fontSize: "0.75rem" }}>Description</div>
                   <div>
@@ -689,7 +718,7 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
                     ></textarea>
                   </div>
                 </div>
-                <div className="editorFormDetailsSubContainer">
+                <div className="my-pics-editor__editor-form-details-sub-container">
                   <div style={{ fontSize: "0.75rem" }}>Image type</div>
                   <div>
                     <select

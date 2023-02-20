@@ -2204,21 +2204,112 @@ button {
   display: flex;
 } */
 
-.previewDiv {
+/* My Pics Editor Form CSS */
+
+.my-pics-editor__container {
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  padding-top: 0.6rem;
+  border-top: 2px solid rgba(169, 169, 169, 0.21);
+  background-color: #f2f2f2;
+}
+.my-pics-editor__eye-icon {
+  font-size: 1.75rem;
+  opacity: 0.4;
+}
+.my-pics-editor__choose-image-div {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.75rem;
   margin-top: 2rem;
 }
-
-.previewDiv p {
+.my-pics-editor__choose-image-div p {
   opacity: 0.5;
 }
 
-.eyeIcon {
-  font-size: 1.75rem;
-  opacity: 0.4;
+.my-pics-editor__editor-form-container {
+  width: 25vw;
+}
+#my-pics-editor__preview-image-for-editor {
+  max-width: 100%;
+  max-height: 300px;
+  margin-bottom: 1rem;
+  margin-top: 1.75rem;
+  outline: 4px solid rgb(233, 233, 233);
+}
+.my-pics-editor__editor-form-details-container {
+}
+.my-pics-editor__editor-form-details-sub-container {
+  font-size: 1.25rem;
+  margin-top: 1.7rem;
+}
+.my-pics-editor__editor-form-details-sub-container input {
+  width: 100%;
+  border-radius: 4px;
+  border: 1px solid lightgray;
+  font-size: 0.85rem;
+  /* font-weight: 600; */
+  padding: 0.35rem;
+  padding-left: 0.5rem;
+  margin-top: 0.6rem;
+}
+.my-pics-editor__editor-form-details-sub-container textarea {
+  width: 100%;
+  border-radius: 4px;
+  border: 1px solid lightgray;
+  font-size: 0.85rem;
+  /* font-weight: 600; */
+  padding: 0.35rem;
+  padding-left: 0.5rem;
+  margin-top: 0.6rem;
+  height: 5rem;
+  resize: none;
+}
+.textArea1 {
+  /*idk where this is used at at this point*/
+  width: 100%;
+  border-radius: 4px;
+  border: 1px solid lightgray;
+  font-size: 0.85rem;
+  /* font-weight: 600; */
+  padding: 0.35rem;
+  padding-left: 0.5rem;
+  margin-top: 0.6rem;
+  height: 5rem;
+  resize: none;
+}
+.my-pics-editor__editor-form-details-sub-containerInput {
+  width: 100%;
+  border-radius: 4px;
+  /* border: 2px solid black; */
+  /* border: none; */
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.35rem;
+  padding-left: 0.5rem;
+  margin-top: 0.6rem;
+}
+.my-pics-editor__editor-form-details-sub-containerInputRed {
+  width: 100%;
+  border-radius: 4px;
+  border: 2px solid rgb(151, 0, 0);
+  /* border: none; */
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.35rem;
+  padding-left: 0.5rem;
+  margin-top: 0.6rem;
+}
+.my-pics-editor__editor-form-details-sub-containerInputRed:focus {
+  /* border: none; */
+  border: 2px solid rgb(151, 0, 0);
+  outline: none;
+}
+.my-pics-editor__editor-form-details-sub-containerInput:focus {
+  /* border: none; */
+  border: 2px solid black;
+  outline: none;
 }
 
 .mypics-image-gallery__img-container:hover .myPicsGallery-img {
@@ -2290,14 +2381,6 @@ button {
   flex-grow: 999;
 }
 
-.myPicsGalleryEditorContainer {
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
-  padding-top: 0.6rem;
-  border-top: 2px solid rgba(169, 169, 169, 0.21);
-  background-color: #f2f2f2;
-}
-
 /* mypics gallery scrollbar */
 
 .myPicsGallery::-webkit-scrollbar {
@@ -2312,96 +2395,6 @@ button {
 
 .myPicsGallery::-webkit-scrollbar-corner {
   background: rgba(0, 0, 0, 0);
-}
-
-.editorFormContainer {
-  width: 25vw;
-}
-
-#previewImageForEditor {
-  width: 100%;
-  max-height: 300px;
-  margin-bottom: 1rem;
-  margin-top: 1.75rem;
-  outline: 4px solid rgb(233, 233, 233);
-}
-
-.editorFormDetailsSubContainer {
-  font-size: 1.25rem;
-  margin-top: 1.7rem;
-}
-
-.editorFormDetailsSubContainer input {
-  width: 100%;
-  border-radius: 4px;
-  border: 1px solid lightgray;
-  font-size: 0.85rem;
-  /* font-weight: 600; */
-  padding: 0.35rem;
-  padding-left: 0.5rem;
-  margin-top: 0.6rem;
-}
-
-.editorFormDetailsSubContainer textarea {
-  width: 100%;
-  border-radius: 4px;
-  border: 1px solid lightgray;
-  font-size: 0.85rem;
-  /* font-weight: 600; */
-  padding: 0.35rem;
-  padding-left: 0.5rem;
-  margin-top: 0.6rem;
-  height: 5rem;
-  resize: none;
-}
-
-.textArea1 {
-  width: 100%;
-  border-radius: 4px;
-  border: 1px solid lightgray;
-  font-size: 0.85rem;
-  /* font-weight: 600; */
-  padding: 0.35rem;
-  padding-left: 0.5rem;
-  margin-top: 0.6rem;
-  height: 5rem;
-  resize: none;
-}
-
-.editorFormDetailsSubContainerInput {
-  width: 100%;
-  border-radius: 4px;
-  /* border: 2px solid black; */
-  /* border: none; */
-  font-size: 0.85rem;
-  font-weight: 600;
-  padding: 0.35rem;
-  padding-left: 0.5rem;
-  margin-top: 0.6rem;
-}
-
-.editorFormDetailsSubContainerInputRed {
-  width: 100%;
-  border-radius: 4px;
-  border: 2px solid rgb(151, 0, 0);
-  /* border: none; */
-  font-size: 0.85rem;
-  font-weight: 600;
-  padding: 0.35rem;
-  padding-left: 0.5rem;
-  margin-top: 0.6rem;
-}
-
-.editorFormDetailsSubContainerInputRed:focus {
-  /* border: none; */
-  border: 2px solid rgb(151, 0, 0);
-  outline: none;
-}
-
-.editorFormDetailsSubContainerInput:focus {
-  /* border: none; */
-  border: 2px solid black;
-  outline: none;
 }
 
 .footerContainer {
