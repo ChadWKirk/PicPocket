@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 
-const HamburgerList = ({ curUser, loggedIn, signOut }) => {
+const HamburgerList = ({ curUser, isLoggedIn, signOut }) => {
   let hamburgerPicPocketList;
-  if (loggedIn) {
+  if (isLoggedIn) {
     hamburgerPicPocketList = (
       <ul>
         <li>
@@ -29,7 +29,7 @@ const HamburgerList = ({ curUser, loggedIn, signOut }) => {
         </li>
       </ul>
     );
-  } else if (!loggedIn) {
+  } else if (!isLoggedIn) {
     hamburgerPicPocketList = (
       <ul>
         <li>

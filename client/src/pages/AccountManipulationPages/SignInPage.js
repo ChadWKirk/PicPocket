@@ -88,12 +88,7 @@ const SignInPage = ({ curUser, isLoggedIn }) => {
           .then((resJSON) => JSON.stringify(resJSON))
           .then((stringJSON) => JSON.parse(stringJSON))
           .then((parsedJSON) => {
-            if (parsedJSON.ok) {
-              localStorage.setItem("user", JSON.stringify(parsedJSON));
-              dispatch({ type: "LOGIN", payload: parsedJSON });
-              window.location.href = "/";
-              //navigate("/");
-            } else if (parsedJSON.status === 404) {
+            if (parsedJSON.status === 404) {
               //if sign in fails
               setInvalidCredentialsAlert(
                 <div className="sign-in-page__invalid-username-or-password-alert-box">
@@ -101,6 +96,12 @@ const SignInPage = ({ curUser, isLoggedIn }) => {
                 </div>
               );
               // window.alert("Account does not exist. Sign in failed.");
+            } else {
+              console.log("ok");
+              localStorage.setItem("user", JSON.stringify(parsedJSON));
+              dispatch({ type: "LOGIN", payload: parsedJSON });
+              window.location.href = "/";
+              //navigate("/");
             }
           })
       );
