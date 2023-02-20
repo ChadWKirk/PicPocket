@@ -26,6 +26,7 @@ const SignUpPage = ({ curUser, loggedIn }) => {
   //classes for username and email input elements to switch to red border when using special chars in username or if username/email already exist
   const [usernameInputClass, setUsernameInputClass] = useState();
   const [emailInputClass, setEmailInputClass] = useState();
+  const [passwordInputClass, setPasswordInputClass] = useState();
 
   //don't accept special characters for username
   const [isSpecialCharacter, setIsSpecialCharacter] = useState(false);
@@ -93,6 +94,8 @@ const SignUpPage = ({ curUser, loggedIn }) => {
 
   const [usernameAlreadyExistsText, setUsernameAlreadyExistsText] = useState();
   const [emailAlreadyExistsText, setEmailAlreadyExistsText] = useState();
+  const [passwordNotStrongEnoughText, setPasswordNotStrongEnoughText] =
+    useState();
 
   async function onSubmit(e) {
     e.preventDefault();
@@ -161,6 +164,20 @@ const SignUpPage = ({ curUser, loggedIn }) => {
               setEmailAlreadyExistsText(
                 <div className="sign-in-page__already-exists-message">
                   Email already exists.
+                </div>
+              );
+            } else if (parsedJSON == "Email is not valid") {
+              setEmailInputClass("red-input-border");
+              setEmailAlreadyExistsText(
+                <div className="sign-in-page__already-exists-message">
+                  Email is not a valid Email address.
+                </div>
+              );
+            } else if (parsedJSON == "Password is not strong enough") {
+              setPasswordInputClass("red-input-border");
+              setPasswordNotStrongEnoughText(
+                <div className="sign-in-page__already-exists-message">
+                  Password is not strong enough.
                 </div>
               );
             } else {
@@ -278,10 +295,13 @@ const SignUpPage = ({ curUser, loggedIn }) => {
                 >
                   *
                 </p>
+                {passwordNotStrongEnoughText}
               </label>
+
               <input
                 id="password"
                 onChange={(event) => setPassword(event.target.value)}
+                className={passwordInputClass}
               ></input>
               {passwordTooltip}
             </div>

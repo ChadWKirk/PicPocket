@@ -4,6 +4,8 @@ const router = express.Router();
 require("dotenv").config({ path: "./config.env" });
 const cors = require("cors");
 const port = process.env.PORT || 5000;
+const bcrypt = require("bcrypt");
+const validator = require("validator");
 
 //cloudinary image hosting
 const cloudinary = require("cloudinary").v2;
@@ -74,9 +76,23 @@ app.get("/curUser", (req, res) => {
       }
     });
 });
+
 //sign up post
-router.post("/signup", async (req, res) => {});
-app.post("/users", (req, response) => {
+app.post("/users", async (req, response) => {
+  //validation
+  if (!validator.isEmail(req.body.email)) {
+    response.json("Email is not valid");
+    return;
+  }
+  if (!validator.isStrongPassword(req.body.password)) {
+    response.json("Password is not strong enough");
+    return;
+  }
+
+  //password hashing
+  const salt = await bcrypt.genSalt(10);
+  const hash = await bcrypt.hash(req.body.password, salt);
+
   let db_connect = dbo.getDb();
 
   //check if username or email already exists
@@ -109,7 +125,7 @@ app.post("/users", (req, response) => {
           await db_connect.collection("picpocket-users").insertOne(
             {
               username: req.body.username,
-              password: req.body.password,
+              password: hash,
               email: req.body.email,
               bio: "",
               pfp: "https://res.cloudinary.com/dtyg4ctfr/image/upload/v1674238936/PicPocket/default_purple_pfp_ibof5p.jpg",
