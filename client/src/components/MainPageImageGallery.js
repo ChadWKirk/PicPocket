@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faDownload } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 
-const MainPageImageGallery = ({ curUser, loggedIn }) => {
+const MainPageImageGallery = ({ curUser, isLoggedIn }) => {
   //img array to display
   const [imgGallery, setImgGallery] = useState([]);
   //fetch img array to map over

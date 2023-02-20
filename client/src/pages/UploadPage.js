@@ -4,7 +4,7 @@ import UploadForm from "../components/UploadForm";
 import FileList from "../components/FileList";
 import RedBanner from "../components/RedBanner";
 
-const UploadPage = ({ curUser, loggedIn }) => {
+const UploadPage = ({ curUser, isLoggedIn }) => {
   const [imagesToUpload, setImagesToUpload] = useState([]);
   const [imageError, setImageError] = useState(false);
 
@@ -18,7 +18,7 @@ const UploadPage = ({ curUser, loggedIn }) => {
     <div>
       <NavbarComponent
         curUser={curUser}
-        loggedIn={loggedIn}
+        isLoggedIn={isLoggedIn}
         navPositionClass={"fixed"}
         navColorClass={"white"}
       />

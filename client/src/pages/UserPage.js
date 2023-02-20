@@ -5,7 +5,7 @@ import NavbarComponent from "../components/NavbarComponent";
 import ImageGallerySortFilterAndSubheadingComponent from "../components/ImageGallerySortFilterAndSubheadingComponent";
 import ImageGallery from "../components/ImageGallery";
 
-const UserPage = ({ curUser, loggedIn }) => {
+const UserPage = ({ curUser, isLoggedIn }) => {
   const { username } = useParams();
 
   //to get number of images in array for "x pics liked by user" or "x search results" heading
@@ -53,7 +53,7 @@ const UserPage = ({ curUser, loggedIn }) => {
       {/* <NavBar curUser={curUser} loggedIn={loggedIn} /> */}
       <NavbarComponent
         curUser={curUser}
-        loggedIn={loggedIn}
+        isLoggedIn={isLoggedIn}
         navPositionClass={"fixed"}
         navColorClass={"white"}
       />
@@ -84,7 +84,7 @@ const UserPage = ({ curUser, loggedIn }) => {
           {/* </div> */}
           <ImageGallery
             curUser={curUser}
-            loggedIn={loggedIn}
+            isLoggedIn={isLoggedIn}
             sort={sort}
             filter={filter}
             imgGalleryLength={imgGalleryLength}

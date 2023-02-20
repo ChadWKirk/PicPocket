@@ -1,12 +1,12 @@
 import React from "react";
 import NavbarComponent from "../components/NavbarComponent";
 
-const CreditsPage = ({ curUser, loggedIn }) => {
+const CreditsPage = ({ curUser, isLoggedIn }) => {
   return (
     <div>
       <NavbarComponent
         curUser={curUser}
-        loggedIn={loggedIn}
+        isLoggedIn={isLoggedIn}
         navPositionClass={"fixed"}
         navColorClass={"white"}
       />

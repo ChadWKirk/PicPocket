@@ -8,7 +8,7 @@ import ImageGallery from "../../components/ImageGallery";
 
 const SearchResultsPage = ({
   curUser,
-  loggedIn,
+  isLoggedIn,
   isShowingImageSelectModal,
   setIsShowingImageSelectModal,
   imgTitleArrState,
@@ -37,7 +37,7 @@ const SearchResultsPage = ({
     <div>
       <NavbarComponent
         curUser={curUser}
-        loggedIn={loggedIn}
+        isLoggedIn={isLoggedIn}
         navPositionClass={"fixed"}
         navColorClass={"white"}
       />
@@ -65,7 +65,7 @@ const SearchResultsPage = ({
         {/* </div> */}
         <ImageGallery
           curUser={curUser}
-          loggedIn={loggedIn}
+          isLoggedIn={isLoggedIn}
           sort={sort}
           filter={filter}
           imgGalleryLength={imgGalleryLength}

@@ -15,7 +15,7 @@ import HamburgerList from "./HamburgerList";
 
 const MainPageNavBar = ({
   curUser,
-  loggedIn,
+  isLoggedIn,
   navPositionClass,
   navColorClass,
 }) => {
@@ -116,7 +116,7 @@ const MainPageNavBar = ({
   //Clears timer so the menu doesn't appear if you just quickly pass the cursor over it.
   let onHoverTimer; //when accbutton is hovered, start timer to change isHovered to true
   let offHoverTimer; //when accbutton is not hovered, start timer to change isHovered to false
-  if (loggedIn) {
+  if (isLoggedIn) {
     accButton = (
       <div
         className="navbar__account-button-and-list-container"
@@ -252,7 +252,11 @@ const MainPageNavBar = ({
           {hamburgerButton}
         </div>
       </div>
-      <HamburgerList curUser={curUser} loggedIn={loggedIn} signOut={signOut} />
+      <HamburgerList
+        curUser={curUser}
+        isLoggedIn={isLoggedIn}
+        signOut={signOut}
+      />
     </div>
   );
 };

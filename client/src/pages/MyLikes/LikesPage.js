@@ -7,7 +7,7 @@ import ImageGallery from "../../components/ImageGallery";
 
 const LikesPage = ({
   curUser,
-  loggedIn,
+  isLoggedIn,
   isShowingImageSelectModal,
   setIsShowingImageSelectModal,
   imgTitleArrState,
@@ -65,10 +65,10 @@ const LikesPage = ({
   }
   return (
     <div>
-      {/* <NavBar curUser={curUser} loggedIn={loggedIn} /> */}
+      {/* <NavBar curUser={curUser} isLoggedIn={isLoggedIn} /> */}
       <NavbarComponent
         curUser={curUser}
-        loggedIn={loggedIn}
+        isLoggedIn={isLoggedIn}
         navPositionClass={"fixed"}
         navColorClass={"white"}
       />
@@ -119,7 +119,7 @@ const LikesPage = ({
           {/* {resultsMap} */}
           <ImageGallery
             curUser={curUser}
-            loggedIn={loggedIn}
+            isLoggedIn={isLoggedIn}
             page={"likesPage"}
             filter={filter}
             sort={sort}

@@ -42,8 +42,6 @@ make about us page
 
 ---
 
-Handle log in token stuff (not getting right response)
-
 handle errors for blank fields etc.
 
 back end for change bio and change email

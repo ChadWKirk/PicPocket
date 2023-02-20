@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import NavbarComponent from "../components/NavbarComponent";
 import PaperWorkButtons from "../components/PaperWorkButtons";
 
-const DisclaimerPage = ({ curUser, loggedIn }) => {
+const DisclaimerPage = ({ curUser, isLoggedIn }) => {
   let disclaimerID = process.env.REACT_APP_TERMLY_DISCLAIMER_ID;
 
   useEffect(() => {
@@ -16,7 +16,7 @@ const DisclaimerPage = ({ curUser, loggedIn }) => {
     <div>
       <NavbarComponent
         curUser={curUser}
-        loggedIn={loggedIn}
+        isLoggedIn={isLoggedIn}
         navPositionClass={"fixed"}
         navColorClass={"white"}
       />

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import NavbarComponent from "../components/NavbarComponent";
 import PaperWorkButtons from "../components/PaperWorkButtons";
 
-const PrivacyPolicyPage = ({curUser, loggedIn}) => {
+const PrivacyPolicyPage = ({ curUser, isLoggedIn }) => {
   let privacyID = process.env.REACT_APP_TERMLY_PRIVACY_POLICY_ID;
 
   useEffect(() => {
@@ -16,7 +16,7 @@ const PrivacyPolicyPage = ({curUser, loggedIn}) => {
     <div>
       <NavbarComponent
         curUser={curUser}
-        loggedIn={loggedIn}
+        isLoggedIn={isLoggedIn}
         navPositionClass={"fixed"}
         navColorClass={"white"}
       />

@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
 
-const MyPicsPage = ({ curUser, loggedIn }) => {
+const MyPicsPage = ({ curUser, isLoggedIn }) => {
   const [massDlLink, setMassDlLink] = useState();
 
   //toast stuff
@@ -468,7 +468,7 @@ const MyPicsPage = ({ curUser, loggedIn }) => {
     <div style={{ overflow: "hidden" }}>
       <NavbarComponent
         curUser={curUser}
-        loggedIn={loggedIn}
+        isLoggedIn={isLoggedIn}
         navPositionClass={"fixed"}
         navColorClass={"white"}
       />

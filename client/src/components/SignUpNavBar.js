@@ -6,7 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
-const SignUpNavBar = ({ curUser, loggedIn }) => {
+const SignUpNavBar = ({ curUser, isLoggedIn }) => {
   let soButton;
   let accButton;
   let siButton;
@@ -26,7 +26,7 @@ const SignUpNavBar = ({ curUser, loggedIn }) => {
 
   const [hoverClass, setHoverClass] = useState(false);
 
-  if (loggedIn) {
+  if (isLoggedIn) {
     accButton = (
       <div
         className="navbarDropCont"

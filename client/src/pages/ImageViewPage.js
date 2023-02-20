@@ -15,7 +15,7 @@ import { AiFillLike } from "react-icons/ai";
 
 const ImageViewPage = ({
   curUser,
-  loggedIn,
+  isLoggedIn,
   isShowingImageSelectModal,
   setIsShowingImageSelectModal,
   imgTitleArrState,
@@ -555,7 +555,7 @@ const ImageViewPage = ({
       )}
       <NavbarComponent
         curUser={curUser}
-        loggedIn={loggedIn}
+        isLoggedIn={isLoggedIn}
         navPositionClass={"fixed"}
         navColorClass={"white"}
       />

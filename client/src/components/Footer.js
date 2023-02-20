@@ -1,8 +1,8 @@
 import React from "react";
 
-const Footer = ({ curUser, loggedIn }) => {
+const Footer = ({ curUser, isLoggedIn }) => {
   let footerPicPocketContent;
-  if (loggedIn) {
+  if (isLoggedIn) {
     footerPicPocketContent = (
       <div>
         <h4>PicPocket</h4>
@@ -30,7 +30,7 @@ const Footer = ({ curUser, loggedIn }) => {
         </ul>
       </div>
     );
-  } else if (!loggedIn) {
+  } else if (!isLoggedIn) {
     footerPicPocketContent = (
       <div>
         <h4>PicPocket</h4>
