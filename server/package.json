@@ -14,7 +14,7 @@
     "nodemon": "^2.0.20"
   },
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "server.js"
   },
   "name": "server",
   "version": "1.0.0",
