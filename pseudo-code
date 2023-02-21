@@ -11,11 +11,15 @@ Hosting and git workflow:
 
 Complete app is on github in above link
 
-Frontend is hosted on Netlify - in client folder, npm run build > netlify deploy ./build > netlify deploy --prod ./build
+Frontend is hosted on Netlify - Install Netlify CLI in client folder > npm run build > netlify deploy ./build > netlify deploy --prod ./build
 
-Backend is hosted on Heroku - in server folder, git add . > git commit -am "message" > git push heroku main
+Backend is hosted on Heroku - Install Heroku CLI in server folder > git add . > git commit -am "message" > git push heroku main
 
 Have domain variable in App.js to toggle between using localhost for fetch routes or heroku domain for fetch routes to make it easier to develop
+
+Email:
+
+Email is done by Zoho and is connected to the https://picpoccket.com domain.
 
 Image Selection (My Pics, My Likes):
 
