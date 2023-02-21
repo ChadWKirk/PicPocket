@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 const UserSettingsPage = ({
   curUser,
-  loggedIn,
+  isLoggedIn,
   isJustDeleted,
   setIsJustDeleted,
   setLoggedIn,
@@ -220,7 +220,7 @@ const UserSettingsPage = ({
     <div>
       <NavbarComponent
         curUser={curUser}
-        loggedIn={loggedIn}
+        isLoggedIn={isLoggedIn}
         navPositionClass={"fixed"}
         navColorClass={"white"}
       />

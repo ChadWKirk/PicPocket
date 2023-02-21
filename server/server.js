@@ -4,6 +4,7 @@ const router = express.Router();
 require("dotenv").config({ path: "./config.env" });
 const cors = require("cors");
 const port = process.env.PORT || 5000;
+const nodemailer = require("nodemailer");
 const bcrypt = require("bcrypt");
 const validator = require("validator");
 const jwt = require("jsonwebtoken");
@@ -82,7 +83,7 @@ app.get("/users", (req, res) => {
 // });
 
 //sign up post
-app.post("/users", async (req, response) => {
+app.post("/signup", async (req, response) => {
   //validation
   if (!validator.isEmail(req.body.email)) {
     response.json("Email is not valid");
@@ -142,6 +143,40 @@ app.post("/users", async (req, response) => {
                 const name = req.body.username;
                 const token = createToken(user.insertedId);
                 response.status(200).json({ name, token });
+                //send verification email
+                const transporter = nodemailer.createTransport({
+                  service: "gmail",
+                  auth: {
+                    user: process.env.EMAIL_SENDER_USER,
+                    pass: process.env.EMAIL_SENDER_PASS,
+                  },
+                });
+
+                const mailConfigurations = {
+                  // It should be a string of sender/server email
+                  from: process.env.EMAIL_SENDER_USER,
+
+                  to: `${req.body.email}`,
+
+                  // Subject of Email
+                  subject: "PicPocket Email Verification",
+
+                  // This would be the text of email body
+                  text: `Hi! There, You have recently visited
+                  our website and entered your email.
+                  Please follow the given link to verify your email
+                  http://localhost:3000/verify/${token}
+                  Thanks`,
+                };
+
+                transporter.sendMail(
+                  mailConfigurations,
+                  function (error, info) {
+                    if (error) throw Error(error);
+                    console.log("Email Sent Successfully");
+                    console.log(info);
+                  }
+                );
               }
             }
           );
