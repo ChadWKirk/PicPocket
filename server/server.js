@@ -145,7 +145,9 @@ app.post("/signup", async (req, response) => {
                 response.status(200).json({ name, token });
                 //send verification email
                 const transporter = nodemailer.createTransport({
-                  service: "gmail",
+                  host: "smtp.zoho.com",
+                  port: 465,
+                  secure: true,
                   auth: {
                     user: process.env.EMAIL_SENDER_USER,
                     pass: process.env.EMAIL_SENDER_PASS,
@@ -154,9 +156,9 @@ app.post("/signup", async (req, response) => {
 
                 const mailConfigurations = {
                   // It should be a string of sender/server email
-                  from: process.env.EMAIL_SENDER_USER,
+                  from: "administrator@picpoccket.com",
 
-                  to: `${req.body.email}`,
+                  to: req.body.email,
 
                   // Subject of Email
                   subject: "PicPocket Email Verification",
@@ -165,7 +167,7 @@ app.post("/signup", async (req, response) => {
                   text: `Hi! There, You have recently visited
                   our website and entered your email.
                   Please follow the given link to verify your email
-                  http://localhost:3000/verify/${token}
+                  https://picpoccket.com/verify/${token}
                   Thanks`,
                 };
 
