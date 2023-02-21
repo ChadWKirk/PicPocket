@@ -86,7 +86,7 @@ const UploadForm = ({
         uploadToMongoBody.imageType = "Photo";
 
         //send to mongoDB
-        fetch("https://picpoccket.herokuapp.com/upload", {
+        fetch("http://localhost:5000/upload", {
           method: "POST",
           headers: { "Content-type": "application/json" },
           body: JSON.stringify(uploadToMongoBody),
@@ -167,7 +167,7 @@ const UploadForm = ({
         uploadToMongoBody.imageType = "Photo";
 
         //send to mongoDB
-        fetch("https://picpoccket.herokuapp.com/upload", {
+        fetch("http://localhost:5000/upload", {
           method: "POST",
           headers: { "Content-type": "application/json" },
           body: JSON.stringify(uploadToMongoBody),

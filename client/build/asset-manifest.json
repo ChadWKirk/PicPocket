@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/static/css/main.4acb0566.css",
-    "main.js": "/static/js/main.fef4c994.js",
+    "main.js": "/static/js/main.657f8d98.js",
     "static/media/PicPocket-SignIn-Collage2.png": "/static/media/PicPocket-SignIn-Collage2.2761e7df4f90beab664f.png",
     "static/media/facebook-logo-oauth.png": "/static/media/facebook-logo-oauth.5ac58a41f35c816d6d2d.png",
     "static/media/upload-page__image-gallery-icon.png": "/static/media/upload-page__image-gallery-icon.6efc1d3040f2b00bf278.png",
     "index.html": "/index.html",
     "main.4acb0566.css.map": "/static/css/main.4acb0566.css.map",
-    "main.fef4c994.js.map": "/static/js/main.fef4c994.js.map"
+    "main.657f8d98.js.map": "/static/js/main.657f8d98.js.map"
   },
   "entrypoints": [
     "static/css/main.4acb0566.css",
-    "static/js/main.fef4c994.js"
+    "static/js/main.657f8d98.js"
   ]
 }
