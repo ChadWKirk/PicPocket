@@ -24,7 +24,7 @@ const NavbarComponent = ({
   const [userPFP, setPFP] = useState();
   useEffect(() => {
     async function fetchUserInfo() {
-      await fetch(`http://localhost:5000/${curUser}/info`, {
+      await fetch(`https://picpoccket.herokuapp.com/${curUser}/info`, {
         method: "GET",
         headers: { "Content-type": "application/json" },
       }).then((response) =>

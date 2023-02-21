@@ -119,7 +119,7 @@ const SignUpNavBar = ({ curUser, isLoggedIn }) => {
   }
 
   async function signOut() {
-    await fetch("http://localhost:5000/SignOut", {
+    await fetch("https://picpoccket.herokuapp.com/SignOut", {
       method: "POST",
       headers: { "Content-type": "application/json" },
     });

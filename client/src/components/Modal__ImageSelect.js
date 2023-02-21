@@ -38,7 +38,7 @@ const Modal__ImageSelect = ({
   //on load, pull img from url parameter :imageTitle (see app.js), and get user info for img author pfp and name
   // useEffect(() => {
   //   async function fetchImgInfo() {
-  //     await fetch(`http://localhost:5000/image/${imageTitle}`, {
+  //     await fetch(`https://picpoccket.herokuapp.com/image/${imageTitle}`, {
   //       method: "GET",
   //       headers: { "Content-type": "application/json" },
   //     }).then((response) =>
@@ -56,7 +56,7 @@ const Modal__ImageSelect = ({
   // useEffect(() => {
   //   if (imgInfo) {
   //     async function fetchUserInfo() {
-  //       await fetch(`http://localhost:5000/${imgInfo.uploadedBy}/info`, {
+  //       await fetch(`https://picpoccket.herokuapp.com/${imgInfo.uploadedBy}/info`, {
   //         method: "GET",
   //         headers: { "Content-type": "application/json" },
   //       }).then((response) =>
@@ -274,7 +274,7 @@ const Modal__ImageSelect = ({
   async function handleMainLike(e) {
     if (imgInfo.likedBy.includes(curUser)) {
       await fetch(
-        `http://localhost:5000/removeLikedBy/${imgInfo.asset_id}/${curUser}`,
+        `https://picpoccket.herokuapp.com/removeLikedBy/${imgInfo.asset_id}/${curUser}`,
         {
           method: "POST",
           headers: { "Content-type": "application/json" },
@@ -286,7 +286,7 @@ const Modal__ImageSelect = ({
       });
     } else if (!imgInfo.likedBy.includes(curUser)) {
       await fetch(
-        `http://localhost:5000/addLikedBy/${imgInfo.asset_id}/${curUser}`,
+        `https://picpoccket.herokuapp.com/addLikedBy/${imgInfo.asset_id}/${curUser}`,
         {
           method: "POST",
           headers: { "Content-type": "application/json" },

@@ -7,7 +7,7 @@ const FileList = ({
   newItemRef,
 }) => {
   async function deleteImageFromBackEnd(imageName, publicId) {
-    await fetch(`http://localhost:5000/deleteImage/`, {
+    await fetch(`https://picpoccket.herokuapp.com/deleteImage/`, {
       method: "POST",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({ public_id: publicId }),

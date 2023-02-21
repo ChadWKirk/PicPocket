@@ -57,7 +57,7 @@ const ImageViewPage = ({
   //on load, pull img from url parameter :imageTitle (see app.js), and get user info for img author pfp and name
   useEffect(() => {
     async function fetchImgInfo() {
-      await fetch(`http://localhost:5000/image/${imageTitle}`, {
+      await fetch(`https://picpoccket.herokuapp.com/image/${imageTitle}`, {
         method: "GET",
         headers: { "Content-type": "application/json" },
       }).then((response) =>
@@ -75,10 +75,13 @@ const ImageViewPage = ({
   useEffect(() => {
     if (imgInfo) {
       async function fetchUserInfo() {
-        await fetch(`http://localhost:5000/${imgInfo.uploadedBy}/info`, {
-          method: "GET",
-          headers: { "Content-type": "application/json" },
-        }).then((response) =>
+        await fetch(
+          `https://picpoccket.herokuapp.com/${imgInfo.uploadedBy}/info`,
+          {
+            method: "GET",
+            headers: { "Content-type": "application/json" },
+          }
+        ).then((response) =>
           response
             .json()
             .then((resJSON) => JSON.stringify(resJSON))
@@ -186,7 +189,7 @@ const ImageViewPage = ({
   async function handleMainLike(e) {
     if (imgInfo.likedBy.includes(curUser)) {
       await fetch(
-        `http://localhost:5000/removeLikedBy/${imgInfo.asset_id}/${curUser}`,
+        `https://picpoccket.herokuapp.com/removeLikedBy/${imgInfo.asset_id}/${curUser}`,
         {
           method: "POST",
           headers: { "Content-type": "application/json" },
@@ -198,7 +201,7 @@ const ImageViewPage = ({
       });
     } else if (!imgInfo.likedBy.includes(curUser)) {
       await fetch(
-        `http://localhost:5000/addLikedBy/${imgInfo.asset_id}/${curUser}`,
+        `https://picpoccket.herokuapp.com/addLikedBy/${imgInfo.asset_id}/${curUser}`,
         {
           method: "POST",
           headers: { "Content-type": "application/json" },
@@ -327,7 +330,7 @@ const ImageViewPage = ({
 
     async function searchFetch() {
       await fetch(
-        `http://localhost:5000/search/${searchQuery}/most-recent/all-types`,
+        `https://picpoccket.herokuapp.com/search/${searchQuery}/most-recent/all-types`,
         {
           method: "GET",
           headers: { "Content-type": "application/json" },
@@ -434,7 +437,7 @@ const ImageViewPage = ({
 
     if (searchArrCopy[index].likedBy.includes(curUser)) {
       await fetch(
-        `http://localhost:5000/removeLikedBy/${element.asset_id}/${curUser}`,
+        `https://picpoccket.herokuapp.com/removeLikedBy/${element.asset_id}/${curUser}`,
         {
           method: "POST",
           headers: { "Content-type": "application/json" },
@@ -450,7 +453,7 @@ const ImageViewPage = ({
       });
     } else if (!searchArrCopy[index].likedBy.includes(curUser)) {
       await fetch(
-        `http://localhost:5000/addLikedBy/${element.asset_id}/${curUser}`,
+        `https://picpoccket.herokuapp.com/addLikedBy/${element.asset_id}/${curUser}`,
         {
           method: "POST",
           headers: { "Content-type": "application/json" },

@@ -48,7 +48,7 @@ const WhiteNavBar = ({ curUser, isLoggedIn }) => {
 
   useEffect(() => {
     async function userInfoFetch() {
-      await fetch(`http://localhost:5000/${curUser}/info`, {
+      await fetch(`https://picpoccket.herokuapp.com/${curUser}/info`, {
         method: "GET",
         headers: { "Content-type": "application/json" },
       }).then((response) =>
@@ -174,7 +174,7 @@ const WhiteNavBar = ({ curUser, isLoggedIn }) => {
   }
 
   async function signOut() {
-    await fetch("http://localhost:5000/SignOut", {
+    await fetch("https://picpoccket.herokuapp.com/SignOut", {
       method: "POST",
       headers: { "Content-type": "application/json" },
     });

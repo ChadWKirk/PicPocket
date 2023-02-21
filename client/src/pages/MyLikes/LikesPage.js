@@ -20,7 +20,7 @@ const LikesPage = ({
 
   useEffect(() => {
     async function fetchUserInfo() {
-      await fetch(`http://localhost:5000/${username}/info`, {
+      await fetch(`https://picpoccket.herokuapp.com/${username}/info`, {
         method: "GET",
         headers: { "Content-type": "application/json" },
       }).then((response) =>

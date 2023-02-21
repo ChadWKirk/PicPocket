@@ -49,15 +49,15 @@ const ImageGallery = ({
     //depending on what the type prop is set to, use one of these routes to fetch img data
     let fetchRoute;
     if (page == "userPage") {
-      fetchRoute = `http://localhost:5000/${username}/${sort}/${filter}`;
+      fetchRoute = `https://picpoccket.herokuapp.com/${username}/${sort}/${filter}`;
     } else if (page == "likesPage") {
-      fetchRoute = `http://localhost:5000/${username}/likes/${sort}/${filter}`;
+      fetchRoute = `https://picpoccket.herokuapp.com/${username}/likes/${sort}/${filter}`;
     } else if (page == "searchPage") {
-      fetchRoute = `http://localhost:5000/search/${searchQuery}/${sort}/${filter}`;
+      fetchRoute = `https://picpoccket.herokuapp.com/search/${searchQuery}/${sort}/${filter}`;
     } else if (page == "mainPageMostRecent") {
-      fetchRoute = "http://localhost:5000/most-recent-images";
+      fetchRoute = "https://picpoccket.herokuapp.com/most-recent-images";
     } else if (page == "mainPageMostPopular") {
-      fetchRoute = "http://localhost:5000/most-popular";
+      fetchRoute = "https://picpoccket.herokuapp.com/most-popular";
     }
     async function fetchImgData() {
       await fetch(fetchRoute, {
@@ -187,7 +187,7 @@ const ImageGallery = ({
 
     if (imgDataCopy[index].likedBy.includes(curUser)) {
       await fetch(
-        `http://localhost:5000/removeLikedBy/${element.asset_id}/${curUser}`,
+        `https://picpoccket.herokuapp.com/removeLikedBy/${element.asset_id}/${curUser}`,
         {
           method: "POST",
           headers: { "Content-type": "application/json" },
@@ -202,7 +202,7 @@ const ImageGallery = ({
       });
     } else if (!imgDataCopy[index].likedBy.includes(curUser)) {
       await fetch(
-        `http://localhost:5000/addLikedBy/${element.asset_id}/${curUser}`,
+        `https://picpoccket.herokuapp.com/addLikedBy/${element.asset_id}/${curUser}`,
         {
           method: "POST",
           headers: { "Content-type": "application/json" },

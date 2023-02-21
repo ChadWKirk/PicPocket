@@ -131,7 +131,7 @@ const SignUpPage = () => {
         />
       );
     } else {
-      await fetch("http://localhost:5000/signup", {
+      await fetch("https://picpoccket.herokuapp.com/signup", {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify(newUser),
@@ -189,11 +189,14 @@ const SignUpPage = () => {
               //update useAuthContext
               dispatch({ type: "LOGIN", payload: parsedJSON });
               //send email verification email
-              fetch("http://localhost:5000/send-verification-email", {
-                method: "POST",
-                headers: { "Content-type": "application/json" },
-                body: JSON.stringify(newUser),
-              }).then((response) => {
+              fetch(
+                "https://picpoccket.herokuapp.com/send-verification-email",
+                {
+                  method: "POST",
+                  headers: { "Content-type": "application/json" },
+                  body: JSON.stringify(newUser),
+                }
+              ).then((response) => {
                 console.log(response);
                 //navigate to success page
                 navigate(`/SignUp/${newUser.username}/Success`);

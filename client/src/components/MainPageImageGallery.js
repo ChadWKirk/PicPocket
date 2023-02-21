@@ -23,7 +23,7 @@ const MainPageImageGallery = ({ curUser, isLoggedIn }) => {
     console.log("run");
 
     async function getImages() {
-      fetch("http://localhost:5000/most-recent-images", {
+      fetch("https://picpoccket.herokuapp.com/most-recent-images", {
         method: "GET",
         headers: { "Content-type": "application/json" },
       }).then((response) =>
@@ -133,7 +133,7 @@ const MainPageImageGallery = ({ curUser, isLoggedIn }) => {
 
     if (fetchArrCopy[index].likedBy.includes(curUser)) {
       await fetch(
-        `http://localhost:5000/removeLikedBy/${element.asset_id}/${curUser}`,
+        `https://picpoccket.herokuapp.com/removeLikedBy/${element.asset_id}/${curUser}`,
         {
           method: "POST",
           headers: { "Content-type": "application/json" },
@@ -149,7 +149,7 @@ const MainPageImageGallery = ({ curUser, isLoggedIn }) => {
       });
     } else if (!fetchArrCopy[index].likedBy.includes(curUser)) {
       await fetch(
-        `http://localhost:5000/addLikedBy/${element.asset_id}/${curUser}`,
+        `https://picpoccket.herokuapp.com/addLikedBy/${element.asset_id}/${curUser}`,
         {
           method: "POST",
           headers: { "Content-type": "application/json" },

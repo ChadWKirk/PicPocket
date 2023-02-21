@@ -81,10 +81,13 @@ const MyPicsPage = ({ curUser, isLoggedIn }) => {
     navigate(`/Account/${curUser}/My-Pics/${sort}/${filter}`);
 
     async function myPicsFetch() {
-      await fetch(`http://localhost:5000/${curUser}/${sort}/${filter}`, {
-        method: "GET",
-        headers: { "Content-type": "application/json" },
-      }).then((response) =>
+      await fetch(
+        `https://picpoccket.herokuapp.com/${curUser}/${sort}/${filter}`,
+        {
+          method: "GET",
+          headers: { "Content-type": "application/json" },
+        }
+      ).then((response) =>
         response.json().then((resJSON) => setImgData(resJSON))
       );
     }
@@ -301,7 +304,7 @@ const MyPicsPage = ({ curUser, isLoggedIn }) => {
     bulkArr.current[0].tags = tags.split(", "); //turn string into array
     bulkArr.current[0].imageType = imageType;
     console.log("submit attempt");
-    await fetch(`http://localhost:5000/update/${curUser}`, {
+    await fetch(`https://picpoccket.herokuapp.com/update/${curUser}`, {
       method: "PUT",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify(bulkArr.current[0]),
@@ -324,7 +327,7 @@ const MyPicsPage = ({ curUser, isLoggedIn }) => {
 
       //cloudinary admin api for bulk delete.
 
-      await fetch(`http://localhost:5000/deleteImage/`, {
+      await fetch(`https://picpoccket.herokuapp.com/deleteImage/`, {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify({ public_id: bulkArr.current[p].public_id }),
@@ -348,7 +351,7 @@ const MyPicsPage = ({ curUser, isLoggedIn }) => {
   async function massDeleteImages() {
     let publicIDArr = bulkArr.current.map((a) => a.public_id);
     console.log(publicIDArr);
-    await fetch(`http://localhost:5000/massDeleteImages`, {
+    await fetch(`https://picpoccket.herokuapp.com/massDeleteImages`, {
       method: "POST",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify(publicIDArr),
@@ -373,10 +376,13 @@ const MyPicsPage = ({ curUser, isLoggedIn }) => {
       a.public_id.replace("/", "%2F")
     );
     console.log(publicIDArr);
-    await fetch(`http://localhost:5000/massDownloadImages/${publicIDArr}`, {
-      method: "GET",
-      headers: { "Content-type": "application/json" },
-    }).then((res) => {
+    await fetch(
+      `https://picpoccket.herokuapp.com/massDownloadImages/${publicIDArr}`,
+      {
+        method: "GET",
+        headers: { "Content-type": "application/json" },
+      }
+    ).then((res) => {
       res
         .json()
         .then((resJSON) => JSON.stringify(resJSON))

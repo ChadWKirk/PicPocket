@@ -33,10 +33,13 @@ const UserSettingsPage = ({
         `Are you sure you would like to permanantely delete your account "${curUser}"?`
       )
     ) {
-      await fetch(`http://localhost:5000/Account/${curUser}/delUser/${pfpID}`, {
-        method: "DELETE",
-        headers: { "Content-type": "application/json" },
-      }).then(() =>
+      await fetch(
+        `https://picpoccket.herokuapp.com/Account/${curUser}/delUser/${pfpID}`,
+        {
+          method: "DELETE",
+          headers: { "Content-type": "application/json" },
+        }
+      ).then(() =>
         setTimeout(() => {
           setIsJustDeleted(true);
           setLoggedIn(false);
@@ -55,7 +58,7 @@ const UserSettingsPage = ({
   useEffect(() => {
     console.log(process.env);
     async function userInfoFetch() {
-      await fetch(`http://localhost:5000/${curUser}/info`, {
+      await fetch(`https://picpoccket.herokuapp.com/${curUser}/info`, {
         method: "GET",
         headers: { "Content-type": "application/json" },
       }).then((response) =>
@@ -164,11 +167,14 @@ const UserSettingsPage = ({
           uploadToMongoBody.imageType = "Photo";
 
           //send to mongoDB
-          fetch(`http://localhost:5000/upload/pfp/${curUser}/${pfpID}`, {
-            method: "POST",
-            headers: { "Content-type": "application/json" },
-            body: JSON.stringify(uploadToMongoBody),
-          })
+          fetch(
+            `https://picpoccket.herokuapp.com/upload/pfp/${curUser}/${pfpID}`,
+            {
+              method: "POST",
+              headers: { "Content-type": "application/json" },
+              body: JSON.stringify(uploadToMongoBody),
+            }
+          )
             .then((res) => {
               setToastStatus("Success");
               setToastMessage("Your avatar was updated successfully.");
