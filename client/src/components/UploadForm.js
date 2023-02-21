@@ -20,7 +20,7 @@ const UploadForm = ({
   var CLOUDINARY_UPLOAD_PRESET = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET;
   let CLOUDINARY_CLOUD_NAME = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
   var targetFilesArray = [];
-  console.log(CLOUDINARY_CLOUD_NAME + " cloud name");
+  console.log(process.env.REACT_APP_CLOUDINARY_CLOUD_NAME + " cloud name");
   console.log(CLOUDINARY_UPLOAD_PRESET + " cloud preset");
   //scroll to new upload
   const newItemRef = useRef(); //every imageitem has a ref of newItemRef
