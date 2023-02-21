@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "bcrypt": "^5.1.0",
+    "bcryptjs": "^2.4.3",
     "cloudinary": "^1.33.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
@@ -14,7 +14,8 @@
     "nodemon": "^2.0.20"
   },
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "monStart": "nodemon server.js"
   },
   "name": "server",
   "version": "1.0.0",

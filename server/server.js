@@ -5,7 +5,7 @@ require("dotenv").config({ path: "./config.env" });
 const cors = require("cors");
 const port = process.env.PORT || 5000;
 const nodemailer = require("nodemailer");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const validator = require("validator");
 const jwt = require("jsonwebtoken");
 const createToken = (_id) => {
