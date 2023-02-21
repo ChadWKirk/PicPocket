@@ -7,6 +7,16 @@ CSS (flexbox, position, display)
 JSON parsing (JSON.parse(), JSON.stringify(), response.json())
 How to handle individual components in an array (ToDo tutorial)
 
+Hosting and git workflow:
+
+Complete app is on github in above link
+
+Frontend is hosted on Netlify - in client folder, npm run build > netlify deploy ./build > netlify deploy --prod ./build
+
+Backend is hosted on Heroku - in server folder, git add . > git commit -am "message" > git push heroku main
+
+Have domain variable in App.js to toggle between using localhost for fetch routes or heroku domain for fetch routes to make it easier to develop
+
 Image Selection (My Pics, My Likes):
 
 - When single select, show edit stuff in form.
@@ -42,23 +52,31 @@ make about us page
 
 ---
 
+get cloudinary name and preset from back end instead of storing in env in front end (unsafe)
+
+put termly env vars in backend as well
+
+make email verification link work -- make it so you can't upload until you click that link - have verified field in account in db set to false until link is clicked
+
+protect api routes for not logged in users (no token)
+
+make change email work - when updating email in db, send another verification email and set verified to false
+
+make change password
+
+make forgot password - if you forget your password, have an email be sent to user's email with a reset password link
+
 handle errors for blank fields etc.
 
 back end for change bio and change email
 
-make it so that duplicate public ID's get named something else in cloudinary
+make it so that duplicate public ID's get named something else in cloudinary (upload preset in cloudinary rules)
 
 contact us page backend once site is hosted and get website email
 
-create change password page
-
 Create single download in myPics - set download button HREF to secure url with fl_attachment in url when selecting an image
 
-create user tokens
-
 create email authentication
-
-create forgot password
 
 make liking a pic send you to sign up page if clicked when signed out
 
