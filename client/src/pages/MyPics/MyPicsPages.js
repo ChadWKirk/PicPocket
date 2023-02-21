@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
 
-const MyPicsPage = ({ curUser, isLoggedIn }) => {
+const MyPicsPage = ({ domain, curUser, isLoggedIn }) => {
   const [massDlLink, setMassDlLink] = useState();
 
   //toast stuff
@@ -81,13 +81,10 @@ const MyPicsPage = ({ curUser, isLoggedIn }) => {
     navigate(`/Account/${curUser}/My-Pics/${sort}/${filter}`);
 
     async function myPicsFetch() {
-      await fetch(
-        `https://picpoccket.herokuapp.com/${curUser}/${sort}/${filter}`,
-        {
-          method: "GET",
-          headers: { "Content-type": "application/json" },
-        }
-      ).then((response) =>
+      await fetch(`${domain}/${curUser}/${sort}/${filter}`, {
+        method: "GET",
+        headers: { "Content-type": "application/json" },
+      }).then((response) =>
         response.json().then((resJSON) => setImgData(resJSON))
       );
     }
@@ -304,7 +301,7 @@ const MyPicsPage = ({ curUser, isLoggedIn }) => {
     bulkArr.current[0].tags = tags.split(", "); //turn string into array
     bulkArr.current[0].imageType = imageType;
     console.log("submit attempt");
-    await fetch(`https://picpoccket.herokuapp.com/update/${curUser}`, {
+    await fetch(`${domain}/update/${curUser}`, {
       method: "PUT",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify(bulkArr.current[0]),
@@ -327,7 +324,7 @@ const MyPicsPage = ({ curUser, isLoggedIn }) => {
 
       //cloudinary admin api for bulk delete.
 
-      await fetch(`https://picpoccket.herokuapp.com/deleteImage/`, {
+      await fetch(`${domain}/deleteImage/`, {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify({ public_id: bulkArr.current[p].public_id }),
@@ -351,7 +348,7 @@ const MyPicsPage = ({ curUser, isLoggedIn }) => {
   async function massDeleteImages() {
     let publicIDArr = bulkArr.current.map((a) => a.public_id);
     console.log(publicIDArr);
-    await fetch(`https://picpoccket.herokuapp.com/massDeleteImages`, {
+    await fetch(`${domain}/massDeleteImages`, {
       method: "POST",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify(publicIDArr),
@@ -376,13 +373,10 @@ const MyPicsPage = ({ curUser, isLoggedIn }) => {
       a.public_id.replace("/", "%2F")
     );
     console.log(publicIDArr);
-    await fetch(
-      `https://picpoccket.herokuapp.com/massDownloadImages/${publicIDArr}`,
-      {
-        method: "GET",
-        headers: { "Content-type": "application/json" },
-      }
-    ).then((res) => {
+    await fetch(`${domain}/massDownloadImages/${publicIDArr}`, {
+      method: "GET",
+      headers: { "Content-type": "application/json" },
+    }).then((res) => {
       res
         .json()
         .then((resJSON) => JSON.stringify(resJSON))
@@ -473,6 +467,7 @@ const MyPicsPage = ({ curUser, isLoggedIn }) => {
   return (
     <div style={{ overflow: "hidden" }}>
       <NavbarComponent
+        domain={domain}
         curUser={curUser}
         isLoggedIn={isLoggedIn}
         navPositionClass={"fixed"}

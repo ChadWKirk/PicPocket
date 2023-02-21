@@ -14,6 +14,7 @@ import NavbarComponent from "../components/NavbarComponent";
 import { AiFillLike } from "react-icons/ai";
 
 const ImageViewPage = ({
+  domain,
   curUser,
   isLoggedIn,
   isShowingImageSelectModal,
@@ -57,7 +58,7 @@ const ImageViewPage = ({
   //on load, pull img from url parameter :imageTitle (see app.js), and get user info for img author pfp and name
   useEffect(() => {
     async function fetchImgInfo() {
-      await fetch(`https://picpoccket.herokuapp.com/image/${imageTitle}`, {
+      await fetch(`${domain}/image/${imageTitle}`, {
         method: "GET",
         headers: { "Content-type": "application/json" },
       }).then((response) =>
@@ -75,13 +76,10 @@ const ImageViewPage = ({
   useEffect(() => {
     if (imgInfo) {
       async function fetchUserInfo() {
-        await fetch(
-          `https://picpoccket.herokuapp.com/${imgInfo.uploadedBy}/info`,
-          {
-            method: "GET",
-            headers: { "Content-type": "application/json" },
-          }
-        ).then((response) =>
+        await fetch(`${domain}/${imgInfo.uploadedBy}/info`, {
+          method: "GET",
+          headers: { "Content-type": "application/json" },
+        }).then((response) =>
           response
             .json()
             .then((resJSON) => JSON.stringify(resJSON))
@@ -188,25 +186,19 @@ const ImageViewPage = ({
   //handle like for main image
   async function handleMainLike(e) {
     if (imgInfo.likedBy.includes(curUser)) {
-      await fetch(
-        `https://picpoccket.herokuapp.com/removeLikedBy/${imgInfo.asset_id}/${curUser}`,
-        {
-          method: "POST",
-          headers: { "Content-type": "application/json" },
-        }
-      ).then((res) => {
+      await fetch(`${domain}/removeLikedBy/${imgInfo.asset_id}/${curUser}`, {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+      }).then((res) => {
         imgInfo.likedBy = imgInfo.likedBy.filter((user) => {
           return user !== curUser;
         });
       });
     } else if (!imgInfo.likedBy.includes(curUser)) {
-      await fetch(
-        `https://picpoccket.herokuapp.com/addLikedBy/${imgInfo.asset_id}/${curUser}`,
-        {
-          method: "POST",
-          headers: { "Content-type": "application/json" },
-        }
-      ).then((res) => {
+      await fetch(`${domain}/addLikedBy/${imgInfo.asset_id}/${curUser}`, {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+      }).then((res) => {
         imgInfo.likedBy.push(curUser);
       });
     }
@@ -329,13 +321,10 @@ const ImageViewPage = ({
     console.log(searchQuery);
 
     async function searchFetch() {
-      await fetch(
-        `https://picpoccket.herokuapp.com/search/${searchQuery}/most-recent/all-types`,
-        {
-          method: "GET",
-          headers: { "Content-type": "application/json" },
-        }
-      ).then((response) =>
+      await fetch(`${domain}/search/${searchQuery}/most-recent/all-types`, {
+        method: "GET",
+        headers: { "Content-type": "application/json" },
+      }).then((response) =>
         response
           .json()
           .then((resJSON) => JSON.stringify(resJSON))
@@ -383,7 +372,7 @@ const ImageViewPage = ({
             // onClick={() => {
             //   navigate(`/image/${element.title}`);
             // }}
-            href={`http://localhost:3000/image/${element.title}`}
+            href={`https://picpoccket.com/image/${element.title}`}
           >
             <img
               src={
@@ -436,13 +425,10 @@ const ImageViewPage = ({
     console.log(searchArrCopy);
 
     if (searchArrCopy[index].likedBy.includes(curUser)) {
-      await fetch(
-        `https://picpoccket.herokuapp.com/removeLikedBy/${element.asset_id}/${curUser}`,
-        {
-          method: "POST",
-          headers: { "Content-type": "application/json" },
-        }
-      ).then((res) => {
+      await fetch(`${domain}/removeLikedBy/${element.asset_id}/${curUser}`, {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+      }).then((res) => {
         searchArrCopy[index].likedBy = searchArrCopy[index].likedBy.filter(
           (user) => {
             return user !== curUser;
@@ -452,13 +438,10 @@ const ImageViewPage = ({
         console.log("run 3");
       });
     } else if (!searchArrCopy[index].likedBy.includes(curUser)) {
-      await fetch(
-        `https://picpoccket.herokuapp.com/addLikedBy/${element.asset_id}/${curUser}`,
-        {
-          method: "POST",
-          headers: { "Content-type": "application/json" },
-        }
-      ).then((res) => {
+      await fetch(`${domain}/addLikedBy/${element.asset_id}/${curUser}`, {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+      }).then((res) => {
         searchArrCopy[index].likedBy.push(curUser);
         setFetchArr(searchArrCopy);
         console.log("run 4");
@@ -544,6 +527,7 @@ const ImageViewPage = ({
       {/* conditionally render modal based on state of isShowingImageSelectModal in app.js */}
       {isShowingImageSelectModal && (
         <Modal__ImageSelect
+          domain={domain}
           curUser={curUser}
           imgTitleArrState={imgTitleArrState}
           isShowingImageSelectModal={isShowingImageSelectModal}
@@ -557,6 +541,7 @@ const ImageViewPage = ({
         />
       )}
       <NavbarComponent
+        domain={domain}
         curUser={curUser}
         isLoggedIn={isLoggedIn}
         navPositionClass={"fixed"}
@@ -569,7 +554,7 @@ const ImageViewPage = ({
             <div className="image-view-page__image-author-pfp-div">
               <a
                 className="image-view-page__image-author-pfp"
-                href={`http://localhost:3000/User/${imgAuthorName}`}
+                href={`https://picpoccket.com/User/${imgAuthorName}`}
               >
                 <img
                   src={imgAuthorPFP}
@@ -579,7 +564,7 @@ const ImageViewPage = ({
             </div>
 
             <a
-              href={`http://localhost:3000/User/${imgAuthorName}`}
+              href={`https://picpoccket.com/User/${imgAuthorName}`}
               className="image-view-page__image-author-name"
             >
               {imgAuthorName}

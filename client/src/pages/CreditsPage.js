@@ -1,10 +1,11 @@
 import React from "react";
 import NavbarComponent from "../components/NavbarComponent";
 
-const CreditsPage = ({ curUser, isLoggedIn }) => {
+const CreditsPage = ({ domain, curUser, isLoggedIn }) => {
   return (
     <div>
       <NavbarComponent
+        domain={domain}
         curUser={curUser}
         isLoggedIn={isLoggedIn}
         navPositionClass={"fixed"}

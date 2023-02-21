@@ -6,6 +6,7 @@ import ImageGallerySortFilterAndSubheadingComponent from "../../components/Image
 import ImageGallery from "../../components/ImageGallery";
 
 const LikesPage = ({
+  domain,
   curUser,
   isLoggedIn,
   isShowingImageSelectModal,
@@ -20,7 +21,7 @@ const LikesPage = ({
 
   useEffect(() => {
     async function fetchUserInfo() {
-      await fetch(`https://picpoccket.herokuapp.com/${username}/info`, {
+      await fetch(`${domain}/${username}/info`, {
         method: "GET",
         headers: { "Content-type": "application/json" },
       }).then((response) =>
@@ -67,6 +68,7 @@ const LikesPage = ({
     <div>
       {/* <NavBar curUser={curUser} isLoggedIn={isLoggedIn} /> */}
       <NavbarComponent
+        domain={domain}
         curUser={curUser}
         isLoggedIn={isLoggedIn}
         navPositionClass={"fixed"}
@@ -102,6 +104,7 @@ const LikesPage = ({
               </a>
             </h1> */}
           <ImageGallerySortFilterAndSubheadingComponent
+            domain={domain}
             sort={sort}
             setSort={setSort}
             sortTitle={sortTitle}
@@ -118,6 +121,7 @@ const LikesPage = ({
           {/* </div> */}
           {/* {resultsMap} */}
           <ImageGallery
+            domain={domain}
             curUser={curUser}
             isLoggedIn={isLoggedIn}
             page={"likesPage"}

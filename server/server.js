@@ -853,7 +853,7 @@ app.get("/:username/likes/:sort/:filter", (req, res) => {
 
 app.get("/most-recent-images", (req, res) => {
   let db_connect = dbo.getDb();
-
+  console.log("testing");
   db_connect
     .collection("picpocket-images")
     .aggregate([

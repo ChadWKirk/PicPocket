@@ -10,6 +10,7 @@ import {
 import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 
 const Modal__ImageSelect = ({
+  domain,
   curUser,
   imgTitleArrState,
   isShowingImageSelectModal,
@@ -273,25 +274,19 @@ const Modal__ImageSelect = ({
   //handle like
   async function handleMainLike(e) {
     if (imgInfo.likedBy.includes(curUser)) {
-      await fetch(
-        `https://picpoccket.herokuapp.com/removeLikedBy/${imgInfo.asset_id}/${curUser}`,
-        {
-          method: "POST",
-          headers: { "Content-type": "application/json" },
-        }
-      ).then((res) => {
+      await fetch(`${domain}/removeLikedBy/${imgInfo.asset_id}/${curUser}`, {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+      }).then((res) => {
         imgInfo.likedBy = imgInfo.likedBy.filter((user) => {
           return user !== curUser;
         });
       });
     } else if (!imgInfo.likedBy.includes(curUser)) {
-      await fetch(
-        `https://picpoccket.herokuapp.com/addLikedBy/${imgInfo.asset_id}/${curUser}`,
-        {
-          method: "POST",
-          headers: { "Content-type": "application/json" },
-        }
-      ).then((res) => {
+      await fetch(`${domain}/addLikedBy/${imgInfo.asset_id}/${curUser}`, {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+      }).then((res) => {
         imgInfo.likedBy.push(curUser);
       });
     }
@@ -441,7 +436,7 @@ const Modal__ImageSelect = ({
             <div className="image-select-modal__image-author-pfp-div">
               <a
                 className="image-select-modal__image-author-pfp"
-                href={`http://localhost:3000/User/${imgAuthorName}`}
+                href={`https://picpoccket.com/User/${imgAuthorName}`}
               >
                 <img
                   src={imgAuthorPFP}
@@ -451,7 +446,7 @@ const Modal__ImageSelect = ({
             </div>
 
             <a
-              href={`http://localhost:3000/User/${imgAuthorName}`}
+              href={`https://picpoccket.com/User/${imgAuthorName}`}
               className="image-select-modal__image-author-name"
             >
               {imgAuthorName}

@@ -89,19 +89,19 @@ const MainPageHeroImage = () => {
         </form>
         <div className="carousel__overlay-categories">
           <p>Try these: </p>
-          <a href="http://localhost:3000/search/Nature/most-recent/all-types">
+          <a href="https://picpoccket.com/search/Nature/most-recent/all-types">
             Nature,
           </a>
-          <a href="http://localhost:3000/search/Cats/most-recent/all-types">
+          <a href="https://picpoccket.com/search/Cats/most-recent/all-types">
             Cats,
           </a>
-          <a href="http://localhost:3000/search/Dogs/most-recent/all-types">
+          <a href="https://picpoccket.com/search/Dogs/most-recent/all-types">
             Dogs,
           </a>
-          <a href="http://localhost:3000/search/Tech/most-recent/all-types">
+          <a href="https://picpoccket.com/search/Tech/most-recent/all-types">
             Tech,
           </a>
-          <a href="http://localhost:3000/search/Landscape/most-recent/all-types">
+          <a href="https://picpoccket.com/search/Landscape/most-recent/all-types">
             Landscape
           </a>
         </div>

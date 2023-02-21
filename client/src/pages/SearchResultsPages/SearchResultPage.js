@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import ImageGallery from "../../components/ImageGallery";
 
 const SearchResultsPage = ({
+  domain,
   curUser,
   isLoggedIn,
   isShowingImageSelectModal,
@@ -36,6 +37,7 @@ const SearchResultsPage = ({
   return (
     <div>
       <NavbarComponent
+        domain={domain}
         curUser={curUser}
         isLoggedIn={isLoggedIn}
         navPositionClass={"fixed"}
@@ -51,6 +53,7 @@ const SearchResultsPage = ({
         > */}
 
         <ImageGallerySortFilterAndSubheadingComponent
+          domain={domain}
           sort={sort}
           setSort={setSort}
           sortTitle={sortTitle}
@@ -64,6 +67,7 @@ const SearchResultsPage = ({
         />
         {/* </div> */}
         <ImageGallery
+          domain={domain}
           curUser={curUser}
           isLoggedIn={isLoggedIn}
           sort={sort}

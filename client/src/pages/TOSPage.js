@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import NavbarComponent from "../components/NavbarComponent";
 import PaperWorkButtons from "../components/PaperWorkButtons";
 
-const TOSPage = ({ curUser, isLoggedIn }) => {
+const TOSPage = ({ domain, curUser, isLoggedIn }) => {
   let TOSID = process.env.REACT_APP_TERMLY_TOS_ID;
 
   useEffect(() => {
@@ -15,6 +15,7 @@ const TOSPage = ({ curUser, isLoggedIn }) => {
   return (
     <div>
       <NavbarComponent
+        domain={domain}
         curUser={curUser}
         isLoggedIn={isLoggedIn}
         navPositionClass={"fixed"}

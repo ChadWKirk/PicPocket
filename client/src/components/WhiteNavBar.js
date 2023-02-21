@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
-const WhiteNavBar = ({ curUser, isLoggedIn }) => {
+const WhiteNavBar = ({ domain, curUser, isLoggedIn }) => {
   let soButton;
   let accButton;
   let siButton;
@@ -48,7 +48,7 @@ const WhiteNavBar = ({ curUser, isLoggedIn }) => {
 
   useEffect(() => {
     async function userInfoFetch() {
-      await fetch(`https://picpoccket.herokuapp.com/${curUser}/info`, {
+      await fetch(`${domain}/${curUser}/info`, {
         method: "GET",
         headers: { "Content-type": "application/json" },
       }).then((response) =>
@@ -174,7 +174,7 @@ const WhiteNavBar = ({ curUser, isLoggedIn }) => {
   }
 
   async function signOut() {
-    await fetch("https://picpoccket.herokuapp.com/SignOut", {
+    await fetch(`${domain}/SignOut`, {
       method: "POST",
       headers: { "Content-type": "application/json" },
     });

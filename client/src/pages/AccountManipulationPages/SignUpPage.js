@@ -10,7 +10,7 @@ import googleOAuthIcon from "../../images/google-logo-oauth.png";
 import facebookOauthIcon from "../../images/facebook-logo-oauth.png";
 import signInPageCollageImg from "../../images/PicPocket-SignIn-Collage2.png";
 
-const SignUpPage = () => {
+const SignUpPage = ({ domain }) => {
   let navigate = useNavigate();
   const { dispatch } = useAuthContext();
   //if user is already logged in, redirect to their account page
@@ -131,7 +131,7 @@ const SignUpPage = () => {
         />
       );
     } else {
-      await fetch("https://picpoccket.herokuapp.com/signup", {
+      await fetch(`${domain}/signup`, {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify(newUser),
@@ -189,14 +189,11 @@ const SignUpPage = () => {
               //update useAuthContext
               dispatch({ type: "LOGIN", payload: parsedJSON });
               //send email verification email
-              fetch(
-                "https://picpoccket.herokuapp.com/send-verification-email",
-                {
-                  method: "POST",
-                  headers: { "Content-type": "application/json" },
-                  body: JSON.stringify(newUser),
-                }
-              ).then((response) => {
+              fetch(`${domain}/send-verification-email`, {
+                method: "POST",
+                headers: { "Content-type": "application/json" },
+                body: JSON.stringify(newUser),
+              }).then((response) => {
                 console.log(response);
                 //navigate to success page
                 navigate(`/SignUp/${newUser.username}/Success`);

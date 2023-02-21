@@ -5,7 +5,7 @@ import NavbarComponent from "../components/NavbarComponent";
 import ImageGallerySortFilterAndSubheadingComponent from "../components/ImageGallerySortFilterAndSubheadingComponent";
 import ImageGallery from "../components/ImageGallery";
 
-const UserPage = ({ curUser, isLoggedIn }) => {
+const UserPage = ({ domain, curUser, isLoggedIn }) => {
   const { username } = useParams();
 
   //to get number of images in array for "x pics liked by user" or "x search results" heading
@@ -22,7 +22,7 @@ const UserPage = ({ curUser, isLoggedIn }) => {
 
   useEffect(() => {
     async function fetchUserInfo() {
-      await fetch(`https://picpoccket.herokuapp.com/${username}/info`, {
+      await fetch(`${domain}/${username}/info`, {
         method: "GET",
         headers: { "Content-type": "application/json" },
       }).then((response) =>
@@ -52,6 +52,7 @@ const UserPage = ({ curUser, isLoggedIn }) => {
     <div>
       {/* <NavBar curUser={curUser} loggedIn={loggedIn} /> */}
       <NavbarComponent
+        domain={domain}
         curUser={curUser}
         isLoggedIn={isLoggedIn}
         navPositionClass={"fixed"}
@@ -69,6 +70,7 @@ const UserPage = ({ curUser, isLoggedIn }) => {
         <div className="image-gallery__container">
           {/* <div className="image-gallery__dropdown-and-subheading-container"> */}
           <ImageGallerySortFilterAndSubheadingComponent
+            domain={domain}
             sort={sort}
             setSort={setSort}
             sortTitle={sortTitle}
@@ -83,6 +85,7 @@ const UserPage = ({ curUser, isLoggedIn }) => {
           />
           {/* </div> */}
           <ImageGallery
+            domain={domain}
             curUser={curUser}
             isLoggedIn={isLoggedIn}
             sort={sort}

@@ -28,6 +28,10 @@ import CreditsPage from "./pages/CreditsPage";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
+  //domain for fetch routes. either localhost or heroku depending on if you are developing or building to deploy to netlify
+  let domain = "http://localhost:5000";
+  // let domain = "https://picpoccket.herokuapp.com";
+
   //When someone deletes their account, they will be navigated back to main page
   //and a red banner will show saying their account has successfully been deleted
   //until they refresh or go to a different page to reset the state to false.
@@ -110,6 +114,7 @@ function App() {
             path="/"
             element={
               <MainPage
+                domain={domain}
                 curUser={curUser}
                 isLoggedIn={isLoggedIn}
                 isJustDeleted={isJustDeleted}
@@ -125,6 +130,7 @@ function App() {
             path="/most-popular"
             element={
               <MainPageMostPopularImages
+                domain={domain}
                 curUser={curUser}
                 isLoggedIn={isLoggedIn}
               />
@@ -134,6 +140,7 @@ function App() {
             path="/search/:searchQuery/:sort/:filter"
             element={
               <SearchResultPage
+                domain={domain}
                 curUser={curUser}
                 isLoggedIn={isLoggedIn}
                 isShowingImageSelectModal={isShowingImageSelectModal}
@@ -147,6 +154,7 @@ function App() {
             path="/image/:imageTitle"
             element={
               <ImageViewPage
+                domain={domain}
                 curUser={curUser}
                 isLoggedIn={isLoggedIn}
                 isShowingImageSelectModal={isShowingImageSelectModal}
@@ -161,6 +169,7 @@ function App() {
             path={`/Account/${curUser}`}
             element={
               <UserSettingsPage
+                domain={domain}
                 curUser={curUser}
                 isLoggedIn={isLoggedIn}
                 // setLoggedIn={setLoggedIn}
@@ -173,6 +182,7 @@ function App() {
             path={`/User/:username`}
             element={
               <UserPage
+                domain={domain}
                 curUser={curUser}
                 isLoggedIn={isLoggedIn}
                 isShowingImageSelectModal={isShowingImageSelectModal}
@@ -186,6 +196,7 @@ function App() {
             path={`/Account/${curUser}/My-Pics/:sort/:filter`}
             element={
               <MyPicsPage
+                domain={domain}
                 curUser={curUser}
                 isLoggedIn={isLoggedIn}
                 isShowingImageSelectModal={isShowingImageSelectModal}
@@ -199,6 +210,7 @@ function App() {
             path={`/Account/:username/Likes/:sort/:filter`}
             element={
               <LikesPage
+                domain={domain}
                 curUser={curUser}
                 isLoggedIn={isLoggedIn}
                 isShowingImageSelectModal={isShowingImageSelectModal}
@@ -210,15 +222,33 @@ function App() {
           ></Route>
           <Route
             path={`/${curUser}/upload`}
-            element={<UploadPage curUser={curUser} isLoggedIn={isLoggedIn} />}
+            element={
+              <UploadPage
+                domain={domain}
+                curUser={curUser}
+                isLoggedIn={isLoggedIn}
+              />
+            }
           ></Route>
           <Route
             path="/SignIn"
-            element={<SignInPage curUser={curUser} isLoggedIn={isLoggedIn} />}
+            element={
+              <SignInPage
+                domain={domain}
+                curUser={curUser}
+                isLoggedIn={isLoggedIn}
+              />
+            }
           ></Route>
           <Route
             path="/SignUp"
-            element={<SignUpPage curUser={curUser} isLoggedIn={isLoggedIn} />}
+            element={
+              <SignUpPage
+                domain={domain}
+                curUser={curUser}
+                isLoggedIn={isLoggedIn}
+              />
+            }
           ></Route>
           <Route
             path="/SignUp/:username/Success"
@@ -227,37 +257,65 @@ function App() {
           <Route
             path="/delSuccess"
             element={
-              <DelSuccessPage curUser={curUser} isLoggedIn={isLoggedIn} />
+              <DelSuccessPage
+                domain={domain}
+                curUser={curUser}
+                isLoggedIn={isLoggedIn}
+              />
             }
           ></Route>
           <Route
             path="/Privacy-Policy"
             element={
-              <PrivacyPolicyPage curUser={curUser} isLoggedIn={isLoggedIn} />
+              <PrivacyPolicyPage
+                domain={domain}
+                curUser={curUser}
+                isLoggedIn={isLoggedIn}
+              />
             }
           ></Route>
           <Route
             path="/Terms-And-Conditions"
-            element={<TOSPage curUser={curUser} isLoggedIn={isLoggedIn} />}
+            element={
+              <TOSPage
+                domain={domain}
+                curUser={curUser}
+                isLoggedIn={isLoggedIn}
+              />
+            }
           ></Route>
           <Route
             path="/Disclaimer"
             element={
-              <DisclaimerPage curUser={curUser} isLoggedIn={isLoggedIn} />
+              <DisclaimerPage
+                domain={domain}
+                curUser={curUser}
+                isLoggedIn={isLoggedIn}
+              />
             }
           ></Route>
           <Route
             path="/Credits"
-            element={<CreditsPage curUser={curUser} isLoggedIn={isLoggedIn} />}
+            element={
+              <CreditsPage
+                domain={domain}
+                curUser={curUser}
+                isLoggedIn={isLoggedIn}
+              />
+            }
           ></Route>
           <Route
             path="/Contact"
             element={
-              <ContactUsPage curUser={curUser} isLoggedIn={isLoggedIn} />
+              <ContactUsPage
+                domain={domain}
+                curUser={curUser}
+                isLoggedIn={isLoggedIn}
+              />
             }
           ></Route>
         </Routes>
-        <Footer curUser={curUser} isLoggedIn={isLoggedIn} />
+        <Footer domain={domain} curUser={curUser} isLoggedIn={isLoggedIn} />
       </div>
     );
   }

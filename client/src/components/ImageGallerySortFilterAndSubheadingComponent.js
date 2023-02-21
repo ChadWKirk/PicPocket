@@ -30,7 +30,7 @@ const ImageGallerySortFilterAndSubheadingComponent = ({
       <h1 className="image-gallery__likes-page-subheading-container">
         <div className="image-gallery__likes-page-hover-div">
           <a
-            href={`http://localhost:3000/User/${username}`}
+            href={`https://picpoccket.com/User/${username}`}
             className="image-gallery__likes-page-subheading-img"
           >
             <img
@@ -41,7 +41,7 @@ const ImageGallerySortFilterAndSubheadingComponent = ({
         </div>
 
         <a
-          href={`http://localhost:3000/User/${username}`}
+          href={`https://picpoccket.com/User/${username}`}
           className="image-gallery__likes-page-subheading-username-link"
         >
           {username}

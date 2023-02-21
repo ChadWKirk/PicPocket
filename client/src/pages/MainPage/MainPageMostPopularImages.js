@@ -9,7 +9,7 @@ import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import ImageGallery from "../../components/ImageGallery";
 
-const MainPageMostPopularImages = ({ curUser, loggedIn }) => {
+const MainPageMostPopularImages = ({ domain, curUser, loggedIn }) => {
   //to get number of images in array for "x pics liked by user" or "x search results" heading
   //really just a placeholder so I can use the ImageGallery component. It doesn't get used on this page
   const [imgGalleryLength, setImgGalleryLength] = useState();

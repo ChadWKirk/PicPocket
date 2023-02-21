@@ -6,7 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
-const SignUpNavBar = ({ curUser, isLoggedIn }) => {
+const SignUpNavBar = ({ domain, curUser, isLoggedIn }) => {
   let soButton;
   let accButton;
   let siButton;
@@ -119,7 +119,7 @@ const SignUpNavBar = ({ curUser, isLoggedIn }) => {
   }
 
   async function signOut() {
-    await fetch("https://picpoccket.herokuapp.com/SignOut", {
+    await fetch(`${domain}/SignOut`, {
       method: "POST",
       headers: { "Content-type": "application/json" },
     });

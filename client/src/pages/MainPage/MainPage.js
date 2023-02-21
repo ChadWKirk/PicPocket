@@ -12,6 +12,7 @@ import RedBanner from "../../components/RedBanner";
 import Modal__ImageSelect from "../../components/Modal__ImageSelect";
 
 const MainPage = ({
+  domain,
   curUser,
   isLoggedIn,
   isJustDeleted,
@@ -221,6 +222,7 @@ const MainPage = ({
     <div>
       <div className="mainPage__heroPicture">
         <NavbarComponent
+          domain={domain}
           curUser={curUser}
           isLoggedIn={isLoggedIn}
           navPositionClass={navPositionClass}
@@ -241,6 +243,7 @@ const MainPage = ({
       <div className="image-gallery__container">
         {/* <div className="imgGalleryCont1">{imgGallery}</div> */}
         <ImageGallery
+          domain={domain}
           curUser={curUser}
           isLoggedIn={isLoggedIn}
           setImgGalleryLength={setImgGalleryLength}

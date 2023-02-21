@@ -14,6 +14,7 @@ import {
 import HamburgerList from "./HamburgerList";
 
 const MainPageNavBar = ({
+  domain,
   curUser,
   isLoggedIn,
   navPositionClass,
@@ -23,7 +24,7 @@ const MainPageNavBar = ({
   const [userPFP, setPFP] = useState();
   useEffect(() => {
     async function fetchUserInfo() {
-      await fetch(`https://picpoccket.herokuapp.com/${curUser}/info`, {
+      await fetch(`${domain}/${curUser}/info`, {
         method: "GET",
         headers: { "Content-type": "application/json" },
       }).then((response) =>
@@ -215,7 +216,7 @@ const MainPageNavBar = ({
   }
 
   async function signOut() {
-    await fetch("https://picpoccket.herokuapp.com/SignOut", {
+    await fetch(`${domain}/SignOut`, {
       method: "POST",
       headers: { "Content-type": "application/json" },
     });

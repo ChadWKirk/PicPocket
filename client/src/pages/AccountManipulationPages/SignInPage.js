@@ -9,7 +9,7 @@ import googleOAuthIcon from "../../images/google-logo-oauth.png";
 import facebookOauthIcon from "../../images/facebook-logo-oauth.png";
 import { parse } from "@fortawesome/fontawesome-svg-core";
 
-const SignInPage = ({ curUser, isLoggedIn }) => {
+const SignInPage = ({ domain, curUser, isLoggedIn }) => {
   const { dispatch } = useAuthContext();
   let navigate = useNavigate();
   //if user is already logged in, redirect to their account page
@@ -78,7 +78,7 @@ const SignInPage = ({ curUser, isLoggedIn }) => {
       );
     } else {
       console.log("Sign in fetch sent");
-      await fetch("https://picpoccket.herokuapp.com/SignIn", {
+      await fetch(`${domain}/SignIn`, {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify(signInUser),

@@ -6,6 +6,7 @@ import { faHeart, faDownload } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 
 const ImageGallery = ({
+  domain,
   curUser,
   isLoggedIn,
   sort,
@@ -49,15 +50,15 @@ const ImageGallery = ({
     //depending on what the type prop is set to, use one of these routes to fetch img data
     let fetchRoute;
     if (page == "userPage") {
-      fetchRoute = `https://picpoccket.herokuapp.com/${username}/${sort}/${filter}`;
+      fetchRoute = `${domain}/${username}/${sort}/${filter}`;
     } else if (page == "likesPage") {
-      fetchRoute = `https://picpoccket.herokuapp.com/${username}/likes/${sort}/${filter}`;
+      fetchRoute = `${domain}/${username}/likes/${sort}/${filter}`;
     } else if (page == "searchPage") {
-      fetchRoute = `https://picpoccket.herokuapp.com/search/${searchQuery}/${sort}/${filter}`;
+      fetchRoute = `${domain}/search/${searchQuery}/${sort}/${filter}`;
     } else if (page == "mainPageMostRecent") {
-      fetchRoute = "https://picpoccket.herokuapp.com/most-recent-images";
+      fetchRoute = `${domain}/most-recent-images`;
     } else if (page == "mainPageMostPopular") {
-      fetchRoute = "https://picpoccket.herokuapp.com/most-popular";
+      fetchRoute = `${domain}/most-popular`;
     }
     async function fetchImgData() {
       await fetch(fetchRoute, {
@@ -162,7 +163,7 @@ const ImageGallery = ({
             <div>
               <a
                 className="image-gallery__image-author-link-container"
-                href={`http://localhost:3000/User/${element.uploadedBy}`}
+                href={`https://picpoccket.com/User/${element.uploadedBy}`}
               >
                 <img
                   src={element.test[0].pfp}
@@ -186,13 +187,10 @@ const ImageGallery = ({
     let imgDataCopy = imgData;
 
     if (imgDataCopy[index].likedBy.includes(curUser)) {
-      await fetch(
-        `https://picpoccket.herokuapp.com/removeLikedBy/${element.asset_id}/${curUser}`,
-        {
-          method: "POST",
-          headers: { "Content-type": "application/json" },
-        }
-      ).then((res) => {
+      await fetch(`${domain}/removeLikedBy/${element.asset_id}/${curUser}`, {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+      }).then((res) => {
         imgDataCopy[index].likedBy = imgDataCopy[index].likedBy.filter(
           (user) => {
             return user !== curUser;
@@ -201,13 +199,10 @@ const ImageGallery = ({
         setImgData(imgDataCopy);
       });
     } else if (!imgDataCopy[index].likedBy.includes(curUser)) {
-      await fetch(
-        `https://picpoccket.herokuapp.com/addLikedBy/${element.asset_id}/${curUser}`,
-        {
-          method: "POST",
-          headers: { "Content-type": "application/json" },
-        }
-      ).then((res) => {
+      await fetch(`${domain}/addLikedBy/${element.asset_id}/${curUser}`, {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+      }).then((res) => {
         imgDataCopy[index].likedBy.push(curUser);
         setImgData(imgDataCopy);
       });

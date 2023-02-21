@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faDownload } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 
-const MainPageImageGallery = ({ curUser, isLoggedIn }) => {
+const MainPageImageGallery = ({ domain, curUser, isLoggedIn }) => {
   //img array to display
   const [imgGallery, setImgGallery] = useState([]);
   //fetch img array to map over
@@ -23,7 +23,7 @@ const MainPageImageGallery = ({ curUser, isLoggedIn }) => {
     console.log("run");
 
     async function getImages() {
-      fetch("https://picpoccket.herokuapp.com/most-recent-images", {
+      fetch(`${domain}/most-recent-images`, {
         method: "GET",
         headers: { "Content-type": "application/json" },
       }).then((response) =>
@@ -115,7 +115,7 @@ const MainPageImageGallery = ({ curUser, isLoggedIn }) => {
             <div>
               <a
                 className="imgAuthor1"
-                href={`http://localhost:3000/User/${element.uploadedBy}`}
+                href={`https://picpoccket.com/User/${element.uploadedBy}`}
               >
                 <img src={element.test[0].pfp} className="profilePicAuthor" />
                 {element.uploadedBy}
@@ -132,13 +132,10 @@ const MainPageImageGallery = ({ curUser, isLoggedIn }) => {
     let fetchArrCopy = fetchArr;
 
     if (fetchArrCopy[index].likedBy.includes(curUser)) {
-      await fetch(
-        `https://picpoccket.herokuapp.com/removeLikedBy/${element.asset_id}/${curUser}`,
-        {
-          method: "POST",
-          headers: { "Content-type": "application/json" },
-        }
-      ).then((res) => {
+      await fetch(`${domain}/removeLikedBy/${element.asset_id}/${curUser}`, {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+      }).then((res) => {
         fetchArrCopy[index].likedBy = fetchArrCopy[index].likedBy.filter(
           (user) => {
             return user !== curUser;
@@ -148,13 +145,10 @@ const MainPageImageGallery = ({ curUser, isLoggedIn }) => {
         console.log("run 3");
       });
     } else if (!fetchArrCopy[index].likedBy.includes(curUser)) {
-      await fetch(
-        `https://picpoccket.herokuapp.com/addLikedBy/${element.asset_id}/${curUser}`,
-        {
-          method: "POST",
-          headers: { "Content-type": "application/json" },
-        }
-      ).then((res) => {
+      await fetch(`${domain}/addLikedBy/${element.asset_id}/${curUser}`, {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+      }).then((res) => {
         fetchArrCopy[index].likedBy.push(curUser);
         setFetchArr(fetchArrCopy);
         console.log("run 4");

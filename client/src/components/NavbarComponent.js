@@ -15,6 +15,7 @@ import {
 import HamburgerList from "./HamburgerList";
 
 const NavbarComponent = ({
+  domain,
   curUser,
   isLoggedIn,
   navPositionClass,
@@ -24,7 +25,7 @@ const NavbarComponent = ({
   const [userPFP, setPFP] = useState();
   useEffect(() => {
     async function fetchUserInfo() {
-      await fetch(`https://picpoccket.herokuapp.com/${curUser}/info`, {
+      await fetch(`${domain}/${curUser}/info`, {
         method: "GET",
         headers: { "Content-type": "application/json" },
       }).then((response) =>

@@ -9,6 +9,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import uploadFormGalleryIcon from "../images/upload-page__image-gallery-icon.png";
 
 const UploadForm = ({
+  domain,
   curUser,
   imagesToUpload,
   setImagesToUpload,
@@ -87,7 +88,7 @@ const UploadForm = ({
         uploadToMongoBody.imageType = "Photo";
 
         //send to mongoDB
-        fetch("http://localhost:5000/upload", {
+        fetch(`${domain}/upload`, {
           method: "POST",
           headers: { "Content-type": "application/json" },
           body: JSON.stringify(uploadToMongoBody),
@@ -168,7 +169,7 @@ const UploadForm = ({
         uploadToMongoBody.imageType = "Photo";
 
         //send to mongoDB
-        fetch("http://localhost:5000/upload", {
+        fetch(`${domain}/upload`, {
           method: "POST",
           headers: { "Content-type": "application/json" },
           body: JSON.stringify(uploadToMongoBody),
