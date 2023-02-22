@@ -56,7 +56,7 @@ make about us page
 
 ---
 
-get cloudinary name and preset from back end instead of storing in env in front end (unsafe)
+get cloudinary name and preset from back end instead of storing in env in front end (unsafe) - upload using multer to handle formData in express - https://youtu.be/wIOpe8S2Mk8
 
 put termly env vars in backend as well
 

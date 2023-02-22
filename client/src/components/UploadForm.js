@@ -72,6 +72,11 @@ const UploadForm = ({
         .catch((err) => {
           console.log(err);
         });
+      // await fetch("/uploadTest", {
+      //   method: "POST",
+      //   headers: { "Content-type": "application/json" },
+      //   body: formData,
+      // });
       //if file type is jpg, png or jpeg and successfully gets uploaded to cloudinary,
       //send to mongoDB. Accepted file types are controlled through upload preset GUI on the cloudinary website
       if (uploadToMongoBody.public_id) {

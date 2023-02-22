@@ -22,7 +22,7 @@ cloudinary.config({
 });
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: false }));
 
 const dbo = require("./db/conn");
@@ -332,6 +332,24 @@ app.get("/search/:searchQuery", (req, res) => {
 });
 
 // localtunnel url script lt --local-host 127.0.0.1 --port 5000 --subdomain picpocket
+//upload cloudinary test
+//need to use Multer to handle form data. send formdata from react without json parse or stringinfy and no headers
+app.post("/uploadTest", async (req, res) => {
+  console.log(req.body);
+  await fetch(`https://api.cloudinary.com/v1_1/dtyg4ctfr/upload`, {
+    method: "POST",
+    body: {
+      file: req.body,
+      upload_preset: "qpexpq57",
+      folder: "picpocket",
+    },
+  })
+    .then((result) => console.log(result))
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
 //upload post
 app.post("/upload", (req, res) => {
   let db_connect = dbo.getDb();
