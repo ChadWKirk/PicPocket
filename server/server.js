@@ -276,6 +276,11 @@ app.post("/change-password", async (req, res) => {
         console.log(err);
       } else if (!passwordMatch) {
         res.json("incorrect current password");
+      } else if (
+        passwordMatch &&
+        req.body.newPassword !== req.body.confirmNewPassword
+      ) {
+        res.json("New Password and Confirm New Password must match.");
       } else {
         if (
           validator.isStrongPassword(req.body.newPassword) &&

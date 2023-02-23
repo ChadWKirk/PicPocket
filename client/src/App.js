@@ -267,7 +267,13 @@ function App() {
           ></Route>
           <Route
             path="/Account/:username/Change-Password"
-            element={<ChangePasswordPage domain={domain} curUser={curUser} />}
+            element={
+              <ChangePasswordPage
+                domain={domain}
+                curUser={curUser}
+                isLoggedIn={isLoggedIn}
+              />
+            }
           />
           <Route
             path="/Privacy-Policy"

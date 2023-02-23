@@ -44,8 +44,6 @@ TASKS:
 
 styling:
 
-set log in button to black on whitenavbar
-
 upload page - make it so dragging over upload form doesn't rerender image items causing them to flicker
 
 put skeleton loading for all images
