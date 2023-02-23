@@ -4,7 +4,7 @@ import NavbarComponent from "../../components/NavbarComponent";
 
 const ChangePasswordPage = ({ domain, curUser }) => {
   const { username } = useParams();
-  const [oldPassword, setOldPassword] = useState();
+  const [currentPassword, setCurrentPassword] = useState();
   const [newPassword, setNewPassword] = useState();
 
   async function onSubmit(e) {
@@ -15,16 +15,28 @@ const ChangePasswordPage = ({ domain, curUser }) => {
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({
         username: username,
-        oldPassword: oldPassword,
+        currentPassword: currentPassword,
         newPassword: newPassword,
       }),
-    }).then((response) => {
-      if (response.ok) {
-        console.log("password changed");
-      } else {
-        console.log("error");
-      }
-    });
+    }).then((response) =>
+      response
+        .json()
+        .then((resJSON) => JSON.stringify(resJSON))
+        .then((stringJSON) => JSON.parse(stringJSON))
+        .then((parsedJSON) => {
+          if (parsedJSON == "change password") {
+            console.log("password changed");
+          } else if (parsedJSON == "password too weak") {
+            console.log("password too weak");
+          } else if (
+            parsedJSON == "new password cannot match current password"
+          ) {
+            console.log("new password cannot match current password");
+          } else {
+            console.log("incorrect current password");
+          }
+        })
+    );
   }
   return (
     <div>
@@ -37,7 +49,7 @@ const ChangePasswordPage = ({ domain, curUser }) => {
               <label for="oldPassInput">Current Password:</label>
               <input
                 id="oldPassInput"
-                onChange={(e) => setOldPassword(e.target.value)}
+                onChange={(e) => setCurrentPassword(e.target.value)}
               ></input>
             </div>
             <div>

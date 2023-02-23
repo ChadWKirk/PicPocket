@@ -253,14 +253,46 @@ app.post("/SignIn", async (req, res) => {
 //     );
 // });
 
-app.post("/change-password", (req, res) => {
+app.post("/change-password", async (req, res) => {
   console.log("password change page");
   console.log(req.body);
+  let db_connect = dbo.getDb();
   //check if user with req.body.username, req.body.oldPassword exists ->
   //if user with req.body.username, req.body.oldPassword exists ->
   //run passwordIsStrongEnoguh() from validaotr on req.body.newPassword ->
   //if passes, change password. if fails, send response "Password not strong enough"
   //if user does not exist, send response "Current password is incorrect"
+
+  db_connect.collection("picpocket-users").findOne(
+    {
+      username: req.body.username,
+    },
+    async function (err, result) {
+      const passwordMatch = await bcrypt.compare(
+        req.body.currentPassword,
+        result.password
+      );
+      if (err) {
+        console.log(err);
+      } else if (!passwordMatch) {
+        res.json("incorrect current password");
+      } else {
+        if (
+          validator.isStrongPassword(req.body.newPassword) &&
+          req.body.newPassword !== req.body.currentPassword
+        ) {
+          res.json("change password");
+        } else if (
+          validator.isStrongPassword(req.body.newPassword) &&
+          req.body.newPassword == req.body.currentPassword
+        ) {
+          res.json("new password cannot match current password");
+        } else {
+          res.json("password too weak");
+        }
+      }
+    }
+  );
 });
 
 app.delete("/Account/:username/delUser/:pfpID", (req, res) => {

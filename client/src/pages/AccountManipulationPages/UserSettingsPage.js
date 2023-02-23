@@ -296,7 +296,7 @@ const UserSettingsPage = ({
         <div className="user-settings-page__change-pw-del-acc-btn-container">
           <button
             className="changePWBtn"
-            onClick={navigate(`${curUser}/Change-Password`)}
+            onClick={() => navigate(`Change-Password`)}
           >
             Change Password
           </button>
