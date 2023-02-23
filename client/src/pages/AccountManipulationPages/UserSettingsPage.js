@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import NavbarComponent from "../../components/NavbarComponent";
-// import NavBar from "../../components/NavBar";
+import { useAuthContext } from "../../context/useAuthContext";
 import ChangePFPBtn from "../../components/ChangePFPBtn";
 import Toast from "../../components/Toast";
 import { useNavigate } from "react-router-dom";
@@ -13,6 +13,8 @@ const UserSettingsPage = ({
   setIsJustDeleted,
   setLoggedIn,
 }) => {
+  const { dispatch } = useAuthContext();
+
   const [toastMessage, setToastMessage] = useState();
   const [toastStatus, setToastStatus] = useState("Invisible");
   function toastDissappear() {
@@ -40,7 +42,10 @@ const UserSettingsPage = ({
       }).then(() =>
         setTimeout(() => {
           setIsJustDeleted(true);
-          setLoggedIn(false);
+          //remove user from local storage
+          localStorage.removeItem("user");
+          //dispatch logout action
+          dispatch({ type: "LOGOUT" });
           navigate("/");
         }, 500)
       );
@@ -289,7 +294,12 @@ const UserSettingsPage = ({
           </button>
         </div>
         <div className="user-settings-page__change-pw-del-acc-btn-container">
-          <button className="changePWBtn">Change Password</button>
+          <button
+            className="changePWBtn"
+            onClick={navigate(`${curUser}/Change-Password`)}
+          >
+            Change Password
+          </button>
           <a href="" onClick={delAcc}>
             <button className="deleteAccountBtn">Delete account</button>
           </a>

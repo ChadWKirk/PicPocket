@@ -132,6 +132,7 @@ app.post("/signup", async (req, response) => {
               username: req.body.username,
               password: hash,
               email: req.body.email,
+              verified: false,
               bio: "",
               pfp: "https://res.cloudinary.com/dtyg4ctfr/image/upload/v1674238936/PicPocket/default_purple_pfp_ibof5p.jpg",
               // signedIn: true,
@@ -251,6 +252,16 @@ app.post("/SignIn", async (req, res) => {
 //       }
 //     );
 // });
+
+app.post("/change-password", (req, res) => {
+  console.log("password change page");
+  console.log(req.body);
+  //check if user with req.body.username, req.body.oldPassword exists ->
+  //if user with req.body.username, req.body.oldPassword exists ->
+  //run passwordIsStrongEnoguh() from validaotr on req.body.newPassword ->
+  //if passes, change password. if fails, send response "Password not strong enough"
+  //if user does not exist, send response "Current password is incorrect"
+});
 
 app.delete("/Account/:username/delUser/:pfpID", (req, res) => {
   let db_connect = dbo.getDb();

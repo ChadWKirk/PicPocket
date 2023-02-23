@@ -44,6 +44,8 @@ TASKS:
 
 styling:
 
+set log in button to black on whitenavbar
+
 upload page - make it so dragging over upload form doesn't rerender image items causing them to flicker
 
 put skeleton loading for all images
@@ -66,7 +68,7 @@ protect api routes for not logged in users (no token)
 
 make change email work - when updating email in db, send another verification email and set verified to false
 
-make change password
+make change password -
 
 make forgot password - if you forget your password, have an email be sent to user's email with a reset password link
 

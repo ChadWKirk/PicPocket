@@ -19,6 +19,7 @@ import UploadPage from "./pages/UploadPage";
 import ImageViewPage from "./pages/ImageViewPage";
 import LikesPage from "./pages/MyLikes/LikesPage";
 import LikeTestPage from "./pages/MyLikes/LikeTestPage";
+import ChangePasswordPage from "./pages/AccountManipulationPages/ChangePasswordPage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import TOSPage from "./pages/TOSPage";
 import DisclaimerPage from "./pages/DisclaimerPage";
@@ -264,6 +265,10 @@ function App() {
               />
             }
           ></Route>
+          <Route
+            path="/Account/:username/Change-Password"
+            element={<ChangePasswordPage domain={domain} curUser={curUser} />}
+          />
           <Route
             path="/Privacy-Policy"
             element={
