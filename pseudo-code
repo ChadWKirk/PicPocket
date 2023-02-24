@@ -54,7 +54,7 @@ mypics - loading for submit/delete/massdelete (make loading/progress bar at top 
 
 make about us page
 
-change password page and contact page - make responsive (input max width problem)
+contact page - make loading and error badges, make them do to display none after fadeout
 
 ---
 

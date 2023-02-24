@@ -316,6 +316,52 @@ app.post("/change-password", async (req, res) => {
   );
 });
 
+//Contact
+app.post("/contact", (req, res) => {
+  console.log("contact");
+  //validation
+  if (!validator.isEmail(req.body.email)) {
+    res.json("Email is not valid");
+    return;
+  }
+
+  //send email
+  const transporter = nodemailer.createTransport({
+    host: "smtp.zoho.com",
+    port: 465,
+    secure: true,
+    auth: {
+      user: process.env.EMAIL_SENDER_USER,
+      pass: process.env.EMAIL_SENDER_PASS,
+    },
+  });
+
+  const mailConfigurations = {
+    // It should be a string of sender/server email
+    from: req.body.email,
+
+    to: "administrator@picpoccket.com",
+
+    // Subject of Email
+    subject: `Contact Email from ${req.body.name} at ${req.body.email}`,
+
+    // This would be the text of email body
+    text: req.body.message,
+  };
+
+  transporter.sendMail(mailConfigurations, function (error, info) {
+    if (error) {
+      // throw Error(error);
+      res.status(400);
+      console.log(error);
+    } else {
+      console.log("Email Sent Successfully");
+      console.log(info);
+      res.json("send message");
+    }
+  });
+});
+
 app.delete("/Account/:username/delUser/:pfpID", (req, res) => {
   let db_connect = dbo.getDb();
 

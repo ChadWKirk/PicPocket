@@ -160,7 +160,7 @@ const ChangePasswordPage = ({ domain, curUser, isLoggedIn }) => {
         curUser={curUser}
         isLoggedIn={isLoggedIn}
         navPositionClass={"fixed"}
-        navColorClass={"white"}
+        navColorClass={"black"}
       />
       <div className="site-tree__container">
         <a
@@ -174,7 +174,7 @@ const ChangePasswordPage = ({ domain, curUser, isLoggedIn }) => {
       </div>
       <div className="change-password-page__form-container">
         <h1>Change Password</h1>
-        <div>
+        <div style={{ width: "100%" }}>
           <form onSubmit={(e) => onSubmit(e)}>
             <div className="change-password-page__input-container">
               <label htmlFor="currentPassInput">
@@ -229,14 +229,16 @@ const ChangePasswordPage = ({ domain, curUser, isLoggedIn }) => {
                 onMouseUp={() => setConfirmNewPasswordInputType("password")}
               />
               {confirmNewPasswordTooltip}
+              <div style={{ marginTop: "1.25rem" }}>
+                <button type="submit">Change Password</button>
+                <button
+                  onClick={() => navigate(`/Account/${curUser}`)}
+                  className="change-password-page__cancel-button"
+                >
+                  Cancel
+                </button>
+              </div>
             </div>
-            <button type="submit">Change Password</button>
-            <button
-              onClick={() => navigate(`/Account/${curUser}`)}
-              className="change-password-page__cancel-button"
-            >
-              Cancel
-            </button>
           </form>
         </div>
       </div>
