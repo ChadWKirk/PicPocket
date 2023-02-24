@@ -35,8 +35,6 @@ const ContactUsPage = ({ domain, curUser, isLoggedIn }) => {
 
   //loading, failure and success badges
   const [loadingSuccessOrFailure, setLoadingSuccessOrFailure] = useState();
-  const [loadingSuccessOrFailureClass, setLoadingSuccessOrFailureClass] =
-    useState("contact-page__success-or-failure-message");
 
   async function onSubmit(e) {
     e.preventDefault();
@@ -83,7 +81,10 @@ const ContactUsPage = ({ domain, curUser, isLoggedIn }) => {
             if (parsedJSON == "send message") {
               console.log("message sent");
               setLoadingSuccessOrFailure(
-                <button className={loadingSuccessOrFailureClass}>
+                <button
+                  className="contact-page__success-or-failure-message-success"
+                  id="loadingSucFailBtn"
+                >
                   <div>
                     <FontAwesomeIcon icon={faCheck} />
                   </div>
@@ -91,13 +92,10 @@ const ContactUsPage = ({ domain, curUser, isLoggedIn }) => {
                   <div style={{ color: "black" }}>Message sent!</div>
                 </button>
               );
+              //after animation runs in css, make it disappear from DOM
               setTimeout(() => {
-                setLoadingSuccessOrFailureClass("displayNone");
-              }, 6000);
-              //turn form empty
-              //put overlay over form with green BG with white text
-              //that says "Message sent! We will respond to you shortly!"
-              //that fades out slowly after 4 seconds
+                setLoadingSuccessOrFailure();
+              }, 5000);
             } else if (parsedJSON == "Email is not valid") {
               setEmailInputClass("red-input-border");
               setEmailErrorText(
@@ -108,13 +106,21 @@ const ContactUsPage = ({ domain, curUser, isLoggedIn }) => {
             } else if (!parsedJSON.ok) {
               console.log("error");
               setLoadingSuccessOrFailure(
-                <div>
-                  <FontAwesomeIcon icon={faXmark} />
-                  <p>Message failed. Please try again soon.</p>
-                </div>
+                <button
+                  className="contact-page__success-or-failure-message-fail"
+                  id="loadingSucFailBtn"
+                >
+                  <div>
+                    <FontAwesomeIcon icon={faXmark} />
+                  </div>
+
+                  <div style={{ color: "black" }}>Error.</div>
+                </button>
               );
-              //if error > put red banner that says
-              //"There was an error sending your message. Please try again soon"
+              //after animation runs in css, make it disappear from DOM
+              setTimeout(() => {
+                setLoadingSuccessOrFailure();
+              }, 5000);
             }
           })
       );
@@ -143,7 +149,7 @@ const ContactUsPage = ({ domain, curUser, isLoggedIn }) => {
       />
 
       <div className="change-password-page__form-container">
-        <h1>Contact</h1>
+        <h1>Contact Us</h1>
         <div style={{ width: "100%" }}>
           <form onSubmit={(e) => onSubmit(e)}>
             <div className="change-password-page__input-container">

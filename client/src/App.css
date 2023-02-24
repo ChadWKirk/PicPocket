@@ -3151,6 +3151,13 @@ button {
   gap: 1.05rem;
 }
 
+@media (width < 320px) {
+  .change-password-page__buttons-container {
+    flex-direction: column;
+    gap: 0;
+  }
+}
+
 .change-password-page__form-container button {
   margin-top: 1.4rem;
   float: right;
@@ -3173,7 +3180,7 @@ button {
   background-color: var(--offWhite) !important;
 }
 
-.contact-page__success-or-failure-message {
+.contact-page__success-or-failure-message-success {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -3181,6 +3188,18 @@ button {
   background-color: lightgreen !important;
   animation: fadeOut2 4s;
   animation-delay: 2s;
+  pointer-events: none;
+}
+
+.contact-page__success-or-failure-message-fail {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: darkred !important;
+  background-color: red !important;
+  animation: fadeOut2 4s;
+  animation-delay: 2s;
+  pointer-events: none;
 }
 
 @keyframes fadeOut2 {
