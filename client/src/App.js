@@ -20,6 +20,7 @@ import ImageViewPage from "./pages/ImageViewPage";
 import LikesPage from "./pages/MyLikes/LikesPage";
 import LikeTestPage from "./pages/MyLikes/LikeTestPage";
 import ChangePasswordPage from "./pages/AccountManipulationPages/ChangePasswordPage";
+import PasswordChangeSuccessPage from "./pages/AccountManipulationPages/PasswordChangeSuccessPage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import TOSPage from "./pages/TOSPage";
 import DisclaimerPage from "./pages/DisclaimerPage";
@@ -269,6 +270,16 @@ function App() {
             path="/Account/:username/Change-Password"
             element={
               <ChangePasswordPage
+                domain={domain}
+                curUser={curUser}
+                isLoggedIn={isLoggedIn}
+              />
+            }
+          />
+          <Route
+            path="/Change-Password-Success"
+            element={
+              <PasswordChangeSuccessPage
                 domain={domain}
                 curUser={curUser}
                 isLoggedIn={isLoggedIn}

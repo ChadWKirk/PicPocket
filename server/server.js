@@ -191,6 +191,7 @@ app.post("/signup", async (req, response) => {
 
 //user sign in post
 app.post("/SignIn", async (req, res) => {
+  console.log("sign in");
   let db_connect = dbo.getDb();
 
   db_connect.collection("picpocket-users").findOne(
@@ -204,6 +205,7 @@ app.post("/SignIn", async (req, res) => {
         user.password
       );
       if (err) {
+        console.log(err);
         res.send("err");
       }
       if (!user) {
@@ -211,6 +213,7 @@ app.post("/SignIn", async (req, res) => {
         res.status(404);
         console.log("no user exists.");
       } else if (!passwordMatch) {
+        console.log("no password matching");
         res.status(404);
       } else if (passwordMatch) {
         console.log("success");
@@ -254,8 +257,10 @@ app.post("/SignIn", async (req, res) => {
 // });
 
 app.post("/change-password", async (req, res) => {
-  console.log("password change page");
-  console.log(req.body);
+  //password hashing
+  const salt = await bcrypt.genSalt(10);
+  const hash = await bcrypt.hash(req.body.newPassword, salt);
+
   let db_connect = dbo.getDb();
   //check if user with req.body.username, req.body.oldPassword exists ->
   //if user with req.body.username, req.body.oldPassword exists ->
@@ -286,6 +291,17 @@ app.post("/change-password", async (req, res) => {
           validator.isStrongPassword(req.body.newPassword) &&
           req.body.newPassword !== req.body.currentPassword
         ) {
+          db_connect.collection("picpocket-users").updateOne(
+            {
+              username: req.body.username,
+            },
+            {
+              //change pfp to uploaded image
+              $set: {
+                password: hash,
+              },
+            }
+          );
           res.json("change password");
         } else if (
           validator.isStrongPassword(req.body.newPassword) &&

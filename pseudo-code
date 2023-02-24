@@ -54,6 +54,8 @@ mypics - loading for submit/delete/massdelete (make loading/progress bar at top 
 
 make about us page
 
+change password page and contact page - make responsive (input max width problem)
+
 ---
 
 get cloudinary name and preset from back end instead of storing in env in front end (unsafe) - upload using multer to handle formData in express - https://youtu.be/wIOpe8S2Mk8
@@ -65,8 +67,6 @@ make email verification link work -- make it so you can't upload until you click
 protect api routes for not logged in users (no token)
 
 make change email work - when updating email in db, send another verification email and set verified to false
-
-make change password -
 
 make forgot password - if you forget your password, have an email be sent to user's email with a reset password link
 

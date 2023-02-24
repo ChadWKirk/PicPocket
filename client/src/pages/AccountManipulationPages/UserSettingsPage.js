@@ -294,15 +294,15 @@ const UserSettingsPage = ({
           </button>
         </div>
         <div className="user-settings-page__change-pw-del-acc-btn-container">
-          <button
+          <a
+            href={`/Account/${curUser}/Change-Password`}
             className="changePWBtn"
-            onClick={() => navigate(`Change-Password`)}
           >
             Change Password
-          </button>
-          <a href="" onClick={delAcc}>
-            <button className="deleteAccountBtn">Delete account</button>
           </a>
+          <button className="deleteAccountBtn" onClick={delAcc}>
+            Delete account
+          </button>
         </div>
       </div>
     </div>

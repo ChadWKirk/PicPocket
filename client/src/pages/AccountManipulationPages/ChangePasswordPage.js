@@ -3,15 +3,28 @@ import { useNavigate, useParams } from "react-router-dom";
 //components
 import TooltipForInputField from "../../components/TooltipForInputField";
 import NavbarComponent from "../../components/NavbarComponent";
+//auth
+import { useAuthContext } from "../../context/useAuthContext";
+//font awesome
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
 
 const ChangePasswordPage = ({ domain, curUser, isLoggedIn }) => {
   let navigate = useNavigate();
+  const { dispatch } = useAuthContext();
 
   //fields
   const { username } = useParams();
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
+
+  //input type
+  const [currentPasswordInputType, setCurrentPasswordInputType] =
+    useState("password");
+  const [newPasswordInputType, setNewPasswordInputType] = useState("password");
+  const [confirmNewPasswordInputType, setConfirmNewPasswordInputType] =
+    useState("password");
 
   //tooltips
   const [currentPasswordTooltip, setCurrentPasswordTooltip] = useState();
@@ -71,7 +84,12 @@ const ChangePasswordPage = ({ domain, curUser, isLoggedIn }) => {
           .then((stringJSON) => JSON.parse(stringJSON))
           .then((parsedJSON) => {
             if (parsedJSON == "change password") {
-              console.log("password changed");
+              //remove user from local storage
+              localStorage.removeItem("user");
+              //dispatch logout action
+              dispatch({ type: "LOGOUT" });
+              //navigate to success page
+              navigate("/Change-Password-Success");
             } else if (parsedJSON == "password too weak") {
               setConfirmNewPasswordInputClass("red-input-border");
               setConfirmNewPasswordErrorText(
@@ -144,6 +162,16 @@ const ChangePasswordPage = ({ domain, curUser, isLoggedIn }) => {
         navPositionClass={"fixed"}
         navColorClass={"white"}
       />
+      <div className="site-tree__container">
+        <a
+          className="site-tree__past-link"
+          href={`https://picpoccket.com/Account/${curUser}`}
+        >
+          Account
+        </a>
+        <div>{">"}</div>
+        <div style={{ fontWeight: "500" }}>Change Password</div>
+      </div>
       <div className="change-password-page__form-container">
         <h1>Change Password</h1>
         <div>
@@ -155,8 +183,15 @@ const ChangePasswordPage = ({ domain, curUser, isLoggedIn }) => {
               <input
                 id="currentPassInput"
                 className={currentPasswordInputClass}
+                type={currentPasswordInputType}
                 onChange={(e) => setCurrentPassword(e.target.value)}
               ></input>
+              <FontAwesomeIcon
+                icon={faEye}
+                className={"change-password-page__eye-icon"}
+                onMouseDown={() => setCurrentPasswordInputType("text")}
+                onMouseUp={() => setCurrentPasswordInputType("password")}
+              />
               {currentPasswordTooltip}
             </div>
             <div className="change-password-page__input-container">
@@ -166,8 +201,15 @@ const ChangePasswordPage = ({ domain, curUser, isLoggedIn }) => {
               <input
                 id="newPassInput"
                 className={newPasswordInputClass}
+                type={newPasswordInputType}
                 onChange={(e) => setNewPassword(e.target.value)}
               ></input>
+              <FontAwesomeIcon
+                icon={faEye}
+                className={"change-password-page__eye-icon"}
+                onMouseDown={() => setNewPasswordInputType("text")}
+                onMouseUp={() => setNewPasswordInputType("password")}
+              />
               {newPasswordTooltip}
             </div>
             <div className="change-password-page__input-container">
@@ -177,8 +219,15 @@ const ChangePasswordPage = ({ domain, curUser, isLoggedIn }) => {
               <input
                 id="confirmNewPassInput"
                 className={confirmNewPasswordInputClass}
+                type={confirmNewPasswordInputType}
                 onChange={(e) => setConfirmNewPassword(e.target.value)}
               ></input>
+              <FontAwesomeIcon
+                icon={faEye}
+                className={"change-password-page__eye-icon"}
+                onMouseDown={() => setConfirmNewPasswordInputType("text")}
+                onMouseUp={() => setConfirmNewPasswordInputType("password")}
+              />
               {confirmNewPasswordTooltip}
             </div>
             <button type="submit">Change Password</button>

@@ -1038,6 +1038,9 @@ button {
   border-radius: 4px;
   font-size: 1rem;
 }
+.changePWBtn:hover {
+  color: rgb(25, 25, 25);
+}
 .deleteAccountBtn {
   width: 157px;
   padding: 0.8rem;
@@ -3000,6 +3003,46 @@ button {
   }
 }
 
+/* Site Tree CSS */
+
+.site-tree__container {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+  font-size: 0.8rem;
+  max-width: 1000px;
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: -20px;
+}
+
+.site-tree__past-link {
+  color: var(--dark2);
+}
+
+.site-tree__past-link:hover {
+  text-decoration: underline;
+  color: var(--dark2);
+}
+
+/* Password Success Page CSS */
+
+.password-success-page__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.35rem;
+  height: 100vh;
+}
+
+.password-success-page__check-icon {
+  font-size: 12rem;
+  color: rgb(29, 152, 29);
+  margin-bottom: -20px;
+  margin-top: -50px;
+}
+
 /* Change Password Page CSS */
 
 .change-password-page__form-container {
@@ -3039,10 +3082,19 @@ button {
   border: 2px solid rgb(228, 228, 228);
   border-radius: 4px;
   padding: 0rem 0.5rem;
+  position: relative;
 }
 
 .change-password-page__input-container input:focus {
   border: 2px solid black;
+}
+
+.change-password-page__eye-icon {
+  position: absolute;
+  right: 1rem;
+  top: 47px;
+  font-size: 0.8rem;
+  cursor: pointer;
 }
 
 .change-password-page__input-container textarea {
