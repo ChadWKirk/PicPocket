@@ -220,13 +220,15 @@ const ContactUsPage = ({ domain, curUser, isLoggedIn }) => {
 
               {messageTooltip}
               <div className="contact-page__buttons-container">
-                <button
-                  onClick={() => navigate(`/`)}
-                  className="contact-page__cancel-button"
-                >
-                  Back To Home
-                </button>
-                {sendButton}
+                <div className="contact-page__buttons-container-subcontainer">
+                  <button
+                    onClick={() => navigate(`/`)}
+                    className="contact-page__cancel-button"
+                  >
+                    Back To Home
+                  </button>
+                  {sendButton}
+                </div>
               </div>
               {successOrErrMessage}
             </div>

@@ -3152,11 +3152,20 @@ button {
 }
 
 .contact-page__buttons-container {
+  /* margin-top: 2.25rem; */
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1.05rem;
+}
+
+.contact-page__buttons-container-subcontainer {
   margin-top: 2.25rem;
   display: flex;
   justify-content: flex-end;
   align-items: center;
   gap: 1.05rem;
+  width: fit-content;
 }
 
 .contact-page__form-container button {
@@ -3215,12 +3224,17 @@ button {
 }
 
 @media (width < 440px) {
-  .contact-page__buttons-container {
+  .contact-page__buttons-container-subcontainer {
     flex-direction: column-reverse;
     gap: 0;
   }
+  .contact-page__buttons-container-subcontainer {
+    margin-left: auto;
+    margin-right: auto;
+  }
   .contact-page__cancel-button {
-    width: 125px;
+    /* width: 125px; */
+    width: 100%;
   }
   .contact-page__message {
     text-align: center;
@@ -3322,6 +3336,14 @@ button {
   font-size: 0.8rem;
   cursor: pointer;
 }
+.change-password-page__eye-icon-last {
+  position: absolute;
+  right: 1rem;
+  /* top: 47px; */
+  bottom: 105px;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
 
 .change-password-page__input-container textarea {
   font-size: 1rem;
@@ -3338,11 +3360,20 @@ button {
 }
 
 .change-password-page__buttons-container {
-  margin-top: 1.25rem;
+  /* margin-top: 1.25rem; */
   display: flex;
   justify-content: flex-end;
   align-items: center;
   gap: 1.05rem;
+}
+
+.change-password-page__buttons-container-subcontainer {
+  margin-top: 1.35rem;
+  /* display: flex; */
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1.05rem;
+  width: fit-content;
 }
 
 .change-password-page__form-container button {
@@ -3365,15 +3396,23 @@ button {
   /* margin-right: 1rem; */
   color: rgb(119, 119, 119) !important;
   background-color: var(--offWhite) !important;
+  margin-right: 1.05rem;
 }
 
 @media (width < 340px) {
-  .change-password-page__buttons-container {
-    flex-direction: column-reverse;
+  .change-password-page__buttons-container-subcontainer {
+    flex-direction: column;
     gap: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
   }
   .change-password-page__cancel-button {
-    width: 147px;
+    width: 100%;
+    margin: 0;
+  }
+  .change-password-page__eye-icon-last {
+    bottom: 169px;
   }
 }
 

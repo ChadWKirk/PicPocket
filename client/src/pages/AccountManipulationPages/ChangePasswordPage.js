@@ -249,19 +249,22 @@ const ChangePasswordPage = ({ domain, curUser, isLoggedIn }) => {
               ></input>
               <FontAwesomeIcon
                 icon={faEye}
-                className={"change-password-page__eye-icon"}
+                className={"change-password-page__eye-icon-last"}
                 onMouseDown={() => setConfirmNewPasswordInputType("text")}
                 onMouseUp={() => setConfirmNewPasswordInputType("password")}
               />
               {confirmNewPasswordTooltip}
-              <div style={{ marginTop: "1.25rem" }}>
-                {changePasswordButton}
-                <button
-                  onClick={() => navigate(`/Account/${curUser}`)}
-                  className="change-password-page__cancel-button"
-                >
-                  Cancel
-                </button>
+
+              <div className="change-password-page__buttons-container">
+                <div className="change-password-page__buttons-container-subcontainer">
+                  {changePasswordButton}
+                  <button
+                    onClick={() => navigate(`/Account/${curUser}`)}
+                    className="change-password-page__cancel-button"
+                  >
+                    Cancel
+                  </button>
+                </div>
               </div>
             </div>
           </form>

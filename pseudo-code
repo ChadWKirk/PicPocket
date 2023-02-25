@@ -56,8 +56,6 @@ make about us page
 
 ---
 
-contact page - error 553 when sending from weird email address
-
 upload form delete doesn't work
 
 get cloudinary name and preset from back end instead of storing in env in front end (unsafe) - upload using multer to handle formData in express - https://youtu.be/wIOpe8S2Mk8
@@ -74,7 +72,7 @@ make forgot password - if you forget your password, have an email be sent to use
 
 handle errors for blank fields etc.
 
-back end for change bio and change email
+back end for change bio
 
 make it so that duplicate public ID's get named something else in cloudinary (upload preset in cloudinary rules)
 

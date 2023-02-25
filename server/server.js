@@ -338,7 +338,7 @@ app.post("/contact", (req, res) => {
 
   const mailConfigurations = {
     // It should be a string of sender/server email
-    from: req.body.email,
+    from: "administrator@picpoccket.com",
 
     to: "administrator@picpoccket.com",
 
