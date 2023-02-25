@@ -133,6 +133,7 @@ app.post("/signup", async (req, response) => {
               password: hash,
               email: req.body.email,
               verified: false,
+              token: "tokenPlaceholder",
               bio: "",
               pfp: "https://res.cloudinary.com/dtyg4ctfr/image/upload/v1674238936/PicPocket/default_purple_pfp_ibof5p.jpg",
               // signedIn: true,
@@ -141,9 +142,17 @@ app.post("/signup", async (req, response) => {
               if (err) {
                 throw err;
               } else {
+                //create token to send in email verification link
                 const name = req.body.username;
                 const token = createToken(user.insertedId);
                 response.status(200).json({ name, token });
+                //update new user's token field with the new token's value
+                db_connect
+                  .collection("picpocket-users")
+                  .updateOne(
+                    { username: req.body.username },
+                    { $set: { token: token } }
+                  );
                 //send verification email
                 const transporter = nodemailer.createTransport({
                   host: "smtp.zoho.com",
@@ -168,7 +177,7 @@ app.post("/signup", async (req, response) => {
                   text: `Hi! There, You have recently visited
                   our website and entered your email.
                   Please follow the given link to verify your email
-                  https://picpoccket.com/verify/${token}
+                  https://picpoccket.com/${req.body.username}/verify/${token}
                   Thanks`,
                 };
 
@@ -187,6 +196,16 @@ app.post("/signup", async (req, response) => {
         insertNew();
       }
     });
+});
+
+//Email Verification Link Verify
+app.post("/:username/verify/:token", (req, res) => {
+  //if use params token is same as :username's token, set :username's verified status to true
+  //if :username is already verified, don't do anything and just bring them to the home page
+  //if :username is not signed in or another user is signed in already, bring them to sign in page to sign in
+  //signing in removes all other tokens and signs that user in
+  //if the token or name doesn't match, give an error message
+  console.log("token page test");
 });
 
 //user sign in post
