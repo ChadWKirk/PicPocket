@@ -982,6 +982,7 @@ button {
 }
 .user-settings-page__change-bio-container {
   width: 100%;
+  position: relative;
 }
 .user-settings-page__bio-textarea {
   width: 100%;
@@ -993,9 +994,17 @@ button {
   margin-top: 0.6rem;
   height: 5rem;
   resize: none;
+  position: relative;
 }
 .user-settings-page__bio-textarea:focus {
   outline: 1px solid #06acca;
+}
+.user-settings-page__bio-char-count {
+  position: absolute;
+  bottom: 41px;
+  right: 7px;
+  font-size: 0.8rem;
+  color: var(--dark4);
 }
 .user-settings-page__change-email-container {
   width: 100%;
@@ -1020,6 +1029,34 @@ button {
   border: none;
   border-radius: 3px;
   font-size: 1rem;
+  display: flex;
+  gap: 0.5rem;
+}
+.user-settings-page__change-bio-email-btn-success {
+  padding: 0.5rem 0.75rem;
+  margin-top: 0.5rem;
+  color: green !important;
+  background-color: lightgreen !important;
+  pointer-events: none;
+  font-weight: 300;
+  border: none;
+  border-radius: 3px;
+  font-size: 1rem;
+  display: flex;
+  gap: 0.5rem;
+}
+.user-settings-page__change-bio-email-btn-fail {
+  padding: 0.5rem 0.75rem;
+  margin-top: 0.5rem;
+  color: darkred !important;
+  background-color: red !important;
+  pointer-events: none;
+  font-weight: 300;
+  border: none;
+  border-radius: 3px;
+  font-size: 1rem;
+  display: flex;
+  gap: 0.5rem;
 }
 .user-settings-page__change-pw-del-acc-btn-container {
   display: flex;

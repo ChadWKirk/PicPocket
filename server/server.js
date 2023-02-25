@@ -362,6 +362,28 @@ app.post("/contact", (req, res) => {
   });
 });
 
+app.post("/submit-new-bio", (req, res) => {
+  console.log(req.body);
+  let db_connect = dbo.getDb();
+
+  db_connect
+    .collection("picpocket-users")
+    .find({ username: req.body.username })
+    .toArray((err, result) => {
+      if (err) {
+        res.status(400);
+      } else if (result) {
+        db_connect
+          .collection("picpocket-users")
+          .updateOne(
+            { username: req.body.username },
+            { $set: { bio: req.body.newBio } }
+          );
+        res.json("bio changed");
+      }
+    });
+});
+
 app.delete("/Account/:username/delUser/:pfpID", (req, res) => {
   let db_connect = dbo.getDb();
 

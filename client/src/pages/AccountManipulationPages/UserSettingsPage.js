@@ -1,9 +1,18 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+//components
 import NavbarComponent from "../../components/NavbarComponent";
 import { useAuthContext } from "../../context/useAuthContext";
 import ChangePFPBtn from "../../components/ChangePFPBtn";
 import Toast from "../../components/Toast";
-import { useNavigate } from "react-router-dom";
+//font awesome
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faArrowRotateRight,
+  faCheck,
+  faSpinner,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 
 const UserSettingsPage = ({
   domain,
@@ -13,7 +22,30 @@ const UserSettingsPage = ({
   setIsJustDeleted,
   setLoggedIn,
 }) => {
+  //navigate
+  const navigate = useNavigate();
+
+  //auth
   const { dispatch } = useAuthContext();
+
+  //bio and email value
+  const [emailValue, setEmailValue] = useState("");
+  const [bioValue, setBioValue] = useState("");
+
+  //change password and email buttons to toggle between loading, success and error
+  const [submitNewBioButton, setSubmitNewBioButton] = useState(
+    <button type="submit" className="user-settings-page__change-bio-email-btn">
+      Change Bio
+    </button>
+  );
+  const [submitNewEmailButton, setSubmitNewEmailButton] = useState(
+    <button type="submit" className="user-settings-page__change-bio-email-btn">
+      Change Email
+    </button>
+  );
+
+  //button to allow user to change bio again after change attempt
+  const [changeBioAgainButton, setChangeBioAgainButton] = useState();
 
   const [toastMessage, setToastMessage] = useState();
   const [toastStatus, setToastStatus] = useState("Invisible");
@@ -23,7 +55,6 @@ const UserSettingsPage = ({
       setToastMessage();
     }, 3000);
   }
-  const navigate = useNavigate();
 
   const [pfpToUpload, setPfpToUpload] = useState("");
   const [isDone, setIsDone] = useState(false);
@@ -56,8 +87,7 @@ const UserSettingsPage = ({
 
   const [userInfo, setUserInfo] = useState();
   const [userPFP, setPFP] = useState();
-  const [emailValue, setEmailValue] = useState("");
-  const [bioValue, setBioValue] = useState("");
+
   useEffect(() => {
     console.log(process.env);
     async function userInfoFetch() {
@@ -81,11 +111,13 @@ const UserSettingsPage = ({
     userInfoFetch();
   }, []);
 
-  let bio;
+  //bio textarea char count - maxLength is in HTML on textarea element
+  const [bioCharCount, setBioCharCount] = useState(bioValue.length);
 
-  if (userInfo) {
-    bio = userInfo.bio;
-  }
+  useEffect(() => {
+    setBioCharCount(bioValue.length);
+  }, [bioValue]);
+
   //slicing secure url to exclude the picpocket part and the extension at the end
   //to add picpocket/ back to in the back end. had to remove the slash part because it messed up the route
   let pfpID;
@@ -212,6 +244,142 @@ const UserSettingsPage = ({
     }
   }
 
+  //change bio
+  async function submitNewBio(e) {
+    e.preventDefault();
+    setSubmitNewBioButton(
+      <button className="user-settings-page__change-bio-email-btn">
+        Change Bio
+        <div className="user-settings-page__change-button-loading-icon">
+          <FontAwesomeIcon icon={faSpinner} className="fa-spin" />
+        </div>
+      </button>
+    );
+    await fetch(`${domain}/submit-new-bio`, {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify({ username: curUser, newBio: bioValue }),
+    }).then((response) =>
+      response
+        .json()
+        .then((resJSON) => JSON.stringify(resJSON))
+        .then((stringJSON) => JSON.parse(stringJSON))
+        .then((parsedJSON) => {
+          if (parsedJSON === "bio changed") {
+            setSubmitNewBioButton(
+              <button className="user-settings-page__change-bio-email-btn-success">
+                Bio Changed!
+                <div>
+                  <FontAwesomeIcon icon={faCheck} />
+                </div>
+              </button>
+            );
+            setChangeBioAgainButton(
+              <div
+                onClick={() => {
+                  setSubmitNewBioButton(
+                    <button
+                      type="submit"
+                      className="user-settings-page__change-bio-email-btn"
+                    >
+                      Change Bio
+                    </button>
+                  );
+                  setChangeBioAgainButton();
+                }}
+                className="user-settings-page__change-bio-email-btn"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  fontSize: "1rem",
+                  cursor: "pointer",
+                }}
+              >
+                <FontAwesomeIcon icon={faArrowRotateRight} />
+              </div>
+            );
+          } else {
+            setSubmitNewBioButton(
+              <button className="user-settings-page__change-bio-email-btn-fail">
+                Error
+                <div>
+                  <FontAwesomeIcon icon={faXmark} />
+                </div>
+              </button>
+            );
+            setChangeBioAgainButton(
+              <div
+                onClick={() => {
+                  setSubmitNewBioButton(
+                    <button
+                      type="submit"
+                      className="user-settings-page__change-bio-email-btn"
+                    >
+                      Change Bio
+                    </button>
+                  );
+                  setChangeBioAgainButton();
+                }}
+                className="user-settings-page__change-bio-email-btn"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  fontSize: "1rem",
+                  cursor: "pointer",
+                }}
+              >
+                <FontAwesomeIcon icon={faArrowRotateRight} />
+              </div>
+            );
+          }
+        })
+    );
+  }
+
+  //change email
+  async function submitNewEmail(e) {
+    e.preventDefault();
+    setSubmitNewEmailButton(
+      <button className="user-settings-page__change-bio-email-btn">
+        Change Email
+        <div className="contact-page__send-button-loading-icon">
+          <FontAwesomeIcon icon={faSpinner} className="fa-spin" />
+        </div>
+      </button>
+    );
+    await fetch(`${domain}/submit-new-email`, {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify({ username: curUser, newEmail: emailValue }),
+    }).then((response) =>
+      response
+        .json()
+        .then((resJSON) => JSON.stringify(resJSON))
+        .then((stringJSON) => JSON.parse(stringJSON))
+        .then((parsedJSON) => {
+          if (parsedJSON === "email changed") {
+            setSubmitNewEmailButton(
+              <button className="user-settings-page__change-bio-email-btn-success">
+                Email Changed!
+                <div>
+                  <FontAwesomeIcon icon={faCheck} />
+                </div>
+              </button>
+            );
+          } else {
+            setSubmitNewEmailButton(
+              <button className="user-settings-page__change-bio-email-btn-fail">
+                Error
+                <div>
+                  <FontAwesomeIcon icon={faXmark} />
+                </div>
+              </button>
+            );
+          }
+        })
+    );
+  }
+
   function closeToast() {
     setToastMessage();
     setToastStatus();
@@ -264,34 +432,38 @@ const UserSettingsPage = ({
           />
         </div>
         <div className="user-settings-page__change-bio-container">
-          <h2>Short Bio:</h2>
-          <textarea
-            className="user-settings-page__bio-textarea"
-            value={bioValue}
-            onChange={(e) => setBioValue(e.target.value)}
-          ></textarea>
-          <button
-            className="user-settings-page__change-bio-email-btn"
-            onClick={() => console.log(bioValue)}
-          >
-            Change Bio
-          </button>
+          <form onSubmit={(e) => submitNewBio(e)}>
+            <h2>Short Bio:</h2>
+            <textarea
+              maxLength={70}
+              className="user-settings-page__bio-textarea"
+              value={bioValue}
+              onChange={(e) => {
+                setBioValue(e.target.value);
+                console.log(bioValue);
+              }}
+            ></textarea>
+            <p className="user-settings-page__bio-char-count">
+              {bioCharCount}/{70}
+            </p>
+            <div style={{ display: "flex", gap: "0.8rem" }}>
+              {submitNewBioButton}
+              {changeBioAgainButton}
+            </div>
+          </form>
         </div>
         <div className="user-settings-page__change-email-container">
-          <h2>Email:</h2>
-          <input
-            value={emailValue}
-            className="user-settings-page__email-input"
-            onChange={(e) => {
-              setEmailValue(e.target.value);
-            }}
-          ></input>
-          <button
-            className="user-settings-page__change-bio-email-btn"
-            onClick={() => console.log(emailValue)}
-          >
-            Change Email
-          </button>
+          <form onSubmit={(e) => submitNewEmail(e)}>
+            <h2>Email:</h2>
+            <input
+              value={emailValue}
+              className="user-settings-page__email-input"
+              onChange={(e) => {
+                setEmailValue(e.target.value);
+              }}
+            ></input>
+            {submitNewEmailButton}
+          </form>
         </div>
         <div className="user-settings-page__change-pw-del-acc-btn-container">
           <a

@@ -72,8 +72,6 @@ make forgot password - if you forget your password, have an email be sent to use
 
 handle errors for blank fields etc.
 
-back end for change bio
-
 make it so that duplicate public ID's get named something else in cloudinary (upload preset in cloudinary rules)
 
 Create single download in myPics - set download button HREF to secure url with fl_attachment in url when selecting an image

@@ -5,7 +5,15 @@ import NavbarComponent from "../components/NavbarComponent";
 import ImageGallerySortFilterAndSubheadingComponent from "../components/ImageGallerySortFilterAndSubheadingComponent";
 import ImageGallery from "../components/ImageGallery";
 
-const UserPage = ({ domain, curUser, isLoggedIn }) => {
+const UserPage = ({
+  domain,
+  curUser,
+  isLoggedIn,
+  imgTitleArrState,
+  setImgTitleArrState,
+  isShowingImageSelectModal,
+  setIsShowingImageSelectModal,
+}) => {
   const { username } = useParams();
 
   //to get number of images in array for "x pics liked by user" or "x search results" heading
@@ -63,7 +71,7 @@ const UserPage = ({ domain, curUser, isLoggedIn }) => {
           <div className="galleryHeading">
             <img src={pfp} className="profilePicBig" />
             <h2>{username}</h2>
-            <p>{bio} okokoko bio</p>
+            <p>{bio}</p>
           </div>
         </div>
 
@@ -92,6 +100,10 @@ const UserPage = ({ domain, curUser, isLoggedIn }) => {
             filter={filter}
             imgGalleryLength={imgGalleryLength}
             setImgGalleryLength={setImgGalleryLength}
+            isShowingImageSelectModal={isShowingImageSelectModal}
+            setIsShowingImageSelectModal={setIsShowingImageSelectModal}
+            imgTitleArrState={imgTitleArrState}
+            setImgTitleArrState={setImgTitleArrState}
             page={"userPage"}
           />
         </div>

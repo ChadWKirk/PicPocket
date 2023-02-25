@@ -163,7 +163,7 @@ const ImageGallery = ({
             <div>
               <a
                 className="image-gallery__image-author-link-container"
-                href={`https://picpoccket.com/User/${element.uploadedBy}`}
+                href={`/User/${element.uploadedBy}`}
               >
                 <img
                   src={element.test[0].pfp}
