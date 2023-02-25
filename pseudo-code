@@ -54,9 +54,9 @@ mypics - loading for submit/delete/massdelete (make loading/progress bar at top 
 
 make about us page
 
-change password page and contact page - make separate form container classes
-
 ---
+
+contact page - error 553 when sending from weird email address
 
 upload form delete doesn't work
 
@@ -77,8 +77,6 @@ handle errors for blank fields etc.
 back end for change bio and change email
 
 make it so that duplicate public ID's get named something else in cloudinary (upload preset in cloudinary rules)
-
-contact us page backend once site is hosted and get website email
 
 Create single download in myPics - set download button HREF to secure url with fl_attachment in url when selecting an image
 

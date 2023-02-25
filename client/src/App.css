@@ -3050,9 +3050,9 @@ button {
   margin-top: -50px;
 }
 
-/* Contact Us Page CSS */
+/* Contact Page CSS */
 
-.change-password-page__form-container {
+.contact-page__form-container {
   margin: 2.75rem auto;
   padding: 2.5rem 2rem 4rem 2rem;
   max-width: 550px;
@@ -3065,28 +3065,26 @@ button {
 }
 
 @media (width < 650px) {
-  .change-password-page__form-container {
+  .contact-page__form-container {
     margin-top: 2rem;
   }
 }
 
 @media (width < 550px) {
-  .change-password-page__form-container {
-    border-left: none;
-    border-right: none;
-    border-top: none;
+  .contact-page__form-container {
+    border: none;
     margin-top: 1.75rem;
-    padding-bottom: 1rem;
+    padding-bottom: 10rem;
   }
 }
 
-.change-password-page__form-container h1 {
+.contact-page__form-container h1 {
   font-size: 1.625rem;
   font-weight: 1000;
-  margin-bottom: 3.75rem;
+  margin-bottom: 5.5rem;
 }
 
-.change-password-page__input-container {
+.contact-page__input-container {
   margin-bottom: 2rem;
   width: 85%;
   margin-left: auto;
@@ -3094,14 +3092,14 @@ button {
   position: relative;
 }
 
-.change-password-page__input-container label {
+.contact-page__input-container label {
   display: block;
   font-size: 0.85rem;
   font-weight: 800;
   margin-bottom: 0.5rem;
 }
 
-.change-password-page__input-container input {
+.contact-page__input-container input {
   font-size: 1rem;
   width: 100%;
   height: 50px;
@@ -3109,13 +3107,13 @@ button {
   border-radius: 4px;
   padding: 0rem 0.5rem;
   position: relative;
-  padding-right: 2.5rem;
+  padding-right: 1rem;
 }
 
-.change-password-page__input-container input:focus {
+.contact-page__input-container input:focus {
   border: 2px solid black;
 }
-.change-password-page__input-container textarea {
+.contact-page__input-container textarea {
   font-size: 1rem;
   width: 100% !important;
   height: 50px;
@@ -3126,19 +3124,20 @@ button {
   padding-right: 2.5rem;
 }
 
-.change-password-page__input-container textarea:focus {
+.contact-page__input-container textarea:focus {
   border: 2px solid black;
 }
 
-.change-password-page__eye-icon {
+.contact-page__eye-icon {
   position: absolute;
   right: 1rem;
-  top: 47px;
+  /* top: 47px; */
+  bottom: 19px;
   font-size: 0.8rem;
   cursor: pointer;
 }
 
-.change-password-page__input-container textarea {
+.contact-page__input-container textarea {
   font-size: 1rem;
   width: 410px;
   min-height: 70px;
@@ -3148,19 +3147,19 @@ button {
   padding: 0.2rem 0.5rem;
 }
 
-.change-password-page__input-container textarea:focus {
+.contact-page__input-container textarea:focus {
   border: 2px solid black;
 }
 
-.change-password-page__buttons-container {
-  margin-top: 1.25rem;
+.contact-page__buttons-container {
+  margin-top: 2.25rem;
   display: flex;
   justify-content: flex-end;
   align-items: center;
   gap: 1.05rem;
 }
 
-.change-password-page__form-container button {
+.contact-page__form-container button {
   margin-top: 1.4rem;
   float: right;
   color: white;
@@ -3171,12 +3170,12 @@ button {
   transition: 0.2s;
 }
 
-.change-password-page__form-container button:hover {
+.contact-page__form-container button:hover {
   background-color: rgb(6, 6, 41);
   transition: 0.2s;
 }
 
-.change-password-page__cancel-button {
+.contact-page__cancel-button {
   /* margin-right: 1rem; */
   color: rgb(119, 119, 119) !important;
   background-color: var(--offWhite) !important;
@@ -3210,20 +3209,20 @@ button {
   pointer-events: none;
 }
 
-.contact-us-page__message {
+.contact-page__message {
   margin-top: 2.25rem;
   /* margin-bottom: -2rem; */
 }
 
-@media (width < 340px) {
-  .change-password-page__buttons-container {
+@media (width < 440px) {
+  .contact-page__buttons-container {
     flex-direction: column-reverse;
     gap: 0;
   }
-  .change-password-page__cancel-button {
-    width: 147px;
+  .contact-page__cancel-button {
+    width: 125px;
   }
-  .contact-us-page__message {
+  .contact-page__message {
     text-align: center;
   }
 }
@@ -3259,9 +3258,7 @@ button {
 
 @media (width < 550px) {
   .change-password-page__form-container {
-    border-left: none;
-    border-right: none;
-    border-top: none;
+    border: none;
     margin-top: 1.75rem;
     padding-bottom: 1rem;
   }
@@ -3320,7 +3317,8 @@ button {
 .change-password-page__eye-icon {
   position: absolute;
   right: 1rem;
-  top: 47px;
+  /* top: 47px; */
+  bottom: 19px;
   font-size: 0.8rem;
   cursor: pointer;
 }
@@ -3369,39 +3367,6 @@ button {
   background-color: var(--offWhite) !important;
 }
 
-.contact-page__send-button-loading-icon {
-  color: var(--offWhite);
-  display: inline;
-  margin-left: 0.5rem;
-}
-
-.contact-page__send-button-success {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: green !important;
-  background-color: lightgreen !important;
-  /* animation: fadeOut2 4s; */
-  /* animation-delay: 2s; */
-  pointer-events: none;
-}
-
-.contact-page__send-button-fail {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: darkred !important;
-  background-color: red !important;
-  /* animation: fadeOut2 4s; */
-  /* animation-delay: 2s; */
-  pointer-events: none;
-}
-
-.contact-us-page__message {
-  margin-top: 2.25rem;
-  /* margin-bottom: -2rem; */
-}
-
 @media (width < 340px) {
   .change-password-page__buttons-container {
     flex-direction: column-reverse;
@@ -3409,9 +3374,6 @@ button {
   }
   .change-password-page__cancel-button {
     width: 147px;
-  }
-  .contact-us-page__message {
-    text-align: center;
   }
 }
 

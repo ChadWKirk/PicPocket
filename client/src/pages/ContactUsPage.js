@@ -75,7 +75,7 @@ const ContactUsPage = ({ domain, curUser, isLoggedIn }) => {
       //if all fields are filled, run fetch request
       else {
         setSendButton(
-          <button type="submit" id="loadingSucFailBtn">
+          <button type="submit">
             Send Message
             <div className="contact-page__send-button-loading-icon">
               <FontAwesomeIcon icon={faSpinner} className="fa-spin" />
@@ -100,10 +100,7 @@ const ContactUsPage = ({ domain, curUser, isLoggedIn }) => {
               if (parsedJSON == "send message") {
                 console.log("message sent");
                 setSendButton(
-                  <button
-                    className="contact-page__send-button-success"
-                    id="loadingSucFailBtn"
-                  >
+                  <button className="contact-page__send-button-success">
                     <div>
                       <FontAwesomeIcon icon={faCheck} />
                     </div>
@@ -112,7 +109,7 @@ const ContactUsPage = ({ domain, curUser, isLoggedIn }) => {
                   </button>
                 );
                 setSuccessOrErrMessage(
-                  <div className="contact-us-page__message">
+                  <div className="contact-page__message">
                     Your message was sent to us. Please give us some time to
                     respond.
                   </div>
@@ -134,10 +131,7 @@ const ContactUsPage = ({ domain, curUser, isLoggedIn }) => {
               } else if (!parsedJSON.ok) {
                 console.log("error");
                 setSendButton(
-                  <button
-                    className="contact-page__send-button-fail"
-                    id="loadingSucFailBtn"
-                  >
+                  <button className="contact-page__send-button-fail">
                     <div>
                       <FontAwesomeIcon icon={faXmark} />
                     </div>
@@ -146,7 +140,7 @@ const ContactUsPage = ({ domain, curUser, isLoggedIn }) => {
                   </button>
                 );
                 setSuccessOrErrMessage(
-                  <div className="contact-us-page__message">
+                  <div className="contact-page__message">
                     Error sending message. Please try again soon.
                   </div>
                 );
@@ -183,11 +177,11 @@ const ContactUsPage = ({ domain, curUser, isLoggedIn }) => {
         navColorClass={"black"}
       />
 
-      <div className="change-password-page__form-container">
+      <div className="contact-page__form-container">
         <h1>Contact Us</h1>
         <div style={{ width: "100%" }}>
           <form onSubmit={(e) => onSubmit(e)}>
-            <div className="change-password-page__input-container">
+            <div className="contact-page__input-container">
               <label htmlFor="nameInput">Name: {nameErrorText}</label>
               <input
                 id="nameInput"
@@ -199,10 +193,9 @@ const ContactUsPage = ({ domain, curUser, isLoggedIn }) => {
                   }
                 }}
               ></input>
-
               {nameTooltip}
             </div>
-            <div className="change-password-page__input-container">
+            <div className="contact-page__input-container">
               <label htmlFor="emailInput">Email: {emailErrorText}</label>
               <input
                 id="emailInput"
@@ -217,7 +210,7 @@ const ContactUsPage = ({ domain, curUser, isLoggedIn }) => {
 
               {emailTooltip}
             </div>
-            <div className="change-password-page__input-container">
+            <div className="contact-page__input-container">
               <label htmlFor="messageInput">Message: {messageErrorText}</label>
               <textarea
                 id="messageInput"
@@ -226,12 +219,12 @@ const ContactUsPage = ({ domain, curUser, isLoggedIn }) => {
               ></textarea>
 
               {messageTooltip}
-              <div className="change-password-page__buttons-container">
+              <div className="contact-page__buttons-container">
                 <button
                   onClick={() => navigate(`/`)}
-                  className="change-password-page__cancel-button"
+                  className="contact-page__cancel-button"
                 >
-                  Cancel
+                  Back To Home
                 </button>
                 {sendButton}
               </div>

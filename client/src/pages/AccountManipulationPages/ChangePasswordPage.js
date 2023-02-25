@@ -7,7 +7,7 @@ import NavbarComponent from "../../components/NavbarComponent";
 import { useAuthContext } from "../../context/useAuthContext";
 //font awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 const ChangePasswordPage = ({ domain, curUser, isLoggedIn }) => {
   let navigate = useNavigate();
@@ -43,6 +43,11 @@ const ChangePasswordPage = ({ domain, curUser, isLoggedIn }) => {
   const [confirmNewPasswordErrorText, setConfirmNewPasswordErrorText] =
     useState();
 
+  //Change Password button
+  const [changePasswordButton, setChangePasswordButton] = useState(
+    <button type="submit">Change Password</button>
+  );
+
   async function onSubmit(e) {
     e.preventDefault();
 
@@ -68,6 +73,14 @@ const ChangePasswordPage = ({ domain, curUser, isLoggedIn }) => {
         />
       );
     } else {
+      setChangePasswordButton(
+        <button type="submit" id="loadingSucFailBtn">
+          Change Password
+          <div className="contact-page__send-button-loading-icon">
+            <FontAwesomeIcon icon={faSpinner} className="fa-spin" />
+          </div>
+        </button>
+      );
       await fetch(`${domain}/change-password`, {
         method: "POST",
         headers: { "Content-type": "application/json" },
@@ -91,6 +104,9 @@ const ChangePasswordPage = ({ domain, curUser, isLoggedIn }) => {
               //navigate to success page
               navigate("/Change-Password-Success");
             } else if (parsedJSON == "password too weak") {
+              setChangePasswordButton(
+                <button type="submit">Change Password</button>
+              );
               setConfirmNewPasswordInputClass("red-input-border");
               setConfirmNewPasswordErrorText(
                 <div className="sign-in-page__already-exists-message">
@@ -108,6 +124,9 @@ const ChangePasswordPage = ({ domain, curUser, isLoggedIn }) => {
             } else if (
               parsedJSON == "new password cannot match current password"
             ) {
+              setChangePasswordButton(
+                <button type="submit">Change Password</button>
+              );
               setNewPasswordInputClass("red-input-border");
               setNewPasswordErrorText(
                 <div className="sign-in-page__already-exists-message">
@@ -117,6 +136,9 @@ const ChangePasswordPage = ({ domain, curUser, isLoggedIn }) => {
             } else if (
               parsedJSON == "New Password and Confirm New Password must match."
             ) {
+              setChangePasswordButton(
+                <button type="submit">Change Password</button>
+              );
               setConfirmNewPasswordInputClass("red-input-border");
               setConfirmNewPasswordErrorText(
                 <div className="sign-in-page__already-exists-message">
@@ -130,6 +152,9 @@ const ChangePasswordPage = ({ domain, curUser, isLoggedIn }) => {
                 </div>
               );
             } else {
+              setChangePasswordButton(
+                <button type="submit">Change Password</button>
+              );
               setCurrentPasswordInputClass("red-input-border");
               setCurrentPasswordErrorText(
                 <div className="sign-in-page__already-exists-message">
@@ -230,7 +255,7 @@ const ChangePasswordPage = ({ domain, curUser, isLoggedIn }) => {
               />
               {confirmNewPasswordTooltip}
               <div style={{ marginTop: "1.25rem" }}>
-                <button type="submit">Change Password</button>
+                {changePasswordButton}
                 <button
                   onClick={() => navigate(`/Account/${curUser}`)}
                   className="change-password-page__cancel-button"
