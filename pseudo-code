@@ -54,9 +54,11 @@ mypics - loading for submit/delete/massdelete (make loading/progress bar at top 
 
 make about us page
 
-contact page - make loading thing with faSpinner, if width is less than 500px, put sucess of fail badge on top under Contact US title.
+change password page and contact page - make separate form container classes
 
 ---
+
+upload form delete doesn't work
 
 get cloudinary name and preset from back end instead of storing in env in front end (unsafe) - upload using multer to handle formData in express - https://youtu.be/wIOpe8S2Mk8
 

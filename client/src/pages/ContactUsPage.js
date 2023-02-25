@@ -33,97 +33,132 @@ const ContactUsPage = ({ domain, curUser, isLoggedIn }) => {
   const [emailErrorText, setEmailErrorText] = useState();
   const [messageErrorText, setMessageErrorText] = useState();
 
-  //loading, failure and success badges
-  const [loadingSuccessOrFailure, setLoadingSuccessOrFailure] = useState();
+  //send message button
+  const [sendButton, setSendButton] = useState(
+    <button type="submit">Send Message</button>
+  );
+
+  //send message success or failure messages
+  const [successOrErrMessage, setSuccessOrErrMessage] = useState();
+
+  //amount of attempts allowed to send message
+  const [attempts, setAttempts] = useState(0);
+  const [maxAttempts, setMaxAttempts] = useState(1);
 
   async function onSubmit(e) {
     e.preventDefault();
+    setAttempts(attempts + 1);
+    if (attempts < maxAttempts) {
+      //tooltips
+      if (name.length === 0) {
+        setNameTooltip(
+          <TooltipForInputField
+            Message={"Please fill out this field."}
+            Type={"Yellow Warning"}
+          />
+        );
+      } else if (email.length === 0) {
+        setEmailTooltip(
+          <TooltipForInputField
+            Message={"Please fill out this field."}
+            Type={"Yellow Warning"}
+          />
+        );
+      } else if (message.length === 0) {
+        setMessageTooltip(
+          <TooltipForInputField
+            Message={"Please fill out this field."}
+            Type={"Yellow Warning"}
+          />
+        );
+      }
+      //if all fields are filled, run fetch request
+      else {
+        setSendButton(
+          <button type="submit" id="loadingSucFailBtn">
+            Send Message
+            <div className="contact-page__send-button-loading-icon">
+              <FontAwesomeIcon icon={faSpinner} className="fa-spin" />
+            </div>
+          </button>
+        );
 
-    //tooltips
-    if (name.length === 0) {
-      setNameTooltip(
-        <TooltipForInputField
-          Message={"Please fill out this field."}
-          Type={"Yellow Warning"}
-        />
-      );
-    } else if (email.length === 0) {
-      setEmailTooltip(
-        <TooltipForInputField
-          Message={"Please fill out this field."}
-          Type={"Yellow Warning"}
-        />
-      );
-    } else if (message.length === 0) {
-      setMessageTooltip(
-        <TooltipForInputField
-          Message={"Please fill out this field."}
-          Type={"Yellow Warning"}
-        />
-      );
-    }
-    //if all fields are filled, run fetch request
-    else {
-      await fetch(`${domain}/contact`, {
-        method: "POST",
-        headers: { "Content-type": "application/json" },
-        body: JSON.stringify({
-          name: name,
-          email: email,
-          message: message,
-        }),
-      }).then((response) =>
-        response
-          .json()
-          .then((resJSON) => JSON.stringify(resJSON))
-          .then((stringJSON) => JSON.parse(stringJSON))
-          .then((parsedJSON) => {
-            if (parsedJSON == "send message") {
-              console.log("message sent");
-              setLoadingSuccessOrFailure(
-                <button
-                  className="contact-page__success-or-failure-message-success"
-                  id="loadingSucFailBtn"
-                >
-                  <div>
-                    <FontAwesomeIcon icon={faCheck} />
+        await fetch(`${domain}/contact`, {
+          method: "POST",
+          headers: { "Content-type": "application/json" },
+          body: JSON.stringify({
+            name: name,
+            email: email,
+            message: message,
+          }),
+        }).then((response) =>
+          response
+            .json()
+            .then((resJSON) => JSON.stringify(resJSON))
+            .then((stringJSON) => JSON.parse(stringJSON))
+            .then((parsedJSON) => {
+              if (parsedJSON == "send message") {
+                console.log("message sent");
+                setSendButton(
+                  <button
+                    className="contact-page__send-button-success"
+                    id="loadingSucFailBtn"
+                  >
+                    <div>
+                      <FontAwesomeIcon icon={faCheck} />
+                    </div>
+
+                    <div style={{ color: "black" }}>Message sent!</div>
+                  </button>
+                );
+                setSuccessOrErrMessage(
+                  <div className="contact-us-page__message">
+                    Your message was sent to us. Please give us some time to
+                    respond.
                   </div>
-
-                  <div style={{ color: "black" }}>Message sent!</div>
-                </button>
-              );
-              //after animation runs in css, make it disappear from DOM
-              setTimeout(() => {
-                setLoadingSuccessOrFailure();
-              }, 5000);
-            } else if (parsedJSON == "Email is not valid") {
-              setEmailInputClass("red-input-border");
-              setEmailErrorText(
-                <div className="sign-in-page__already-exists-message">
-                  Invalid email address.
-                </div>
-              );
-            } else if (!parsedJSON.ok) {
-              console.log("error");
-              setLoadingSuccessOrFailure(
-                <button
-                  className="contact-page__success-or-failure-message-fail"
-                  id="loadingSucFailBtn"
-                >
-                  <div>
-                    <FontAwesomeIcon icon={faXmark} />
+                );
+                //after some time, make btn and message back to default state
+                // setTimeout(() => {
+                //   setSendButton(<button type="submit">Send Message</button>);
+                //   setSuccessOrErrMessage();
+                // }, 7000);
+              } else if (parsedJSON == "Email is not valid") {
+                setSendButton(<button type="submit">Send Message</button>);
+                setAttempts(0);
+                setEmailInputClass("red-input-border");
+                setEmailErrorText(
+                  <div className="sign-in-page__already-exists-message">
+                    Invalid email address.
                   </div>
+                );
+              } else if (!parsedJSON.ok) {
+                console.log("error");
+                setSendButton(
+                  <button
+                    className="contact-page__send-button-fail"
+                    id="loadingSucFailBtn"
+                  >
+                    <div>
+                      <FontAwesomeIcon icon={faXmark} />
+                    </div>
 
-                  <div style={{ color: "black" }}>Error.</div>
-                </button>
-              );
-              //after animation runs in css, make it disappear from DOM
-              setTimeout(() => {
-                setLoadingSuccessOrFailure();
-              }, 5000);
-            }
-          })
-      );
+                    <div style={{ color: "black" }}>Error.</div>
+                  </button>
+                );
+                setSuccessOrErrMessage(
+                  <div className="contact-us-page__message">
+                    Error sending message. Please try again soon.
+                  </div>
+                );
+                //after some time, make btn and message back to default state
+                // setTimeout(() => {
+                //   setSendButton(<button type="submit">Send Message</button>);
+                //   setSuccessOrErrMessage();
+                // }, 7000);
+              }
+            })
+        );
+      }
     }
   }
   return (
@@ -158,6 +193,11 @@ const ContactUsPage = ({ domain, curUser, isLoggedIn }) => {
                 id="nameInput"
                 className={nameInputClass}
                 onChange={(e) => setName(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    onSubmit(e);
+                  }
+                }}
               ></input>
 
               {nameTooltip}
@@ -168,6 +208,11 @@ const ContactUsPage = ({ domain, curUser, isLoggedIn }) => {
                 id="emailInput"
                 className={emailInputClass}
                 onChange={(e) => setEmail(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    onSubmit(e);
+                  }
+                }}
               ></input>
 
               {emailTooltip}
@@ -188,9 +233,9 @@ const ContactUsPage = ({ domain, curUser, isLoggedIn }) => {
                 >
                   Cancel
                 </button>
-                <button type="submit">Send Message</button>
-                {loadingSuccessOrFailure}
+                {sendButton}
               </div>
+              {successOrErrMessage}
             </div>
           </form>
         </div>
