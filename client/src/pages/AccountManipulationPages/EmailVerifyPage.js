@@ -36,12 +36,12 @@ const EmailVerifyPage = ({ domain, isLoggedIn, curUser }) => {
         .then((parsedJSON) => {
           if (parsedJSON == "verified has been set to true") {
             setEmailIcon(
-              <div className="email-verify-page__email-image">
+              <div className="email-verify-page__email-image-success">
                 <FontAwesomeIcon icon={faEnvelopeCircleCheck} />
               </div>
             );
             setMessage(
-              <div className="email-verify-page__message-container">
+              <div className="email-verify-page__message-container-success">
                 <h1>Your email has been verified!</h1>
                 <h3>You can now upload pics!</h3>
                 <h4 style={{ marginTop: "3.75rem" }}>
@@ -56,27 +56,30 @@ const EmailVerifyPage = ({ domain, isLoggedIn, curUser }) => {
             navigate("/");
           } else if (parsedJSON == "user does not match") {
             setEmailIcon(
-              <div className="email-verify-page__email-image-fail-container">
-                <div className="email-verify-page__email-image-fail-envelope">
+              <div className="email-verify-page__email-image-container-fail">
+                <div className="email-verify-page__email-image-envelope-fail">
                   <FontAwesomeIcon icon={faEnvelope} />
                 </div>
-                <div className="email-verify-page__email-image-fail-x">
+                <div className="email-verify-page__email-image-x-fail">
                   <FontAwesomeIcon icon={faXmark} />
                 </div>
               </div>
             );
             setMessage(
-              <div className="email-verify-page__message-fail-container">
+              <div className="email-verify-page__message-container-fail">
                 <h1>
                   We can not find a user that matches the username and/or token
                   in this verification link.
                 </h1>
-                <h3>
-                  Please log in to your account and resend the verifiation link.
+                <h3 style={{ marginTop: "2rem" }}>
+                  Please go to your{" "}
+                  <a href={`/Account/${username}`}>User Settings</a> page and
+                  resend the verifiation link next to the "Change Email" button.
                 </h3>
-                <h3>
-                  If this is your second time trying a new link, please contact
-                  us at administrator@picpoccket.com
+                <h3 style={{ marginTop: "4rem" }}>
+                  If this is your second time trying a new link, please{" "}
+                  <a href={`/Contact`}>Contact Us</a> at
+                  administrator@picpoccket.com
                 </h3>
               </div>
             );
@@ -91,8 +94,10 @@ const EmailVerifyPage = ({ domain, isLoggedIn, curUser }) => {
 
   return (
     <div className="email-verify-page__container">
-      {emailIcon}
-      {message}
+      <div className="email-verify-page__contents-container">
+        {emailIcon}
+        {message}
+      </div>
     </div>
   );
 };

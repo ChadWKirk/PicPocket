@@ -1092,19 +1092,49 @@ button {
 /* Email Verify Page CSS */
 
 .email-verify-page__container {
+  background-color: var(--offWhite);
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+}
+.email-verify-page__contents-container {
+  max-width: var(--siteContentsMaxWidth);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin: auto;
-  margin-bottom: 7rem;
+  padding-bottom: 7rem;
+  min-height: 100%;
+  color: var(--dark2);
 }
-.email-verify-page__email-image {
+.email-verify-page__email-image-success {
   font-size: 12rem;
   color: rgb(29, 152, 29);
 }
-.email-verify-page__message-container {
+.email-verify-page__message-container-success {
   text-align: center;
+}
+.email-verify-page__email-image-container-fail {
+  position: relative;
+}
+.email-verify-page__email-image-envelope-fail {
+  font-size: 12rem;
+  color: rgb(185, 51, 51);
+}
+.email-verify-page__email-image-x-fail {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  font-size: 6rem;
+  color: rgb(137, 36, 36);
+}
+.email-verify-page__message-container-fail {
+  text-align: center;
+  padding: 0 12rem;
 }
 
 /* Red Banner CSS */
