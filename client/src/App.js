@@ -40,6 +40,8 @@ function App() {
   //until they refresh or go to a different page to reset the state to false.
   const [isJustDeleted, setIsJustDeleted] = useState(false);
 
+  const [isJustVerified, setIsJustVerified] = useState(false);
+
   //used to show image select modal or not
   const [isShowingImageSelectModal, setIsShowingImageSelectModal] =
     useState(false);
@@ -230,6 +232,8 @@ function App() {
                 domain={domain}
                 curUser={curUser}
                 isLoggedIn={isLoggedIn}
+                isJustVerified={isJustVerified}
+                setIsJustVerified={setIsJustVerified}
               />
             }
           ></Route>
@@ -274,6 +278,8 @@ function App() {
                 domain={domain}
                 curUser={curUser}
                 isLoggedIn={isLoggedIn}
+                isJustVerified={isJustVerified}
+                setIsJustVerified={setIsJustVerified}
               />
             }
           />

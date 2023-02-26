@@ -1,10 +1,61 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import NavbarComponent from "../components/NavbarComponent";
 import UploadForm from "../components/UploadForm";
 import FileList from "../components/FileList";
 import RedBanner from "../components/RedBanner";
+import GreenBanner from "../components/GreenBanner";
 
-const UploadPage = ({ domain, curUser, isLoggedIn }) => {
+const UploadPage = ({
+  domain,
+  curUser,
+  isLoggedIn,
+  isJustVerified,
+  setIsJustVerified,
+}) => {
+  //get user's info
+  const [userInfo, setUserInfo] = useState();
+  const [verifiedValue, setVerifiedValue] = useState();
+  useEffect(() => {
+    console.log(process.env);
+    async function userInfoFetch() {
+      await fetch(`${domain}/${curUser}/info`, {
+        method: "GET",
+        headers: { "Content-type": "application/json" },
+      }).then((response) =>
+        response
+          .json()
+          .then((resJSON) => JSON.stringify(resJSON))
+          .then((stringJSON) => JSON.parse(stringJSON))
+          .then((parsedJSON) => {
+            setUserInfo(parsedJSON[0]);
+            setVerifiedValue(parsedJSON[0].verified);
+          })
+      );
+    }
+
+    userInfoFetch();
+  }, []);
+
+  //set banner whether verified is false, true or just verified
+  const [banner, setBanner] = useState();
+  useEffect(() => {
+    if (verifiedValue === false) {
+      setBanner(
+        <RedBanner Message={"Please confirm your email before uploading."} />
+      );
+    } else if (verifiedValue === true && isJustVerified === true) {
+      setBanner(
+        <GreenBanner
+          Message={
+            "Your email has been successfully verified! You can now upload Pics!"
+          }
+        />
+      );
+    } else if (verifiedValue === true) {
+      setBanner();
+    }
+  }, [verifiedValue]);
+
   const [imagesToUpload, setImagesToUpload] = useState([]);
   const [imageError, setImageError] = useState(false);
 
@@ -23,7 +74,7 @@ const UploadPage = ({ domain, curUser, isLoggedIn }) => {
         navPositionClass={"fixed"}
         navColorClass={"white"}
       />
-      {/* <RedBanner Message={"Please confirm your email before uploading."} /> */}
+      {banner}
       {/* <div className="upload-page__container"> */}
       <div className="upload-page__form-and-list-container">
         <UploadForm
@@ -34,6 +85,7 @@ const UploadPage = ({ domain, curUser, isLoggedIn }) => {
           setImageError={setImageError}
           setImagesToUpload={setImagesToUpload}
           removeImageFromUploadFrontEnd={removeImageFromUploadFrontEnd}
+          verifiedValue={verifiedValue}
         />
       </div>
       {/* </div> */}

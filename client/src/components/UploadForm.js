@@ -16,6 +16,7 @@ const UploadForm = ({
   removeImageFromUploadFrontEnd,
   setImageError,
   imageError,
+  verifiedValue,
 }) => {
   //cloudinary preset and file for formData
   var CLOUDINARY_UPLOAD_PRESET = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET;
@@ -38,82 +39,86 @@ const UploadForm = ({
 
   async function uploadHandlerClick(e) {
     e.preventDefault();
-    setUploadFormDragStyle();
-    setIsDragActive(false);
+    if (verifiedValue === false) {
+      return;
+    } else {
+      setUploadFormDragStyle();
+      setIsDragActive(false);
 
-    for (var i = 0; i < e.target.files.length; i++) {
-      const image = e.target.files[i];
-      image.isUploading = true;
-      setIsUploadingForRef(!isUploadingForRef); //switch this every time upload begins to call useEffect
-      targetFilesArray.push(image);
-      setImagesToUpload((imagesToUpload) => [...imagesToUpload, image]);
-      console.log(targetFilesArray + " target files");
+      for (var i = 0; i < e.target.files.length; i++) {
+        const image = e.target.files[i];
+        image.isUploading = true;
+        setIsUploadingForRef(!isUploadingForRef); //switch this every time upload begins to call useEffect
+        targetFilesArray.push(image);
+        setImagesToUpload((imagesToUpload) => [...imagesToUpload, image]);
+        console.log(targetFilesArray + " target files");
 
-      //to send in fetch
-      const formData = new FormData();
-      formData.append("file", image);
-      formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
-      formData.append("folder", "picpocket");
+        //to send in fetch
+        const formData = new FormData();
+        formData.append("file", image);
+        formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+        formData.append("folder", "picpocket");
 
-      var uploadToMongoBody;
+        var uploadToMongoBody;
 
-      //send post request to cloudinary api upload endpoint url (have to use admin API
-      //from cloudinary for multi upload). Upload preset only allows jpg, jpeg or png files.
-      await fetch(
-        `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/upload`,
-        {
-          method: "POST",
-          body: formData,
-        }
-      )
-        .then((result) =>
-          result.json().then((resJSON) => (uploadToMongoBody = resJSON))
+        //send post request to cloudinary api upload endpoint url (have to use admin API
+        //from cloudinary for multi upload). Upload preset only allows jpg, jpeg or png files.
+        await fetch(
+          `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/upload`,
+          {
+            method: "POST",
+            body: formData,
+          }
         )
-        .catch((err) => {
-          console.log(err);
-        });
-      // await fetch("/uploadTest", {
-      //   method: "POST",
-      //   headers: { "Content-type": "application/json" },
-      //   body: formData,
-      // });
-      //if file type is jpg, png or jpeg and successfully gets uploaded to cloudinary,
-      //send to mongoDB. Accepted file types are controlled through upload preset GUI on the cloudinary website
-      if (uploadToMongoBody.public_id) {
-        //add fields to fetch response to get ready to send to MongoDB
-        uploadToMongoBody.likes = 0;
-        uploadToMongoBody.likedBy = [];
-        uploadToMongoBody.uploadedBy = curUser;
-        uploadToMongoBody.title = image.name
-          .replace(".jpg", "")
-          .replace(".png", "")
-          .replace(".jpeg", "");
-        uploadToMongoBody.description = "";
-        uploadToMongoBody.price = "$0.00";
-        uploadToMongoBody.imageType = "Photo";
-
-        //send to mongoDB
-        fetch(`${domain}/upload`, {
-          method: "POST",
-          headers: { "Content-type": "application/json" },
-          body: JSON.stringify(uploadToMongoBody),
-        })
-          .then((res) => {
-            image.isUploading = false;
-            image.secure_url = uploadToMongoBody.secure_url;
-            image.publicId = uploadToMongoBody.public_id;
-            image.assetId = uploadToMongoBody.asset_id;
-            setImagesToUpload((imagesToUpload) => [...imagesToUpload]);
-            console.log(imagesToUpload);
-          })
+          .then((result) =>
+            result.json().then((resJSON) => (uploadToMongoBody = resJSON))
+          )
           .catch((err) => {
-            console.error(err);
-            removeImageFromUploadFrontEnd(image.name);
+            console.log(err);
           });
-      } else {
-        image.isError = true;
-        image.isUploading = false;
-        setImageError(!imageError);
+        // await fetch("/uploadTest", {
+        //   method: "POST",
+        //   headers: { "Content-type": "application/json" },
+        //   body: formData,
+        // });
+        //if file type is jpg, png or jpeg and successfully gets uploaded to cloudinary,
+        //send to mongoDB. Accepted file types are controlled through upload preset GUI on the cloudinary website
+        if (uploadToMongoBody.public_id) {
+          //add fields to fetch response to get ready to send to MongoDB
+          uploadToMongoBody.likes = 0;
+          uploadToMongoBody.likedBy = [];
+          uploadToMongoBody.uploadedBy = curUser;
+          uploadToMongoBody.title = image.name
+            .replace(".jpg", "")
+            .replace(".png", "")
+            .replace(".jpeg", "");
+          uploadToMongoBody.description = "";
+          uploadToMongoBody.price = "$0.00";
+          uploadToMongoBody.imageType = "Photo";
+
+          //send to mongoDB
+          fetch(`${domain}/upload`, {
+            method: "POST",
+            headers: { "Content-type": "application/json" },
+            body: JSON.stringify(uploadToMongoBody),
+          })
+            .then((res) => {
+              image.isUploading = false;
+              image.secure_url = uploadToMongoBody.secure_url;
+              image.publicId = uploadToMongoBody.public_id;
+              image.assetId = uploadToMongoBody.asset_id;
+              setImagesToUpload((imagesToUpload) => [...imagesToUpload]);
+              console.log(imagesToUpload);
+            })
+            .catch((err) => {
+              console.error(err);
+              removeImageFromUploadFrontEnd(image.name);
+            });
+        } else {
+          image.isError = true;
+          image.isUploading = false;
+          setImageError(!imageError);
+        }
       }
     }
   }
@@ -121,80 +126,86 @@ const UploadForm = ({
   //upload handler for drag
   async function uploadHandlerDrag(e) {
     e.preventDefault();
-    setUploadFormDragStyle();
-    setIsDragActive(false);
-    let dt = e.dataTransfer;
-    let files = dt.files;
-    let count = files.length;
-    for (let i = 0; i < count; i++) {
-      console.log(i);
-      const image = files[i];
-      image.isUploading = true;
-      setIsUploadingForRef(!isUploadingForRef); //switch this every time upload begins to call useEffect
-      // targetFilesArray.push(image);
-      setImagesToUpload((imagesToUpload) => [...imagesToUpload, image]);
-      // console.log(targetFilesArray + " target files");
+    if (verifiedValue === false) {
+      setUploadFormDragStyle();
+      setIsDragActive(false);
+      return;
+    } else {
+      setUploadFormDragStyle();
+      setIsDragActive(false);
+      let dt = e.dataTransfer;
+      let files = dt.files;
+      let count = files.length;
+      for (let i = 0; i < count; i++) {
+        console.log(i);
+        const image = files[i];
+        image.isUploading = true;
+        setIsUploadingForRef(!isUploadingForRef); //switch this every time upload begins to call useEffect
+        // targetFilesArray.push(image);
+        setImagesToUpload((imagesToUpload) => [...imagesToUpload, image]);
+        // console.log(targetFilesArray + " target files");
 
-      //to send in fetch
-      const formData = new FormData();
-      formData.append("file", image);
-      formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
-      formData.append("folder", "picpocket");
+        //to send in fetch
+        const formData = new FormData();
+        formData.append("file", image);
+        formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+        formData.append("folder", "picpocket");
 
-      var uploadToMongoBody;
+        var uploadToMongoBody;
 
-      //send post request to cloudinary api upload endpoint url (have to use admin API
-      //from cloudinary for multi upload). Upload preset only allows jpg, jpeg or png files.
-      await fetch(
-        `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/upload`,
-        {
-          method: "POST",
-          body: formData,
-        }
-      )
-        .then((result) =>
-          result.json().then((resJSON) => (uploadToMongoBody = resJSON))
+        //send post request to cloudinary api upload endpoint url (have to use admin API
+        //from cloudinary for multi upload). Upload preset only allows jpg, jpeg or png files.
+        await fetch(
+          `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/upload`,
+          {
+            method: "POST",
+            body: formData,
+          }
         )
-        .catch((err) => {
-          console.log(err);
-        });
-      //if file type is jpg, png or jpeg and successfully gets uploaded to cloudinary,
-      //send to mongoDB. Accepted file types are controlled through upload preset GUI on the cloudinary website
-      if (uploadToMongoBody.public_id) {
-        //add fields to fetch response to get ready to send to MongoDB
-        uploadToMongoBody.likes = 0;
-        uploadToMongoBody.likedBy = [];
-        uploadToMongoBody.uploadedBy = curUser;
-        uploadToMongoBody.title = image.name
-          .replace(".jpg", "")
-          .replace(".png", "")
-          .replace(".jpeg", "");
-        uploadToMongoBody.description = "";
-        uploadToMongoBody.price = "$0.00";
-        uploadToMongoBody.imageType = "Photo";
-
-        //send to mongoDB
-        fetch(`${domain}/upload`, {
-          method: "POST",
-          headers: { "Content-type": "application/json" },
-          body: JSON.stringify(uploadToMongoBody),
-        })
-          .then((res) => {
-            image.isUploading = false;
-            image.secure_url = uploadToMongoBody.secure_url;
-            image.publicId = uploadToMongoBody.public_id;
-            image.assetId = uploadToMongoBody.asset_id;
-            setImagesToUpload((imagesToUpload) => [...imagesToUpload]);
-            console.log(imagesToUpload);
-          })
+          .then((result) =>
+            result.json().then((resJSON) => (uploadToMongoBody = resJSON))
+          )
           .catch((err) => {
-            console.error(err);
-            removeImageFromUploadFrontEnd(image.name);
+            console.log(err);
           });
-      } else {
-        image.isError = true;
-        image.isUploading = false;
-        setImageError(!imageError);
+        //if file type is jpg, png or jpeg and successfully gets uploaded to cloudinary,
+        //send to mongoDB. Accepted file types are controlled through upload preset GUI on the cloudinary website
+        if (uploadToMongoBody.public_id) {
+          //add fields to fetch response to get ready to send to MongoDB
+          uploadToMongoBody.likes = 0;
+          uploadToMongoBody.likedBy = [];
+          uploadToMongoBody.uploadedBy = curUser;
+          uploadToMongoBody.title = image.name
+            .replace(".jpg", "")
+            .replace(".png", "")
+            .replace(".jpeg", "");
+          uploadToMongoBody.description = "";
+          uploadToMongoBody.price = "$0.00";
+          uploadToMongoBody.imageType = "Photo";
+
+          //send to mongoDB
+          fetch(`${domain}/upload`, {
+            method: "POST",
+            headers: { "Content-type": "application/json" },
+            body: JSON.stringify(uploadToMongoBody),
+          })
+            .then((res) => {
+              image.isUploading = false;
+              image.secure_url = uploadToMongoBody.secure_url;
+              image.publicId = uploadToMongoBody.public_id;
+              image.assetId = uploadToMongoBody.asset_id;
+              setImagesToUpload((imagesToUpload) => [...imagesToUpload]);
+              console.log(imagesToUpload);
+            })
+            .catch((err) => {
+              console.error(err);
+              removeImageFromUploadFrontEnd(image.name);
+            });
+        } else {
+          image.isError = true;
+          image.isUploading = false;
+          setImageError(!imageError);
+        }
       }
     }
   }

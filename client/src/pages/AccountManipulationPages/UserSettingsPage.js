@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 //components
 import NavbarComponent from "../../components/NavbarComponent";
+import TooltipForInputField from "../../components/TooltipForInputField";
 import { useAuthContext } from "../../context/useAuthContext";
 import ChangePFPBtn from "../../components/ChangePFPBtn";
 import Toast from "../../components/Toast";
@@ -27,6 +28,17 @@ const UserSettingsPage = ({
 
   //auth
   const { dispatch } = useAuthContext();
+
+  //input classes for red border on error
+  const [emailInputClass, setEmailInputClass] = useState(
+    "user-settings-page__email-input"
+  );
+
+  //error messages for email not valid or already exists
+  const [emailErrorText, setEmailErrorText] = useState();
+
+  //tooltip for empty email field
+  const [emailTooltip, setEmailTooltip] = useState();
 
   //get user's info
   const [userInfo, setUserInfo] = useState();
@@ -59,8 +71,12 @@ const UserSettingsPage = ({
       Change Bio
     </button>
   );
-  const [submitNewEmailButton, setSubmitNewEmailButton] = useState(
-    <button type="submit" className="user-settings-page__change-bio-email-btn">
+  const [changeEmailButton, setChangeEmailButton] = useState(
+    <button
+      type="submit"
+      onClick={(e) => console.log(emailValue)}
+      className="user-settings-page__change-bio-email-btn"
+    >
       Change Email
     </button>
   );
@@ -82,7 +98,7 @@ const UserSettingsPage = ({
         Change Bio
       </button>
     );
-    setSubmitNewEmailButton(
+    setChangeEmailButton(
       <button
         type="submit"
         className="user-settings-page__change-bio-email-btn"
@@ -373,47 +389,93 @@ const UserSettingsPage = ({
   }
 
   //change email
-  async function submitNewEmail(e) {
+  async function changeEmail(e) {
     e.preventDefault();
-    setSubmitNewEmailButton(
-      <button className="user-settings-page__change-bio-email-btn">
-        Change Email
-        <div className="contact-page__send-button-loading-icon">
-          <FontAwesomeIcon icon={faSpinner} className="fa-spin" />
-        </div>
-      </button>
-    );
-    await fetch(`${domain}/submit-new-email`, {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify({ username: curUser, newEmail: emailValue }),
-    }).then((response) =>
-      response
-        .json()
-        .then((resJSON) => JSON.stringify(resJSON))
-        .then((stringJSON) => JSON.parse(stringJSON))
-        .then((parsedJSON) => {
-          if (parsedJSON === "email changed") {
-            setSubmitNewEmailButton(
-              <button className="user-settings-page__change-bio-email-btn-success">
-                Email Changed!
-                <div>
-                  <FontAwesomeIcon icon={faCheck} />
-                </div>
-              </button>
-            );
-          } else {
-            setSubmitNewEmailButton(
-              <button className="user-settings-page__change-bio-email-btn-fail">
-                Error
-                <div>
-                  <FontAwesomeIcon icon={faXmark} />
-                </div>
-              </button>
-            );
-          }
-        })
-    );
+    if (emailValue.length === 0) {
+      setEmailTooltip(
+        <TooltipForInputField
+          Message={"Please fill out this field."}
+          Type={"Yellow Warning"}
+        />
+      );
+    } else {
+      setChangeEmailButton(
+        <button className="user-settings-page__change-bio-email-btn">
+          Change Email
+          <div className="user-settings-page__change-button-loading-icon">
+            <FontAwesomeIcon icon={faSpinner} className="fa-spin" />
+          </div>
+        </button>
+      );
+      await fetch(`${domain}/change-email`, {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify({ username: curUser, email: emailValue }),
+      }).then((response) =>
+        response
+          .json()
+          .then((resJSON) => JSON.stringify(resJSON))
+          .then((stringJSON) => JSON.parse(stringJSON))
+          .then((parsedJSON) => {
+            if (parsedJSON === "email changed") {
+              setChangeEmailButton(
+                <button className="user-settings-page__change-bio-email-btn-success">
+                  Email Changed!
+                  <div>
+                    <FontAwesomeIcon icon={faCheck} />
+                  </div>
+                </button>
+              );
+              //rerender verification button to get new email value
+              setResendVerificationButton(
+                <button className="user-settings-page__change-bio-email-btn-success">
+                  Verification Link Sent!
+                  <div>
+                    <FontAwesomeIcon icon={faCheck} />
+                  </div>
+                </button>
+              );
+            } else if (parsedJSON === "email already exists") {
+              console.log("email already exists");
+              setEmailInputClass(
+                "user-settings-page__email-input red-input-border"
+              );
+              setEmailErrorText("Email already exists");
+              setChangeEmailButton(
+                <button
+                  type="submit"
+                  className="user-settings-page__change-bio-email-btn"
+                >
+                  Change Email
+                </button>
+              );
+            } else if (parsedJSON === "email is not valid") {
+              console.log("email is not valid");
+              setEmailInputClass(
+                "user-settings-page__email-input red-input-border"
+              );
+              setEmailErrorText("Email is not a valid email address");
+              setChangeEmailButton(
+                <button
+                  type="submit"
+                  className="user-settings-page__change-bio-email-btn"
+                >
+                  Change Email
+                </button>
+              );
+            } else {
+              setChangeEmailButton(
+                <button className="user-settings-page__change-bio-email-btn-fail">
+                  Error
+                  <div>
+                    <FontAwesomeIcon icon={faXmark} />
+                  </div>
+                </button>
+              );
+            }
+          })
+      );
+    }
   }
 
   //resend verification link
@@ -471,7 +533,13 @@ const UserSettingsPage = ({
   // }
 
   return (
-    <div>
+    <div
+      onClick={() => {
+        setEmailErrorText();
+        setEmailInputClass("user-settings-page__email-input");
+        setEmailTooltip();
+      }}
+    >
       <NavbarComponent
         domain={domain}
         curUser={curUser}
@@ -533,20 +601,29 @@ const UserSettingsPage = ({
           </form>
         </div>
         <div className="user-settings-page__change-email-container">
-          <form onSubmit={(e) => submitNewEmail(e)}>
-            <h2>Email:</h2>
+          <form
+            onSubmit={(e) => changeEmail(e)}
+            style={{ position: "relative" }}
+          >
+            <h2>
+              Email:{" "}
+              <p className="sign-in-page__already-exists-message">
+                {emailErrorText}
+              </p>
+            </h2>
             <input
               value={emailValue}
-              className="user-settings-page__email-input"
+              className={emailInputClass}
               onChange={(e) => {
                 setEmailValue(e.target.value);
               }}
             ></input>
+            {emailTooltip}
             <div
               className="user-settings-page__email-buttons-container"
               style={{ display: "flex", gap: "0.8rem" }}
             >
-              {submitNewEmailButton}
+              {changeEmailButton}
               {resendVerificationButton}
             </div>
           </form>

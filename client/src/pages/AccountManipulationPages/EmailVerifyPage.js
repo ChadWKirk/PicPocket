@@ -8,7 +8,12 @@ import {
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 
-const EmailVerifyPage = ({ domain, isLoggedIn, curUser }) => {
+const EmailVerifyPage = ({
+  domain,
+  isLoggedIn,
+  curUser,
+  setIsJustVerified,
+}) => {
   //if use params token is same as :username's token, set :username's verified status to true
   //if :username is already verified, don't do anything and just bring them to the home page
   //if :username is not signed in or another user is signed in already, bring them to sign in page to sign in
@@ -49,6 +54,7 @@ const EmailVerifyPage = ({ domain, isLoggedIn, curUser }) => {
                 </h4>
               </div>
             );
+            setIsJustVerified(true);
             setTimeout(() => {
               navigate(`/${username}/upload`);
             }, 2000);

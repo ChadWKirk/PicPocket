@@ -1148,6 +1148,43 @@ button {
   padding: 0 12rem;
 }
 
+/* Green Banner CSS */
+.green-banner__container {
+  max-width: 100vw;
+  height: 40px;
+  background-color: rgb(29, 152, 29);
+}
+.green-banner__contents-container {
+  max-width: var(--siteContentsMidWidth);
+  height: 40px;
+  padding-left: var(--sideSpacePadding);
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.8rem;
+  margin: auto;
+}
+.green-banner__exclamation-icon {
+  font-size: 1.5rem;
+  color: rgb(24, 102, 24);
+}
+.green-banner__contents-container div {
+  color: rgb(241, 241, 241);
+}
+
+@media (width < 650px) {
+  .green-banner__container,
+  .green-banner__contents-container {
+    height: 30px;
+  }
+  .green-banner__exclamation-icon {
+    font-size: 0.85rem;
+  }
+  .green-banner__contents-container div {
+    font-size: 0.75rem;
+  }
+}
+
 /* Red Banner CSS */
 .red-banner__container {
   max-width: 100vw;
