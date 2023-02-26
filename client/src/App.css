@@ -1031,6 +1031,7 @@ button {
   font-size: 1rem;
   display: flex;
   gap: 0.5rem;
+  cursor: pointer;
 }
 .user-settings-page__change-bio-email-btn-success {
   padding: 0.5rem 0.75rem;
@@ -1057,6 +1058,16 @@ button {
   font-size: 1rem;
   display: flex;
   gap: 0.5rem;
+}
+@media (width < 400px) {
+  .user-settings-page__email-buttons-container {
+    flex-direction: column;
+  }
+  .user-settings-page__change-bio-email-btn,
+  .user-settings-page__change-bio-email-btn-fail,
+  .user-settings-page__change-bio-email-btn-success {
+    justify-content: center;
+  }
 }
 .user-settings-page__change-pw-del-acc-btn-container {
   display: flex;

@@ -198,6 +198,57 @@ app.post("/signup", async (req, response) => {
     });
 });
 
+//Resend Verification Link
+app.post("/resend-verification-link", (req, res) => {
+  console.log(req.body.email);
+  let db_connect = dbo.getDb();
+
+  db_connect
+    .collection("picpocket-users")
+    .findOne({ username: req.body.username }, function (err, user) {
+      if (err) {
+        console.log(err);
+      } else if (user) {
+        const transporter = nodemailer.createTransport({
+          host: "smtp.zoho.com",
+          port: 465,
+          secure: true,
+          auth: {
+            user: process.env.EMAIL_SENDER_USER,
+            pass: process.env.EMAIL_SENDER_PASS,
+          },
+        });
+
+        const mailConfigurations = {
+          // It should be a string of sender/server email
+          from: "administrator@picpoccket.com",
+
+          to: req.body.email,
+
+          // Subject of Email
+          subject: "PicPocket Email Verification",
+
+          // This would be the text of email body
+          text: `Hi! There, You have recently visited
+    our website and entered your email.
+    Please follow the given link to verify your email
+    localhost:3000/${req.body.username}/verify/${user.verifyToken}
+    Thanks`,
+        };
+
+        transporter.sendMail(mailConfigurations, function (error, info) {
+          if (error) {
+            throw Error(error);
+          } else {
+            res.json("verification resent");
+            console.log("Email Sent Successfully");
+            console.log(info);
+          }
+        });
+      }
+    });
+});
+
 //Email Verification Link Verify
 app.post("/:username/verify/:token", (req, res) => {
   //if :username is not signed in or another user is signed in already, bring them to sign in page to sign in

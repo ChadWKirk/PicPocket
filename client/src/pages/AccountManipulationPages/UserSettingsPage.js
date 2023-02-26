@@ -28,11 +28,32 @@ const UserSettingsPage = ({
   //auth
   const { dispatch } = useAuthContext();
 
-  //bio and email value
-  const [emailValue, setEmailValue] = useState("");
-  const [bioValue, setBioValue] = useState("");
+  //get user's info
+  const [userInfo, setUserInfo] = useState();
+  useEffect(() => {
+    console.log(process.env);
+    async function userInfoFetch() {
+      await fetch(`${domain}/${curUser}/info`, {
+        method: "GET",
+        headers: { "Content-type": "application/json" },
+      }).then((response) =>
+        response
+          .json()
+          .then((resJSON) => JSON.stringify(resJSON))
+          .then((stringJSON) => JSON.parse(stringJSON))
+          .then((parsedJSON) => {
+            setUserInfo(parsedJSON[0]);
+            setEmailValue(parsedJSON[0].email);
+            setBioValue(parsedJSON[0].bio);
+            setPFP(parsedJSON[0].pfp);
+          })
+      );
+    }
 
-  //change password and email buttons to toggle between loading, success and error
+    userInfoFetch();
+  }, []);
+
+  //change password, change email and resend verification buttons to toggle between loading, success and error
   const [submitNewBioButton, setSubmitNewBioButton] = useState(
     <button type="submit" className="user-settings-page__change-bio-email-btn">
       Change Bio
@@ -43,6 +64,45 @@ const UserSettingsPage = ({
       Change Email
     </button>
   );
+  const [resendVerificationButton, setResendVerificationButton] = useState(
+    <div
+      onClick={(e) => console.log(emailValue)}
+      className="user-settings-page__change-bio-email-btn"
+    >
+      Resend Verification Link
+    </div>
+  );
+  //rerender these once userinfo is fetched (above useEffect) so the bio and email values are accurate
+  useEffect(() => {
+    setSubmitNewBioButton(
+      <button
+        type="submit"
+        className="user-settings-page__change-bio-email-btn"
+      >
+        Change Bio
+      </button>
+    );
+    setSubmitNewEmailButton(
+      <button
+        type="submit"
+        className="user-settings-page__change-bio-email-btn"
+      >
+        Change Email
+      </button>
+    );
+    setResendVerificationButton(
+      <div
+        onClick={(e) => resendVerificationLink(e)}
+        className="user-settings-page__change-bio-email-btn"
+      >
+        Resend Verification Link
+      </div>
+    );
+  }, [userInfo]);
+
+  //bio and email value
+  const [emailValue, setEmailValue] = useState("");
+  const [bioValue, setBioValue] = useState("");
 
   //button to allow user to change bio again after change attempt
   const [changeBioAgainButton, setChangeBioAgainButton] = useState();
@@ -85,31 +145,7 @@ const UserSettingsPage = ({
     }
   }
 
-  const [userInfo, setUserInfo] = useState();
   const [userPFP, setPFP] = useState();
-
-  useEffect(() => {
-    console.log(process.env);
-    async function userInfoFetch() {
-      await fetch(`${domain}/${curUser}/info`, {
-        method: "GET",
-        headers: { "Content-type": "application/json" },
-      }).then((response) =>
-        response
-          .json()
-          .then((resJSON) => JSON.stringify(resJSON))
-          .then((stringJSON) => JSON.parse(stringJSON))
-          .then((parsedJSON) => {
-            setUserInfo(parsedJSON[0]);
-            setEmailValue(parsedJSON[0].email);
-            setBioValue(parsedJSON[0].bio);
-            setPFP(parsedJSON[0].pfp);
-          })
-      );
-    }
-
-    userInfoFetch();
-  }, []);
 
   //bio textarea char count - maxLength is in HTML on textarea element
   const [bioCharCount, setBioCharCount] = useState(bioValue.length);
@@ -380,6 +416,50 @@ const UserSettingsPage = ({
     );
   }
 
+  //resend verification link
+  async function resendVerificationLink(e) {
+    e.preventDefault();
+    setResendVerificationButton(
+      <button className="user-settings-page__change-bio-email-btn">
+        Resend Verification Link
+        <div className="user-settings-page__change-button-loading-icon">
+          <FontAwesomeIcon icon={faSpinner} className="fa-spin" />
+        </div>
+      </button>
+    );
+    await fetch(`${domain}/resend-verification-link`, {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify({ username: curUser, email: emailValue }),
+    }).then((response) =>
+      response
+        .json()
+        .then((resJSON) => JSON.stringify(resJSON))
+        .then((stringJSON) => JSON.parse(stringJSON))
+        .then((parsedJSON) => {
+          if (parsedJSON === "verification resent") {
+            setResendVerificationButton(
+              <button className="user-settings-page__change-bio-email-btn-success">
+                Verification Link Sent!
+                <div>
+                  <FontAwesomeIcon icon={faCheck} />
+                </div>
+              </button>
+            );
+          } else {
+            setResendVerificationButton(
+              <button className="user-settings-page__change-bio-email-btn-fail">
+                Error
+                <div>
+                  <FontAwesomeIcon icon={faXmark} />
+                </div>
+              </button>
+            );
+          }
+        })
+    );
+  }
+
   function closeToast() {
     setToastMessage();
     setToastStatus();
@@ -462,7 +542,13 @@ const UserSettingsPage = ({
                 setEmailValue(e.target.value);
               }}
             ></input>
-            {submitNewEmailButton}
+            <div
+              className="user-settings-page__email-buttons-container"
+              style={{ display: "flex", gap: "0.8rem" }}
+            >
+              {submitNewEmailButton}
+              {resendVerificationButton}
+            </div>
           </form>
         </div>
         <div className="user-settings-page__change-pw-del-acc-btn-container">
