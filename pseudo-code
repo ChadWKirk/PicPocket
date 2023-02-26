@@ -58,15 +58,17 @@ make about us page
 
 EMAIL VERIFICATION - Deal with if user is not signed in or a different user is signed in currently
 
+Google and Facebook OAuth
+
+protect api routes for not logged in users (no token)
+
+make forgot password - if you forget your password, have an email be sent to user's email with a reset password link
+
 upload form delete doesn't work
 
 get cloudinary name and preset from back end instead of storing in env in front end (unsafe) - upload using multer to handle formData in express - https://youtu.be/wIOpe8S2Mk8
 
 put termly env vars in backend as well
-
-protect api routes for not logged in users (no token)
-
-make forgot password - if you forget your password, have an email be sent to user's email with a reset password link
 
 handle errors for blank fields etc.
 
