@@ -56,6 +56,8 @@ make about us page
 
 ---
 
+EMAIL VERIFICATION - style "no user found" page content. Deal with if user is not signed in or a different user is signed in currently. put a green banner (copy of red banner) on upload page when redirected after verification success (use a isJustVerified prop similar to the isJustDeleted prop when someone deletes their account). Make a resend verification button in UserSettingsPage. Make change email stuff.
+
 upload form delete doesn't work
 
 get cloudinary name and preset from back end instead of storing in env in front end (unsafe) - upload using multer to handle formData in express - https://youtu.be/wIOpe8S2Mk8

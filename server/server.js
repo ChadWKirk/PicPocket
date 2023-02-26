@@ -133,7 +133,7 @@ app.post("/signup", async (req, response) => {
               password: hash,
               email: req.body.email,
               verified: false,
-              token: "tokenPlaceholder",
+              verifyToken: "tokenPlaceholder",
               bio: "",
               pfp: "https://res.cloudinary.com/dtyg4ctfr/image/upload/v1674238936/PicPocket/default_purple_pfp_ibof5p.jpg",
               // signedIn: true,
@@ -151,7 +151,7 @@ app.post("/signup", async (req, response) => {
                   .collection("picpocket-users")
                   .updateOne(
                     { username: req.body.username },
-                    { $set: { token: token } }
+                    { $set: { verifyToken: token } }
                   );
                 //send verification email
                 const transporter = nodemailer.createTransport({
@@ -177,7 +177,7 @@ app.post("/signup", async (req, response) => {
                   text: `Hi! There, You have recently visited
                   our website and entered your email.
                   Please follow the given link to verify your email
-                  https://picpoccket.com/${req.body.username}/verify/${token}
+                  localhost:3000/${req.body.username}/verify/${token}
                   Thanks`,
                 };
 
@@ -200,12 +200,41 @@ app.post("/signup", async (req, response) => {
 
 //Email Verification Link Verify
 app.post("/:username/verify/:token", (req, res) => {
-  //if use params token is same as :username's token, set :username's verified status to true
-  //if :username is already verified, don't do anything and just bring them to the home page
   //if :username is not signed in or another user is signed in already, bring them to sign in page to sign in
   //signing in removes all other tokens and signs that user in
-  //if the token or name doesn't match, give an error message
   console.log("token page test");
+  let db_connect = dbo.getDb();
+
+  //if use params token is same as :username's token, set :username's verified status to true
+  //and send response to tell react to render success page stuff
+  db_connect.collection("picpocket-users").findOne(
+    {
+      $and: [{ username: req.body.username }, { verifyToken: req.body.token }],
+    },
+    function (err, user) {
+      if (err) {
+        console.log(err);
+        res.json("error");
+      } else if (user) {
+        //if :username is already verified, don't do anything and just bring them to the home page
+        if (user.verified == true) {
+          res.json("already verified");
+        } else {
+          db_connect
+            .collection("picpocket-users")
+            .updateOne(
+              { username: req.body.username },
+              { $set: { verified: true } }
+            );
+          res.json("verified has been set to true");
+        }
+      }
+      //if the token or name doesn't match, give fail page
+      else {
+        res.json("user does not match");
+      }
+    }
+  );
 });
 
 //user sign in post

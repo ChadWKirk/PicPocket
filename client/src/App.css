@@ -1089,6 +1089,24 @@ button {
   font-size: 1rem;
 }
 
+/* Email Verify Page CSS */
+
+.email-verify-page__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  margin-bottom: 7rem;
+}
+.email-verify-page__email-image {
+  font-size: 12rem;
+  color: rgb(29, 152, 29);
+}
+.email-verify-page__message-container {
+  text-align: center;
+}
+
 /* Red Banner CSS */
 .red-banner__container {
   max-width: 100vw;

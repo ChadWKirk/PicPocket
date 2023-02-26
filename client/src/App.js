@@ -21,6 +21,7 @@ import LikesPage from "./pages/MyLikes/LikesPage";
 import LikeTestPage from "./pages/MyLikes/LikeTestPage";
 import ChangePasswordPage from "./pages/AccountManipulationPages/ChangePasswordPage";
 import PasswordChangeSuccessPage from "./pages/AccountManipulationPages/PasswordChangeSuccessPage";
+import EmailVerifyPage from "./pages/AccountManipulationPages/EmailVerifyPage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import TOSPage from "./pages/TOSPage";
 import DisclaimerPage from "./pages/DisclaimerPage";
@@ -266,6 +267,16 @@ function App() {
               />
             }
           ></Route>
+          <Route
+            path="/:username/verify/:token"
+            element={
+              <EmailVerifyPage
+                domain={domain}
+                curUser={curUser}
+                isLoggedIn={isLoggedIn}
+              />
+            }
+          />
           <Route
             path="/Account/:username/Change-Password"
             element={
