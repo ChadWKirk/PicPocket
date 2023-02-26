@@ -2653,6 +2653,11 @@ button {
   border: 4px dashed #3789d1;
   transition: 0.2s;
 }
+.upload-page__upload-form-drag-enter-not-verified {
+  background-color: rgba(255, 224, 224, 0.918);
+  border: 4px dashed #d13737;
+  transition: 0.2s;
+}
 .upload-page__upload-form-gallery-icon {
   width: 85px;
 }

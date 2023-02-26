@@ -56,7 +56,7 @@ make about us page
 
 ---
 
-EMAIL VERIFICATION - Deal with if user is not signed in or a different user is signed in currently. put a green banner (copy of red banner) on upload page when redirected after verification success (use a isJustVerified prop similar to the isJustDeleted prop when someone deletes their account). Make change email stuff.
+EMAIL VERIFICATION - Deal with if user is not signed in or a different user is signed in currently
 
 upload form delete doesn't work
 
@@ -64,11 +64,7 @@ get cloudinary name and preset from back end instead of storing in env in front 
 
 put termly env vars in backend as well
 
-make email verification link work -- make it so you can't upload until you click that link - have verified field in account in db set to false until link is clicked
-
 protect api routes for not logged in users (no token)
-
-make change email work - when updating email in db, send another verification email and set verified to false
 
 make forgot password - if you forget your password, have an email be sent to user's email with a reset password link
 
@@ -77,8 +73,6 @@ handle errors for blank fields etc.
 make it so that duplicate public ID's get named something else in cloudinary (upload preset in cloudinary rules)
 
 Create single download in myPics - set download button HREF to secure url with fl_attachment in url when selecting an image
-
-create email authentication
 
 make liking a pic send you to sign up page if clicked when signed out
 

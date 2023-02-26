@@ -249,6 +249,96 @@ app.post("/resend-verification-link", (req, res) => {
     });
 });
 
+//Change Email
+app.post("/change-email", (req, res) => {
+  //validation
+  if (!validator.isEmail(req.body.email)) {
+    res.json("email is not valid");
+    return;
+  }
+
+  let db_connect = dbo.getDb();
+
+  //check if email already exists
+  db_connect
+    .collection("picpocket-users")
+    .findOne({ email: req.body.email }, function (err, user) {
+      if (err) {
+        response.status(400).send("error");
+        console.log("to array error");
+      } else if (user) {
+        res.json("email already exists");
+        console.log("email already exists");
+      } else {
+        console.log("email is new");
+        async function updateEmail() {
+          db_connect.collection("picpocket-users").updateOne(
+            {
+              username: req.body.username,
+            },
+            { $set: { email: req.body.email, verified: false } },
+            function (err, user) {
+              if (err) {
+                throw err;
+              } else if (user) {
+                console.log(user);
+              }
+              //send email with verification link to new email
+              db_connect
+                .collection("picpocket-users")
+                .findOne({ username: req.body.username }, function (err, user) {
+                  if (err) {
+                    console.log(err);
+                  } else {
+                    const transporter = nodemailer.createTransport({
+                      host: "smtp.zoho.com",
+                      port: 465,
+                      secure: true,
+                      auth: {
+                        user: process.env.EMAIL_SENDER_USER,
+                        pass: process.env.EMAIL_SENDER_PASS,
+                      },
+                    });
+
+                    const mailConfigurations = {
+                      // It should be a string of sender/server email
+                      from: "administrator@picpoccket.com",
+
+                      to: req.body.email,
+
+                      // Subject of Email
+                      subject: "PicPocket Email Verification",
+
+                      // This would be the text of email body
+                      text: `Hi! There, You have recently visited
+                  our website and entered your email.
+                  Please follow the given link to verify your email
+                  localhost:3000/${req.body.username}/verify/${user.verifyToken}
+                  Thanks`,
+                    };
+
+                    transporter.sendMail(
+                      mailConfigurations,
+                      function (error, info) {
+                        if (error) {
+                          throw Error(error);
+                        } else {
+                          console.log("Email Sent Successfully");
+                          console.log(info);
+                          res.json("email changed");
+                        }
+                      }
+                    );
+                  }
+                });
+            }
+          );
+        }
+        updateEmail();
+      }
+    });
+});
+
 //Email Verification Link Verify
 app.post("/:username/verify/:token", (req, res) => {
   //if :username is not signed in or another user is signed in already, bring them to sign in page to sign in

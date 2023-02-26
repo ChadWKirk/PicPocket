@@ -258,12 +258,24 @@ const UploadForm = ({
             <div
               className="upload-page__upload-form-hover-div"
               onDragEnter={() =>
-                setUploadFormDragStyle("upload-page__upload-form-drag-enter")
+                verifiedValue
+                  ? setUploadFormDragStyle(
+                      "upload-page__upload-form-drag-enter"
+                    )
+                  : setUploadFormDragStyle(
+                      "upload-page__upload-form-drag-enter-not-verified"
+                    )
               }
               onDragOver={(e) => {
                 // e.stopPropagation();
                 e.preventDefault();
-                setUploadFormDragStyle("upload-page__upload-form-drag-enter");
+                verifiedValue
+                  ? setUploadFormDragStyle(
+                      "upload-page__upload-form-drag-enter"
+                    )
+                  : setUploadFormDragStyle(
+                      "upload-page__upload-form-drag-enter-not-verified"
+                    );
               }}
               onDragLeave={() => {
                 setUploadFormDragStyle();
