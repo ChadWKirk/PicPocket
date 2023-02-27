@@ -156,6 +156,22 @@ const SignInPage = ({ domain, curUser, isLoggedIn }) => {
                 onChange={(event) => setPassword(event.target.value)}
               ></input>
               {passwordTooltip}
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  marginTop: "1rem",
+                  fontSize: "0.85rem",
+                }}
+              >
+                <div style={{ display: "flex", gap: "0.5rem" }}>
+                  <div>Don't have an account?</div>
+                  <a href="#">Sign Up</a>
+                </div>
+                <div>
+                  <a href="/send-forgot">Forgot Password?</a>
+                </div>
+              </div>
             </div>
             <button type="submit" className="sign-in-page__sign-in-button">
               Sign In

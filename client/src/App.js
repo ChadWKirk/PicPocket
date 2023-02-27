@@ -21,6 +21,8 @@ import LikesPage from "./pages/MyLikes/LikesPage";
 import LikeTestPage from "./pages/MyLikes/LikeTestPage";
 import ChangePasswordPage from "./pages/AccountManipulationPages/ChangePasswordPage";
 import PasswordChangeSuccessPage from "./pages/AccountManipulationPages/PasswordChangeSuccessPage";
+import SendForgotPasswordPage from "./pages/AccountManipulationPages/ForgotPasswordPages/ForgotPasswordSendLinkPage";
+import ForgotPasswordResetPage from "./pages/AccountManipulationPages/ForgotPasswordPages/ForgotPasswordResetPage";
 import EmailVerifyPage from "./pages/AccountManipulationPages/EmailVerifyPage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import TOSPage from "./pages/TOSPage";
@@ -297,6 +299,28 @@ function App() {
             path="/Change-Password-Success"
             element={
               <PasswordChangeSuccessPage
+                domain={domain}
+                curUser={curUser}
+                isLoggedIn={isLoggedIn}
+              />
+            }
+          />
+          <Route
+            // path="/Account/:username/:token/Forgot-Password"
+            path="/forgot"
+            element={
+              <ForgotPasswordResetPage
+                domain={domain}
+                curUser={curUser}
+                isLoggedIn={isLoggedIn}
+              />
+            }
+          />
+          <Route
+            // path="/send-forgot/:email"
+            path="/send-forgot"
+            element={
+              <SendForgotPasswordPage
                 domain={domain}
                 curUser={curUser}
                 isLoggedIn={isLoggedIn}
