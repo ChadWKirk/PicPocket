@@ -13,8 +13,33 @@ const ForgotPasswordResetPage = ({ domain, curUser, isLoggedIn }) => {
   let navigate = useNavigate();
   const { dispatch } = useAuthContext();
 
-  //fields
+  const { token } = useParams();
   const { username } = useParams();
+
+  //check if token is expired
+  useEffect(() => {
+    console.log(token);
+    async function checkIfTokenExpired() {
+      await fetch(`${domain}/${username}/check-forgot-token/${token}`, {
+        method: "GET",
+      }).then((response) =>
+        response
+          .json()
+          .then((resJSON) => JSON.stringify(resJSON))
+          .then((stringJSON) => JSON.parse(stringJSON))
+          .then((parsedJSON) => {
+            if (parsedJSON === "token expired") {
+              console.log("expired");
+            } else {
+              console.log("not expired");
+            }
+          })
+      );
+    }
+    checkIfTokenExpired();
+  });
+
+  //fields
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
 

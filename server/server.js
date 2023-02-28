@@ -219,10 +219,19 @@ app.post("/send-forgot-password-link", (req, res) => {
         console.log(err);
         res.json("error");
       } else if (user) {
-        //create token that expires in 15 minutes
+        //create token that expires in 60 minutes
         let resetPWToken = crypto.randomBytes(32).toString("hex");
+
         //create hash of token to store in DB
-        const hash = await bcrypt.hash(resetPWToken, Number(10));
+        const salt = await bcrypt.genSalt(10);
+        const hash = {
+          token: await bcrypt.hash(resetPWToken, salt),
+          createdAt: {
+            type: Date,
+            default: new Date(),
+            expires: new Date().setMinutes(new Date().getMinutes() + 60),
+          },
+        };
         //add token to forgotPWToken field in user
         db_connect
           .collection("picpocket-users")
@@ -253,7 +262,7 @@ app.post("/send-forgot-password-link", (req, res) => {
           // This would be the text of email body
           text: `Here is your reset password link:
 
-          localhost:3000/reset-password/${resetPWToken}
+          localhost:3000/${user.username}/reset-password/${resetPWToken}
           
           Thanks`,
         };
@@ -269,6 +278,48 @@ app.post("/send-forgot-password-link", (req, res) => {
         });
       } else {
         res.json("email does not belong to any account");
+      }
+    });
+});
+
+//Check if forgot password token is expired when going to reset password page
+app.get("/:username/check-forgot-token/:token", async (req, res) => {
+  console.log("check forgot token test");
+
+  const token = req.params.token;
+  const username = req.params.username;
+
+  let db_connect = dbo.getDb();
+
+  //check token in params with hash in db
+  //see if token being used is expired
+  db_connect
+    .collection("picpocket-users")
+    .findOne({ username: username }, async function (err, user) {
+      if (err) {
+        res.json("error");
+        console.log(err);
+      } else if (user) {
+        const passwordMatch = await bcrypt.compare(
+          token,
+          user.forgotPWToken.token
+        );
+        if (!passwordMatch) {
+          res.json("token does not match");
+          console.log("token does not match");
+        } else {
+          //if they match (using correct/most recent forgot password email that was sent)
+          //check if expired
+          if (user.forgotPWToken.createdAt.expires <= new Date()) {
+            res.json("token expired");
+            console.log("token expired");
+          } else {
+            res.json("token not expired");
+            console.log("token not expired");
+          }
+        }
+      } else {
+        res.json("no user");
       }
     });
 });

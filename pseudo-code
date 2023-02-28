@@ -54,6 +54,10 @@ mypics - loading for submit/delete/massdelete (make loading/progress bar at top 
 
 make about us page
 
+style forgot password and sign up thing on sign in page
+
+put "Have an account? Sign In" on sign up page
+
 ---
 
 EMAIL VERIFICATION - Deal with if user is not signed in or a different user is signed in currently
@@ -62,7 +66,7 @@ Google and Facebook OAuth
 
 protect api routes for not logged in users (no token)
 
-make forgot password - make forgotPWToken expire in 15 minutes, make reset password backend (copy change-password backend but add check for token) - https://blog.logrocket.com/implementing-secure-password-reset-node-js/#token-model
+make forgot password - make reset password backend (copy change-password backend but add check for token) - https://blog.logrocket.com/implementing-secure-password-reset-node-js/#token-model
 
 upload form delete doesn't work
 

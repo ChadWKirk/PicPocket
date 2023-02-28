@@ -312,7 +312,7 @@ function App() {
             }
           />
           <Route
-            path="/reset-password/:token"
+            path="/:username/reset-password/:token"
             element={
               <ForgotPasswordResetPage
                 domain={domain}
