@@ -62,7 +62,7 @@ Google and Facebook OAuth
 
 protect api routes for not logged in users (no token)
 
-make forgot password - if you forget your password, have an email be sent to user's email with a reset password link
+make forgot password - make forgotPWToken expire in 15 minutes, make reset password backend (copy change-password backend but add check for token) - https://blog.logrocket.com/implementing-secure-password-reset-node-js/#token-model
 
 upload form delete doesn't work
 

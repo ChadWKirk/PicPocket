@@ -3768,6 +3768,13 @@ button {
   justify-content: flex-start;
   align-items: flex-start;
 }
+.sign-in-page__reset-password-link-sent-banner {
+  background-color: rgb(12, 12, 48);
+  color: var(--offWhite);
+  padding: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1.15rem;
+}
 .sign-in-page__form-container button {
   display: flex;
   justify-content: center;

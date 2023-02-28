@@ -42,7 +42,12 @@ function App() {
   //until they refresh or go to a different page to reset the state to false.
   const [isJustDeleted, setIsJustDeleted] = useState(false);
 
+  //banner for upload page for when you have just verified your email to be able to upload (green banner)
   const [isJustVerified, setIsJustVerified] = useState(false);
+
+  //banner on sign in page that appears right after you send a forgot password link to your email
+  const [resetPasswordLinkJustSent, setResetPasswordLinkJustSent] =
+    useState(false);
 
   //used to show image select modal or not
   const [isShowingImageSelectModal, setIsShowingImageSelectModal] =
@@ -246,6 +251,7 @@ function App() {
                 domain={domain}
                 curUser={curUser}
                 isLoggedIn={isLoggedIn}
+                resetPasswordLinkJustSent={resetPasswordLinkJustSent}
               />
             }
           ></Route>
@@ -306,8 +312,7 @@ function App() {
             }
           />
           <Route
-            // path="/Account/:username/:token/Forgot-Password"
-            path="/forgot"
+            path="/reset-password/:token"
             element={
               <ForgotPasswordResetPage
                 domain={domain}
@@ -317,13 +322,13 @@ function App() {
             }
           />
           <Route
-            // path="/send-forgot/:email"
             path="/send-forgot"
             element={
               <SendForgotPasswordPage
                 domain={domain}
                 curUser={curUser}
                 isLoggedIn={isLoggedIn}
+                setResetPasswordLinkJustSent={setResetPasswordLinkJustSent}
               />
             }
           />

@@ -6,6 +6,7 @@ const cors = require("cors");
 const port = process.env.PORT || 5000;
 const nodemailer = require("nodemailer");
 const bcrypt = require("bcryptjs");
+const crypto = require("crypto");
 const validator = require("validator");
 const jwt = require("jsonwebtoken");
 const createToken = (_id) => {
@@ -134,6 +135,7 @@ app.post("/signup", async (req, response) => {
               email: req.body.email,
               verified: false,
               verifyToken: "tokenPlaceholder",
+              forgotPWToken: "tokenPlaceholder",
               bio: "",
               pfp: "https://res.cloudinary.com/dtyg4ctfr/image/upload/v1674238936/PicPocket/default_purple_pfp_ibof5p.jpg",
               // signedIn: true,
@@ -194,6 +196,79 @@ app.post("/signup", async (req, response) => {
           );
         }
         insertNew();
+      }
+    });
+});
+
+//Send Forgot Password Link
+app.post("/send-forgot-password-link", (req, res) => {
+  console.log("forgot test");
+  //check if email is a valid email
+  if (!validator.isEmail(req.body.email)) {
+    res.json("Email is not valid");
+    return;
+  }
+
+  //check if req.body.email belongs to any existing account
+  let db_connect = dbo.getDb();
+
+  db_connect
+    .collection("picpocket-users")
+    .findOne({ email: req.body.email }, async function (err, user) {
+      if (err) {
+        console.log(err);
+        res.json("error");
+      } else if (user) {
+        //create token that expires in 15 minutes
+        let resetPWToken = crypto.randomBytes(32).toString("hex");
+        //create hash of token to store in DB
+        const hash = await bcrypt.hash(resetPWToken, Number(10));
+        //add token to forgotPWToken field in user
+        db_connect
+          .collection("picpocket-users")
+          .updateOne(
+            { email: req.body.email },
+            { $set: { forgotPWToken: hash } }
+          );
+        //send email to req.body.email containing link that contains token
+        const transporter = nodemailer.createTransport({
+          host: "smtp.zoho.com",
+          port: 465,
+          secure: true,
+          auth: {
+            user: process.env.EMAIL_SENDER_USER,
+            pass: process.env.EMAIL_SENDER_PASS,
+          },
+        });
+
+        const mailConfigurations = {
+          // It should be a string of sender/server email
+          from: "administrator@picpoccket.com",
+
+          to: req.body.email,
+
+          // Subject of Email
+          subject: "PicPocket Email Verification",
+
+          // This would be the text of email body
+          text: `Here is your reset password link:
+
+          localhost:3000/reset-password/${resetPWToken}
+          
+          Thanks`,
+        };
+
+        transporter.sendMail(mailConfigurations, function (error, info) {
+          if (error) {
+            throw Error(error);
+          } else {
+            console.log("Email Sent Successfully");
+            console.log(info);
+            res.json("forgot password link sent");
+          }
+        });
+      } else {
+        res.json("email does not belong to any account");
       }
     });
 });

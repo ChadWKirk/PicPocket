@@ -9,7 +9,12 @@ import googleOAuthIcon from "../../../images/google-logo-oauth.png";
 import facebookOauthIcon from "../../../images/facebook-logo-oauth.png";
 import { parse } from "@fortawesome/fontawesome-svg-core";
 
-const ForgotPasswordSendLinkPage = ({ domain, curUser, isLoggedIn }) => {
+const ForgotPasswordSendLinkPage = ({
+  domain,
+  curUser,
+  isLoggedIn,
+  setResetPasswordLinkJustSent,
+}) => {
   const { dispatch } = useAuthContext();
   let navigate = useNavigate();
   //if user is already logged in, redirect to their account page
@@ -24,18 +29,11 @@ const ForgotPasswordSendLinkPage = ({ domain, curUser, isLoggedIn }) => {
 
   const [emailTooltip, setEmailTooltip] = useState();
 
-  const [invalidCredentialstAlert, setInvalidCredentialsAlert] = useState();
+  const [emailInputClass, setEmailInputClass] = useState();
 
-  var [curUser2, setCurUser] = useState({
-    email: "",
-  });
-
-  let signInUser = {
-    email: email,
-  }; //this is the user the customer is ATTEMPTING to sign in with (does not pass name as prop on fail)
+  const [emailErrorText, setEmailErrorText] = useState();
 
   async function onSubmit(e) {
-    curUser = { email: "" };
     e.preventDefault();
     console.log("submitted");
 
@@ -51,27 +49,33 @@ const ForgotPasswordSendLinkPage = ({ domain, curUser, isLoggedIn }) => {
       await fetch(`${domain}/send-forgot-password-link`, {
         method: "POST",
         headers: { "Content-type": "application/json" },
-        body: JSON.stringify(signInUser),
+        body: JSON.stringify({ email: email }),
       }).then((response) =>
         response
           .json()
           .then((resJSON) => JSON.stringify(resJSON))
           .then((stringJSON) => JSON.parse(stringJSON))
           .then((parsedJSON) => {
-            if (parsedJSON.status === 404) {
-              //if sign in fails
-              setInvalidCredentialsAlert(
-                <div className="sign-in-page__invalid-email-or-password-alert-box">
-                  Invalid email or password.
+            if (parsedJSON === "forgot password link sent") {
+              console.log("forgot password link sent");
+              setResetPasswordLinkJustSent(true);
+              navigate("/signin");
+            } else if (parsedJSON === "email does not belong to any account") {
+              console.log("email does not belong to any account");
+              setEmailInputClass("red-input-border");
+              setEmailErrorText(
+                <div className="sign-in-page__already-exists-message">
+                  Email does not belong to any account.
                 </div>
               );
-              // window.alert("Account does not exist. Sign in failed.");
-            } else {
-              console.log("ok");
-              localStorage.setItem("user", JSON.stringify(parsedJSON));
-              dispatch({ type: "LOGIN", payload: parsedJSON });
-              window.location.href = "/";
-              //navigate("/");
+            } else if (parsedJSON === "Email is not valid") {
+              console.log(parsedJSON);
+              setEmailInputClass("red-input-border");
+              setEmailErrorText(
+                <div className="sign-in-page__already-exists-message">
+                  Email is not a valid address.
+                </div>
+              );
             }
           })
       );
@@ -102,14 +106,14 @@ const ForgotPasswordSendLinkPage = ({ domain, curUser, isLoggedIn }) => {
             will be sent to you with instructions about how to complete the
             process.
           </div>
-          {invalidCredentialstAlert}
           <form onSubmit={onSubmit}>
             <div
               className="forgot-password-send-link-page__input-block"
               style={{ marginTop: "2.5rem" }}
             >
-              <label htmlFor="email">Email Address: </label>
+              <label htmlFor="email">Email Address: {emailErrorText}</label>
               <input
+                className={emailInputClass}
                 id="email"
                 onChange={(event) => setEmail(event.target.value)}
               ></input>

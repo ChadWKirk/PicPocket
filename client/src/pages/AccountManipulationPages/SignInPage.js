@@ -9,7 +9,12 @@ import googleOAuthIcon from "../../images/google-logo-oauth.png";
 import facebookOauthIcon from "../../images/facebook-logo-oauth.png";
 import { parse } from "@fortawesome/fontawesome-svg-core";
 
-const SignInPage = ({ domain, curUser, isLoggedIn }) => {
+const SignInPage = ({
+  domain,
+  curUser,
+  isLoggedIn,
+  resetPasswordLinkJustSent,
+}) => {
   const { dispatch } = useAuthContext();
   let navigate = useNavigate();
   //if user is already logged in, redirect to their account page
@@ -123,6 +128,12 @@ const SignInPage = ({ domain, curUser, isLoggedIn }) => {
           >
             Log in to your account
           </div>
+          {resetPasswordLinkJustSent && (
+            <div className="sign-in-page__reset-password-link-sent-banner">
+              You will receive an email with instructions on how to reset your
+              password shortly.
+            </div>
+          )}
           <button className="sign-in-page__oauth-button">
             <div>
               <img src={googleOAuthIcon}></img>
