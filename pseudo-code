@@ -71,8 +71,6 @@ handle errors for blank fields etc.
 
 make it so that duplicate public ID's get named something else in cloudinary (upload preset in cloudinary rules)
 
-Create single download in myPics - set download button HREF to secure url with fl_attachment in url when selecting an image
-
 make liking a pic send you to sign up page if clicked when signed out
 
 ---

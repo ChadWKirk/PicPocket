@@ -753,19 +753,29 @@ const MyPicsPage = ({ domain, curUser, isLoggedIn }) => {
                 >
                   Submit
                 </button>
-                <button
-                  style={{
-                    fontSize: "0.85rem",
-                    backgroundColor: "rgb(250, 250, 250)",
-                    padding: "0.25rem",
-                    paddingLeft: "0.75rem",
-                    paddingRight: "0.75rem",
-                    border: "1px solid lightgrey",
-                    borderRadius: "2px",
-                  }}
-                >
-                  <FontAwesomeIcon icon={faDownload} />
-                </button>
+                {bulkArr.current[0] && (
+                  <a
+                    style={{
+                      fontSize: "0.85rem",
+                      backgroundColor: "rgb(250, 250, 250)",
+                      padding: "0.25rem",
+                      paddingLeft: "0.75rem",
+                      paddingRight: "0.75rem",
+                      border: "1px solid lightgrey",
+                      borderRadius: "2px",
+                    }}
+                    href={
+                      bulkArr.current[0].secure_url.slice(0, 50) +
+                      "q_100/fl_attachment/" +
+                      bulkArr.current[0].secure_url.slice(
+                        50,
+                        bulkArr.current[0].secure_url.lastIndexOf(".")
+                      )
+                    }
+                  >
+                    <FontAwesomeIcon icon={faDownload} />
+                  </a>
+                )}
                 <button
                   type="button"
                   onClick={(e) => deleteImageFromBackEnd(e)}
