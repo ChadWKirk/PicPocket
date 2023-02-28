@@ -80,27 +80,34 @@ const ForgotPasswordSendLinkPage = ({ domain, curUser, isLoggedIn }) => {
 
   return (
     <div
-      className="sign-in-page__container"
+      className="forgot-password-send-link-page__container"
       onClick={() => {
         setEmailTooltip();
       }}
     >
-      <div className="sign-in-page__contents-container">
-        <div className="sign-in-page__form-container">
+      <div className="forgot-password-send-link-page__contents-container">
+        <div className="forgot-password-send-link-page__form-container">
           <div style={{ fontSize: "1rem", fontWeight: "300" }}>PicPocket</div>
-          <div
-            style={{ fontSize: "2rem", color: "#f5c000", fontWeight: "500" }}
-          >
+          <div className="forgot-password-send-link-page__heading">
             Reset your password
           </div>
-          <div>
+          <div
+            style={{
+              fontSize: "0.8rem",
+              marginTop: "0.7rem",
+              maxWidth: "70ch",
+            }}
+          >
             To reset your password, enter your email below and submit. An email
             will be sent to you with instructions about how to complete the
             process.
           </div>
           {invalidCredentialstAlert}
           <form onSubmit={onSubmit}>
-            <div className="sign-in-page__input-block">
+            <div
+              className="forgot-password-send-link-page__input-block"
+              style={{ marginTop: "2.5rem" }}
+            >
               <label htmlFor="email">Email Address: </label>
               <input
                 id="email"
@@ -108,14 +115,17 @@ const ForgotPasswordSendLinkPage = ({ domain, curUser, isLoggedIn }) => {
               ></input>
               {emailTooltip}
             </div>
-            <button type="submit" className="sign-in-page__sign-in-button">
+            <button
+              type="submit"
+              className="forgot-password-send-link-page__sign-in-button"
+            >
               Reset Password
             </button>
           </form>
         </div>
-        <div className="sign-in-page__collage-image-container">
+        <div className="forgot-password-send-link-page__collage-image-container">
           <img
-            className="sign-in-page__collage-image"
+            className="forgot-password-send-link-page__collage-image"
             src={signInPageCollageImg}
           ></img>
         </div>
