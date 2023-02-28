@@ -3939,6 +3939,18 @@ button {
   left: 10px;
   transform: rotate(180deg);
 }
+.sign-in-page__dont-have-account-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  font-size: 0.85rem;
+}
+@media (width < 410px) {
+  .sign-in-page__dont-have-account-container {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
 .sign-in-page__sign-in-button {
   font-size: 1rem;
   width: 100%;

@@ -321,6 +321,17 @@ const SignUpPage = ({ domain }) => {
               ></input>
               {passwordTooltip}
             </div>
+            <div
+              style={{
+                display: "flex",
+                gap: "0.5rem",
+                marginTop: "1rem",
+                fontSize: "0.85rem",
+              }}
+            >
+              <div>Already have an account?</div>
+              <a href="/SignIn">Sign In</a>
+            </div>
             <button type="submit" className="sign-in-page__sign-in-button">
               Sign Up
             </button>

@@ -168,6 +168,7 @@ const SignInPage = ({
               ></input>
               {passwordTooltip}
               <div
+                className="sign-in-page__dont-have-account-container"
                 style={{
                   display: "flex",
                   justifyContent: "space-between",
@@ -177,7 +178,7 @@ const SignInPage = ({
               >
                 <div style={{ display: "flex", gap: "0.5rem" }}>
                   <div>Don't have an account?</div>
-                  <a href="#">Sign Up</a>
+                  <a href="/SignUp">Sign Up</a>
                 </div>
                 <div>
                   <a href="/send-forgot">Forgot Password?</a>
