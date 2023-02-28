@@ -324,6 +324,7 @@ const UploadForm = ({
         imagesToUpload={imagesToUpload}
         removeImageFromUploadFrontEnd={removeImageFromUploadFrontEnd}
         newItemRef={newItemRef}
+        domain={domain}
       />
       {imagesToUpload[0] && (
         <div className="upload-page__all-done-banner-container">

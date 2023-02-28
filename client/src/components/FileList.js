@@ -8,7 +8,7 @@ const FileList = ({
   newItemRef,
 }) => {
   async function deleteImageFromBackEnd(imageName, publicId) {
-    await fetch(`${domain}/deleteImage/`, {
+    await fetch(`${domain}/deleteImage`, {
       method: "POST",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({ public_id: publicId }),
