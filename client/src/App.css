@@ -1145,7 +1145,7 @@ button {
 }
 .email-verify-page__message-container-fail {
   text-align: center;
-  padding: 0 12rem;
+  max-width: 90ch;
 }
 
 /* Green Banner CSS */

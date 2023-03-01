@@ -53,9 +53,11 @@ mypics - loading for submit/delete/massdelete (make loading/progress bar at top 
 
 make about us page
 
----
+style emails
 
-EMAIL VERIFICATION - Deal with if user is not signed in or a different user is signed in currently
+style sign up success page
+
+---
 
 Google and Facebook OAuth
 

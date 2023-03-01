@@ -1,11 +1,16 @@
 import { React, useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+// components
+import NavbarComponent from "../../components/NavbarComponent";
+
 //font awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEnvelopeCircleCheck,
   faEnvelope,
   faXmark,
+  faCircleArrowUp,
+  faArrowUpRightDots,
 } from "@fortawesome/free-solid-svg-icons";
 
 const EmailVerifyPage = ({
@@ -24,6 +29,7 @@ const EmailVerifyPage = ({
   const { token } = useParams();
 
   //what content to show based on success or error
+  const [navbar, setNavbar] = useState();
   const [emailIcon, setEmailIcon] = useState();
   const [message, setMessage] = useState();
 
@@ -95,11 +101,79 @@ const EmailVerifyPage = ({
   }
 
   useEffect(() => {
-    verifyPostRequest();
+    if (curUser == username) {
+      verifyPostRequest();
+    } else {
+      if (isLoggedIn) {
+        setNavbar(
+          <NavbarComponent
+            domain={domain}
+            curUser={curUser}
+            isLoggedIn={isLoggedIn}
+            navPositionClass={"fixed"}
+            navColorClass={"black"}
+          />
+        );
+        setEmailIcon(
+          <div
+            className="email-verify-page__email-image-container-fail"
+            style={{ marginTop: "5rem" }}
+          >
+            <div className="email-verify-page__email-image-envelope-fail">
+              <FontAwesomeIcon icon={faArrowUpRightDots} />
+            </div>
+          </div>
+        );
+        setMessage(
+          <div className="email-verify-page__message-container-fail">
+            <h1>
+              Please log out of the current user and log back in as yourself.
+              Then click the link in your email again.
+            </h1>
+            <h3 style={{ marginTop: "4rem" }}>Thanks,</h3>
+            <h3>PicPocket</h3>
+          </div>
+        );
+      } else {
+        setNavbar(
+          <NavbarComponent
+            domain={domain}
+            curUser={curUser}
+            isLoggedIn={isLoggedIn}
+            navPositionClass={"fixed"}
+            navColorClass={"black"}
+          />
+        );
+        setEmailIcon(
+          <div
+            className="email-verify-page__email-image-container-fail"
+            style={{ marginTop: "5rem" }}
+          >
+            <div className="email-verify-page__email-image-envelope-fail">
+              <FontAwesomeIcon icon={faEnvelope} />
+            </div>
+            <div className="email-verify-page__email-image-x-fail">
+              <FontAwesomeIcon icon={faXmark} />
+            </div>
+          </div>
+        );
+        setMessage(
+          <div className="email-verify-page__message-container-fail">
+            <h1>
+              Please <a href="/SignIn">Sign In</a> to your account, then go back
+              into your email and click the verification link.
+            </h1>
+            <h3 style={{ marginTop: "4rem" }}>Thanks,</h3>
+            <h3>PicPocket</h3>
+          </div>
+        );
+      }
+    }
   }, []);
 
   return (
     <div className="email-verify-page__container">
+      {navbar}
       <div className="email-verify-page__contents-container">
         {emailIcon}
         {message}
