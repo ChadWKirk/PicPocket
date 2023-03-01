@@ -59,7 +59,7 @@ style sign up success page
 
 ---
 
-Google and Facebook OAuth
+Google and Facebook OAuth - https://console.cloud.google.com/ - https://youtu.be/TqlVP_IkS28 - https://www.npmjs.com/package/@react-oauth/google
 
 protect api routes for not logged in users (no token)
 
