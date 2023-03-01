@@ -1,5 +1,7 @@
 import { React, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+// jwt decode
+import jwt_decode from "jwt-decode";
 //components
 import TooltipForInputField from "../../components/TooltipForInputField";
 import { useAuthContext } from "../../context/useAuthContext";
@@ -23,6 +25,27 @@ const SignInPage = ({
   //     navigate(`/Account/${curUser}`);
   //   }
   // }, []);
+
+  //Google OAuth
+  function handleCallbackResponse(response) {
+    console.log("Encoded JWT ID token:" + response.credential);
+    let userObject = jwt_decode(response.credential);
+    console.log(userObject);
+  }
+
+  useEffect(() => {
+    /* global google */
+    google.accounts.id.initialize({
+      client_id:
+        "674140638950-ek6n33jtremlofgcd0arv7j4vhe1bbs3.apps.googleusercontent.com",
+      callback: handleCallbackResponse,
+    });
+
+    google.accounts.id.renderButton(
+      document.getElementById("googleSignInButton"),
+      { theme: "outline", size: "large" }
+    );
+  }, []);
 
   //states for username, email and password input values
   const [username, setUsername] = useState("");
@@ -134,12 +157,16 @@ const SignInPage = ({
               password shortly.
             </div>
           )}
-          <button className="sign-in-page__oauth-button">
+          <div
+            id="googleSignInButton"
+            className="sign-in-page__oauth-button"
+          ></div>
+          {/* <button className="sign-in-page__oauth-button">
             <div>
               <img src={googleOAuthIcon}></img>
               Google
             </div>
-          </button>
+          </button> */}
           <button className="sign-in-page__oauth-button">
             <div>
               <img src={facebookOauthIcon}></img>Facebook
