@@ -53,8 +53,6 @@ mypics - loading for submit/delete/massdelete (make loading/progress bar at top 
 
 make about us page
 
-forgot password - token expired page content
-
 ---
 
 EMAIL VERIFICATION - Deal with if user is not signed in or a different user is signed in currently

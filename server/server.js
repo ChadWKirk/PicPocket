@@ -300,12 +300,12 @@ app.get("/:username/check-forgot-token/:token", async (req, res) => {
         res.json("error");
         console.log(err);
       } else if (user) {
-        const passwordMatch = await bcrypt.compare(
+        const tokenMatch = await bcrypt.compare(
           token,
           user.forgotPWToken.token
         );
-        if (!passwordMatch) {
-          res.json("token does not match");
+        if (!tokenMatch) {
+          res.json("token expired");
           console.log("token does not match");
         } else {
           //if they match (using correct/most recent forgot password email that was sent)

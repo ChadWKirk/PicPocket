@@ -12,7 +12,10 @@ const PasswordChangeSuccessPage = () => {
     }, 500);
   });
   return (
-    <div className="password-success-page__container">
+    <div
+      className="password-success-page__container"
+      style={{ textAlign: "center" }}
+    >
       <div className="password-success-page__check-icon">
         <FontAwesomeIcon icon={faCheckCircle} />
       </div>

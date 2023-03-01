@@ -7,7 +7,12 @@ import NavbarComponent from "../../../components/NavbarComponent";
 import { useAuthContext } from "../../../context/useAuthContext";
 //font awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEye,
+  faSpinner,
+  faXmark,
+  faXmarkCircle,
+} from "@fortawesome/free-solid-svg-icons";
 
 const ForgotPasswordResetPage = ({ domain, curUser, isLoggedIn }) => {
   let navigate = useNavigate();
@@ -16,7 +21,11 @@ const ForgotPasswordResetPage = ({ domain, curUser, isLoggedIn }) => {
   const { token } = useParams();
   const { username } = useParams();
 
+  //state of if token is expired or not (determined by the server in the /send-forgot-password-link post)
+  const [isTokenExpired, setIsTokenExpired] = useState();
+
   //check if token is expired
+  //display "token expired" page if token is expired
   useEffect(() => {
     console.log(token);
     async function checkIfTokenExpired() {
@@ -29,9 +38,11 @@ const ForgotPasswordResetPage = ({ domain, curUser, isLoggedIn }) => {
           .then((stringJSON) => JSON.parse(stringJSON))
           .then((parsedJSON) => {
             if (parsedJSON === "token expired") {
-              console.log("expired");
+              console.log("token expired");
+              setIsTokenExpired(true);
             } else {
-              console.log("not expired");
+              console.log("token not expired");
+              setIsTokenExpired(false);
             }
           })
       );
@@ -178,61 +189,87 @@ const ForgotPasswordResetPage = ({ domain, curUser, isLoggedIn }) => {
         navPositionClass={"fixed"}
         navColorClass={"black"}
       />
-      <div className="change-password-page__form-container">
-        <h1>Reset Password</h1>
-        <div style={{ width: "100%" }}>
-          <form onSubmit={(e) => onSubmit(e)}>
-            <div className="change-password-page__input-container">
-              <label htmlFor="newPassInput">
-                New Password: {newPasswordErrorText}
-              </label>
-              <input
-                id="newPassInput"
-                className={newPasswordInputClass}
-                type={newPasswordInputType}
-                onChange={(e) => setNewPassword(e.target.value)}
-              ></input>
-              <FontAwesomeIcon
-                icon={faEye}
-                className={"change-password-page__eye-icon"}
-                onMouseDown={() => setNewPasswordInputType("text")}
-                onMouseUp={() => setNewPasswordInputType("password")}
-              />
-              {newPasswordTooltip}
-            </div>
-            <div className="change-password-page__input-container">
-              <label htmlFor="confirmNewPassInput">
-                Confirm New Password: {confirmNewPasswordErrorText}
-              </label>
-              <input
-                id="confirmNewPassInput"
-                className={confirmNewPasswordInputClass}
-                type={confirmNewPasswordInputType}
-                onChange={(e) => setConfirmNewPassword(e.target.value)}
-              ></input>
-              <FontAwesomeIcon
-                icon={faEye}
-                className={"change-password-page__eye-icon-last"}
-                onMouseDown={() => setConfirmNewPasswordInputType("text")}
-                onMouseUp={() => setConfirmNewPasswordInputType("password")}
-              />
-              {confirmNewPasswordTooltip}
+      {!isTokenExpired && (
+        <div className="change-password-page__form-container">
+          <h1>Reset Password</h1>
+          <div style={{ width: "100%" }}>
+            <form onSubmit={(e) => onSubmit(e)}>
+              <div className="change-password-page__input-container">
+                <label htmlFor="newPassInput">
+                  New Password: {newPasswordErrorText}
+                </label>
+                <input
+                  id="newPassInput"
+                  className={newPasswordInputClass}
+                  type={newPasswordInputType}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                ></input>
+                <FontAwesomeIcon
+                  icon={faEye}
+                  className={"change-password-page__eye-icon"}
+                  onMouseDown={() => setNewPasswordInputType("text")}
+                  onMouseUp={() => setNewPasswordInputType("password")}
+                />
+                {newPasswordTooltip}
+              </div>
+              <div className="change-password-page__input-container">
+                <label htmlFor="confirmNewPassInput">
+                  Confirm New Password: {confirmNewPasswordErrorText}
+                </label>
+                <input
+                  id="confirmNewPassInput"
+                  className={confirmNewPasswordInputClass}
+                  type={confirmNewPasswordInputType}
+                  onChange={(e) => setConfirmNewPassword(e.target.value)}
+                ></input>
+                <FontAwesomeIcon
+                  icon={faEye}
+                  className={"change-password-page__eye-icon-last"}
+                  onMouseDown={() => setConfirmNewPasswordInputType("text")}
+                  onMouseUp={() => setConfirmNewPasswordInputType("password")}
+                />
+                {confirmNewPasswordTooltip}
 
-              <div className="change-password-page__buttons-container">
-                <div className="change-password-page__buttons-container-subcontainer">
-                  {changePasswordButton}
-                  <button
-                    onClick={() => navigate(`/`)}
-                    className="change-password-page__cancel-button"
-                  >
-                    Cancel
-                  </button>
+                <div className="change-password-page__buttons-container">
+                  <div className="change-password-page__buttons-container-subcontainer">
+                    {changePasswordButton}
+                    <button
+                      onClick={() => navigate(`/`)}
+                      className="change-password-page__cancel-button"
+                    >
+                      Cancel
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
-      </div>
+      )}
+      {isTokenExpired && (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            textAlign: "center",
+          }}
+        >
+          <div style={{ color: "darkred", fontSize: "10rem" }}>
+            <FontAwesomeIcon icon={faXmarkCircle} />
+          </div>
+
+          <h1 style={{ marginBottom: "3rem" }}>
+            Sorry, but the token in your reset password link has expired
+          </h1>
+          <h3>
+            Please go back to the <a href="/send-forgot">Forgot Password</a>{" "}
+            page and send another link to yourself.
+          </h3>
+          <h3 style={{ marginTop: "2rem" }}>Thanks,</h3>
+          <div style={{ marginBottom: "15rem" }}>PicPocket</div>
+        </div>
+      )}
     </div>
   );
 };
