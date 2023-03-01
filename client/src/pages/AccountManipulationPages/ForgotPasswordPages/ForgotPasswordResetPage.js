@@ -37,7 +37,7 @@ const ForgotPasswordResetPage = ({ domain, curUser, isLoggedIn }) => {
       );
     }
     checkIfTokenExpired();
-  });
+  }, []);
 
   //fields
   const [newPassword, setNewPassword] = useState("");
@@ -87,14 +87,18 @@ const ForgotPasswordResetPage = ({ domain, curUser, isLoggedIn }) => {
       );
     } else {
       setChangePasswordButton(
-        <button type="submit" id="loadingSucFailBtn">
+        <button
+          type="submit"
+          id="loadingSucFailBtn"
+          style={{ pointerEvents: "none" }}
+        >
           Reset Password
           <div className="contact-page__send-button-loading-icon">
             <FontAwesomeIcon icon={faSpinner} className="fa-spin" />
           </div>
         </button>
       );
-      await fetch(`${domain}/change-password`, {
+      await fetch(`${domain}/reset-password`, {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify({
@@ -131,18 +135,6 @@ const ForgotPasswordResetPage = ({ domain, curUser, isLoggedIn }) => {
                 <div className="sign-in-page__already-exists-message">
                   Password is not strong enough. (Requirements - 8 characters,
                   one uppercase letter, one number and one special character).
-                </div>
-              );
-            } else if (
-              parsedJSON == "new password cannot match current password"
-            ) {
-              setChangePasswordButton(
-                <button type="submit">Reset Password</button>
-              );
-              setNewPasswordInputClass("red-input-border");
-              setNewPasswordErrorText(
-                <div className="sign-in-page__already-exists-message">
-                  New password cannot match current password.
                 </div>
               );
             } else if (

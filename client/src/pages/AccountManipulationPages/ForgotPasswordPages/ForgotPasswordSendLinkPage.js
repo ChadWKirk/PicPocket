@@ -8,6 +8,9 @@ import signInPageCollageImg from "../../../images/PicPocket-SignIn-Collage2.png"
 import googleOAuthIcon from "../../../images/google-logo-oauth.png";
 import facebookOauthIcon from "../../../images/facebook-logo-oauth.png";
 import { parse } from "@fortawesome/fontawesome-svg-core";
+//font awesome
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 const ForgotPasswordSendLinkPage = ({
   domain,
@@ -33,6 +36,15 @@ const ForgotPasswordSendLinkPage = ({
 
   const [emailErrorText, setEmailErrorText] = useState();
 
+  const [resetPasswordButton, setResetPasswordButton] = useState(
+    <button
+      type="submit"
+      className="forgot-password-send-link-page__sign-in-button"
+    >
+      Reset Password
+    </button>
+  );
+
   async function onSubmit(e) {
     e.preventDefault();
     console.log("submitted");
@@ -46,6 +58,16 @@ const ForgotPasswordSendLinkPage = ({
       );
     } else {
       console.log("fetch sent");
+      setResetPasswordButton(
+        <button
+          type="submit"
+          className="forgot-password-send-link-page__sign-in-button"
+          style={{ pointerEvents: "none" }}
+        >
+          Reset Password
+          <FontAwesomeIcon icon={faSpinner} className="fa-spin" />
+        </button>
+      );
       await fetch(`${domain}/send-forgot-password-link`, {
         method: "POST",
         headers: { "Content-type": "application/json" },
@@ -119,12 +141,7 @@ const ForgotPasswordSendLinkPage = ({
               ></input>
               {emailTooltip}
             </div>
-            <button
-              type="submit"
-              className="forgot-password-send-link-page__sign-in-button"
-            >
-              Reset Password
-            </button>
+            {resetPasswordButton}
           </form>
         </div>
         <div className="forgot-password-send-link-page__collage-image-container">

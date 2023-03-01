@@ -631,6 +631,43 @@ app.post("/change-password", async (req, res) => {
   );
 });
 
+//Reset Password (after forgot password)
+app.post("/reset-password", async (req, res) => {
+  //run isStrongPassword() from validator on req.body.newPassword ->
+  //if passes, change password. if fails, send response "password too weak"
+
+  //password hashing
+  const salt = await bcrypt.genSalt(10);
+  const hash = await bcrypt.hash(req.body.newPassword, salt);
+
+  //validation
+  //if password is not strong enough, return
+  if (!validator.isStrongPassword(req.body.newPassword)) {
+    response.json("password too weak");
+    return;
+  }
+
+  let db_connect = dbo.getDb();
+
+  //if new password and confirm new password fields do not match
+  if (req.body.newPassword !== req.body.confirmNewPassword) {
+    res.json("New Password and Confirm New Password must match.");
+  } else {
+    //if password is strong and fields match
+    db_connect.collection("picpocket-users").updateOne(
+      {
+        username: req.body.username,
+      },
+      {
+        $set: {
+          password: hash,
+        },
+      }
+    );
+    res.json("change password");
+  }
+});
+
 //Contact
 app.post("/contact", (req, res) => {
   console.log("contact");
