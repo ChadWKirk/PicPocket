@@ -66,7 +66,8 @@ Google / facebook sign in/up:
 - post to /oauth/sign
 - instead of username/pw, check for email/username
 - if user with $and: email, username exists > run /signin stuff
-- if doesn't exist > insert user as type: oauth, email: email, username: full name, pfp: google pic, no tokens because no need for email verify or pw change/forgot password
+- if doesn't exist > insert user as type: oauth, email: email, username: full name, pfp: google pic, no tokens because no need for email verify or pw change/forgot password > run /signup stuff (token)
+- run dispatch thing that takes the token as payload
 - navigate to either home page or sign up success page depending on res.json()
 - don't display change password or change email if curUser.type === "oauth"
 
