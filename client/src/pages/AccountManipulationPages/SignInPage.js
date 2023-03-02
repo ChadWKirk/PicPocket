@@ -34,6 +34,7 @@ const SignInPage = ({
   //Google OAuth
   const login = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
+      //get user info from google account
       try {
         const data = await axios.get(
           "https://www.googleapis.com/oauth2/v3/userinfo",
@@ -44,6 +45,34 @@ const SignInPage = ({
           }
         );
         console.log(data);
+        //sign in/up
+        console.log("oauth sign fetch sent");
+        await fetch(`${domain}/oauth/sign`, {
+          method: "POST",
+          headers: { "Content-type": "application/json" },
+          body: JSON.stringify(data),
+        }).then((response) =>
+          response
+            .json()
+            .then((resJSON) => JSON.stringify(resJSON))
+            .then((stringJSON) => JSON.parse(stringJSON))
+            .then((parsedJSON) => {
+              if (parsedJSON.status === 404) {
+                //if sign in fails
+                setInvalidCredentialsAlert(
+                  <div className="sign-in-page__invalid-username-or-password-alert-box">
+                    Invalid username or password.
+                  </div>
+                );
+              } else {
+                console.log("ok");
+                localStorage.setItem("user", JSON.stringify(parsedJSON));
+                dispatch({ type: "LOGIN", payload: parsedJSON });
+                window.location.href = "/";
+                //navigate("/");
+              }
+            })
+        );
       } catch (err) {
         console.log(err);
       }
