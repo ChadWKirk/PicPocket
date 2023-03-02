@@ -61,6 +61,15 @@ style sign up success page
 
 Google and Facebook OAuth - https://console.cloud.google.com/ - https://youtu.be/TqlVP_IkS28 - https://www.npmjs.com/package/@react-oauth/google
 
+Google / facebook sign in/up:
+
+- post to /oauth/sign
+- instead of username/pw, check for email/username
+- if user with $and: email, username exists > run /signin stuff
+- if doesn't exist > insert user as type: oauth, email: email, username: full name, pfp: google pic, no tokens because no need for email verify or pw change/forgot password
+- navigate to either home page or sign up success page depending on res.json()
+- don't display change password or change email if curUser.type === "oauth"
+
 protect api routes for not logged in users (no token)
 
 get cloudinary name and preset from back end instead of storing in env in front end (unsafe) - upload using multer to handle formData in express - https://youtu.be/wIOpe8S2Mk8
