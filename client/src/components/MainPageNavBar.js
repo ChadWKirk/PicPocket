@@ -15,7 +15,8 @@ import HamburgerList from "./HamburgerList";
 
 const MainPageNavBar = ({
   domain,
-  curUser,
+  curUser_real,
+  curUser_hyphenated,
   isLoggedIn,
   navPositionClass,
   navColorClass,
@@ -24,7 +25,7 @@ const MainPageNavBar = ({
   const [userPFP, setPFP] = useState();
   useEffect(() => {
     async function fetchUserInfo() {
-      await fetch(`${domain}/${curUser}/info`, {
+      await fetch(`${domain}/${curUser_real}/info`, {
         method: "GET",
         headers: { "Content-type": "application/json" },
       }).then((response) =>
@@ -137,7 +138,7 @@ const MainPageNavBar = ({
         }}
       >
         <a
-          href={`/Account/${curUser}`}
+          href={`/Account/${curUser_hyphenated}`}
           className="navbar__account-button-container"
         >
           <div className="navbar__account-button-hover-overlay-div">
@@ -154,17 +155,21 @@ const MainPageNavBar = ({
         >
           <ul className="navbar__dropdown-menu">
             <li>
-              <a href={`/Account/${curUser}/Likes/most-recent/all-types`}>
+              <a
+                href={`/Account/${curUser_hyphenated}/Likes/most-recent/all-types`}
+              >
                 Likes
               </a>
             </li>
             <li>
-              <a href={`/Account/${curUser}/My-Pics/most-recent/all-types`}>
+              <a
+                href={`/Account/${curUser_hyphenated}/My-Pics/most-recent/all-types`}
+              >
                 My Pics
               </a>
             </li>
             <li>
-              <a href={`/Account/${curUser}`}>User Settings</a>
+              <a href={`/Account/${curUser_hyphenated}`}>User Settings</a>
             </li>
             <li>
               <a href="/" onClick={signOut}>
@@ -176,12 +181,18 @@ const MainPageNavBar = ({
       </div>
     );
     uploadButton = (
-      <a href={`/${curUser}/upload`} className="navbar__CTA-button-1">
+      <a
+        href={`/${curUser_hyphenated}/upload`}
+        className="navbar__CTA-button-1"
+      >
         Upload
       </a>
     );
     smallUploadButton = (
-      <a href={`/${curUser}/upload`} className="navbar__smallUploadButton">
+      <a
+        href={`/${curUser_hyphenated}/upload`}
+        className="navbar__smallUploadButton"
+      >
         <FontAwesomeIcon icon={faUpload} />
       </a>
     );
@@ -254,7 +265,8 @@ const MainPageNavBar = ({
         </div>
       </div>
       <HamburgerList
-        curUser={curUser}
+        curUser_real={curUser_real}
+        curUser_hyphenated={curUser_hyphenated}
         isLoggedIn={isLoggedIn}
         signOut={signOut}
       />

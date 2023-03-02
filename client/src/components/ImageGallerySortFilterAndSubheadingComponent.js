@@ -44,7 +44,7 @@ const ImageGallerySortFilterAndSubheadingComponent = ({
           href={`https://picpoccket.com/User/${username}`}
           className="image-gallery__likes-page-subheading-username-link"
         >
-          {username}
+          {username.split("-").join(" ")}
         </a>
       </h1>
     );

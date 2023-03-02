@@ -10,7 +10,8 @@ import uploadFormGalleryIcon from "../images/upload-page__image-gallery-icon.png
 
 const UploadForm = ({
   domain,
-  curUser,
+  curUser_real,
+  curUser_hyphenated,
   imagesToUpload,
   setImagesToUpload,
   removeImageFromUploadFrontEnd,
@@ -87,7 +88,7 @@ const UploadForm = ({
           //add fields to fetch response to get ready to send to MongoDB
           uploadToMongoBody.likes = 0;
           uploadToMongoBody.likedBy = [];
-          uploadToMongoBody.uploadedBy = curUser;
+          uploadToMongoBody.uploadedBy = curUser_real;
           uploadToMongoBody.title = image.name
             .replace(".jpg", "")
             .replace(".png", "")
@@ -174,7 +175,7 @@ const UploadForm = ({
           //add fields to fetch response to get ready to send to MongoDB
           uploadToMongoBody.likes = 0;
           uploadToMongoBody.likedBy = [];
-          uploadToMongoBody.uploadedBy = curUser;
+          uploadToMongoBody.uploadedBy = curUser_real;
           uploadToMongoBody.title = image.name
             .replace(".jpg", "")
             .replace(".png", "")
@@ -356,7 +357,9 @@ const UploadForm = ({
             <button className={browseButtonAllDoneClass}>Browse</button>
           </div>
           All done?
-          <a href={`/Account/${curUser}/My-Pics/most-recent/all-types`}>
+          <a
+            href={`/Account/${curUser_hyphenated}/My-Pics/most-recent/all-types`}
+          >
             Edit Images
           </a>
         </div>

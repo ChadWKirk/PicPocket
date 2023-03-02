@@ -10,7 +10,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
 
-const MyPicsPage = ({ domain, curUser, isLoggedIn }) => {
+const MyPicsPage = ({
+  domain,
+  curUser_real,
+  curUser_hyphenated,
+  isLoggedIn,
+}) => {
   const [massDlLink, setMassDlLink] = useState();
 
   //toast stuff
@@ -78,10 +83,10 @@ const MyPicsPage = ({ domain, curUser, isLoggedIn }) => {
     isSelectAll.current = false;
     setIsSelectAllState(false);
 
-    navigate(`/Account/${curUser}/My-Pics/${sort}/${filter}`);
+    // navigate(`/Account/${curUser}/My-Pics/${sort}/${filter}`);
 
     async function myPicsFetch() {
-      await fetch(`${domain}/${curUser}/${sort}/${filter}`, {
+      await fetch(`${domain}/${curUser_real}/${sort}/${filter}`, {
         method: "GET",
         headers: { "Content-type": "application/json" },
       }).then((response) =>
@@ -301,7 +306,7 @@ const MyPicsPage = ({ domain, curUser, isLoggedIn }) => {
     bulkArr.current[0].tags = tags.split(", "); //turn string into array
     bulkArr.current[0].imageType = imageType;
     console.log("submit attempt");
-    await fetch(`${domain}/update/${curUser}`, {
+    await fetch(`${domain}/update/${curUser_real}`, {
       method: "PUT",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify(bulkArr.current[0]),
@@ -468,7 +473,8 @@ const MyPicsPage = ({ domain, curUser, isLoggedIn }) => {
     <div style={{ overflow: "hidden" }}>
       <NavbarComponent
         domain={domain}
-        curUser={curUser}
+        curUser_real={curUser_real}
+        curUser_hyphenated={curUser_hyphenated}
         isLoggedIn={isLoggedIn}
         navPositionClass={"fixed"}
         navColorClass={"white"}
@@ -483,7 +489,7 @@ const MyPicsPage = ({ domain, curUser, isLoggedIn }) => {
           <div className="mypics-page__heading">
             <h2>Your Pics</h2>
             <p>
-              {imgData.length} images uploaded by {curUser}
+              {imgData.length} images uploaded by {curUser_real}
               {/* <a href={`"/Account/${curUser}"`}>{curUser}</a> */}
             </p>
           </div>

@@ -9,7 +9,12 @@ import { useAuthContext } from "../context/useAuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faSpinner, faXmark } from "@fortawesome/free-solid-svg-icons";
 
-const ContactUsPage = ({ domain, curUser, isLoggedIn }) => {
+const ContactUsPage = ({
+  domain,
+  curUser_real,
+  curUser_hyphenated,
+  isLoggedIn,
+}) => {
   let navigate = useNavigate();
   const { dispatch } = useAuthContext();
 
@@ -171,7 +176,8 @@ const ContactUsPage = ({ domain, curUser, isLoggedIn }) => {
     >
       <NavbarComponent
         domain={domain}
-        curUser={curUser}
+        curUser_real={curUser_real}
+        curUser_hyphenated={curUser_hyphenated}
         isLoggedIn={isLoggedIn}
         navPositionClass={"fixed"}
         navColorClass={"black"}

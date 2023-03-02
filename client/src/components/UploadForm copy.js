@@ -3,7 +3,15 @@ import { React, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleMinus } from "@fortawesome/free-solid-svg-icons";
 
-const UploadForm = ({ id, onClick, num, curUser, onMultiPic, pic }) => {
+const UploadForm = ({
+  id,
+  onClick,
+  num,
+  curUser_real,
+  curUser_hyphenated,
+  onMultiPic,
+  pic,
+}) => {
   //cloudinary preset and file for formData
   var CLOUDINARY_UPLOAD_PRESET = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET;
   let CLOUDINARY_CLOUD_NAME = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;

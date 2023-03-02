@@ -37,8 +37,6 @@ function App() {
   let domain = "http://localhost:5000";
   // let domain = "https://picpoccket.herokuapp.com";
 
-  
-
   //When someone deletes their account, they will be navigated back to main page
   //and a red banner will show saying their account has successfully been deleted
   //until they refresh or go to a different page to reset the state to false.
@@ -98,16 +96,19 @@ function App() {
   const { user } = useAuthContext();
   console.log(user);
   //set curUser to user.name
-  const [curUser, setCurUser] = useState();
+  const [curUser_hyphenated, setCurUser_hyphenated] = useState();
+  const [curUser_real, setCurUser_real] = useState();
   //set logged in to true/false depending on if user from AuthContext is null or not
   const [isLoggedIn, setIsLoggedIn] = useState();
   useEffect(() => {
     if (user !== null) {
-      setCurUser(user.name);
+      setCurUser_real(user.name);
+      setCurUser_hyphenated(user.name.split(" ").join("-"));
       setIsLoggedIn(true);
       console.log(isLoggedIn);
     } else {
-      setCurUser();
+      setCurUser_real();
+      setCurUser_hyphenated();
       setIsLoggedIn(false);
     }
   }, [user]);
@@ -129,7 +130,8 @@ function App() {
             element={
               <MainPage
                 domain={domain}
-                curUser={curUser}
+                curUser_real={curUser_real}
+                curUser_hyphenated={curUser_hyphenated}
                 isLoggedIn={isLoggedIn}
                 isJustDeleted={isJustDeleted}
                 setIsJustDeleted={setIsJustDeleted}
@@ -145,7 +147,8 @@ function App() {
             element={
               <MainPageMostPopularImages
                 domain={domain}
-                curUser={curUser}
+                curUser_real={curUser_real}
+                curUser_hyphenated={curUser_hyphenated}
                 isLoggedIn={isLoggedIn}
               />
             }
@@ -155,7 +158,8 @@ function App() {
             element={
               <SearchResultPage
                 domain={domain}
-                curUser={curUser}
+                curUser_real={curUser_real}
+                curUser_hyphenated={curUser_hyphenated}
                 isLoggedIn={isLoggedIn}
                 isShowingImageSelectModal={isShowingImageSelectModal}
                 setIsShowingImageSelectModal={setIsShowingImageSelectModal}
@@ -169,7 +173,8 @@ function App() {
             element={
               <ImageViewPage
                 domain={domain}
-                curUser={curUser}
+                curUser_real={curUser_real}
+                curUser_hyphenated={curUser_hyphenated}
                 isLoggedIn={isLoggedIn}
                 isShowingImageSelectModal={isShowingImageSelectModal}
                 setIsShowingImageSelectModal={setIsShowingImageSelectModal}
@@ -180,11 +185,12 @@ function App() {
           ></Route>
           <Route path="/like-test" element={<LikeTestPage />}></Route>
           <Route
-            path={`/Account/${curUser}`}
+            path={`/Account/${curUser_hyphenated}`}
             element={
               <UserSettingsPage
                 domain={domain}
-                curUser={curUser}
+                curUser_real={curUser_real}
+                curUser_hyphenated={curUser_hyphenated}
                 isLoggedIn={isLoggedIn}
                 // setLoggedIn={setLoggedIn}
                 isJustDeleted={isJustDeleted}
@@ -197,7 +203,8 @@ function App() {
             element={
               <UserPage
                 domain={domain}
-                curUser={curUser}
+                curUser_real={curUser_real}
+                curUser_hyphenated={curUser_hyphenated}
                 isLoggedIn={isLoggedIn}
                 isShowingImageSelectModal={isShowingImageSelectModal}
                 setIsShowingImageSelectModal={setIsShowingImageSelectModal}
@@ -207,11 +214,12 @@ function App() {
             }
           ></Route>
           <Route
-            path={`/Account/${curUser}/My-Pics/:sort/:filter`}
+            path={`/Account/${curUser_hyphenated}/My-Pics/:sort/:filter`}
             element={
               <MyPicsPage
                 domain={domain}
-                curUser={curUser}
+                curUser_real={curUser_real}
+                curUser_hyphenated={curUser_hyphenated}
                 isLoggedIn={isLoggedIn}
                 isShowingImageSelectModal={isShowingImageSelectModal}
                 setIsShowingImageSelectModal={setIsShowingImageSelectModal}
@@ -225,7 +233,8 @@ function App() {
             element={
               <LikesPage
                 domain={domain}
-                curUser={curUser}
+                curUser_real={curUser_real}
+                curUser_hyphenated={curUser_hyphenated}
                 isLoggedIn={isLoggedIn}
                 isShowingImageSelectModal={isShowingImageSelectModal}
                 setIsShowingImageSelectModal={setIsShowingImageSelectModal}
@@ -235,11 +244,12 @@ function App() {
             }
           ></Route>
           <Route
-            path={`/${curUser}/upload`}
+            path={`/${curUser_hyphenated}/upload`}
             element={
               <UploadPage
                 domain={domain}
-                curUser={curUser}
+                curUser_real={curUser_real}
+                curUser_hyphenated={curUser_hyphenated}
                 isLoggedIn={isLoggedIn}
                 isJustVerified={isJustVerified}
                 setIsJustVerified={setIsJustVerified}
@@ -251,7 +261,8 @@ function App() {
             element={
               <SignInPage
                 domain={domain}
-                curUser={curUser}
+                curUser_real={curUser_real}
+                curUser_hyphenated={curUser_hyphenated}
                 isLoggedIn={isLoggedIn}
                 resetPasswordLinkJustSent={resetPasswordLinkJustSent}
               />
@@ -262,7 +273,8 @@ function App() {
             element={
               <SignUpPage
                 domain={domain}
-                curUser={curUser}
+                curUser_real={curUser_real}
+                curUser_hyphenated={curUser_hyphenated}
                 isLoggedIn={isLoggedIn}
               />
             }
@@ -276,7 +288,8 @@ function App() {
             element={
               <DelSuccessPage
                 domain={domain}
-                curUser={curUser}
+                curUser_real={curUser_real}
+                curUser_hyphenated={curUser_hyphenated}
                 isLoggedIn={isLoggedIn}
               />
             }
@@ -286,7 +299,8 @@ function App() {
             element={
               <EmailVerifyPage
                 domain={domain}
-                curUser={curUser}
+                curUser_real={curUser_real}
+                curUser_hyphenated={curUser_hyphenated}
                 isLoggedIn={isLoggedIn}
                 isJustVerified={isJustVerified}
                 setIsJustVerified={setIsJustVerified}
@@ -298,7 +312,8 @@ function App() {
             element={
               <ChangePasswordPage
                 domain={domain}
-                curUser={curUser}
+                curUser_real={curUser_real}
+                curUser_hyphenated={curUser_hyphenated}
                 isLoggedIn={isLoggedIn}
               />
             }
@@ -308,7 +323,8 @@ function App() {
             element={
               <PasswordChangeSuccessPage
                 domain={domain}
-                curUser={curUser}
+                curUser_real={curUser_real}
+                curUser_hyphenated={curUser_hyphenated}
                 isLoggedIn={isLoggedIn}
               />
             }
@@ -318,7 +334,8 @@ function App() {
             element={
               <ForgotPasswordResetPage
                 domain={domain}
-                curUser={curUser}
+                curUser_real={curUser_real}
+                curUser_hyphenated={curUser_hyphenated}
                 isLoggedIn={isLoggedIn}
               />
             }
@@ -328,7 +345,8 @@ function App() {
             element={
               <SendForgotPasswordPage
                 domain={domain}
-                curUser={curUser}
+                curUser_real={curUser_real}
+                curUser_hyphenated={curUser_hyphenated}
                 isLoggedIn={isLoggedIn}
                 setResetPasswordLinkJustSent={setResetPasswordLinkJustSent}
               />
@@ -339,7 +357,8 @@ function App() {
             element={
               <PrivacyPolicyPage
                 domain={domain}
-                curUser={curUser}
+                curUser_real={curUser_real}
+                curUser_hyphenated={curUser_hyphenated}
                 isLoggedIn={isLoggedIn}
               />
             }
@@ -349,7 +368,8 @@ function App() {
             element={
               <TOSPage
                 domain={domain}
-                curUser={curUser}
+                curUser_real={curUser_real}
+                curUser_hyphenated={curUser_hyphenated}
                 isLoggedIn={isLoggedIn}
               />
             }
@@ -359,7 +379,8 @@ function App() {
             element={
               <DisclaimerPage
                 domain={domain}
-                curUser={curUser}
+                curUser_real={curUser_real}
+                curUser_hyphenated={curUser_hyphenated}
                 isLoggedIn={isLoggedIn}
               />
             }
@@ -369,7 +390,8 @@ function App() {
             element={
               <CreditsPage
                 domain={domain}
-                curUser={curUser}
+                curUser_real={curUser_real}
+                curUser_hyphenated={curUser_hyphenated}
                 isLoggedIn={isLoggedIn}
               />
             }
@@ -379,13 +401,19 @@ function App() {
             element={
               <ContactUsPage
                 domain={domain}
-                curUser={curUser}
+                curUser_real={curUser_real}
+                curUser_hyphenated={curUser_hyphenated}
                 isLoggedIn={isLoggedIn}
               />
             }
           ></Route>
         </Routes>
-        <Footer domain={domain} curUser={curUser} isLoggedIn={isLoggedIn} />
+        <Footer
+          domain={domain}
+          curUser_real={curUser_real}
+          curUser_hyphenated={curUser_hyphenated}
+          isLoggedIn={isLoggedIn}
+        />
       </div>
     );
   }

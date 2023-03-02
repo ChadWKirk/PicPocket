@@ -3,7 +3,7 @@ import React from "react";
 import Logo from "../../components/Logo";
 import SearchBar from "../../components/SearchBar";
 
-const DelSuccessPage = ({ curUser, loggedIn }) => {
+const DelSuccessPage = ({ curUser_real, curUser_hyphenated, loggedIn }) => {
   return (
     <div>
       {/* <NavBar curUser={curUser} loggedIn={loggedIn} /> */}

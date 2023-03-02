@@ -16,7 +16,8 @@ import {
 const EmailVerifyPage = ({
   domain,
   isLoggedIn,
-  curUser,
+  curUser_real,
+  curUser_hyphenated,
   setIsJustVerified,
 }) => {
   //if use params token is same as :username's token, set :username's verified status to true
@@ -34,7 +35,7 @@ const EmailVerifyPage = ({
   const [message, setMessage] = useState();
 
   //fetch
-  async function verifyPostRequest() {
+  async function verificationPostRequest() {
     await fetch(`${domain}/${username}/verify/${token}`, {
       method: "POST",
       headers: { "Content-type": "application/json" },
@@ -101,14 +102,15 @@ const EmailVerifyPage = ({
   }
 
   useEffect(() => {
-    if (curUser == username) {
-      verifyPostRequest();
+    if (curUser_hyphenated == username) {
+      verificationPostRequest();
     } else {
       if (isLoggedIn) {
         setNavbar(
           <NavbarComponent
             domain={domain}
-            curUser={curUser}
+            curUser_real={curUser_real}
+            curUser_hyphenated={curUser_hyphenated}
             isLoggedIn={isLoggedIn}
             navPositionClass={"fixed"}
             navColorClass={"black"}
@@ -138,7 +140,8 @@ const EmailVerifyPage = ({
         setNavbar(
           <NavbarComponent
             domain={domain}
-            curUser={curUser}
+            curUser_real={curUser_real}
+            curUser_hyphenated={curUser_hyphenated}
             isLoggedIn={isLoggedIn}
             navPositionClass={"fixed"}
             navColorClass={"black"}

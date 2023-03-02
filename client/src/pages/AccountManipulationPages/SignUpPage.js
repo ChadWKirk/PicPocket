@@ -43,7 +43,7 @@ const SignUpPage = ({ domain }) => {
   }, [username]);
 
   let specialMessage;
-  if (/[~`!#$%\^&*+=\\[\]\\;,/{}|\\":<>\?]/g.test(username)) {
+  if (/[~`!#$%\^&*+=\\[\]\\;,/{}|\\":<>()-._@\?]/g.test(username)) {
     console.log("special");
     specialMessage = " No Special Characters";
   } else {

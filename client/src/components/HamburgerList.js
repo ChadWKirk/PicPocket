@@ -1,6 +1,11 @@
 import React, { useEffect } from "react";
 
-const HamburgerList = ({ curUser, isLoggedIn, signOut }) => {
+const HamburgerList = ({
+  curUser_real,
+  curUser_hyphenated,
+  isLoggedIn,
+  signOut,
+}) => {
   let hamburgerPicPocketList;
   if (isLoggedIn) {
     hamburgerPicPocketList = (
@@ -9,18 +14,24 @@ const HamburgerList = ({ curUser, isLoggedIn, signOut }) => {
           <a href="/">Home</a>
         </li>
         <li>
-          <a href={`/${curUser}/upload`}>Upload</a>
+          <a href={`/${curUser_hyphenated}/upload`}>Upload</a>
         </li>
         <li>
-          <a href={`/Account/${curUser}/Likes/most-recent/all-types`}>Likes</a>
+          <a
+            href={`/Account/${curUser_hyphenated}/Likes/most-recent/all-types`}
+          >
+            Likes
+          </a>
         </li>
         <li>
-          <a href={`/Account/${curUser}/My-Pics/most-recent/all-types`}>
+          <a
+            href={`/Account/${curUser_hyphenated}/My-Pics/most-recent/all-types`}
+          >
             My Pics
           </a>
         </li>
         <li>
-          <a href={`/Account/${curUser}`}>User Settings</a>
+          <a href={`/Account/${curUser_hyphenated}`}>User Settings</a>
         </li>
         <li>
           <a href="/" onClick={signOut}>

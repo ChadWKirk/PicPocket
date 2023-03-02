@@ -15,7 +15,8 @@ import { AiFillLike } from "react-icons/ai";
 
 const ImageViewPage = ({
   domain,
-  curUser,
+  curUser_real,
+  curUser_hyphenated,
   isLoggedIn,
   isShowingImageSelectModal,
   setIsShowingImageSelectModal,
@@ -144,7 +145,7 @@ const ImageViewPage = ({
 
     // searchQuery = imageTags.join(" ") + " " + imageTitlee;
 
-    if (imgInfo.likedBy.includes(curUser)) {
+    if (imgInfo.likedBy.includes(curUser_real)) {
       mainImgLikeBtn = (
         <button
           className="image-view-page__main-like-button"
@@ -185,21 +186,24 @@ const ImageViewPage = ({
 
   //handle like for main image
   async function handleMainLike(e) {
-    if (imgInfo.likedBy.includes(curUser)) {
-      await fetch(`${domain}/removeLikedBy/${imgInfo.asset_id}/${curUser}`, {
-        method: "POST",
-        headers: { "Content-type": "application/json" },
-      }).then((res) => {
+    if (imgInfo.likedBy.includes(curUser_real)) {
+      await fetch(
+        `${domain}/removeLikedBy/${imgInfo.asset_id}/${curUser_real}`,
+        {
+          method: "POST",
+          headers: { "Content-type": "application/json" },
+        }
+      ).then((res) => {
         imgInfo.likedBy = imgInfo.likedBy.filter((user) => {
-          return user !== curUser;
+          return user !== curUser_real;
         });
       });
-    } else if (!imgInfo.likedBy.includes(curUser)) {
-      await fetch(`${domain}/addLikedBy/${imgInfo.asset_id}/${curUser}`, {
+    } else if (!imgInfo.likedBy.includes(curUser_real)) {
+      await fetch(`${domain}/addLikedBy/${imgInfo.asset_id}/${curUser_real}`, {
         method: "POST",
         headers: { "Content-type": "application/json" },
       }).then((res) => {
-        imgInfo.likedBy.push(curUser);
+        imgInfo.likedBy.push(curUser_real);
       });
     }
     setIsLiked(!isLiked);
@@ -347,7 +351,7 @@ const ImageViewPage = ({
       var likeButton;
       var count = -1;
 
-      if (element.likedBy.includes(curUser)) {
+      if (element.likedBy.includes(curUser_real)) {
         likeButton = (
           <div>
             <FontAwesomeIcon
@@ -424,25 +428,28 @@ const ImageViewPage = ({
     var searchArrCopy = searchArr;
     console.log(searchArrCopy);
 
-    if (searchArrCopy[index].likedBy.includes(curUser)) {
-      await fetch(`${domain}/removeLikedBy/${element.asset_id}/${curUser}`, {
-        method: "POST",
-        headers: { "Content-type": "application/json" },
-      }).then((res) => {
+    if (searchArrCopy[index].likedBy.includes(curUser_real)) {
+      await fetch(
+        `${domain}/removeLikedBy/${element.asset_id}/${curUser_real}`,
+        {
+          method: "POST",
+          headers: { "Content-type": "application/json" },
+        }
+      ).then((res) => {
         searchArrCopy[index].likedBy = searchArrCopy[index].likedBy.filter(
           (user) => {
-            return user !== curUser;
+            return user !== curUser_real;
           }
         );
         setFetchArr(searchArrCopy);
         console.log("run 3");
       });
-    } else if (!searchArrCopy[index].likedBy.includes(curUser)) {
-      await fetch(`${domain}/addLikedBy/${element.asset_id}/${curUser}`, {
+    } else if (!searchArrCopy[index].likedBy.includes(curUser_real)) {
+      await fetch(`${domain}/addLikedBy/${element.asset_id}/${curUser_real}`, {
         method: "POST",
         headers: { "Content-type": "application/json" },
       }).then((res) => {
-        searchArrCopy[index].likedBy.push(curUser);
+        searchArrCopy[index].likedBy.push(curUser_real);
         setFetchArr(searchArrCopy);
         console.log("run 4");
       });
@@ -528,7 +535,8 @@ const ImageViewPage = ({
       {isShowingImageSelectModal && (
         <Modal__ImageSelect
           domain={domain}
-          curUser={curUser}
+          curUser_real={curUser_real}
+          curUser_hyphenated={curUser_hyphenated}
           imgTitleArrState={imgTitleArrState}
           isShowingImageSelectModal={isShowingImageSelectModal}
           setIsShowingImageSelectModal={setIsShowingImageSelectModal}
@@ -542,7 +550,8 @@ const ImageViewPage = ({
       )}
       <NavbarComponent
         domain={domain}
-        curUser={curUser}
+        curUser_real={curUser_real}
+        curUser_hyphenated={curUser_hyphenated}
         isLoggedIn={isLoggedIn}
         navPositionClass={"fixed"}
         navColorClass={"white"}

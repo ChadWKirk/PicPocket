@@ -1,6 +1,6 @@
 import React from "react";
 
-const Footer = ({ curUser, isLoggedIn }) => {
+const Footer = ({ curUser_real, curUser_hyphenated, isLoggedIn }) => {
   let footerPicPocketContent;
   if (isLoggedIn) {
     footerPicPocketContent = (
@@ -12,20 +12,24 @@ const Footer = ({ curUser, isLoggedIn }) => {
             <a href="/">Home</a>
           </li>
           <li>
-            <a href={`/Account/${curUser}/Likes/Most-Recent/All-Types`}>
+            <a
+              href={`/Account/${curUser_hyphenated}/Likes/Most-Recent/All-Types`}
+            >
               Likes
             </a>
           </li>
           <li>
-            <a href={`/Account/${curUser}/My-Pics/Most-Recent/All-Types`}>
+            <a
+              href={`/Account/${curUser_hyphenated}/My-Pics/Most-Recent/All-Types`}
+            >
               My Pics
             </a>
           </li>
           <li>
-            <a href={`/${curUser}/Upload`}>Upload</a>
+            <a href={`/${curUser_hyphenated}/Upload`}>Upload</a>
           </li>
           <li>
-            <a href={`/Account/${curUser}`}>User Settings</a>
+            <a href={`/Account/${curUser_hyphenated}`}>User Settings</a>
           </li>
         </ul>
       </div>

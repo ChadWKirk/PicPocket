@@ -7,7 +7,8 @@ import ImageGallery from "../components/ImageGallery";
 
 const UserPage = ({
   domain,
-  curUser,
+  curUser_real,
+  curUser_hyphenated,
   isLoggedIn,
   imgTitleArrState,
   setImgTitleArrState,
@@ -61,7 +62,8 @@ const UserPage = ({
       {/* <NavBar curUser={curUser} loggedIn={loggedIn} /> */}
       <NavbarComponent
         domain={domain}
-        curUser={curUser}
+        curUser_real={curUser_real}
+        curUser_hyphenated={curUser_hyphenated}
         isLoggedIn={isLoggedIn}
         navPositionClass={"fixed"}
         navColorClass={"white"}
@@ -94,7 +96,8 @@ const UserPage = ({
           {/* </div> */}
           <ImageGallery
             domain={domain}
-            curUser={curUser}
+            curUser_real={curUser_real}
+            curUser_hyphenated={curUser_hyphenated}
             isLoggedIn={isLoggedIn}
             sort={sort}
             filter={filter}

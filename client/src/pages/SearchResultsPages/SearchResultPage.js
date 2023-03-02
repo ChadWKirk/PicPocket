@@ -8,7 +8,8 @@ import ImageGallery from "../../components/ImageGallery";
 
 const SearchResultsPage = ({
   domain,
-  curUser,
+  curUser_real,
+  curUser_hyphenated,
   isLoggedIn,
   isShowingImageSelectModal,
   setIsShowingImageSelectModal,
@@ -38,7 +39,8 @@ const SearchResultsPage = ({
     <div>
       <NavbarComponent
         domain={domain}
-        curUser={curUser}
+        curUser_real={curUser_real}
+        curUser_hyphenated={curUser_hyphenated}
         isLoggedIn={isLoggedIn}
         navPositionClass={"fixed"}
         navColorClass={"white"}
@@ -68,7 +70,8 @@ const SearchResultsPage = ({
         {/* </div> */}
         <ImageGallery
           domain={domain}
-          curUser={curUser}
+          curUser_real={curUser_real}
+          curUser_hyphenated={curUser_hyphenated}
           isLoggedIn={isLoggedIn}
           sort={sort}
           filter={filter}

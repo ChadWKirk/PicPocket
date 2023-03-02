@@ -11,7 +11,8 @@ import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 
 const Modal__ImageSelect = ({
   domain,
-  curUser,
+  curUser_real,
+  curUser_hyphenated,
   imgTitleArrState,
   isShowingImageSelectModal,
   setIsShowingImageSelectModal,
@@ -126,7 +127,7 @@ const Modal__ImageSelect = ({
 
     // searchQuery = imageTags.join(" ") + " " + imageTitlee;
 
-    if (imgInfo.likedBy.includes(curUser)) {
+    if (imgInfo.likedBy.includes(curUser_real)) {
       imageSelectModalLikeBtn = (
         <button
           className="image-select-modal__main-like-button"
@@ -273,21 +274,21 @@ const Modal__ImageSelect = ({
 
   //handle like
   async function handleMainLike(e) {
-    if (imgInfo.likedBy.includes(curUser)) {
-      await fetch(`${domain}/removeLikedBy/${imgInfo.asset_id}/${curUser}`, {
+    if (imgInfo.likedBy.includes(curUser_real)) {
+      await fetch(`${domain}/removeLikedBy/${imgInfo.asset_id}/${curUser_real}`, {
         method: "POST",
         headers: { "Content-type": "application/json" },
       }).then((res) => {
         imgInfo.likedBy = imgInfo.likedBy.filter((user) => {
-          return user !== curUser;
+          return user !== curUser_real;
         });
       });
-    } else if (!imgInfo.likedBy.includes(curUser)) {
-      await fetch(`${domain}/addLikedBy/${imgInfo.asset_id}/${curUser}`, {
+    } else if (!imgInfo.likedBy.includes(curUser_real)) {
+      await fetch(`${domain}/addLikedBy/${imgInfo.asset_id}/${curUser_real}`, {
         method: "POST",
         headers: { "Content-type": "application/json" },
       }).then((res) => {
-        imgInfo.likedBy.push(curUser);
+        imgInfo.likedBy.push(curUser_real);
       });
     }
     setIsLiked(!isLiked);

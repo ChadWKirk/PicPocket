@@ -13,7 +13,8 @@ import Modal__ImageSelect from "../../components/Modal__ImageSelect";
 
 const MainPage = ({
   domain,
-  curUser,
+  curUser_real,
+  curUser_hyphenated,
   isLoggedIn,
   isJustDeleted,
   setIsJustDeleted,
@@ -223,7 +224,8 @@ const MainPage = ({
       <div className="mainPage__heroPicture">
         <NavbarComponent
           domain={domain}
-          curUser={curUser}
+          curUser_real={curUser_real}
+          curUser_hyphenated={curUser_hyphenated}
           isLoggedIn={isLoggedIn}
           navPositionClass={navPositionClass}
           navColorClass={navColorClass}
@@ -244,7 +246,8 @@ const MainPage = ({
         {/* <div className="imgGalleryCont1">{imgGallery}</div> */}
         <ImageGallery
           domain={domain}
-          curUser={curUser}
+          curUser_real={curUser_real}
+          curUser_hyphenated={curUser_hyphenated}
           isLoggedIn={isLoggedIn}
           setImgGalleryLength={setImgGalleryLength}
           page={"mainPageMostRecent"}

@@ -18,7 +18,8 @@ import { parse } from "@fortawesome/fontawesome-svg-core";
 
 const SignInPage = ({
   domain,
-  curUser,
+  curUser_real,
+  curUser_hyphenated,
   isLoggedIn,
   resetPasswordLinkJustSent,
 }) => {
@@ -118,7 +119,7 @@ const SignInPage = ({
   }
 
   async function onSubmit(e) {
-    curUser = { username: "" };
+    // curUser = { username: "" };
     e.preventDefault();
     console.log("submitted");
 

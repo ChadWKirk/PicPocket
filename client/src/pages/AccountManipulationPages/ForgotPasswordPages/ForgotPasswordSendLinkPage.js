@@ -14,7 +14,8 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 const ForgotPasswordSendLinkPage = ({
   domain,
-  curUser,
+  curUser_real,
+  curUser_hyphenated,
   isLoggedIn,
   setResetPasswordLinkJustSent,
 }) => {

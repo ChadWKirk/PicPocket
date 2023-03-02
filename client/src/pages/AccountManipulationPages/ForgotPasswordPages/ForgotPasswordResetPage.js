@@ -14,7 +14,12 @@ import {
   faXmarkCircle,
 } from "@fortawesome/free-solid-svg-icons";
 
-const ForgotPasswordResetPage = ({ domain, curUser, isLoggedIn }) => {
+const ForgotPasswordResetPage = ({
+  domain,
+  curUser_real,
+  curUser_hyphenated,
+  isLoggedIn,
+}) => {
   let navigate = useNavigate();
   const { dispatch } = useAuthContext();
 
@@ -184,7 +189,8 @@ const ForgotPasswordResetPage = ({ domain, curUser, isLoggedIn }) => {
     >
       <NavbarComponent
         domain={domain}
-        curUser={curUser}
+        curUser_real={curUser_real}
+        curUser_hyphenated={curUser_hyphenated}
         isLoggedIn={isLoggedIn}
         navPositionClass={"fixed"}
         navColorClass={"black"}

@@ -4,7 +4,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faDownload } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 
-const MainPageImageGallery = ({ domain, curUser, isLoggedIn }) => {
+const MainPageImageGallery = ({
+  domain,
+  curUser_real,
+  curUser_hyphenated,
+  isLoggedIn,
+}) => {
   //img array to display
   const [imgGallery, setImgGallery] = useState([]);
   //fetch img array to map over
@@ -46,7 +51,7 @@ const MainPageImageGallery = ({ domain, curUser, isLoggedIn }) => {
     mapArr = fetchArr.map((element, index) => {
       let likeButton;
       console.log(fetchArr[index].uploadedBy);
-      if (element.likedBy.includes(curUser)) {
+      if (element.likedBy.includes(curUser_real)) {
         likeButton = (
           <FontAwesomeIcon
             icon={faHeart}
@@ -131,25 +136,28 @@ const MainPageImageGallery = ({ domain, curUser, isLoggedIn }) => {
   async function handleLike(e, element, index) {
     let fetchArrCopy = fetchArr;
 
-    if (fetchArrCopy[index].likedBy.includes(curUser)) {
-      await fetch(`${domain}/removeLikedBy/${element.asset_id}/${curUser}`, {
-        method: "POST",
-        headers: { "Content-type": "application/json" },
-      }).then((res) => {
+    if (fetchArrCopy[index].likedBy.includes(curUser_real)) {
+      await fetch(
+        `${domain}/removeLikedBy/${element.asset_id}/${curUser_real}`,
+        {
+          method: "POST",
+          headers: { "Content-type": "application/json" },
+        }
+      ).then((res) => {
         fetchArrCopy[index].likedBy = fetchArrCopy[index].likedBy.filter(
           (user) => {
-            return user !== curUser;
+            return user !== curUser_real;
           }
         );
         setFetchArr(fetchArrCopy);
         console.log("run 3");
       });
-    } else if (!fetchArrCopy[index].likedBy.includes(curUser)) {
-      await fetch(`${domain}/addLikedBy/${element.asset_id}/${curUser}`, {
+    } else if (!fetchArrCopy[index].likedBy.includes(curUser_real)) {
+      await fetch(`${domain}/addLikedBy/${element.asset_id}/${curUser_real}`, {
         method: "POST",
         headers: { "Content-type": "application/json" },
       }).then((res) => {
-        fetchArrCopy[index].likedBy.push(curUser);
+        fetchArrCopy[index].likedBy.push(curUser_real);
         setFetchArr(fetchArrCopy);
         console.log("run 4");
       });

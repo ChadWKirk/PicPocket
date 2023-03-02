@@ -6,7 +6,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
-const SignUpNavBar = ({ domain, curUser, isLoggedIn }) => {
+const SignUpNavBar = ({
+  domain,
+  curUser_real,
+  curUser_hyphenated,
+  isLoggedIn,
+}) => {
   let soButton;
   let accButton;
   let siButton;
@@ -45,7 +50,7 @@ const SignUpNavBar = ({ domain, curUser, isLoggedIn }) => {
           className="navbarDropButton"
           onClick={() => setVisibleClassFunc()}
         >
-          {curUser}
+          {curUser_real}
           <FontAwesomeIcon
             icon={faChevronDown}
             fontSize={10}
@@ -55,24 +60,28 @@ const SignUpNavBar = ({ domain, curUser, isLoggedIn }) => {
         <div className={hoverClass ? `navbarULCont` : `navbarULCont gone`}>
           <ul className="navbarUL">
             <li>
-              <a href={`/Account/${curUser}/Likes/most-recent/all-types`}>
+              <a
+                href={`/Account/${curUser_hyphenated}/Likes/most-recent/all-types`}
+              >
                 Likes
               </a>
             </li>
             <li>
-              <a href={`/Account/${curUser}/My-Pics/most-recent/all-types`}>
+              <a
+                href={`/Account/${curUser_hyphenated}/My-Pics/most-recent/all-types`}
+              >
                 My Pics
               </a>
             </li>
             <li>
-              <a href={`/Account/${curUser}`}>User Settings</a>
+              <a href={`/Account/${curUser_hyphenated}`}>User Settings</a>
             </li>
           </ul>
         </div>
       </div>
     );
     uploadButton = (
-      <a href={`/${curUser}/upload`}>
+      <a href={`/${curUser_hyphenated}/upload`}>
         <button className="navbarClickThisButton">Upload</button>
       </a>
     );

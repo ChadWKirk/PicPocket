@@ -37,6 +37,8 @@ If array.length > 1, show stack of little images and say "Select a single image 
 - Keep array of what is selected in order to mass delete/download
 - Have buttons that appear for delete/download when at least one image is selected
 
+Google OAuth - https://console.cloud.google.com/ - https://youtu.be/TqlVP_IkS28 - https://www.npmjs.com/package/@react-oauth/google
+
 Google / facebook sign in/up:
 
 - post to /oauth/sign
@@ -69,15 +71,9 @@ style sign up success page
 
 ---
 
-Make it so names with spaces doesn't mess up the paths for urls with %20. Maybe change %20 to dashes in url. - https://www.google.com/search?q=dealing+with+spaces+in+react+router&rlz=1C1GCEU_enUS996US996&oq=dealing+with+spaces+in+react+router&aqs=chrome..69i57j33i160l2j33i299.4840j0j7&sourceid=chrome&ie=UTF-8
-
 Put google stuff on sign up page too
 
-Google and Facebook OAuth - https://console.cloud.google.com/ - https://youtu.be/TqlVP_IkS28 - https://www.npmjs.com/package/@react-oauth/google
-
-Google / facebook sign in/up:
-
-- don't display change password or change email if curUser.type === "oauth"
+Facebook OAuth
 
 protect api routes for not logged in users (no token)
 

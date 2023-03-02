@@ -7,7 +7,8 @@ import ImageGallery from "../../components/ImageGallery";
 
 const LikesPage = ({
   domain,
-  curUser,
+  curUser_real,
+  curUser_hyphenated,
   isLoggedIn,
   isShowingImageSelectModal,
   setIsShowingImageSelectModal,
@@ -21,7 +22,7 @@ const LikesPage = ({
 
   useEffect(() => {
     async function fetchUserInfo() {
-      await fetch(`${domain}/${username}/info`, {
+      await fetch(`${domain}/${username.split("-").join(" ")}/info`, {
         method: "GET",
         headers: { "Content-type": "application/json" },
       }).then((response) =>
@@ -59,17 +60,18 @@ const LikesPage = ({
 
   let whosLikesIsItHeading;
 
-  if (username == curUser) {
+  if (username == curUser_hyphenated) {
     whosLikesIsItHeading = <h2>Your Likes</h2>;
   } else {
-    whosLikesIsItHeading = <h2>{username}'s Likes</h2>;
+    whosLikesIsItHeading = <h2>{username.split(" ").join("-")}'s Likes</h2>;
   }
   return (
     <div>
       {/* <NavBar curUser={curUser} isLoggedIn={isLoggedIn} /> */}
       <NavbarComponent
         domain={domain}
-        curUser={curUser}
+        curUser_real={curUser_real}
+        curUser_hyphenated={curUser_hyphenated}
         isLoggedIn={isLoggedIn}
         navPositionClass={"fixed"}
         navColorClass={"white"}
@@ -79,7 +81,7 @@ const LikesPage = ({
           <div className="galleryHeading">
             {whosLikesIsItHeading}
             <p>
-              {imgGalleryLength} images liked by {username}
+              {imgGalleryLength} images liked by {username.split("-").join(" ")}
             </p>
           </div>
         </div>
@@ -122,7 +124,8 @@ const LikesPage = ({
           {/* {resultsMap} */}
           <ImageGallery
             domain={domain}
-            curUser={curUser}
+            curUser_real={curUser_real}
+            curUser_hyphenated={curUser_hyphenated}
             isLoggedIn={isLoggedIn}
             page={"likesPage"}
             filter={filter}

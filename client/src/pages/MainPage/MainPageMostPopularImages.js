@@ -9,7 +9,12 @@ import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import ImageGallery from "../../components/ImageGallery";
 
-const MainPageMostPopularImages = ({ domain, curUser, loggedIn }) => {
+const MainPageMostPopularImages = ({
+  domain,
+  curUser_real,
+  curUser_hyphenated,
+  loggedIn,
+}) => {
   //to get number of images in array for "x pics liked by user" or "x search results" heading
   //really just a placeholder so I can use the ImageGallery component. It doesn't get used on this page
   const [imgGalleryLength, setImgGalleryLength] = useState();
@@ -200,7 +205,8 @@ const MainPageMostPopularImages = ({ domain, curUser, loggedIn }) => {
     <div>
       <div className="mainPage__heroPicture">
         <NavbarComponent
-          curUser={curUser}
+          curUser_real={curUser_real}
+          curUser_hyphenated={curUser_hyphenated}
           loggedIn={loggedIn}
           navPositionClass={navPositionClass}
           navColorClass={navColorClass}
@@ -218,7 +224,8 @@ const MainPageMostPopularImages = ({ domain, curUser, loggedIn }) => {
       <div className="imgGallerySectionCont1">
         {/* <div className="imgGalleryCont1">{imgGallery}</div> */}
         <ImageGallery
-          curUser={curUser}
+          curUser_real={curUser_real}
+          curUser_hyphenated={curUser_hyphenated}
           loggedIn={loggedIn}
           setImgGalleryLength={setImgGalleryLength}
           page={"mainPageMostPopular"}

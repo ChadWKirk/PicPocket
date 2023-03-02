@@ -7,7 +7,8 @@ import GreenBanner from "../components/GreenBanner";
 
 const UploadPage = ({
   domain,
-  curUser,
+  curUser_real,
+  curUser_hyphenated,
   isLoggedIn,
   isJustVerified,
   setIsJustVerified,
@@ -18,7 +19,7 @@ const UploadPage = ({
   useEffect(() => {
     console.log(process.env);
     async function userInfoFetch() {
-      await fetch(`${domain}/${curUser}/info`, {
+      await fetch(`${domain}/${curUser_real}/info`, {
         method: "GET",
         headers: { "Content-type": "application/json" },
       }).then((response) =>
@@ -69,7 +70,8 @@ const UploadPage = ({
     <div>
       <NavbarComponent
         domain={domain}
-        curUser={curUser}
+        curUser_real={curUser_real}
+        curUser_hyphenated={curUser_hyphenated}
         isLoggedIn={isLoggedIn}
         navPositionClass={"fixed"}
         navColorClass={"white"}
@@ -79,7 +81,8 @@ const UploadPage = ({
       <div className="upload-page__form-and-list-container">
         <UploadForm
           domain={domain}
-          curUser={curUser}
+          curUser_real={curUser_real}
+          curUser_hyphenated={curUser_hyphenated}
           imagesToUpload={imagesToUpload}
           imageError={imageError}
           setImageError={setImageError}

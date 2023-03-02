@@ -9,7 +9,12 @@ import { useAuthContext } from "../../context/useAuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faSpinner } from "@fortawesome/free-solid-svg-icons";
 
-const ChangePasswordPage = ({ domain, curUser, isLoggedIn }) => {
+const ChangePasswordPage = ({
+  domain,
+  curUser_real,
+  curUser_hyphenated,
+  isLoggedIn,
+}) => {
   let navigate = useNavigate();
   const { dispatch } = useAuthContext();
 
@@ -182,7 +187,8 @@ const ChangePasswordPage = ({ domain, curUser, isLoggedIn }) => {
     >
       <NavbarComponent
         domain={domain}
-        curUser={curUser}
+        curUser_real={curUser_real}
+        curUser_hyphenated={curUser_hyphenated}
         isLoggedIn={isLoggedIn}
         navPositionClass={"fixed"}
         navColorClass={"black"}
@@ -190,7 +196,7 @@ const ChangePasswordPage = ({ domain, curUser, isLoggedIn }) => {
       <div className="site-tree__container">
         <a
           className="site-tree__past-link"
-          href={`https://picpoccket.com/Account/${curUser}`}
+          href={`/Account/${curUser_hyphenated}`}
         >
           Account
         </a>
@@ -259,7 +265,7 @@ const ChangePasswordPage = ({ domain, curUser, isLoggedIn }) => {
                 <div className="change-password-page__buttons-container-subcontainer">
                   {changePasswordButton}
                   <button
-                    onClick={() => navigate(`/Account/${curUser}`)}
+                    onClick={() => navigate(`/Account/${curUser_hyphenated}`)}
                     className="change-password-page__cancel-button"
                   >
                     Cancel

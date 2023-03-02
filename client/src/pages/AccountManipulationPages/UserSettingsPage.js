@@ -17,7 +17,8 @@ import {
 
 const UserSettingsPage = ({
   domain,
-  curUser,
+  curUser_real,
+  curUser_hyphenated,
   isLoggedIn,
   isJustDeleted,
   setIsJustDeleted,
@@ -40,12 +41,15 @@ const UserSettingsPage = ({
   //tooltip for empty email field
   const [emailTooltip, setEmailTooltip] = useState();
 
+  //account type. if oauth don't display change email or change password stuff
+  const [isOAuthAccountType, setIsOAuthAccountType] = useState();
+
   //get user's info
   const [userInfo, setUserInfo] = useState();
   useEffect(() => {
     console.log(process.env);
     async function userInfoFetch() {
-      await fetch(`${domain}/${curUser}/info`, {
+      await fetch(`${domain}/${curUser_real}/info`, {
         method: "GET",
         headers: { "Content-type": "application/json" },
       }).then((response) =>
@@ -58,6 +62,11 @@ const UserSettingsPage = ({
             setEmailValue(parsedJSON[0].email);
             setBioValue(parsedJSON[0].bio);
             setPFP(parsedJSON[0].pfp);
+            if (parsedJSON[0].type == "normal") {
+              setIsOAuthAccountType(false);
+            } else {
+              setIsOAuthAccountType(true);
+            }
           })
       );
     }
@@ -140,10 +149,10 @@ const UserSettingsPage = ({
 
     if (
       window.confirm(
-        `Are you sure you would like to permanantely delete your account "${curUser}"?`
+        `Are you sure you would like to permanantely delete your account "${curUser_real}"?`
       )
     ) {
-      await fetch(`${domain}/Account/${curUser}/delUser/${pfpID}`, {
+      await fetch(`${domain}/Account/${curUser_real}/delUser/${pfpID}`, {
         method: "DELETE",
         headers: { "Content-type": "application/json" },
       }).then(() =>
@@ -244,7 +253,7 @@ const UserSettingsPage = ({
           //add fields to fetch response to get ready to send to MongoDB
           uploadToMongoBody.likes = 0;
           uploadToMongoBody.likedBy = [];
-          uploadToMongoBody.uploadedBy = curUser;
+          uploadToMongoBody.uploadedBy = curUser_real;
           uploadToMongoBody.title = image.name
             .replace(".jpg", "")
             .replace(".png", "")
@@ -254,7 +263,7 @@ const UserSettingsPage = ({
           uploadToMongoBody.imageType = "Photo";
 
           //send to mongoDB
-          fetch(`${domain}/upload/pfp/${curUser}/${pfpID}`, {
+          fetch(`${domain}/upload/pfp/${curUser_real}/${pfpID}`, {
             method: "POST",
             headers: { "Content-type": "application/json" },
             body: JSON.stringify(uploadToMongoBody),
@@ -310,7 +319,7 @@ const UserSettingsPage = ({
     await fetch(`${domain}/submit-new-bio`, {
       method: "POST",
       headers: { "Content-type": "application/json" },
-      body: JSON.stringify({ username: curUser, newBio: bioValue }),
+      body: JSON.stringify({ username: curUser_real, newBio: bioValue }),
     }).then((response) =>
       response
         .json()
@@ -410,7 +419,7 @@ const UserSettingsPage = ({
       await fetch(`${domain}/change-email`, {
         method: "POST",
         headers: { "Content-type": "application/json" },
-        body: JSON.stringify({ username: curUser, email: emailValue }),
+        body: JSON.stringify({ username: curUser_real, email: emailValue }),
       }).then((response) =>
         response
           .json()
@@ -492,7 +501,7 @@ const UserSettingsPage = ({
     await fetch(`${domain}/resend-verification-link`, {
       method: "POST",
       headers: { "Content-type": "application/json" },
-      body: JSON.stringify({ username: curUser, email: emailValue }),
+      body: JSON.stringify({ username: curUser_real, email: emailValue }),
     }).then((response) =>
       response
         .json()
@@ -542,7 +551,8 @@ const UserSettingsPage = ({
     >
       <NavbarComponent
         domain={domain}
-        curUser={curUser}
+        curUser_real={curUser_real}
+        curUser_hyphenated={curUser_hyphenated}
         isLoggedIn={isLoggedIn}
         navPositionClass={"fixed"}
         navColorClass={"white"}
@@ -558,7 +568,7 @@ const UserSettingsPage = ({
             lineHeight: "1.2",
           }}
         >
-          {curUser}
+          {curUser_real}
         </h3>
         <div className="user-settings-page__change-pfp-container">
           <img src={userPFP} className="profilePicBig" />
@@ -600,41 +610,45 @@ const UserSettingsPage = ({
             </div>
           </form>
         </div>
-        <div className="user-settings-page__change-email-container">
-          <form
-            onSubmit={(e) => changeEmail(e)}
-            style={{ position: "relative" }}
-          >
-            <h2>
-              Email:{" "}
-              <p className="sign-in-page__already-exists-message">
-                {emailErrorText}
-              </p>
-            </h2>
-            <input
-              value={emailValue}
-              className={emailInputClass}
-              onChange={(e) => {
-                setEmailValue(e.target.value);
-              }}
-            ></input>
-            {emailTooltip}
-            <div
-              className="user-settings-page__email-buttons-container"
-              style={{ display: "flex", gap: "0.8rem" }}
+        {!isOAuthAccountType && (
+          <div className="user-settings-page__change-email-container">
+            <form
+              onSubmit={(e) => changeEmail(e)}
+              style={{ position: "relative" }}
             >
-              {changeEmailButton}
-              {resendVerificationButton}
-            </div>
-          </form>
-        </div>
+              <h2>
+                Email:{" "}
+                <p className="sign-in-page__already-exists-message">
+                  {emailErrorText}
+                </p>
+              </h2>
+              <input
+                value={emailValue}
+                className={emailInputClass}
+                onChange={(e) => {
+                  setEmailValue(e.target.value);
+                }}
+              ></input>
+              {emailTooltip}
+              <div
+                className="user-settings-page__email-buttons-container"
+                style={{ display: "flex", gap: "0.8rem" }}
+              >
+                {changeEmailButton}
+                {resendVerificationButton}
+              </div>
+            </form>
+          </div>
+        )}
         <div className="user-settings-page__change-pw-del-acc-btn-container">
-          <a
-            href={`/Account/${curUser}/Change-Password`}
-            className="changePWBtn"
-          >
-            Change Password
-          </a>
+          {!isOAuthAccountType && (
+            <a
+              href={`/Account/${curUser_hyphenated}/Change-Password`}
+              className="changePWBtn"
+            >
+              Change Password
+            </a>
+          )}
           <button className="deleteAccountBtn" onClick={delAcc}>
             Delete account
           </button>

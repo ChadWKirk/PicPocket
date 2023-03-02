@@ -1,13 +1,13 @@
 import { React, useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
-const SignUpSuccessPage = ({ curUser, loggedIn }) => {
+const SignUpSuccessPage = ({ curUser_real, curUser_hyphenated, loggedIn }) => {
   let navigate = useNavigate();
   const { username } = useParams();
 
   useEffect(() => {
     if (loggedIn) {
-      navigate(`/Account/${curUser}`);
+      navigate(`/Account/${curUser_hyphenated}`);
     }
   }, []);
 

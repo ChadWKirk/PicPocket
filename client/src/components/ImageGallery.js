@@ -7,7 +7,8 @@ import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 
 const ImageGallery = ({
   domain,
-  curUser,
+  curUser_real,
+  curUser_hyphenated,
   isLoggedIn,
   sort,
   filter,
@@ -87,7 +88,7 @@ const ImageGallery = ({
       titleArr.push(element.title);
       let likeButton;
 
-      if (element.likedBy.includes(curUser)) {
+      if (element.likedBy.includes(curUser_real)) {
         likeButton = (
           <div>
             <FontAwesomeIcon
@@ -186,24 +187,27 @@ const ImageGallery = ({
   async function handleLike(e, element, index) {
     let imgDataCopy = imgData;
 
-    if (imgDataCopy[index].likedBy.includes(curUser)) {
-      await fetch(`${domain}/removeLikedBy/${element.asset_id}/${curUser}`, {
-        method: "POST",
-        headers: { "Content-type": "application/json" },
-      }).then((res) => {
+    if (imgDataCopy[index].likedBy.includes(curUser_real)) {
+      await fetch(
+        `${domain}/removeLikedBy/${element.asset_id}/${curUser_real}`,
+        {
+          method: "POST",
+          headers: { "Content-type": "application/json" },
+        }
+      ).then((res) => {
         imgDataCopy[index].likedBy = imgDataCopy[index].likedBy.filter(
           (user) => {
-            return user !== curUser;
+            return user !== curUser_real;
           }
         );
         setImgData(imgDataCopy);
       });
-    } else if (!imgDataCopy[index].likedBy.includes(curUser)) {
-      await fetch(`${domain}/addLikedBy/${element.asset_id}/${curUser}`, {
+    } else if (!imgDataCopy[index].likedBy.includes(curUser_real)) {
+      await fetch(`${domain}/addLikedBy/${element.asset_id}/${curUser_real}`, {
         method: "POST",
         headers: { "Content-type": "application/json" },
       }).then((res) => {
-        imgDataCopy[index].likedBy.push(curUser);
+        imgDataCopy[index].likedBy.push(curUser_real);
         setImgData(imgDataCopy);
       });
     }

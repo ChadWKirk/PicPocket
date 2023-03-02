@@ -8,7 +8,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
-const WhiteNavBar = ({ domain, curUser, isLoggedIn }) => {
+const WhiteNavBar = ({
+  domain,
+  curUser_real,
+  curUser_hyphenated,
+  isLoggedIn,
+}) => {
   let soButton;
   let accButton;
   let siButton;
@@ -48,7 +53,7 @@ const WhiteNavBar = ({ domain, curUser, isLoggedIn }) => {
 
   useEffect(() => {
     async function userInfoFetch() {
-      await fetch(`${domain}/${curUser}/info`, {
+      await fetch(`${domain}/${curUser_real}/info`, {
         method: "GET",
         headers: { "Content-type": "application/json" },
       }).then((response) =>
@@ -95,7 +100,7 @@ const WhiteNavBar = ({ domain, curUser, isLoggedIn }) => {
           onClick={() => setVisibleClassFunc()}
           style={{ color: "black" }}
         >
-          <a href={`/Account/${curUser}`}>
+          <a href={`/Account/${curUser_hyphenated}`}>
             <div className="whiteNavBarPFPDiv">
               <img src={userPFP} className="profilePicSmall" />
             </div>
@@ -110,24 +115,28 @@ const WhiteNavBar = ({ domain, curUser, isLoggedIn }) => {
         <div className={hoverClass ? `navbarULCont` : `navbarULCont gone`}>
           <ul className="navbarUL">
             <li>
-              <a href={`/Account/${curUser}/Likes/most-recent/all-types`}>
+              <a
+                href={`/Account/${curUser_hyphenated}/Likes/most-recent/all-types`}
+              >
                 Likes
               </a>
             </li>
             <li>
-              <a href={`/Account/${curUser}/My-Pics/most-recent/all-types`}>
+              <a
+                href={`/Account/${curUser_hyphenated}/My-Pics/most-recent/all-types`}
+              >
                 My Pics
               </a>
             </li>
             <li>
-              <a href={`/Account/${curUser}`}>User Settings</a>
+              <a href={`/Account/${curUser_hyphenated}`}>User Settings</a>
             </li>
           </ul>
         </div>
       </div>
     );
     uploadButton = (
-      <a href={`/${curUser}/upload`}>
+      <a href={`/${curUser_hyphenated}/upload`}>
         <button
           className="navbarClickThisButton__whitenav"
           style={{ color: "black" }}
