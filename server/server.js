@@ -195,6 +195,7 @@ app.post("/signup", async (req, response) => {
                   context: {
                     //variables to use in email.handlebars
                     name: req.body.username,
+                    token: token,
                   },
 
                   // This would be the text of email body
@@ -367,6 +368,18 @@ app.post("/resend-verification-link", (req, res) => {
           },
         });
 
+        //point to template folder
+        const handlebarsOptions = {
+          viewEngine: {
+            partialsDir: path.resolve("./views/"),
+            defaultLayout: false,
+          },
+          viewPath: path.resolve("./views/"),
+        };
+
+        //use template file
+        transporter.use("compile", hbs(handlebarsOptions));
+
         const mailConfigurations = {
           // It should be a string of sender/server email
           from: "administrator@picpoccket.com",
@@ -376,12 +389,20 @@ app.post("/resend-verification-link", (req, res) => {
           // Subject of Email
           subject: "PicPocket Email Verification",
 
+          template: "email", //name of template file in views folder - email.handlebars
+
+          context: {
+            //variables to use in email.handlebars
+            name: req.body.username,
+            token: user.verifyToken,
+          },
+
           // This would be the text of email body
-          text: `Hi! There, You have recently visited
-    our website and entered your email.
-    Please follow the given link to verify your email
-    localhost:3000/${req.body.username}/verify/${user.verifyToken}
-    Thanks`,
+          //   text: `Hi! There, You have recently visited
+          //   our website and entered your email.
+          //   Please follow the given link to verify your email
+          //   localhost:3000/${req.body.username}/verify/${token}
+          //   Thanks`,
         };
 
         transporter.sendMail(mailConfigurations, function (error, info) {

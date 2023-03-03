@@ -5,13 +5,27 @@
     <title>Welcome Email</title>
   </head>
   <body>
-    <h2>Hello {{name}}! </h2>
-    <p>We're glad to have you join PicPocket. </p>
-    <p>You have recently visited our website and entered your email. Please
-      follow the given link to verify your email.</p>
-    <a>
-      localhost:3000/${req.body.username}/verify/${token}</a>
-    <p>Thanks,</p>
-    <p>PicPocket</p>
+    <div
+      style="background-color: #00509d;align-content: center;padding: 1rem 1.5rem;border-radius: 1px;"
+    >
+      <h2
+        style="padding: 1rem; text-align: center;width: 13rem; font-size: 1.5rem;margin: auto; border-radius: 7px; background-color: #f5c000; color: black"
+      >Hello
+        {{name}}!
+      </h2>
+
+      <div
+        style="background-color: #fff;border-radius: 2px;padding: 1rem; text-align: center;font-size: 1.15rem;margin-top: 0.75rem;"
+      ><p style="color:black;font-size: 1.25rem">We're glad to have you join
+          <b>PicPocket!</b>
+        </p>
+        <p style="color:black;">You have recently visited our website and
+          entered your email. Please follow the given link to verify your email.</p>
+        <a>
+          localhost:3000/{{name}}/verify/{{token}}</a>
+        <p style="color:black;">Thanks,</p>
+        <p style="color:black;">PicPocket</p></div>
+    </div>
+
   </body>
 </html>
