@@ -34,12 +34,17 @@ const UserSettingsPage = ({
   const [emailInputClass, setEmailInputClass] = useState(
     "user-settings-page__email-input"
   );
+  const [passwordInputClass, setPasswordInputClass] = useState(
+    "user-settings-page__email-input"
+  );
 
-  //error messages for email not valid or already exists
+  //error messages for email/password fields
   const [emailErrorText, setEmailErrorText] = useState();
+  const [passwordErrorText, setPasswordErrorText] = useState();
 
-  //tooltip for empty email field
+  //tooltip for empty email or password field
   const [emailTooltip, setEmailTooltip] = useState();
+  const [passwordTooltip, setPasswordTooltip] = useState();
 
   //account type. if oauth don't display change email or change password stuff
   const [isOAuthAccountType, setIsOAuthAccountType] = useState();
@@ -128,6 +133,7 @@ const UserSettingsPage = ({
   //bio and email value
   const [emailValue, setEmailValue] = useState("");
   const [bioValue, setBioValue] = useState("");
+  const [passwordValue, setPasswordValue] = useState("");
 
   //button to allow user to change bio again after change attempt
   const [changeBioAgainButton, setChangeBioAgainButton] = useState();
@@ -630,6 +636,43 @@ const UserSettingsPage = ({
                 }}
               ></input>
               {emailTooltip}
+              <div
+                className="user-settings-page__email-buttons-container"
+                style={{ display: "flex", gap: "0.8rem" }}
+              ></div>
+              <h2
+                style={{
+                  display: "flex",
+                  gap: "0.1rem",
+                  fontSize: "1rem",
+                  marginBottom: "-0.25rem",
+                  marginTop: "1rem",
+                }}
+              >
+                Password
+                <p
+                  style={{
+                    fontSize: "0.75rem",
+                    color: "red",
+                    display: "inline",
+                  }}
+                >
+                  *
+                </p>
+                :{" "}
+                <p className="sign-in-page__already-exists-message">
+                  {passwordErrorText}
+                </p>
+              </h2>
+              <input
+                type="password"
+                value={passwordValue}
+                className={passwordInputClass}
+                onChange={(e) => {
+                  setPasswordValue(e.target.value);
+                }}
+              ></input>
+              {passwordTooltip}
               <div
                 className="user-settings-page__email-buttons-container"
                 style={{ display: "flex", gap: "0.8rem" }}
