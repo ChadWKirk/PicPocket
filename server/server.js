@@ -1,5 +1,7 @@
 const express = require("express");
 const app = express();
+const path = require("path");
+const hbs = require("nodemailer-express-handlebars");
 const router = express.Router();
 require("dotenv").config({ path: "./config.env" });
 const cors = require("cors");
@@ -167,6 +169,18 @@ app.post("/signup", async (req, response) => {
                   },
                 });
 
+                //point to template folder
+                const handlebarsOptions = {
+                  viewEngine: {
+                    partialsDir: path.resolve("./views/"),
+                    defaultLayout: false,
+                  },
+                  viewPath: path.resolve("./views/"),
+                };
+
+                //use template file
+                transporter.use("compile", hbs(handlebarsOptions));
+
                 const mailConfigurations = {
                   // It should be a string of sender/server email
                   from: "administrator@picpoccket.com",
@@ -176,12 +190,19 @@ app.post("/signup", async (req, response) => {
                   // Subject of Email
                   subject: "PicPocket Email Verification",
 
+                  template: "email", //name of template file in views folder - email.handlebars
+
+                  context: {
+                    //variables to use in email.handlebars
+                    name: req.body.username,
+                  },
+
                   // This would be the text of email body
-                  text: `Hi! There, You have recently visited
-                  our website and entered your email.
-                  Please follow the given link to verify your email
-                  localhost:3000/${req.body.username}/verify/${token}
-                  Thanks`,
+                  //   text: `Hi! There, You have recently visited
+                  //   our website and entered your email.
+                  //   Please follow the given link to verify your email
+                  //   localhost:3000/${req.body.username}/verify/${token}
+                  //   Thanks`,
                 };
 
                 transporter.sendMail(
