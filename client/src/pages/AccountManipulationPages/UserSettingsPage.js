@@ -30,6 +30,9 @@ const UserSettingsPage = ({
   //auth
   const { dispatch } = useAuthContext();
 
+  //whether user is able to submit form. Disabled after one successful change email, and while loading (to prevent user from being able to press enter on form while loading or success)
+  const [canSubmit, setCanSubmit] = useState(true);
+
   //input classes for red border on error
   const [emailInputClass, setEmailInputClass] = useState(
     "user-settings-page__email-input"
@@ -406,8 +409,17 @@ const UserSettingsPage = ({
   //change email
   async function changeEmail(e) {
     e.preventDefault();
-    if (emailValue.length === 0) {
+    if (!canSubmit) {
+      return;
+    } else if (emailValue.length === 0) {
       setEmailTooltip(
+        <TooltipForInputField
+          Message={"Please fill out this field."}
+          Type={"Yellow Warning"}
+        />
+      );
+    } else if (passwordValue.length === 0) {
+      setPasswordTooltip(
         <TooltipForInputField
           Message={"Please fill out this field."}
           Type={"Yellow Warning"}
@@ -415,17 +427,25 @@ const UserSettingsPage = ({
       );
     } else {
       setChangeEmailButton(
-        <button className="user-settings-page__change-bio-email-btn">
+        <button
+          className="user-settings-page__change-bio-email-btn"
+          style={{ pointerEvents: "none" }}
+        >
           Change Email
           <div className="user-settings-page__change-button-loading-icon">
             <FontAwesomeIcon icon={faSpinner} className="fa-spin" />
           </div>
         </button>
       );
+      setCanSubmit(false);
       await fetch(`${domain}/change-email`, {
         method: "POST",
         headers: { "Content-type": "application/json" },
-        body: JSON.stringify({ username: curUser_real, email: emailValue }),
+        body: JSON.stringify({
+          username: curUser_real,
+          email: emailValue,
+          password: passwordValue,
+        }),
       }).then((response) =>
         response
           .json()
@@ -464,6 +484,7 @@ const UserSettingsPage = ({
                   Change Email
                 </button>
               );
+              setCanSubmit(true);
             } else if (parsedJSON === "email is not valid") {
               console.log("email is not valid");
               setEmailInputClass(
@@ -478,6 +499,21 @@ const UserSettingsPage = ({
                   Change Email
                 </button>
               );
+              setCanSubmit(true);
+            } else if (parsedJSON === "Incorrect password.") {
+              setPasswordErrorText("Incorrect password.");
+              setPasswordInputClass(
+                "user-settings-page__email-input red-input-border"
+              );
+              setChangeEmailButton(
+                <button
+                  type="submit"
+                  className="user-settings-page__change-bio-email-btn"
+                >
+                  Change Email
+                </button>
+              );
+              setCanSubmit(true);
             } else {
               setChangeEmailButton(
                 <button className="user-settings-page__change-bio-email-btn-fail">
@@ -487,6 +523,7 @@ const UserSettingsPage = ({
                   </div>
                 </button>
               );
+              setCanSubmit(true);
             }
           })
       );
@@ -553,6 +590,9 @@ const UserSettingsPage = ({
         setEmailErrorText();
         setEmailInputClass("user-settings-page__email-input");
         setEmailTooltip();
+        setPasswordErrorText();
+        setPasswordInputClass("user-settings-page__email-input");
+        setPasswordTooltip();
       }}
     >
       <NavbarComponent
@@ -618,61 +658,66 @@ const UserSettingsPage = ({
         </div>
         {!isOAuthAccountType && (
           <div className="user-settings-page__change-email-container">
-            <form
-              onSubmit={(e) => changeEmail(e)}
-              style={{ position: "relative" }}
-            >
-              <h2>
-                Email:{" "}
-                <p className="sign-in-page__already-exists-message">
-                  {emailErrorText}
-                </p>
-              </h2>
-              <input
-                value={emailValue}
-                className={emailInputClass}
-                onChange={(e) => {
-                  setEmailValue(e.target.value);
-                }}
-              ></input>
-              {emailTooltip}
+            <form onSubmit={(e) => changeEmail(e)}>
+              <div style={{ position: "relative" }}>
+                <h2>
+                  Email:{" "}
+                  <p className="sign-in-page__already-exists-message">
+                    {emailErrorText}
+                  </p>
+                </h2>
+
+                <input
+                  value={emailValue}
+                  className={emailInputClass}
+                  onChange={(e) => {
+                    setEmailValue(e.target.value);
+                  }}
+                ></input>
+                {emailTooltip}
+              </div>
+
               <div
                 className="user-settings-page__email-buttons-container"
                 style={{ display: "flex", gap: "0.8rem" }}
               ></div>
-              <h2
-                style={{
-                  display: "flex",
-                  gap: "0.1rem",
-                  fontSize: "1rem",
-                  marginBottom: "-0.25rem",
-                  marginTop: "1rem",
-                }}
-              >
-                Password
-                <p
+              <div style={{ position: "relative" }}>
+                <h2
                   style={{
-                    fontSize: "0.75rem",
-                    color: "red",
-                    display: "inline",
+                    display: "flex",
+                    gap: "0.1rem",
+                    fontSize: "1rem",
+                    marginBottom: "-0.25rem",
+                    marginTop: "1rem",
                   }}
                 >
-                  *
-                </p>
-                :{" "}
-                <p className="sign-in-page__already-exists-message">
-                  {passwordErrorText}
-                </p>
-              </h2>
-              <input
-                type="password"
-                value={passwordValue}
-                className={passwordInputClass}
-                onChange={(e) => {
-                  setPasswordValue(e.target.value);
-                }}
-              ></input>
-              {passwordTooltip}
+                  Password
+                  <p
+                    style={{
+                      fontSize: "0.75rem",
+                      color: "red",
+                      display: "inline",
+                    }}
+                  >
+                    *
+                  </p>
+                  :{" "}
+                  <p className="sign-in-page__already-exists-message">
+                    {passwordErrorText}
+                  </p>
+                </h2>
+
+                <input
+                  type="password"
+                  value={passwordValue}
+                  className={passwordInputClass}
+                  onChange={(e) => {
+                    setPasswordValue(e.target.value);
+                  }}
+                ></input>
+                {passwordTooltip}
+              </div>
+
               <div
                 className="user-settings-page__email-buttons-container"
                 style={{ display: "flex", gap: "0.8rem" }}

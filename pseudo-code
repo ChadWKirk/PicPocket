@@ -75,8 +75,6 @@ Put google stuff on sign up page too
 
 Facebook OAuth
 
-add password required field for changing email - if password is empty > show tooltip, if password is wrong > error text "Incorrect password", resending link doesn't require password
-
 protect api routes for not logged in users (no token)
 
 get cloudinary name and preset from back end instead of storing in env in front end (unsafe) - upload using multer to handle formData in express - https://youtu.be/wIOpe8S2Mk8

@@ -398,70 +398,101 @@ app.post("/change-email", (req, res) => {
         console.log("email already exists");
       } else {
         console.log("email is new");
-        async function updateEmail() {
-          db_connect.collection("picpocket-users").updateOne(
-            {
-              username: req.body.username,
-            },
-            { $set: { email: req.body.email, verified: false } },
-            function (err, user) {
-              if (err) {
-                throw err;
-              } else if (user) {
-                console.log(user);
-              }
-              //send email with verification link to new email
-              db_connect
-                .collection("picpocket-users")
-                .findOne({ username: req.body.username }, function (err, user) {
-                  if (err) {
-                    console.log(err);
-                  } else {
-                    const transporter = nodemailer.createTransport({
-                      host: "smtp.zoho.com",
-                      port: 465,
-                      secure: true,
-                      auth: {
-                        user: process.env.EMAIL_SENDER_USER,
-                        pass: process.env.EMAIL_SENDER_PASS,
-                      },
-                    });
+        //check if password belongs to account making the change
+        //find user with curUser username
+        db_connect.collection("picpocket-users").findOne(
+          {
+            username: req.body.username,
+          },
+          async function (err, user) {
+            if (err) {
+              console.log(err);
+              res.json("error");
+            } else if (!user) {
+              console.log("No user found.");
+              res.json("No user found.");
+            } else if (user) {
+              //once found, compare the given password with the user's password hash
+              const passwordMatch = await bcrypt.compare(
+                req.body.password,
+                user.password
+              );
+              if (!passwordMatch) {
+                console.log("Incorrect password.");
+                res.json("Incorrect password.");
+              } else if (passwordMatch) {
+                // async function updateEmail() {
+                db_connect.collection("picpocket-users").updateOne(
+                  {
+                    username: req.body.username,
+                  },
+                  { $set: { email: req.body.email, verified: false } },
+                  function (err, user) {
+                    if (err) {
+                      throw err;
+                    } else if (user) {
+                      console.log(user);
+                    }
+                    //send email with verification link to new email
+                    db_connect
+                      .collection("picpocket-users")
+                      .findOne(
+                        { username: req.body.username },
+                        function (err, user) {
+                          if (err) {
+                            console.log(err);
+                          } else {
+                            const transporter = nodemailer.createTransport({
+                              host: "smtp.zoho.com",
+                              port: 465,
+                              secure: true,
+                              auth: {
+                                user: process.env.EMAIL_SENDER_USER,
+                                pass: process.env.EMAIL_SENDER_PASS,
+                              },
+                            });
 
-                    const mailConfigurations = {
-                      // It should be a string of sender/server email
-                      from: "administrator@picpoccket.com",
+                            const mailConfigurations = {
+                              // It should be a string of sender/server email
+                              from: "administrator@picpoccket.com",
 
-                      to: req.body.email,
+                              to: req.body.email,
 
-                      // Subject of Email
-                      subject: "PicPocket Email Verification",
+                              // Subject of Email
+                              subject: "PicPocket Email Verification",
 
-                      // This would be the text of email body
-                      text: `Hi! There, You have recently visited
+                              // This would be the text of email body
+                              text: `Hi! There, You have recently visited
                   our website and entered your email.
                   Please follow the given link to verify your email
                   localhost:3000/${req.body.username}/verify/${user.verifyToken}
                   Thanks`,
-                    };
+                            };
 
-                    transporter.sendMail(
-                      mailConfigurations,
-                      function (error, info) {
-                        if (error) {
-                          throw Error(error);
-                        } else {
-                          console.log("Email Sent Successfully");
-                          console.log(info);
-                          res.json("email changed");
+                            transporter.sendMail(
+                              mailConfigurations,
+                              function (error, info) {
+                                if (error) {
+                                  throw Error(error);
+                                } else {
+                                  console.log("Email Sent Successfully");
+                                  console.log(info);
+                                  res.json("email changed");
+                                }
+                              }
+                            );
+                          }
                         }
-                      }
-                    );
+                      );
                   }
-                });
+                );
+                // }
+              }
             }
-          );
-        }
-        updateEmail();
+          }
+        );
+
+        // updateEmail();
       }
     });
 });
