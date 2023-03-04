@@ -273,6 +273,18 @@ app.post("/send-forgot-password-link", (req, res) => {
           },
         });
 
+        //point to template folder
+        const handlebarsOptions = {
+          viewEngine: {
+            partialsDir: path.resolve("./views/"),
+            defaultLayout: false,
+          },
+          viewPath: path.resolve("./views/"),
+        };
+
+        //use template file
+        transporter.use("compile", hbs(handlebarsOptions));
+
         const mailConfigurations = {
           // It should be a string of sender/server email
           from: "administrator@picpoccket.com",
@@ -280,14 +292,17 @@ app.post("/send-forgot-password-link", (req, res) => {
           to: req.body.email,
 
           // Subject of Email
-          subject: "PicPocket Email Verification",
+          subject: "PicPocket Password Reset Link",
 
-          // This would be the text of email body
-          text: `Here is your reset password link:
+          template: "passwordReset", //name of template file in views folder - email.handlebars
 
-          localhost:3000/${user.username}/reset-password/${resetPWToken}
-          
-          Thanks`,
+          context: {
+            //variables to use in email.handlebars
+            name: user.username,
+            linkName: user.username.split(" ").join("-"),
+            token: resetPWToken,
+            link: `http://localhost:3000/${user.username}/reset-password/${resetPWToken}`,
+          },
         };
 
         transporter.sendMail(mailConfigurations, function (error, info) {
