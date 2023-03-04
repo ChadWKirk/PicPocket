@@ -196,7 +196,9 @@ const SignUpPage = ({ domain }) => {
               }).then((response) => {
                 console.log(response);
                 //navigate to success page
-                navigate(`/SignUp/${newUser.username}/Success`);
+                navigate(
+                  `/SignUp/${newUser.username.split(" ").join("-")}/Success`
+                );
               });
             }
           })

@@ -67,8 +67,6 @@ make about us page
 
 style emails - https://blog.logrocket.com/send-emails-nodejs-nodemailer/ - copy verify email stuff to wherever it needs to go in server.js - style password reset email
 
-style sign up success page
-
 ---
 
 Put google stuff on sign up page too
