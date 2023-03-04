@@ -185,33 +185,40 @@ const ImageGallery = ({
   setImgGalleryLength(imgGallery.length);
 
   async function handleLike(e, element, index) {
-    let imgDataCopy = imgData;
+    if (!isLoggedIn) {
+      window.location.href = "/SignUp";
+    } else {
+      let imgDataCopy = imgData;
 
-    if (imgDataCopy[index].likedBy.includes(curUser_real)) {
-      await fetch(
-        `${domain}/removeLikedBy/${element.asset_id}/${curUser_real}`,
-        {
-          method: "POST",
-          headers: { "Content-type": "application/json" },
-        }
-      ).then((res) => {
-        imgDataCopy[index].likedBy = imgDataCopy[index].likedBy.filter(
-          (user) => {
-            return user !== curUser_real;
+      if (imgDataCopy[index].likedBy.includes(curUser_real)) {
+        await fetch(
+          `${domain}/removeLikedBy/${element.asset_id}/${curUser_real}`,
+          {
+            method: "POST",
+            headers: { "Content-type": "application/json" },
           }
-        );
-        setImgData(imgDataCopy);
-      });
-    } else if (!imgDataCopy[index].likedBy.includes(curUser_real)) {
-      await fetch(`${domain}/addLikedBy/${element.asset_id}/${curUser_real}`, {
-        method: "POST",
-        headers: { "Content-type": "application/json" },
-      }).then((res) => {
-        imgDataCopy[index].likedBy.push(curUser_real);
-        setImgData(imgDataCopy);
-      });
+        ).then((res) => {
+          imgDataCopy[index].likedBy = imgDataCopy[index].likedBy.filter(
+            (user) => {
+              return user !== curUser_real;
+            }
+          );
+          setImgData(imgDataCopy);
+        });
+      } else if (!imgDataCopy[index].likedBy.includes(curUser_real)) {
+        await fetch(
+          `${domain}/addLikedBy/${element.asset_id}/${curUser_real}`,
+          {
+            method: "POST",
+            headers: { "Content-type": "application/json" },
+          }
+        ).then((res) => {
+          imgDataCopy[index].likedBy.push(curUser_real);
+          setImgData(imgDataCopy);
+        });
+      }
+      setIsLiked(!isLiked);
     }
-    setIsLiked(!isLiked);
   }
 
   return (

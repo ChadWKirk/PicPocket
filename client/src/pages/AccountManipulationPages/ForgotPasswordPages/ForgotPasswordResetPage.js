@@ -45,6 +45,8 @@ const ForgotPasswordResetPage = ({
             if (parsedJSON === "token expired") {
               console.log("token expired");
               setIsTokenExpired(true);
+            } else if (parsedJSON === "no user") {
+              setIsTokenExpired(true);
             } else {
               console.log("token not expired");
               setIsTokenExpired(false);
@@ -118,7 +120,7 @@ const ForgotPasswordResetPage = ({
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify({
-          username: username,
+          username: username.split("-").join(" "),
           newPassword: newPassword,
           confirmNewPassword: confirmNewPassword,
         }),
@@ -273,7 +275,15 @@ const ForgotPasswordResetPage = ({
             page and send another link to yourself.
           </h3>
           <h3 style={{ marginTop: "2rem" }}>Thanks,</h3>
-          <div style={{ marginBottom: "15rem" }}>PicPocket</div>
+          <div
+            style={{
+              marginBottom: "15rem",
+              fontWeight: "500",
+              fontSize: "2rem",
+            }}
+          >
+            PicPocket
+          </div>
         </div>
       )}
     </div>

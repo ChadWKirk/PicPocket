@@ -325,7 +325,7 @@ app.get("/:username/check-forgot-token/:token", async (req, res) => {
   console.log("check forgot token test");
 
   const token = req.params.token;
-  const username = req.params.username;
+  const username = req.params.username.split("-").join(" ");
 
   let db_connect = dbo.getDb();
 
@@ -409,6 +409,7 @@ app.post("/resend-verification-link", (req, res) => {
           context: {
             //variables to use in email.handlebars
             name: req.body.username,
+            linkName: req.body.username.split(" ").join("-"),
             token: user.verifyToken,
           },
 

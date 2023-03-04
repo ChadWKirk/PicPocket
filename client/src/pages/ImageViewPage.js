@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronLeft,
@@ -22,6 +23,7 @@ const ImageViewPage = ({
   setIsShowingImageSelectModal,
   imgTitleArrState,
 }) => {
+  let navigate = useNavigate();
   //variables for related images
   let searchQuery;
   let imageURL;
@@ -186,27 +188,34 @@ const ImageViewPage = ({
 
   //handle like for main image
   async function handleMainLike(e) {
-    if (imgInfo.likedBy.includes(curUser_real)) {
-      await fetch(
-        `${domain}/removeLikedBy/${imgInfo.asset_id}/${curUser_real}`,
-        {
-          method: "POST",
-          headers: { "Content-type": "application/json" },
-        }
-      ).then((res) => {
-        imgInfo.likedBy = imgInfo.likedBy.filter((user) => {
-          return user !== curUser_real;
+    if (!isLoggedIn) {
+      window.location.href = "/SignUp";
+    } else {
+      if (imgInfo.likedBy.includes(curUser_real)) {
+        await fetch(
+          `${domain}/removeLikedBy/${imgInfo.asset_id}/${curUser_real}`,
+          {
+            method: "POST",
+            headers: { "Content-type": "application/json" },
+          }
+        ).then((res) => {
+          imgInfo.likedBy = imgInfo.likedBy.filter((user) => {
+            return user !== curUser_real;
+          });
         });
-      });
-    } else if (!imgInfo.likedBy.includes(curUser_real)) {
-      await fetch(`${domain}/addLikedBy/${imgInfo.asset_id}/${curUser_real}`, {
-        method: "POST",
-        headers: { "Content-type": "application/json" },
-      }).then((res) => {
-        imgInfo.likedBy.push(curUser_real);
-      });
+      } else if (!imgInfo.likedBy.includes(curUser_real)) {
+        await fetch(
+          `${domain}/addLikedBy/${imgInfo.asset_id}/${curUser_real}`,
+          {
+            method: "POST",
+            headers: { "Content-type": "application/json" },
+          }
+        ).then((res) => {
+          imgInfo.likedBy.push(curUser_real);
+        });
+      }
+      setIsLiked(!isLiked);
     }
-    setIsLiked(!isLiked);
   }
 
   //tag list scrolling
@@ -425,36 +434,43 @@ const ImageViewPage = ({
 
   //handle likes for related images
   async function handleLike(e, element, index) {
-    var searchArrCopy = searchArr;
-    console.log(searchArrCopy);
+    if (!isLoggedIn) {
+      window.location.href = "/SignUp";
+    } else {
+      var searchArrCopy = searchArr;
+      console.log(searchArrCopy);
 
-    if (searchArrCopy[index].likedBy.includes(curUser_real)) {
-      await fetch(
-        `${domain}/removeLikedBy/${element.asset_id}/${curUser_real}`,
-        {
-          method: "POST",
-          headers: { "Content-type": "application/json" },
-        }
-      ).then((res) => {
-        searchArrCopy[index].likedBy = searchArrCopy[index].likedBy.filter(
-          (user) => {
-            return user !== curUser_real;
+      if (searchArrCopy[index].likedBy.includes(curUser_real)) {
+        await fetch(
+          `${domain}/removeLikedBy/${element.asset_id}/${curUser_real}`,
+          {
+            method: "POST",
+            headers: { "Content-type": "application/json" },
           }
-        );
-        setFetchArr(searchArrCopy);
-        console.log("run 3");
-      });
-    } else if (!searchArrCopy[index].likedBy.includes(curUser_real)) {
-      await fetch(`${domain}/addLikedBy/${element.asset_id}/${curUser_real}`, {
-        method: "POST",
-        headers: { "Content-type": "application/json" },
-      }).then((res) => {
-        searchArrCopy[index].likedBy.push(curUser_real);
-        setFetchArr(searchArrCopy);
-        console.log("run 4");
-      });
+        ).then((res) => {
+          searchArrCopy[index].likedBy = searchArrCopy[index].likedBy.filter(
+            (user) => {
+              return user !== curUser_real;
+            }
+          );
+          setFetchArr(searchArrCopy);
+          console.log("run 3");
+        });
+      } else if (!searchArrCopy[index].likedBy.includes(curUser_real)) {
+        await fetch(
+          `${domain}/addLikedBy/${element.asset_id}/${curUser_real}`,
+          {
+            method: "POST",
+            headers: { "Content-type": "application/json" },
+          }
+        ).then((res) => {
+          searchArrCopy[index].likedBy.push(curUser_real);
+          setFetchArr(searchArrCopy);
+          console.log("run 4");
+        });
+      }
+      setIsLiked(!isLiked);
     }
-    setIsLiked(!isLiked);
   }
 
   //img zoom stuff
@@ -535,6 +551,7 @@ const ImageViewPage = ({
       {isShowingImageSelectModal && (
         <Modal__ImageSelect
           domain={domain}
+          isLoggedIn={isLoggedIn}
           curUser_real={curUser_real}
           curUser_hyphenated={curUser_hyphenated}
           imgTitleArrState={imgTitleArrState}

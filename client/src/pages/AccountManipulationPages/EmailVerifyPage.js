@@ -36,10 +36,13 @@ const EmailVerifyPage = ({
 
   //fetch
   async function verificationPostRequest() {
-    await fetch(`${domain}/${username}/verify/${token}`, {
+    await fetch(`${domain}/${username.split("-").join(" ")}/verify/${token}`, {
       method: "POST",
       headers: { "Content-type": "application/json" },
-      body: JSON.stringify({ username: username, token: token }),
+      body: JSON.stringify({
+        username: username.split("-").join(" "),
+        token: token,
+      }),
     }).then((response) =>
       response
         .json()

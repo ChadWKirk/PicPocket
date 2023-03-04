@@ -13,6 +13,7 @@ const Modal__ImageSelect = ({
   domain,
   curUser_real,
   curUser_hyphenated,
+  isLoggedIn,
   imgTitleArrState,
   isShowingImageSelectModal,
   setIsShowingImageSelectModal,
@@ -274,24 +275,34 @@ const Modal__ImageSelect = ({
 
   //handle like
   async function handleMainLike(e) {
-    if (imgInfo.likedBy.includes(curUser_real)) {
-      await fetch(`${domain}/removeLikedBy/${imgInfo.asset_id}/${curUser_real}`, {
-        method: "POST",
-        headers: { "Content-type": "application/json" },
-      }).then((res) => {
-        imgInfo.likedBy = imgInfo.likedBy.filter((user) => {
-          return user !== curUser_real;
+    if (!isLoggedIn) {
+      window.location.href = "/SignUp";
+    } else {
+      if (imgInfo.likedBy.includes(curUser_real)) {
+        await fetch(
+          `${domain}/removeLikedBy/${imgInfo.asset_id}/${curUser_real}`,
+          {
+            method: "POST",
+            headers: { "Content-type": "application/json" },
+          }
+        ).then((res) => {
+          imgInfo.likedBy = imgInfo.likedBy.filter((user) => {
+            return user !== curUser_real;
+          });
         });
-      });
-    } else if (!imgInfo.likedBy.includes(curUser_real)) {
-      await fetch(`${domain}/addLikedBy/${imgInfo.asset_id}/${curUser_real}`, {
-        method: "POST",
-        headers: { "Content-type": "application/json" },
-      }).then((res) => {
-        imgInfo.likedBy.push(curUser_real);
-      });
+      } else if (!imgInfo.likedBy.includes(curUser_real)) {
+        await fetch(
+          `${domain}/addLikedBy/${imgInfo.asset_id}/${curUser_real}`,
+          {
+            method: "POST",
+            headers: { "Content-type": "application/json" },
+          }
+        ).then((res) => {
+          imgInfo.likedBy.push(curUser_real);
+        });
+      }
+      setIsLiked(!isLiked);
     }
-    setIsLiked(!isLiked);
   }
 
   //img zoom stuff
