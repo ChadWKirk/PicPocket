@@ -195,6 +195,7 @@ app.post("/signup", async (req, response) => {
                   context: {
                     //variables to use in email.handlebars
                     name: req.body.username,
+                    linkName: req.body.username.split(" ").join("-"),
                     token: token,
                   },
 

@@ -16,6 +16,18 @@ const MyPicsPage = ({
   curUser_hyphenated,
   isLoggedIn,
 }) => {
+  let navigate = useNavigate();
+  const { username } = useParams();
+
+  //if user tries to go to a user's my pics page that they aren't logged in as
+  //change url to url with their curUser name
+  //if user tries to get to my pics page and they aren't logged in at all, app.js takes cares of it by using Navigate element
+  useEffect(() => {
+    if (username !== curUser_hyphenated) {
+      navigate(`/Account/${curUser_hyphenated}/My-Pics/most-recent/all-types`);
+    }
+  }, []);
+
   const [massDlLink, setMassDlLink] = useState();
 
   //toast stuff
@@ -32,8 +44,6 @@ const MyPicsPage = ({
     setToastMessage();
     setToastStatus();
   }
-
-  let navigate = useNavigate();
 
   //img array to display
   const [imgGallery, setImgGallery] = useState([]);

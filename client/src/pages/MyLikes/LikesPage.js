@@ -15,7 +15,17 @@ const LikesPage = ({
   imgTitleArrState,
   setImgTitleArrState,
 }) => {
+  let navigate = useNavigate();
   const { username } = useParams();
+
+  //if user tries to go to a user's likes page that they aren't logged in as
+  //change url to url with their curUser name
+  //if user tries to get to likes page and they aren't logged in at all, app.js takes cares of it by using Navigate element
+  useEffect(() => {
+    if (username !== curUser_hyphenated) {
+      navigate(`/Account/${curUser_hyphenated}/Likes/most-recent/all-types`);
+    }
+  }, []);
 
   //to get profile picture of user's like page you are seeing
   const [userInfo, setUserInfo] = useState();
@@ -35,7 +45,7 @@ const LikesPage = ({
     }
 
     fetchUserInfo();
-  }, []);
+  }, [username]);
 
   let pfp;
   let bio;

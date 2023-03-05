@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+//components
 import NavbarComponent from "../components/NavbarComponent";
 import UploadForm from "../components/UploadForm";
 import FileList from "../components/FileList";
@@ -13,6 +15,18 @@ const UploadPage = ({
   isJustVerified,
   setIsJustVerified,
 }) => {
+  let navigate = useNavigate();
+  const { username } = useParams();
+
+  //if user tries to go to a user's upload page that they aren't logged in as
+  //change url to url with their curUser name
+  //if user tries to get to upload page and they aren't logged in at all, app.js takes cares of it by using Navigate element
+  useEffect(() => {
+    if (username !== curUser_hyphenated) {
+      navigate(`/${curUser_hyphenated}/upload`);
+    }
+  }, []);
+
   //get user's info
   const [userInfo, setUserInfo] = useState();
   const [verifiedValue, setVerifiedValue] = useState();

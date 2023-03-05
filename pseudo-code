@@ -67,11 +67,11 @@ make about us page
 
 ---
 
+fix sorting in likes and my pics page. doesn't change url
+
 Put google stuff on sign up page too
 
 Facebook OAuth
-
-protect api routes for not logged in users (no token)
 
 get cloudinary name and preset from back end instead of storing in env in front end (unsafe) - upload using multer to handle formData in express - https://youtu.be/wIOpe8S2Mk8
 

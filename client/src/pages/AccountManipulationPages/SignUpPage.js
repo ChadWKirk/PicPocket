@@ -10,7 +10,7 @@ import googleOAuthIcon from "../../images/google-logo-oauth.png";
 import facebookOauthIcon from "../../images/facebook-logo-oauth.png";
 import signInPageCollageImg from "../../images/PicPocket-SignIn-Collage2.png";
 
-const SignUpPage = ({ domain }) => {
+const SignUpPage = ({ domain, setIsJustSignedUp }) => {
   let navigate = useNavigate();
   const { dispatch } = useAuthContext();
   //if user is already logged in, redirect to their account page
@@ -196,6 +196,7 @@ const SignUpPage = ({ domain }) => {
               }).then((response) => {
                 console.log(response);
                 //navigate to success page
+                setIsJustSignedUp(true);
                 navigate(
                   `/SignUp/${newUser.username.split(" ").join("-")}/Success`
                 );

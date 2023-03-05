@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { useAuthContext } from "./context/useAuthContext";
 //components
 import Footer from "./components/Footer";
@@ -56,6 +56,12 @@ function App() {
   //used to give array of img titles to imageview page to use for imageSelectModal
   //to fetch img src and to go to previous or next image
   const [imgTitleArrState, setImgTitleArrState] = useState();
+
+  //set true or false for if user just signed up. use to decide whether to show sign up success page
+  const [isJustSignedUp, setIsJustSignedUp] = useState(false);
+
+  //set true or false for if user just changed password. use to decide whether to show password change success page
+  const [isPasswordJustChanged, setIsPasswordJustChanged] = useState(false);
 
   // const [curUser, setCurUser] = useState();
   // const [loggedIn, setLoggedIn] = useState();
@@ -185,17 +191,21 @@ function App() {
           ></Route>
           <Route path="/like-test" element={<LikeTestPage />}></Route>
           <Route
-            path={`/Account/${curUser_hyphenated}`}
+            path={`/Account/:username`}
             element={
-              <UserSettingsPage
-                domain={domain}
-                curUser_real={curUser_real}
-                curUser_hyphenated={curUser_hyphenated}
-                isLoggedIn={isLoggedIn}
-                // setLoggedIn={setLoggedIn}
-                isJustDeleted={isJustDeleted}
-                setIsJustDeleted={setIsJustDeleted}
-              />
+              isLoggedIn ? (
+                <UserSettingsPage
+                  domain={domain}
+                  curUser_real={curUser_real}
+                  curUser_hyphenated={curUser_hyphenated}
+                  isLoggedIn={isLoggedIn}
+                  // setLoggedIn={setLoggedIn}
+                  isJustDeleted={isJustDeleted}
+                  setIsJustDeleted={setIsJustDeleted}
+                />
+              ) : (
+                <Navigate to="/SignUp" />
+              )
             }
           ></Route>
           <Route
@@ -214,46 +224,58 @@ function App() {
             }
           ></Route>
           <Route
-            path={`/Account/${curUser_hyphenated}/My-Pics/:sort/:filter`}
+            path={`/Account/:username/My-Pics/:sort/:filter`}
             element={
-              <MyPicsPage
-                domain={domain}
-                curUser_real={curUser_real}
-                curUser_hyphenated={curUser_hyphenated}
-                isLoggedIn={isLoggedIn}
-                isShowingImageSelectModal={isShowingImageSelectModal}
-                setIsShowingImageSelectModal={setIsShowingImageSelectModal}
-                imgTitleArrState={imgTitleArrState}
-                setImgTitleArrState={setImgTitleArrState}
-              />
+              isLoggedIn ? (
+                <MyPicsPage
+                  domain={domain}
+                  curUser_real={curUser_real}
+                  curUser_hyphenated={curUser_hyphenated}
+                  isLoggedIn={isLoggedIn}
+                  isShowingImageSelectModal={isShowingImageSelectModal}
+                  setIsShowingImageSelectModal={setIsShowingImageSelectModal}
+                  imgTitleArrState={imgTitleArrState}
+                  setImgTitleArrState={setImgTitleArrState}
+                />
+              ) : (
+                <Navigate to="/SignUp" />
+              )
             }
           ></Route>
           <Route
             path={`/Account/:username/Likes/:sort/:filter`}
             element={
-              <LikesPage
-                domain={domain}
-                curUser_real={curUser_real}
-                curUser_hyphenated={curUser_hyphenated}
-                isLoggedIn={isLoggedIn}
-                isShowingImageSelectModal={isShowingImageSelectModal}
-                setIsShowingImageSelectModal={setIsShowingImageSelectModal}
-                imgTitleArrState={imgTitleArrState}
-                setImgTitleArrState={setImgTitleArrState}
-              />
+              isLoggedIn ? (
+                <LikesPage
+                  domain={domain}
+                  curUser_real={curUser_real}
+                  curUser_hyphenated={curUser_hyphenated}
+                  isLoggedIn={isLoggedIn}
+                  isShowingImageSelectModal={isShowingImageSelectModal}
+                  setIsShowingImageSelectModal={setIsShowingImageSelectModal}
+                  imgTitleArrState={imgTitleArrState}
+                  setImgTitleArrState={setImgTitleArrState}
+                />
+              ) : (
+                <Navigate to="/SignUp" />
+              )
             }
           ></Route>
           <Route
-            path={`/${curUser_hyphenated}/upload`}
+            path={`/:username/upload`}
             element={
-              <UploadPage
-                domain={domain}
-                curUser_real={curUser_real}
-                curUser_hyphenated={curUser_hyphenated}
-                isLoggedIn={isLoggedIn}
-                isJustVerified={isJustVerified}
-                setIsJustVerified={setIsJustVerified}
-              />
+              isLoggedIn ? (
+                <UploadPage
+                  domain={domain}
+                  curUser_real={curUser_real}
+                  curUser_hyphenated={curUser_hyphenated}
+                  isLoggedIn={isLoggedIn}
+                  isJustVerified={isJustVerified}
+                  setIsJustVerified={setIsJustVerified}
+                />
+              ) : (
+                <Navigate to="/SignUp" />
+              )
             }
           ></Route>
           <Route
@@ -276,12 +298,15 @@ function App() {
                 curUser_real={curUser_real}
                 curUser_hyphenated={curUser_hyphenated}
                 isLoggedIn={isLoggedIn}
+                setIsJustSignedUp={setIsJustSignedUp}
               />
             }
           ></Route>
           <Route
             path="/SignUp/:username/Success"
-            element={<SignUpSuccessPage />}
+            element={
+              isJustSignedUp ? <SignUpSuccessPage /> : <Navigate to="/" />
+            }
           ></Route>
           <Route
             path="/delSuccess"
@@ -310,23 +335,32 @@ function App() {
           <Route
             path="/Account/:username/Change-Password"
             element={
-              <ChangePasswordPage
-                domain={domain}
-                curUser_real={curUser_real}
-                curUser_hyphenated={curUser_hyphenated}
-                isLoggedIn={isLoggedIn}
-              />
+              isLoggedIn ? (
+                <ChangePasswordPage
+                  domain={domain}
+                  curUser_real={curUser_real}
+                  curUser_hyphenated={curUser_hyphenated}
+                  isLoggedIn={isLoggedIn}
+                  setIsPasswordJustChanged={setIsPasswordJustChanged}
+                />
+              ) : (
+                <Navigate to="/SignUp" />
+              )
             }
           />
           <Route
             path="/Change-Password-Success"
             element={
-              <PasswordChangeSuccessPage
-                domain={domain}
-                curUser_real={curUser_real}
-                curUser_hyphenated={curUser_hyphenated}
-                isLoggedIn={isLoggedIn}
-              />
+              isPasswordJustChanged ? (
+                <PasswordChangeSuccessPage
+                  domain={domain}
+                  curUser_real={curUser_real}
+                  curUser_hyphenated={curUser_hyphenated}
+                  isLoggedIn={isLoggedIn}
+                />
+              ) : (
+                <Navigate to="/" />
+              )
             }
           />
           <Route

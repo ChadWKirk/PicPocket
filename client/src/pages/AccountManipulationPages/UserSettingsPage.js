@@ -27,6 +27,13 @@ const UserSettingsPage = ({
   //navigate
   const navigate = useNavigate();
 
+  //if user tries to go to a user's account settings page that they aren't logged in as
+  //change url to url with their curUser name
+  //if user tries to get to user settings page and they aren't logged in at all, app.js takes cares of it by using Navigate element
+  useEffect(() => {
+    navigate(`/Account/${curUser_hyphenated}`);
+  }, []);
+
   //auth
   const { dispatch } = useAuthContext();
 

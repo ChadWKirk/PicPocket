@@ -4,15 +4,9 @@ import { useParams, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 
-const SignUpSuccessPage = ({ curUser_real, curUser_hyphenated, loggedIn }) => {
+const SignUpSuccessPage = ({ curUser_real, curUser_hyphenated }) => {
   let navigate = useNavigate();
   const { username } = useParams();
-
-  useEffect(() => {
-    if (loggedIn) {
-      navigate(`/Account/${curUser_hyphenated}`);
-    }
-  }, []);
 
   return (
     <div
