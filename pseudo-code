@@ -57,7 +57,7 @@ styling:
 
 upload page - make it so dragging over upload form doesn't rerender image items causing them to flicker
 
-put skeleton loading for all images
+put skeleton loading for all images - https://www.w3schools.com/howto/howto_css_aspect_ratio.asp - get aspect ratio of element by dividing element.height / element.width. Assign that to padding top % by multiplying that by 100. for example 1200 / 1600 = x. x times 100 = paddingTop %
 
 copy mainpage stuff to mainpagemostpopular
 

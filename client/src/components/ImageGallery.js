@@ -84,6 +84,10 @@ const ImageGallery = ({
   let titleArr = [];
   useEffect(() => {
     imgDataMapOutcome = imgData.map((element, index) => {
+      // use this for paddingTop of skeleton loading div to get aspect ratio
+      let aspectRatio = element.height / element.width;
+      let paddingTop = aspectRatio * 100;
+      let elementBGColor = element.colors[0][0];
       //create array of titles to use for imageSelectModal
       titleArr.push(element.title);
       let likeButton;
@@ -115,63 +119,85 @@ const ImageGallery = ({
       return (
         //each of these is one image item in the image gallery. Includes overlay with like, download and pfp buttons
         <div key={index} className="image-gallery__image-container">
-          <a
-            onClick={() => {
-              setIsShowingImageSelectModal(true);
-              navigate(`/image/${element.title}`);
+          <div
+            style={{
+              width: `${element.width}px`,
+              paddingTop: `${paddingTop}%`,
+              // zIndex: "1",
+              // position: "absolute",
+              // opacity: "0",
+              // top: "0",
+              // left: "0",
+              // display: "",
+              background: `${elementBGColor}`,
+              color: `${elementBGColor}`,
             }}
-            //  href={`http://localhost:3000/image/${element.title}`}
-            style={{ cursor: "pointer" }}
           >
-            <img
-              src={
-                element.secure_url.slice(0, 50) +
-                "q_60/c_scale,w_700/dpr_auto/" +
-                element.secure_url.slice(
-                  50,
-                  element.secure_url.lastIndexOf(".")
-                ) +
-                ".jpg"
-              }
-              className="image-gallery__image"
-              loading="lazy"
-            ></img>
-          </a>
-
-          <div className="image-gallery__image-overlay-container">
+            ddd
             <a
-              className="image-gallery__like-button-container"
-              onClick={(e) => handleLike(e, element, index)}
+              onClick={() => {
+                setIsShowingImageSelectModal(true);
+                navigate(`/image/${element.title}`);
+              }}
+              //  href={`http://localhost:3000/image/${element.title}`}
+              style={{
+                cursor: "pointer",
+                position: "absolute",
+                top: "0",
+                display: "block",
+                // zIndex: "2",
+              }}
             >
-              {likeButton}
+              <img
+                src={
+                  element.secure_url.slice(0, 50) +
+                  "q_60/c_scale,w_700/dpr_auto/" +
+                  element.secure_url.slice(
+                    50,
+                    element.secure_url.lastIndexOf(".")
+                  ) +
+                  ".jpg"
+                }
+                className="image-gallery__image"
+                loading="lazy"
+                onLoad={() => console.log("loaded")}
+              ></img>
             </a>
-            <a
-              className="image-gallery__download-button-container"
-              href={
-                element.secure_url.slice(0, 50) +
-                "q_100/fl_attachment/" +
-                element.secure_url.slice(
-                  50,
-                  element.secure_url.lastIndexOf(".")
-                )
-              }
-            >
-              <FontAwesomeIcon
-                icon={faDownload}
-                className="image-gallery__download-button-icon"
-              ></FontAwesomeIcon>
-            </a>
-            <div>
+            <div className="image-gallery__image-overlay-container">
               <a
-                className="image-gallery__image-author-link-container"
-                href={`/User/${element.uploadedBy}`}
+                className="image-gallery__like-button-container"
+                onClick={(e) => handleLike(e, element, index)}
               >
-                <img
-                  src={element.test[0].pfp}
-                  className="image-gallery__image-author-profile-pic"
-                />
-                {element.uploadedBy}
+                {likeButton}
               </a>
+              <a
+                className="image-gallery__download-button-container"
+                href={
+                  element.secure_url.slice(0, 50) +
+                  "q_100/fl_attachment/" +
+                  element.secure_url.slice(
+                    50,
+                    element.secure_url.lastIndexOf(".")
+                  )
+                }
+              >
+                <FontAwesomeIcon
+                  icon={faDownload}
+                  className="image-gallery__download-button-icon"
+                ></FontAwesomeIcon>
+              </a>
+              <div>
+                <a
+                  className="image-gallery__image-author-link-container"
+                  href={`/User/${element.uploadedBy}`}
+                >
+                  <img
+                    src={element.test[0].pfp}
+                    className="image-gallery__image-author-profile-pic"
+                  />
+                  {element.uploadedBy}
+                </a>
+              </div>
             </div>
           </div>
         </div>
