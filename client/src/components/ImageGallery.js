@@ -86,8 +86,8 @@ const ImageGallery = ({
     imgDataMapOutcome = imgData.map((element, index) => {
       // use this for paddingTop of skeleton loading div to get aspect ratio
       let aspectRatio = element.height / element.width;
-      let paddingTop = aspectRatio * 100;
-      let elementBGColor = element.colors[0][0];
+      let paddingTop = aspectRatio * 100; //turn aspect ratio into percentage for paddingTop
+      let elementBGColor = element.colors[0][0]; //use image (element) primary color as background color
       //create array of titles to use for imageSelectModal
       titleArr.push(element.title);
       let likeButton;
@@ -119,16 +119,12 @@ const ImageGallery = ({
       return (
         //each of these is one image item in the image gallery. Includes overlay with like, download and pfp buttons
         <div key={index} className="image-gallery__image-container">
+          {/* Skeleton loading background. has background color of primary color of image (element). Uses paddingTop to maintain aspect ratio of image (see start of useEffect) */}
           <div
             style={{
               width: `${element.width}px`,
               paddingTop: `${paddingTop}%`,
-              // zIndex: "1",
-              // position: "absolute",
-              // opacity: "0",
-              // top: "0",
-              // left: "0",
-              // display: "",
+              height: "100px", //for some reason, adding an artbitrary height knocks off that extra couple hundred pixels off the bottom.
               background: `${elementBGColor}`,
               color: `${elementBGColor}`,
             }}
@@ -145,6 +141,7 @@ const ImageGallery = ({
                 position: "absolute",
                 top: "0",
                 display: "block",
+                // opacity: "0",
                 // zIndex: "2",
               }}
             >

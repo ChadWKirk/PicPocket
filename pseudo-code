@@ -57,8 +57,6 @@ styling:
 
 upload page - make it so dragging over upload form doesn't rerender image items causing them to flicker
 
-put skeleton loading for all images - https://www.w3schools.com/howto/howto_css_aspect_ratio.asp - get aspect ratio of element by dividing element.height / element.width. Assign that to padding top % by multiplying that by 100. for example 1200 / 1600 = x. x times 100 = paddingTop %
-
 copy mainpage stuff to mainpagemostpopular
 
 mypics - loading for submit/delete/massdelete (make loading/progress bar at top of the page like youtube), make it so that if all checkboxes are checked, selectall box checked = true and if not all of them are checked then select all checkbox checked = false, make it so when deleting all it deletes all from front end (more than 20 or so), general styling, make page responsive.
