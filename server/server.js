@@ -1139,15 +1139,20 @@ app.get("/massDownloadImages/:publicIDArr", (req, res) => {
 //update image info
 app.put("/update/:username", async (req, res) => {
   console.log("update test");
-
   var mongoReplacement;
+  //random 6 digit number to tag onto the public_id to allow images to be named the same thing but have different public_ids
+  let randomNumber = Math.floor(100000 + Math.random() * 900000);
   //if name is being changed in update form
-  if (req.body.public_id != `picpocket/${req.body.title}`) {
+  if (req.body.public_id != `picpocket/${req.body.title}-${randomNumber}`) {
     //update in cloudinary
     await cloudinary.uploader
-      .rename(req.body.public_id, `picpocket/${req.body.title}`, {
-        invalidate: true,
-      })
+      .rename(
+        req.body.public_id,
+        `picpocket/${req.body.title}-${randomNumber}`,
+        {
+          invalidate: true,
+        }
+      )
       .then((result) => {
         mongoReplacement = result;
       })
@@ -1170,6 +1175,7 @@ app.put("/update/:username", async (req, res) => {
   let db_connect = dbo.getDb();
   var myQuery = { public_id: req.body.public_id };
 
+  mongoReplacement.colors = req.body.colors;
   mongoReplacement.likes = req.body.likes;
   mongoReplacement.likedBy = req.body.likedBy;
   mongoReplacement.uploadedBy = req.params.username;

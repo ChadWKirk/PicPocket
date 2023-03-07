@@ -49,6 +49,14 @@ Google / facebook sign in/up:
 - navigate to either home page or sign up success page depending on res.json()
 - don't display change password or change email if curUser.type === "oauth"
 
+duplicate named images:
+
+for public id, put Math.floor(100000 + Math.random() \* 900000) at the end of the name of the image
+
+for example "lady" turns into "lady-245609" or "lady-333400"
+
+when clicking image in gallery > go to /image/<public_id> without the "picpocket/" part > GET request to get image with req.params.public_id as public_id
+
 ---
 
 TASKS:

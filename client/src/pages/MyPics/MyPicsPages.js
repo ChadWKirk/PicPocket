@@ -72,6 +72,9 @@ const MyPicsPage = ({
   const [tags, setTags] = useState("");
   const [imageType, setImageType] = useState("");
 
+  //get colors from image for when you submit an edit to it to carry them over
+  const [colors, setColors] = useState();
+
   //sort and filter values to do get requests
   const [sort, setSort] = useState("most-recent");
   const [filter, setFilter] = useState("all-types");
