@@ -51,7 +51,9 @@ Google / facebook sign in/up:
 
 duplicate named images:
 
-for public id, put Math.floor(100000 + Math.random() \* 900000) at the end of the name of the image
+upload using multer instead of in front end with unsigned upload preset so you can input the random number so the initial public_id isn't a random string
+
+for public id, put Math.floor(100000 + Math.random() {multiplied by} 900000) at the end of the name of the image
 
 for example "lady" turns into "lady-245609" or "lady-333400"
 
@@ -71,21 +73,21 @@ mypics - loading for submit/delete/massdelete (make loading/progress bar at top 
 
 make about us page
 
+create Page Not Found page for any routes that are undefined
+
 ---
 
-fix sorting in likes and my pics page. doesn't change url
+fix sorting in likes and my pics page. doesn't change url. - need to figure out how to change just part of URL and make it not cumbersome.
 
 Put google stuff on sign up page too
 
 Facebook OAuth
 
-get cloudinary name and preset from back end instead of storing in env in front end (unsafe) - upload using multer to handle formData in express - https://youtu.be/wIOpe8S2Mk8
+get cloudinary name and preset from back end instead of storing in env in front end (unsafe) - upload using multer to handle formData in express - https://cloudinary.com/documentation/upload_images https://medium.com/the-andela-way/how-to-upload-multiple-images-using-cloudinary-and-node-js-2f053b167b80 https://youtu.be/wIOpe8S2Mk8
 
 put termly env vars in backend as well
 
 handle errors for blank fields etc.
-
-make it so that duplicate public ID's get named something else in cloudinary (upload preset in cloudinary rules)
 
 ---
 

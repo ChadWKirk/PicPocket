@@ -29,9 +29,11 @@ const UserPage = ({
 
   const [userInfo, setUserInfo] = useState();
 
+  console.log(sort);
+
   useEffect(() => {
     async function fetchUserInfo() {
-      await fetch(`${domain}/${username}/info`, {
+      await fetch(`${domain}/${curUser_real}/info`, {
         method: "GET",
         headers: { "Content-type": "application/json" },
       }).then((response) =>
@@ -72,7 +74,7 @@ const UserPage = ({
         <div className="galleryHeadingAndSortContainer">
           <div className="galleryHeading">
             <img src={pfp} className="profilePicBig" />
-            <h2>{username}</h2>
+            <h2>{curUser_real}</h2>
             <p>{bio}</p>
           </div>
         </div>
@@ -90,7 +92,8 @@ const UserPage = ({
             filterTitle={filterTitle}
             setFilterTitle={setFilterTitle}
             imgGalleryLength={imgGalleryLength}
-            username={username}
+            curUser_real={curUser_real}
+            curUser_hyphenated={curUser_hyphenated}
             page={"userPage"}
           />
           {/* </div> */}

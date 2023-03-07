@@ -29,7 +29,8 @@ const Modal__ImageSelect = ({
   let navigate = useNavigate();
 
   //img info
-  const { imageTitle } = useParams();
+  const { imgPublic_Id } = useParams();
+
   // const [imgInfo, setImgInfo] = useState();
 
   //user info to get author name and pfp
@@ -38,10 +39,10 @@ const Modal__ImageSelect = ({
   //refetch img info to update like button to either liked or not liked
   const [isLiked, setIsLiked] = useState();
 
-  //on load, pull img from url parameter :imageTitle (see app.js), and get user info for img author pfp and name
+  //on load, pull img from url parameter :imgPublic_Id (see app.js), and get user info for img author pfp and name
   // useEffect(() => {
   //   async function fetchImgInfo() {
-  //     await fetch(`https://picpoccket.herokuapp.com/image/${imageTitle}`, {
+  //     await fetch(`https://picpoccket.herokuapp.com/image/${imgPublic_Id}`, {
   //       method: "GET",
   //       headers: { "Content-type": "application/json" },
   //     }).then((response) =>
@@ -126,7 +127,7 @@ const Modal__ImageSelect = ({
       );
     }
 
-    // searchQuery = imageTags.join(" ") + " " + imageTitlee;
+    // searchQuery = imageTags.join(" ") + " " + imgPublic_Ide;
 
     if (imgInfo.likedBy.includes(curUser_real)) {
       imageSelectModalLikeBtn = (
@@ -387,7 +388,7 @@ const Modal__ImageSelect = ({
   }, [isPrevOrNextClicked]);
 
   //index of current img in title array to get prev and next links for next and previous arrow links (see html conditional rendering)
-  let currentImgIndex = imgTitleArrState.indexOf(`${imageTitle}`);
+  let currentImgIndex = imgTitleArrState.indexOf(`${imgPublic_Id}`);
 
   return (
     <div
@@ -448,7 +449,7 @@ const Modal__ImageSelect = ({
             <div className="image-select-modal__image-author-pfp-div">
               <a
                 className="image-select-modal__image-author-pfp"
-                href={`https://picpoccket.com/User/${imgAuthorName}`}
+                href={`/User/${curUser_hyphenated}`}
               >
                 <img
                   src={imgAuthorPFP}
@@ -458,7 +459,7 @@ const Modal__ImageSelect = ({
             </div>
 
             <a
-              href={`https://picpoccket.com/User/${imgAuthorName}`}
+              href={`/User/${curUser_hyphenated}`}
               className="image-select-modal__image-author-name"
             >
               {imgAuthorName}

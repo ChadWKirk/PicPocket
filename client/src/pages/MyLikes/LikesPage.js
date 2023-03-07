@@ -18,6 +18,10 @@ const LikesPage = ({
   let navigate = useNavigate();
   const { username } = useParams();
 
+  //sort and filter from URL
+  const { urlSort } = useParams();
+  const { urlFilter } = useParams();
+
   //if user tries to go to a user's likes page that they aren't logged in as
   //change url to url with their curUser name
   //if user tries to get to likes page and they aren't logged in at all, app.js takes cares of it by using Navigate element
@@ -62,8 +66,8 @@ const LikesPage = ({
   const [imgGalleryLength, setImgGalleryLength] = useState();
 
   //sort and filter values to do get requests
-  const [sort, setSort] = useState("most-recent");
-  const [filter, setFilter] = useState("all-types");
+  const [sort, setSort] = useState(urlSort);
+  const [filter, setFilter] = useState(urlFilter);
   //sort and filter values to change the titles of the dropdown menus
   const [sortTitle, setSortTitle] = useState("Most Recent");
   const [filterTitle, setFilterTitle] = useState("All Types");
@@ -127,7 +131,8 @@ const LikesPage = ({
             setFilterTitle={setFilterTitle}
             imgGalleryLength={imgGalleryLength}
             pfp={pfp}
-            username={username}
+            curUser_real={curUser_real}
+            curUser_hyphenated={curUser_hyphenated}
             page={"likesPage"}
           />
           {/* </div> */}

@@ -15,7 +15,8 @@ const ImageGallerySortFilterAndSubheadingComponent = ({
   imgGalleryLength,
   searchQuery,
   pfp,
-  username,
+  curUser_hyphenated,
+  curUser_real,
   page,
 }) => {
   let subHeading;
@@ -30,7 +31,7 @@ const ImageGallerySortFilterAndSubheadingComponent = ({
       <h1 className="image-gallery__likes-page-subheading-container">
         <div className="image-gallery__likes-page-hover-div">
           <a
-            href={`https://picpoccket.com/User/${username}`}
+            href={`/User/${curUser_hyphenated}`}
             className="image-gallery__likes-page-subheading-img"
           >
             <img
@@ -41,15 +42,15 @@ const ImageGallerySortFilterAndSubheadingComponent = ({
         </div>
 
         <a
-          href={`https://picpoccket.com/User/${username}`}
+          href={`/User/${curUser_hyphenated}`}
           className="image-gallery__likes-page-subheading-username-link"
         >
-          {username.split("-").join(" ")}
+          {curUser_real}
         </a>
       </h1>
     );
   } else if (page == "userPage") {
-    subHeading = <h1>Pics By {username}</h1>;
+    subHeading = <h1>Pics By {curUser_real}</h1>;
   }
   return (
     <div className="image-gallery__dropdown-and-subheading-container">

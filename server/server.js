@@ -1139,11 +1139,17 @@ app.get("/massDownloadImages/:publicIDArr", (req, res) => {
 //update image info
 app.put("/update/:username", async (req, res) => {
   console.log("update test");
+  //get existing random number from public_id
+  let p_id = req.body.public_id;
+  let existingRandomNumber = req.body.public_id.slice(p_id.length - 6);
+  console.log(existingRandomNumber);
   var mongoReplacement;
   //random 6 digit number to tag onto the public_id to allow images to be named the same thing but have different public_ids
   let randomNumber = Math.floor(100000 + Math.random() * 900000);
   //if name is being changed in update form
-  if (req.body.public_id != `picpocket/${req.body.title}-${randomNumber}`) {
+  if (
+    req.body.public_id != `picpocket/${req.body.title}-${existingRandomNumber}`
+  ) {
     //update in cloudinary
     await cloudinary.uploader
       .rename(
@@ -1229,14 +1235,14 @@ app.post("/removeLikedBy/:assetID/:username", (req, res) => {
 });
 
 //Image View Page Gets
-app.get("/image/:title", (req, res) => {
-  console.log("get");
-  let image = req.params.title;
+app.get("/image/:public_id", (req, res) => {
+  //searches for image with same public id as one in url
+  let image = `picpocket/${req.params.public_id}`;
   let db_connect = dbo.getDb();
 
   db_connect
     .collection("picpocket-images")
-    .find({ title: image })
+    .find({ public_id: image })
     .toArray(function (err, result) {
       if (err) {
         res.status(400).send("Error fetching listings!");

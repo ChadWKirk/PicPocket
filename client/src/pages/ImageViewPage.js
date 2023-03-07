@@ -30,7 +30,7 @@ const ImageViewPage = ({
   const [imageFetchID, setImageFetchID] = useState();
 
   //img info
-  const { imageTitle } = useParams();
+  const { imgPublic_Id } = useParams();
   const [imgInfo, setImgInfo] = useState();
 
   //user info to get author name and pfp
@@ -58,10 +58,10 @@ const ImageViewPage = ({
   //to rerender modal on prev or next img arrow click
   const [isPrevOrNextClicked, setIsPrevOrNextClicked] = useState(false);
 
-  //on load, pull img from url parameter :imageTitle (see app.js), and get user info for img author pfp and name
+  //on load, pull img from url parameter :imgPublic_Id (see app.js), and get user info for img author pfp and name
   useEffect(() => {
     async function fetchImgInfo() {
-      await fetch(`${domain}/image/${imageTitle}`, {
+      await fetch(`${domain}/image/${imgPublic_Id}`, {
         method: "GET",
         headers: { "Content-type": "application/json" },
       }).then((response) =>
@@ -73,6 +73,7 @@ const ImageViewPage = ({
       );
     }
     fetchImgInfo();
+    console.log("this ", imgTitleArrState);
   }, [isLiked, isPrevOrNextClicked]);
 
   //fetch user info for pfp and author name
@@ -109,6 +110,10 @@ const ImageViewPage = ({
 
   //assigning img info to variables
   let imgSrc;
+  // use this for paddingTop of skeleton loading div to get aspect ratio
+  let aspectRatio;
+  let paddingTop; //turn aspect ratio into percentage for paddingTop
+  let elementBGColor; //use image (element) primary color as background color
   let imgTitle;
   let imgDescription;
   let imgLikes;
@@ -122,6 +127,10 @@ const ImageViewPage = ({
   if (imgInfo) {
     imgSrc = imgInfo.secure_url;
     imgTitle = imgInfo.title;
+    // use this for paddingTop of skeleton loading div to get aspect ratio
+    aspectRatio = imgInfo.height / imgInfo.width;
+    paddingTop = aspectRatio * 100; //turn aspect ratio into percentage for paddingTop
+    elementBGColor = imgInfo.colors[0][0]; //use image (element) primary color as background color
     if (imgInfo.description == "") {
       imgDescription = <em>No Description Given</em>;
     } else {
@@ -145,7 +154,7 @@ const ImageViewPage = ({
       );
     }
 
-    // searchQuery = imageTags.join(" ") + " " + imageTitlee;
+    // searchQuery = imageTags.join(" ") + " " + imgPublic_Ide;
 
     if (imgInfo.likedBy.includes(curUser_real)) {
       mainImgLikeBtn = (
@@ -580,7 +589,7 @@ const ImageViewPage = ({
             <div className="image-view-page__image-author-pfp-div">
               <a
                 className="image-view-page__image-author-pfp"
-                href={`https://picpoccket.com/User/${imgAuthorName}`}
+                href={`/User/${imgAuthorName}`}
               >
                 <img
                   src={imgAuthorPFP}
@@ -590,7 +599,7 @@ const ImageViewPage = ({
             </div>
 
             <a
-              href={`https://picpoccket.com/User/${imgAuthorName}`}
+              href={`/User/${imgAuthorName}`}
               className="image-view-page__image-author-name"
             >
               {imgAuthorName}
@@ -609,6 +618,15 @@ const ImageViewPage = ({
       </div>
       <div className="image-view-page__container">
         <div className="image-view-page__img-container">
+          {/* <div
+            style={{
+              // width: `${imgInfo.width}px`,
+              paddingTop: `${paddingTop}%`,
+              height: "100px", //for some reason, adding an artbitrary height knocks off that extra couple hundred pixels off the bottom.
+              background: `${elementBGColor}`,
+              color: `${elementBGColor}`,
+            }}
+          > */}
           <img
             id="mainImg"
             src={imgSrc}
@@ -629,6 +647,7 @@ const ImageViewPage = ({
               transformOrigin: transformOriginState,
             }}
           ></img>
+          {/* </div> */}
         </div>
         <div className="image-view-page__img-info-container">
           <div className="image-view-page__img-title">{imgTitle}</div>

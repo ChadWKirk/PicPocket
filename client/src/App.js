@@ -175,7 +175,7 @@ function App() {
             }
           ></Route>
           <Route
-            path="/image/:imageTitle"
+            path="/image/:imgPublic_Id"
             element={
               <ImageViewPage
                 domain={domain}
@@ -243,7 +243,7 @@ function App() {
             }
           ></Route>
           <Route
-            path={`/Account/:username/Likes/:sort/:filter`}
+            path={`/Account/:username/Likes/:urlSort/:urlFilter`}
             element={
               isLoggedIn ? (
                 <LikesPage

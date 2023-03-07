@@ -34,6 +34,7 @@ const ImageGallery = ({
   }
   //username for user page (not current logged in user's username)
   const { username } = useParams();
+
   //the thing you searched to use for fetch request (if being used for search results page)
   const { searchQuery } = useParams();
 
@@ -51,9 +52,9 @@ const ImageGallery = ({
     //depending on what the type prop is set to, use one of these routes to fetch img data
     let fetchRoute;
     if (page == "userPage") {
-      fetchRoute = `${domain}/${username}/${sort}/${filter}`;
+      fetchRoute = `${domain}/${curUser_real}/${sort}/${filter}`;
     } else if (page == "likesPage") {
-      fetchRoute = `${domain}/${username}/likes/${sort}/${filter}`;
+      fetchRoute = `${domain}/${curUser_real}/likes/${sort}/${filter}`;
     } else if (page == "searchPage") {
       fetchRoute = `${domain}/search/${searchQuery}/${sort}/${filter}`;
     } else if (page == "mainPageMostRecent") {
@@ -89,7 +90,8 @@ const ImageGallery = ({
       let paddingTop = aspectRatio * 100; //turn aspect ratio into percentage for paddingTop
       let elementBGColor = element.colors[0][0]; //use image (element) primary color as background color
       //create array of titles to use for imageSelectModal
-      titleArr.push(element.title);
+      let givenPublic_Id = element.public_id.slice(10); //give titleArr the public_id of element, minus the "picpocket/" part
+      titleArr.push(givenPublic_Id);
       let likeButton;
 
       if (element.likedBy.includes(curUser_real)) {
@@ -133,7 +135,7 @@ const ImageGallery = ({
             <a
               onClick={() => {
                 setIsShowingImageSelectModal(true);
-                navigate(`/image/${element.title}`);
+                navigate(`/image/${element.public_id.slice(10)}`); //removes the picpocket/ part of public_id so only name is there like "lady-540923"
               }}
               //  href={`http://localhost:3000/image/${element.title}`}
               style={{
@@ -186,7 +188,7 @@ const ImageGallery = ({
               <div>
                 <a
                   className="image-gallery__image-author-link-container"
-                  href={`/User/${element.uploadedBy}`}
+                  href={`/User/${element.uploadedBy.split(" ").join("-")}`}
                 >
                   <img
                     src={element.test[0].pfp}
