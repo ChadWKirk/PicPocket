@@ -59,6 +59,10 @@ for example "lady" turns into "lady-245609" or "lady-333400"
 
 when clicking image in gallery > go to /image/<public_id> without the "picpocket/" part > GET request to get image with req.params.public_id as public_id
 
+sorting/filtering:
+
+use all lowercase sort/filter values for example "atoz" instead of "aToz" to be able to allow for case insensitive sorting/filtering if user manually types the url
+
 ---
 
 TASKS:
@@ -77,7 +81,7 @@ create Page Not Found page for any routes that are undefined
 
 ---
 
-fix sorting in likes and my pics page. doesn't change url. - need to figure out how to change just part of URL and make it not cumbersome.
+fix sorting in likes and my pics page. doesn't change url. - need to figure out how to change just part of URL and make it not cumbersome. - https://medium.com/@alex.pavlov/how-to-set-or-get-query-parameters-in-react-router-7d6e2440ede8
 
 Put google stuff on sign up page too
 

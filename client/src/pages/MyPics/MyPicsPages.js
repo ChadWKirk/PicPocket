@@ -317,7 +317,7 @@ const MyPicsPage = ({
     bulkArr.current[0].title = title;
     bulkArr.current[0].description = description;
     bulkArr.current[0].tags = tags.split(", "); //turn string into array
-    bulkArr.current[0].imageType = imageType;
+    bulkArr.current[0].imageType = imageType.toLowerCase();
     console.log("submit attempt");
     await fetch(`${domain}/update/${curUser_real}`, {
       method: "PUT",

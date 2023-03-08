@@ -19,6 +19,39 @@ const ImageGallerySortFilterAndSubheadingComponent = ({
   curUser_real,
   page,
 }) => {
+  //check for sort/filter value from url to show proper title in dropdown menu
+  switch (sort.toLowerCase()) {
+    case "most-recent":
+      setSortTitle("Most Recent");
+      break;
+    case "oldest":
+      setSortTitle("Oldest");
+      break;
+    case "atoz":
+      setSortTitle("A - Z");
+      break;
+    case "ztoa":
+      setSortTitle("Z - A");
+      break;
+    case "leastlikes":
+      setSortTitle("Least Popular");
+      break;
+    case "mostlikes":
+      setSortTitle("Popular");
+      break;
+  }
+  switch (filter.toLowerCase()) {
+    case "all-types":
+      setFilterTitle("All Types");
+      break;
+    case "photo":
+      setFilterTitle("Photo");
+      break;
+    case "illustration":
+      setFilterTitle("Illustration");
+      break;
+  }
+
   let subHeading;
   if (page == "searchPage") {
     subHeading = (
@@ -81,7 +114,7 @@ const ImageGallerySortFilterAndSubheadingComponent = ({
           <Dropdown.Item
             className="image-gallery__dropdown-item"
             onClick={() => {
-              setSort("aToz");
+              setSort("atoz");
               setSortTitle("A - Z");
             }}
           >
@@ -90,7 +123,7 @@ const ImageGallerySortFilterAndSubheadingComponent = ({
           <Dropdown.Item
             className="image-gallery__dropdown-item"
             onClick={() => {
-              setSort("zToa");
+              setSort("ztoa");
               setSortTitle("Z - A");
             }}
           >
@@ -99,7 +132,7 @@ const ImageGallerySortFilterAndSubheadingComponent = ({
           <Dropdown.Item
             className="image-gallery__dropdown-item"
             onClick={() => {
-              setSort("leastLikes");
+              setSort("leastlikes");
               setSortTitle("Least Popular");
             }}
           >
@@ -108,7 +141,7 @@ const ImageGallerySortFilterAndSubheadingComponent = ({
           <Dropdown.Item
             className="image-gallery__dropdown-item"
             onClick={() => {
-              setSort("mostLikes");
+              setSort("mostlikes");
               setSortTitle("Popular");
             }}
           >
@@ -131,7 +164,7 @@ const ImageGallerySortFilterAndSubheadingComponent = ({
           <Dropdown.Item
             className="image-gallery__dropdown-item"
             onClick={() => {
-              setFilter("Photo");
+              setFilter("photo");
               setFilterTitle("Photo");
             }}
           >
@@ -140,7 +173,7 @@ const ImageGallerySortFilterAndSubheadingComponent = ({
           <Dropdown.Item
             className="image-gallery__dropdown-item"
             onClick={() => {
-              setFilter("Illustration");
+              setFilter("illustration");
               setFilterTitle("Illustration");
             }}
           >

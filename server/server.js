@@ -1447,13 +1447,13 @@ app.get("/:username/likes/:sort/:filter", (req, res) => {
     sortBy = { created_at: -1 };
   } else if (sort == "oldest") {
     sortBy = { created_at: 1 };
-  } else if (sort == "aToz") {
+  } else if (sort == "atoz") {
     sortBy = { title: 1 };
-  } else if (sort == "zToa") {
+  } else if (sort == "ztoa") {
     sortBy = { title: -1 };
-  } else if (sort == "leastLikes") {
+  } else if (sort == "leastlikes") {
     sortBy = { likes: 1 };
-  } else if (sort == "mostLikes") {
+  } else if (sort == "mostlikes") {
     sortBy = { likes: -1 };
   }
 

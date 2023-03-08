@@ -95,7 +95,7 @@ const UploadForm = ({
             .replace(".jpeg", "");
           uploadToMongoBody.description = "";
           uploadToMongoBody.price = "$0.00";
-          uploadToMongoBody.imageType = "Photo";
+          uploadToMongoBody.imageType = "photo";
 
           //send to mongoDB
           fetch(`${domain}/upload`, {
@@ -182,7 +182,7 @@ const UploadForm = ({
             .replace(".jpeg", "");
           uploadToMongoBody.description = "";
           uploadToMongoBody.price = "$0.00";
-          uploadToMongoBody.imageType = "Photo";
+          uploadToMongoBody.imageType = "photo";
 
           //send to mongoDB
           fetch(`${domain}/upload`, {
