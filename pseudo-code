@@ -81,6 +81,8 @@ create Page Not Found page for any routes that are undefined
 
 ---
 
+change search results sort filter to lower case in server js
+
 fix sorting in likes and my pics page. doesn't change url. - need to figure out how to change just part of URL and make it not cumbersome. - https://medium.com/@alex.pavlov/how-to-set-or-get-query-parameters-in-react-router-7d6e2440ede8
 
 Put google stuff on sign up page too
