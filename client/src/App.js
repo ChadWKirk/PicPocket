@@ -5,6 +5,7 @@ import { useAuthContext } from "./context/useAuthContext";
 import Footer from "./components/Footer";
 
 //pages
+import NotFoundPage from "./pages/NotFoundPage";
 import MainPage from "./pages/MainPage/MainPage";
 import MainPageMostPopularImages from "./pages/MainPage/MainPageMostPopularImages";
 import UserSettingsPage from "./pages/AccountManipulationPages/UserSettingsPage";
@@ -131,6 +132,17 @@ function App() {
     return (
       <div className="app">
         <Routes>
+          <Route
+            path="*"
+            element={
+              <NotFoundPage
+                domain={domain}
+                curUser_real={curUser_real}
+                curUser_hyphenated={curUser_hyphenated}
+                isLoggedIn={isLoggedIn}
+              />
+            }
+          ></Route>
           <Route
             path="/"
             element={

@@ -1100,6 +1100,16 @@ button {
   font-size: 1rem;
 }
 
+/* Page Not Found Page CSS */
+.not-found-page__contents-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  margin-top: 7rem;
+}
+
 /* Email Verify Page CSS */
 
 .email-verify-page__container {
