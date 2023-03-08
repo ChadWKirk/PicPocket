@@ -23,6 +23,9 @@ const ImageGallery = ({
   // used to navigate to imageViewPage and isShowingImageSelectModal state to show modal on first navigate
   let navigate = useNavigate();
 
+  const { sortParam } = useParams();
+  console.log(sortParam);
+
   //subheading for Main Page
   let mainPageSubheading;
   if (page == "mainPageMostRecent" || page == "mainPageMostPopular") {

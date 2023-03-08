@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 // import NavBar from "../../components/NavBar";
 import NavbarComponent from "../../components/NavbarComponent";
 import ImageGallerySortFilterAndSubheadingComponent from "../../components/ImageGallerySortFilterAndSubheadingComponent";
@@ -15,19 +15,24 @@ const LikesPage = ({
   imgTitleArrState,
   setImgTitleArrState,
 }) => {
-  let navigate = useNavigate();
-  const { username } = useParams();
+  //search parameters eg: ?sort=most-recent  ... to get params use searchParams.get("x") eg: searchParams.get("sort")
+  let [searchParams, setSearchParams] = useSearchParams();
 
-  //sort and filter from URL
-  const { urlSort } = useParams();
-  const { urlFilter } = useParams();
+  let navigate = useNavigate();
+
+  //url parameters
+  const { username, urlSort, urlFilter } = useParams();
+
+  // console.log(params.toString());
 
   //if user tries to go to a user's likes page that they aren't logged in as
   //change url to url with their curUser name
   //if user tries to get to likes page and they aren't logged in at all, app.js takes cares of it by using Navigate element
   useEffect(() => {
     if (username !== curUser_hyphenated) {
-      navigate(`/Account/${curUser_hyphenated}/Likes/most-recent/all-types`);
+      navigate(
+        `/Account/${curUser_hyphenated}/Likes/?sort=most-recent&filter=all-types`
+      );
     }
   }, []);
 
@@ -66,8 +71,8 @@ const LikesPage = ({
   const [imgGalleryLength, setImgGalleryLength] = useState();
 
   //sort and filter values to do get requests
-  const [sort, setSort] = useState(urlSort);
-  const [filter, setFilter] = useState(urlFilter);
+  const [sort, setSort] = useState(searchParams.get("sort"));
+  const [filter, setFilter] = useState(searchParams.get("filter"));
   //sort and filter values to change the titles of the dropdown menus
   const [sortTitle, setSortTitle] = useState("Most Recent");
   const [filterTitle, setFilterTitle] = useState("All Types");

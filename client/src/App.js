@@ -160,7 +160,7 @@ function App() {
             }
           ></Route>
           <Route
-            path="/search/:searchQuery/:sort/:filter"
+            path="/search/:searchQuery"
             element={
               <SearchResultPage
                 domain={domain}
@@ -243,7 +243,8 @@ function App() {
             }
           ></Route>
           <Route
-            path={`/Account/:username/Likes/:urlSort/:urlFilter`}
+            // path={`/Account/:username/Likes/:urlSort/:urlFilter`}
+            path={`/Account/:username/Likes`}
             element={
               isLoggedIn ? (
                 <LikesPage

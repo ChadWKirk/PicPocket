@@ -64,8 +64,9 @@ const MainPageHeroImage = () => {
     console.log(inputValue);
   }
 
-  function onSubmit() {
-    navigate(`/search/${inputValue}/most-recent/all-types`);
+  function onSubmit(e) {
+    e.preventDefault();
+    window.location.href = `/search/${inputValue}/?sort=most-recent&filter=all-types`;
   }
 
   return (
@@ -74,7 +75,10 @@ const MainPageHeroImage = () => {
         <p>
           The best free stock photos. Royalty free images shared by creators.
         </p>
-        <form className="carousel__search-container" onSubmit={onSubmit}>
+        <form
+          className="carousel__search-container"
+          onSubmit={(e) => onSubmit(e)}
+        >
           <input
             className="carousel__search-bar"
             placeholder="Search for free photos"

@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
-import { useNavigate } from "react-router-dom";
+import { createSearchParams, useNavigate } from "react-router-dom";
 
 const ImageGallerySortFilterAndSubheadingComponent = ({
   sort,
@@ -19,6 +19,9 @@ const ImageGallerySortFilterAndSubheadingComponent = ({
   curUser_real,
   page,
 }) => {
+  //useNavigate hook to change sort and filter parameters in url when clicking dropdown menu
+  const navigate = useNavigate();
+
   //check for sort/filter value from url to show proper title in dropdown menu
   switch (sort.toLowerCase()) {
     case "most-recent":
@@ -98,6 +101,12 @@ const ImageGallerySortFilterAndSubheadingComponent = ({
             onClick={() => {
               setSort("most-recent");
               setSortTitle("Most Recent");
+              navigate({
+                search: createSearchParams({
+                  sort: "most-recent",
+                  filter: filter,
+                }).toString(),
+              });
             }}
           >
             Most Recent
@@ -107,6 +116,12 @@ const ImageGallerySortFilterAndSubheadingComponent = ({
             onClick={() => {
               setSort("oldest");
               setSortTitle("Oldest");
+              navigate({
+                search: createSearchParams({
+                  sort: "oldest",
+                  filter: filter,
+                }).toString(),
+              });
             }}
           >
             Oldest
@@ -116,6 +131,12 @@ const ImageGallerySortFilterAndSubheadingComponent = ({
             onClick={() => {
               setSort("atoz");
               setSortTitle("A - Z");
+              navigate({
+                search: createSearchParams({
+                  sort: "atoz",
+                  filter: filter,
+                }).toString(),
+              });
             }}
           >
             A - Z
@@ -125,6 +146,12 @@ const ImageGallerySortFilterAndSubheadingComponent = ({
             onClick={() => {
               setSort("ztoa");
               setSortTitle("Z - A");
+              navigate({
+                search: createSearchParams({
+                  sort: "ztoa",
+                  filter: filter,
+                }).toString(),
+              });
             }}
           >
             Z - A
@@ -134,6 +161,12 @@ const ImageGallerySortFilterAndSubheadingComponent = ({
             onClick={() => {
               setSort("leastlikes");
               setSortTitle("Least Popular");
+              navigate({
+                search: createSearchParams({
+                  sort: "leastlikes",
+                  filter: filter,
+                }).toString(),
+              });
             }}
           >
             Least Popular
@@ -143,6 +176,12 @@ const ImageGallerySortFilterAndSubheadingComponent = ({
             onClick={() => {
               setSort("mostlikes");
               setSortTitle("Popular");
+              navigate({
+                search: createSearchParams({
+                  sort: "mostlikes",
+                  filter: filter,
+                }).toString(),
+              });
             }}
           >
             Popular
@@ -157,6 +196,12 @@ const ImageGallerySortFilterAndSubheadingComponent = ({
             onClick={() => {
               setFilter("all-types");
               setFilterTitle("All Types");
+              navigate({
+                search: createSearchParams({
+                  sort: sort,
+                  filter: "all-types",
+                }).toString(),
+              });
             }}
           >
             All types
@@ -166,6 +211,12 @@ const ImageGallerySortFilterAndSubheadingComponent = ({
             onClick={() => {
               setFilter("photo");
               setFilterTitle("Photo");
+              navigate({
+                search: createSearchParams({
+                  sort: sort,
+                  filter: "photo",
+                }).toString(),
+              });
             }}
           >
             Photo
@@ -175,6 +226,12 @@ const ImageGallerySortFilterAndSubheadingComponent = ({
             onClick={() => {
               setFilter("illustration");
               setFilterTitle("Illustration");
+              navigate({
+                search: createSearchParams({
+                  sort: sort,
+                  filter: "illustration",
+                }).toString(),
+              });
             }}
           >
             Illustration

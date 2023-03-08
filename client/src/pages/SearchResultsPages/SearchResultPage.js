@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import NavbarComponent from "../../components/NavbarComponent";
 import ImageGallerySortFilterAndSubheadingComponent from "../../components/ImageGallerySortFilterAndSubheadingComponent";
-import { useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom";
 
 import ImageGallery from "../../components/ImageGallery";
 
@@ -16,6 +15,9 @@ const SearchResultsPage = ({
   imgTitleArrState,
   setImgTitleArrState,
 }) => {
+  //search parameters eg: ?sort=most-recent  ... to get params use searchParams.get("x") eg: searchParams.get("sort")
+  let [searchParams, setSearchParams] = useSearchParams();
+
   //to get number of images in array for "x pics liked by user" or "x search results" heading
   const [imgGalleryLength, setImgGalleryLength] = useState();
 
@@ -23,17 +25,17 @@ const SearchResultsPage = ({
   const { searchQuery } = useParams();
 
   //sort and filter values to do get requests
-  const [sort, setSort] = useState("most-recent");
-  const [filter, setFilter] = useState("all-types");
+  const [sort, setSort] = useState(searchParams.get("sort"));
+  const [filter, setFilter] = useState(searchParams.get("filter"));
   //sort and filter values to change the titles of the dropdown menus
   const [sortTitle, setSortTitle] = useState("Most Recent");
   const [filterTitle, setFilterTitle] = useState("All Types");
 
   //when either sort or filter is changed, navigate to new search url
   let navigate = useNavigate();
-  useEffect(() => {
-    navigate(`/search/${searchQuery}/${sort}/${filter}`);
-  }, [sort, filter]);
+  // useEffect(() => {
+  //   navigate(`/search/${searchQuery}/?sort=most-recent&filter=all-types`);
+  // }, [sort, filter]);
 
   return (
     <div>

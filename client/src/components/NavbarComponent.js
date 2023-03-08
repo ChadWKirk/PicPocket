@@ -67,8 +67,9 @@ const NavbarComponent = ({
   function onChange(event) {
     inputValue = event.target.value;
   }
-  function onSubmit() {
-    navigate(`/search/${inputValue}/most-recent/all-types`);
+  function onSubmit(e) {
+    e.preventDefault();
+    window.location.href = `/search/${inputValue}/?sort=most-recent&filter=all-types`;
   }
 
   //navbuttons to conditionally render based on whether you're logged in or not
@@ -171,7 +172,7 @@ const NavbarComponent = ({
           <ul className="navbar__dropdown-menu">
             <li>
               <a
-                href={`/Account/${curUser_hyphenated}/Likes/most-recent/all-types`}
+                href={`/Account/${curUser_hyphenated}/Likes/?sort=most-recent&filter=all-types`}
               >
                 Likes
               </a>
@@ -249,7 +250,10 @@ const NavbarComponent = ({
           <a href="/" className="navbar__logo">
             PicPocket
           </a>
-          <form className="navbar__search-container" onSubmit={onSubmit}>
+          <form
+            className="navbar__search-container"
+            onSubmit={(e) => onSubmit(e)}
+          >
             <input
               className="navbar__search-bar"
               placeholder="Search for free photos"
