@@ -55,7 +55,9 @@ const ImageGallery = ({
     //depending on what the type prop is set to, use one of these routes to fetch img data
     let fetchRoute;
     if (page == "userPage") {
-      fetchRoute = `${domain}/${curUser_real}/${sort}/${filter}`;
+      fetchRoute = `${domain}/${username
+        .split("-")
+        .join(" ")}/${sort}/${filter}`;
     } else if (page == "likesPage") {
       fetchRoute = `${domain}/${curUser_real}/likes/${sort}/${filter}`;
     } else if (page == "searchPage") {

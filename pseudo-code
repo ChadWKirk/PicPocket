@@ -77,7 +77,7 @@ mypics - loading for submit/delete/massdelete (make loading/progress bar at top 
 
 make about us page
 
-use page not found page any time a user route goes to a user that doesn't exist
+put isLoading on imageViewPage to make it so empty imageViewPage content doesn't get displayed before PageNotFound content is displayed
 
 ---
 

@@ -922,17 +922,19 @@ app.delete("/Account/:username/delUser/:pfpID", (req, res) => {
 //get user info (pfp, description)
 app.get("/:username/info", (req, res) => {
   let db_connect = dbo.getDb();
-  console.log("SSSSS");
+  console.log("user info fetch");
   db_connect
     .collection("picpocket-users")
     .find({ username: req.params.username })
     .toArray(function (err, result) {
       if (err) {
-        res.status(400).send("Error fetching user info!");
-      } else {
+        res.status(400).send("Error fetching listings!");
+      } else if (result.length >= 1) {
         res.json(result);
-        console.log(result);
-        console.log("o");
+        console.log("user found");
+      } else if (result.length <= 0) {
+        res.json("no user found");
+        console.log("no user found");
       }
     });
 });
