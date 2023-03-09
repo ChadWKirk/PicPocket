@@ -1,5 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import NavbarComponent from "../components/NavbarComponent";
+//font awesome
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faEye,
+  faQuestion,
+  faQuestionCircle,
+} from "@fortawesome/free-solid-svg-icons";
 
 const NotFoundPage = ({
   domain,
@@ -18,26 +25,15 @@ const NotFoundPage = ({
         navColorClass={"black"}
       />
       <div className="not-found-page__contents-container">
-        <div>eye icon</div>
-        <div>Sorry, this page could not be found.</div>
-        <div>Here are some helpful links instead:</div>
-        <ul>
-          <li>
-            <a>link 1</a>
-          </li>
-          <li>
-            <a>link 1</a>
-          </li>
-          <li>
-            <a>link 1</a>
-          </li>
-          <li>
-            <a>link 1</a>
-          </li>
-          <li>
-            <a>link 1</a>
-          </li>
-        </ul>
+        <div className="not-found-page__icon">
+          <FontAwesomeIcon icon={faQuestionCircle} />
+        </div>
+        <div className="not-found-page__message">
+          Sorry, this page could not be found.
+        </div>
+        <div className="not-found-page__link">
+          <a href="/">Go Back Home</a>
+        </div>
       </div>
     </div>
   );
