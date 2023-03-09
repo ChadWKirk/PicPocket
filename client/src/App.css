@@ -1118,11 +1118,12 @@ button {
 }
 .not-found-page__icon {
   font-size: 12rem;
-  /* margin-top: -7rem; */
+  color: var(--dark2);
 }
 .not-found-page__message {
   font-size: 4rem;
   margin-bottom: 2rem;
+  color: var(--dark2);
 }
 .not-found-page__link {
   color: #000;

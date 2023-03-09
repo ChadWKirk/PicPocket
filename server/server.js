@@ -1246,9 +1246,12 @@ app.get("/image/:public_id", (req, res) => {
     .toArray(function (err, result) {
       if (err) {
         res.status(400).send("Error fetching listings!");
-      } else {
+      } else if (result.length >= 1) {
         res.json(result);
-        console.log(result);
+        console.log("image found");
+      } else if (result.length <= 0) {
+        res.json("no image found");
+        console.log("no image found");
       }
     });
 });

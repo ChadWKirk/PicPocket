@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronLeft,
   faChevronRight,
+  faQuestionCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
@@ -58,6 +59,9 @@ const ImageViewPage = ({
   //to rerender modal on prev or next img arrow click
   const [isPrevOrNextClicked, setIsPrevOrNextClicked] = useState(false);
 
+  // whether an image is found by fetchImgInfo() or not. Determines whether "page not found" content is display or normal imageViewPage content is displayed
+  const [isImgFound, setIsImgFound] = useState(true);
+
   //on load, pull img from url parameter :imgPublic_Id (see app.js), and get user info for img author pfp and name
   useEffect(() => {
     async function fetchImgInfo() {
@@ -69,7 +73,13 @@ const ImageViewPage = ({
           .json()
           .then((resJSON) => JSON.stringify(resJSON))
           .then((stringJSON) => JSON.parse(stringJSON))
-          .then((parsedJSON) => setImgInfo(parsedJSON[0]))
+          .then((parsedJSON) => {
+            if (parsedJSON === "no image found") {
+              setIsImgFound(false);
+            } else {
+              setImgInfo(parsedJSON[0]);
+            }
+          })
       );
     }
     fetchImgInfo();
@@ -78,6 +88,7 @@ const ImageViewPage = ({
 
   //fetch user info for pfp and author name
   useEffect(() => {
+    console.log(imgInfo);
     if (imgInfo) {
       async function fetchUserInfo() {
         await fetch(`${domain}/${imgInfo.uploadedBy}/info`, {
@@ -493,10 +504,8 @@ const ImageViewPage = ({
   let imgRect = useRef();
   let imgRectVal;
   useEffect(() => {
-    if (imgInfo) {
-      imgRectVal = document.querySelector("#mainImg").getBoundingClientRect();
-      imgRect.current = imgRectVal;
-    }
+    imgRectVal = document.querySelector("#mainImg").getBoundingClientRect();
+    imgRect.current = imgRectVal;
   }, [imgInfo, isImgZoomedIn]);
 
   //set transformOrigin to click position relative to the image element by subtrcting width/height from click position when clicking. top left is 0,0
@@ -582,41 +591,62 @@ const ImageViewPage = ({
         navPositionClass={"fixed"}
         navColorClass={"white"}
       />
-      <div className="image-view-page__top-bar-height-margin">margin</div>
-      <div className="image-view-page__top-bar-container">
-        <div className="image-view-page__top-bar-contents">
-          <div className="image-view-page__image-author-link-container">
-            <div className="image-view-page__image-author-pfp-div">
-              <a
-                className="image-view-page__image-author-pfp"
-                href={`/User/${imgAuthorName}`}
-              >
-                <img
-                  src={imgAuthorPFP}
-                  className="image-view-page__image-author-pfp"
-                />
-              </a>
-            </div>
-
-            <a
-              href={`/User/${imgAuthorName}`}
-              className="image-view-page__image-author-name"
-            >
-              {imgAuthorName}
-            </a>
+      {!isImgFound && (
+        <div className="not-found-page__contents-container">
+          <div className="not-found-page__icon">
+            <FontAwesomeIcon icon={faQuestionCircle} />
           </div>
-          <div className="image-view-page__top-bar-buttons-container">
-            {mainImgLikeBtn}
-            <a
-              className="image-view-page__download-button"
-              href={imgDownloadURL}
-            >
-              Free Download
-            </a>
+          <div className="not-found-page__message">
+            Sorry, this page could not be found.
+          </div>
+          <div className="not-found-page__link">
+            <a href="/">Go Back Home</a>
           </div>
         </div>
-      </div>
-      <div className="image-view-page__container">
+      )}
+      {isImgFound && (
+        <div className="image-view-page__top-bar-height-margin">margin</div>
+      )}
+      {isImgFound && (
+        <div className="image-view-page__top-bar-container">
+          <div className="image-view-page__top-bar-contents">
+            <div className="image-view-page__image-author-link-container">
+              <div className="image-view-page__image-author-pfp-div">
+                <a
+                  className="image-view-page__image-author-pfp"
+                  href={`/User/${imgAuthorName}`}
+                >
+                  <img
+                    src={imgAuthorPFP}
+                    className="image-view-page__image-author-pfp"
+                  />
+                </a>
+              </div>
+
+              <a
+                href={`/User/${imgAuthorName}`}
+                className="image-view-page__image-author-name"
+              >
+                {imgAuthorName}
+              </a>
+            </div>
+            <div className="image-view-page__top-bar-buttons-container">
+              {mainImgLikeBtn}
+              <a
+                className="image-view-page__download-button"
+                href={imgDownloadURL}
+              >
+                Free Download
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
+      <div
+        className={`${
+          !isImgFound ? "displayNone" : "image-view-page__container"
+        }`}
+      >
         <div className="image-view-page__img-container">
           {/* <div
             style={{

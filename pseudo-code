@@ -77,9 +77,7 @@ mypics - loading for submit/delete/massdelete (make loading/progress bar at top 
 
 make about us page
 
-create Page Not Found page for any routes that are undefined - styling
-
-use page not found page any time a user route goes to a user that doesn't exist or an image view page image that doesn't exist
+use page not found page any time a user route goes to a user that doesn't exist
 
 ---
 
