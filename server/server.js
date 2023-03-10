@@ -1,4 +1,5 @@
 const express = require("express");
+const fs = require("fs");
 const app = express();
 const path = require("path");
 const hbs = require("nodemailer-express-handlebars");
@@ -14,6 +15,16 @@ const jwt = require("jsonwebtoken");
 const createToken = (_id) => {
   return jwt.sign({ _id: _id }, process.env.JWT_SECRET);
 };
+const multer = require("multer");
+const fileStorageEngine = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "./images");
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
+const upload = multer({ storage: fileStorageEngine });
 
 //cloudinary image hosting
 const cloudinary = require("cloudinary").v2;
@@ -40,6 +51,63 @@ app.listen(port, () => {
     if (err) console.log(err);
   });
   console.log("server has connected.");
+});
+
+//upload image(s) post
+app.use("/upload", upload.array("files", 200), async (req, res) => {
+  let db_connect = dbo.getDb();
+  let uploadToMongoBody;
+  //random 6 digit number to tag onto the public_id to allow images to be named the same thing but have different public_ids
+  let randomNumber = Math.floor(100000 + Math.random() * 900000);
+  //make sure it's working
+  console.log("upload start");
+  console.log("req.files");
+  console.log(req.files);
+  console.log("req.body");
+  console.log(req.body);
+  //upload to cloudinary
+  await cloudinary.uploader
+    .upload(`images/${req.files[0].originalname}`, {
+      folder: "picpocket",
+      public_id: `${req.files[0].originalname
+        .split(" ")
+        .join("-")
+        .replace(".jpg", "")
+        .replace(".png", "")
+        .replace(".jpeg", "")}-${randomNumber}`,
+      colors: true,
+    })
+    .then((result) => {
+      //upload to mongoDB
+      console.log(result);
+      uploadToMongoBody = result;
+      uploadToMongoBody.likes = 0;
+      uploadToMongoBody.likedBy = [];
+      uploadToMongoBody.uploadedBy = req.body.uploaderName;
+      uploadToMongoBody.title = req.files[0].originalname
+        .replace(".jpg", "")
+        .replace(".png", "")
+        .replace(".jpeg", "");
+      uploadToMongoBody.description = "";
+      uploadToMongoBody.imageType = "photo";
+      db_connect.collection("picpocket-images").insertOne(result);
+      //remove file from images folder once it is successfully uploaded to cloudinary and mongoDB
+      fs.unlink(`images/${req.files[0].originalname}`, function (err) {
+        if (err) {
+          throw err;
+        } else {
+          console.log(
+            "file removed from images folder after uploading successfully."
+          );
+        }
+      });
+      res.json({
+        secure_url: uploadToMongoBody.secure_url,
+        public_id: uploadToMongoBody.public_id,
+        asset_id: uploadToMongoBody.asset_id,
+      });
+    })
+    .catch(console.log("error"));
 });
 
 app.get("/users", (req, res) => {
@@ -985,18 +1053,6 @@ app.post("/uploadTest", async (req, res) => {
     .catch((err) => {
       console.log(err);
     });
-});
-
-//upload post
-app.post("/upload", (req, res) => {
-  let db_connect = dbo.getDb();
-  //make sure it's working
-  console.log("upload test start");
-  console.log("upload test start");
-  console.log(req.body);
-  //insert them into MongoDB with a likes and uploaded by field added
-  db_connect.collection("picpocket-images").insertOne(req.body);
-  res.json("uploaded");
 });
 
 //upload pfp post
