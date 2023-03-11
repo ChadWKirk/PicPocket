@@ -110,6 +110,126 @@ app.use("/upload", upload.array("files", 200), async (req, res) => {
     .catch(console.log("error"));
 });
 
+//upload pfp post
+app.use(
+  "/pfpUpload/:username/:oldPFP",
+  upload.single("file"),
+  async (req, res) => {
+    let uploadToMongoBody;
+    //req.body.secure_url for new PFP src
+    let oldPFPID = "picpocket/" + req.params.oldPFP;
+    let db_connect = dbo.getDb();
+    //make sure it's working
+    console.log("upload pfp start");
+    console.log(req.body);
+    console.log(req.file);
+    //random 6 digit number to tag onto the public_id to allow images to be named the same thing but have different public_ids
+    let randomNumber = Math.floor(100000 + Math.random() * 900000);
+
+    //upload new PFP to cloudinary
+    //upload to cloudinary
+    await cloudinary.uploader
+      .upload(`images/${req.file.originalname}`, {
+        folder: "picpocket",
+        public_id: `${req.file.originalname
+          .split(" ")
+          .join("-")
+          .replace(".jpg", "")
+          .replace(".png", "")
+          .replace(".jpeg", "")}-${randomNumber}`,
+        colors: true,
+      })
+      .then((result) => {
+        //upload to mongoDB
+        console.log(result);
+        uploadToMongoBody = result;
+        uploadToMongoBody.likes = 0;
+        uploadToMongoBody.likedBy = [];
+        uploadToMongoBody.uploadedBy = req.body.uploaderName;
+        uploadToMongoBody.title = req.file.originalname
+          .replace(".jpg", "")
+          .replace(".png", "")
+          .replace(".jpeg", "");
+        uploadToMongoBody.description = "";
+        uploadToMongoBody.imageType = "photo";
+        db_connect.collection("picpocket-pfps").insertOne(result);
+        //change pfp to uploaded image
+        db_connect.collection("picpocket-users").updateOne(
+          {
+            username: req.params.username,
+          },
+          {
+            $set: {
+              pfp: result.secure_url,
+            },
+          }
+        );
+        //remove file from images folder once it is successfully uploaded to cloudinary and mongoDB
+        fs.unlink(`images/${req.file.originalname}`, function (err) {
+          if (err) {
+            throw err;
+          } else {
+            console.log(
+              "file removed from images folder after uploading successfully."
+            );
+          }
+        });
+        //delete old pfp from mongoDb
+        db_connect
+          .collection("picpocket-pfps")
+          .deleteOne({ public_id: oldPFPID });
+
+        //delete old pfp from Cloudinary
+        //if old pfp is not the default purple pfp, delete it (to avoid deleting the default purple pfp)
+        if (oldPFPID != "picpocket/default_purple_pfp_ibof5p") {
+          cloudinary.uploader
+            .destroy(oldPFPID, { invalidate: true })
+            .then((result) => {
+              console.log(result);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+        res.json({
+          secure_url: uploadToMongoBody.secure_url,
+          public_id: uploadToMongoBody.public_id,
+          asset_id: uploadToMongoBody.asset_id,
+        });
+      })
+      .catch(console.log("error"));
+
+    //upload new PFP to mongoDb
+    db_connect.collection("picpocket-pfps").insertOne(req.body);
+    db_connect.collection("picpocket-users").updateOne(
+      {
+        username: req.params.username,
+      },
+      {
+        //change pfp to uploaded image
+        $set: {
+          pfp: req.body.secure_url,
+        },
+      }
+    );
+    //delete old pfp from mongoDb
+    db_connect.collection("picpocket-pfps").deleteOne({ public_id: oldPFPID });
+
+    //delete old pfp from Cloudinary
+    //if old pfp is not the default purple pfp, delete it (to avoid deleting the default purple pfp)
+    if (oldPFPID != "picpocket/default_purple_pfp_ibof5p") {
+      cloudinary.uploader
+        .destroy(oldPFPID, { invalidate: true })
+        .then((result) => {
+          console.log(result);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }
+);
+
 app.get("/users", (req, res) => {
   let db_connect = dbo.getDb();
 
@@ -1053,48 +1173,6 @@ app.post("/uploadTest", async (req, res) => {
     .catch((err) => {
       console.log(err);
     });
-});
-
-//upload pfp post
-app.post("/upload/pfp/:username/:oldPFP", (req, res) => {
-  //req.body.secure_url for new PFP src
-  let oldPFPID = "picpocket/" + req.params.oldPFP;
-  let db_connect = dbo.getDb();
-  //make sure it's working
-  console.log("upload test start");
-  console.log("upload test start");
-  console.log(req.body);
-
-  //upload new PFP to mongoDb
-  db_connect.collection("picpocket-pfps").insertOne(req.body);
-  db_connect.collection("picpocket-users").updateOne(
-    {
-      username: req.params.username,
-    },
-    {
-      //change pfp to uploaded image
-      $set: {
-        pfp: req.body.secure_url,
-      },
-    }
-  );
-  //delete old pfp from mongoDb
-
-  db_connect.collection("picpocket-pfps").deleteOne({ public_id: oldPFPID });
-
-  //delete old pfp from Cloudinary
-  if (oldPFPID != "picpocket/default_purple_pfp_ibof5p") {
-    cloudinary.uploader
-      .destroy(oldPFPID, { invalidate: true })
-      .then((result) => {
-        console.log(result);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
-  res.json("uploaded");
 });
 
 //My Likes GET

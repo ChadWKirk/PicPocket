@@ -19,12 +19,8 @@ const UploadForm = ({
   imageError,
   verifiedValue,
 }) => {
-  //cloudinary preset and file for formData
-  var CLOUDINARY_UPLOAD_PRESET = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET;
-  let CLOUDINARY_CLOUD_NAME = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
+  //file for form data
   var targetFilesArray = [];
-  console.log(process.env.REACT_APP_CLOUDINARY_CLOUD_NAME + " cloud name");
-  console.log(CLOUDINARY_UPLOAD_PRESET + " cloud preset");
   //scroll to new upload
   const newItemRef = useRef(); //every imageitem has a ref of newItemRef
   const [isUploadingForRef, setIsUploadingForRef] = useState(false);
@@ -126,7 +122,6 @@ const UploadForm = ({
         setImagesToUpload((imagesToUpload) => [...imagesToUpload, image]);
         // console.log(targetFilesArray + " target files");
         //if file type is JPEG, JPG or PNG
-
         if (image.type == "image/jpeg" || image.type == "image/png") {
           //to send in fetch
           const formData = new FormData();

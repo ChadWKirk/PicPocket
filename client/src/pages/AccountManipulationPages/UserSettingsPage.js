@@ -215,7 +215,8 @@ const UserSettingsPage = ({
     setIsDone(false);
     for (var i = 0; i < e.target.files.length; i++) {
       const image = e.target.files[i];
-      console.log(e.target.files);
+      console.log(image);
+      //if user tries to upload image that isn't allowed
       if (fileTypeArr.indexOf(e.target.files[i].type.toLowerCase()) < 0) {
         image.isUploading = true;
         setPfpToUpload(image);
@@ -243,80 +244,40 @@ const UserSettingsPage = ({
         //to send in fetch
         const formData = new FormData();
         formData.append("file", image);
-        formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
-        formData.append("folder", "picpocket");
+        formData.append("uploaderName", curUser_real);
 
-        var uploadToMongoBody;
+        await fetch(`${domain}/pfpUpload/${curUser_real}/${pfpID}`, {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) =>
+            response
+              .json()
+              .then((resJSON) => JSON.stringify(resJSON))
+              .then((stringJSON) => JSON.parse(stringJSON))
+              .then((parsedJSON) => {
+                setToastStatus("Success");
+                setToastMessage("Your avatar was updated successfully.");
+                toastDissappear();
+                console.log(toastMessage);
+                image.isUploading = false;
+                setPfpToUpload(image);
+                setPFP(parsedJSON.secure_url);
+                // notify_pfp_upload_success();
 
-        //send post request to cloudinary api upload endpoint url (have to use admin API
-        //from cloudinary for multi upload). Upload preset only allows jpg, jpeg or png files.
-        await fetch(
-          `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/upload`,
-          {
-            method: "POST",
-            body: formData,
-          }
-        )
-          .then((result) =>
-            result.json().then((resJSON) => (uploadToMongoBody = resJSON))
+                image.secure_url = parsedJSON.secure_url;
+                image.publicId = parsedJSON.public_id;
+                image.assetId = parsedJSON.asset_id;
+                pfpID = parsedJSON.secure_url.slice(
+                  72,
+                  parsedJSON.secure_url.length - 4
+                );
+              })
           )
           .catch((err) => {
-            console.log(err);
+            console.error(err);
+            // removeImageFromUpload(image.name);
           });
-        //if file type is jpg, png or jpeg and successfully gets uploaded to cloudinary,
-        //send to mongoDB
-        if (uploadToMongoBody.public_id) {
-          //add fields to fetch response to get ready to send to MongoDB
-          uploadToMongoBody.likes = 0;
-          uploadToMongoBody.likedBy = [];
-          uploadToMongoBody.uploadedBy = curUser_real;
-          uploadToMongoBody.title = image.name
-            .replace(".jpg", "")
-            .replace(".png", "")
-            .replace(".jpeg", "");
-          uploadToMongoBody.description = "";
-          uploadToMongoBody.price = "$0.00";
-          uploadToMongoBody.imageType = "Photo";
-
-          //send to mongoDB
-          fetch(`${domain}/upload/pfp/${curUser_real}/${pfpID}`, {
-            method: "POST",
-            headers: { "Content-type": "application/json" },
-            body: JSON.stringify(uploadToMongoBody),
-          })
-            .then((res) => {
-              setToastStatus("Success");
-              setToastMessage("Your avatar was updated successfully.");
-              toastDissappear();
-              console.log(toastMessage);
-              image.isUploading = false;
-              setPfpToUpload(image);
-              setPFP(uploadToMongoBody.secure_url);
-              // notify_pfp_upload_success();
-
-              image.secure_url = uploadToMongoBody.secure_url;
-              image.publicId = uploadToMongoBody.public_id;
-              image.assetId = uploadToMongoBody.asset_id;
-              pfpID = uploadToMongoBody.secure_url.slice(
-                72,
-                uploadToMongoBody.secure_url.length - 4
-              );
-              // setImagesToUpload((imagesToUpload) => [...imagesToUpload]);
-              // console.log(imagesToUpload);
-            })
-            .catch((err) => {
-              console.error(err);
-              // removeImageFromUpload(image.name);
-            });
-        } //else {
-        //   image.isError = true;
-
-        //   image.isUploading = false;
-        //   setPfpToUpload(image);
-        //   setIsDone(true);
-
-        // setImageError(!imageError);
-        // }
       }
     }
   }
@@ -625,17 +586,21 @@ const UserSettingsPage = ({
         </h3>
         <div className="user-settings-page__change-pfp-container">
           <img src={userPFP} className="profilePicBig" />
-          <button className="user-settings-page__change-pfp-btn">
-            <input
-              className="user-settings-page__change-pfp-input"
-              type="file"
-              onChange={(e) => uploadHandler(e)}
-            />
-            <ChangePFPBtn
-              pfpToUpload={pfpToUpload}
-              setPfpToUpload={setPfpToUpload}
-            />
-          </button>
+          <form>
+            <button className="user-settings-page__change-pfp-btn">
+              <input
+                className="user-settings-page__change-pfp-input"
+                type="file"
+                name="file"
+                onChange={(e) => uploadHandler(e)}
+              />
+              <ChangePFPBtn
+                pfpToUpload={pfpToUpload}
+                setPfpToUpload={setPfpToUpload}
+              />
+            </button>
+          </form>
+
           <Toast
             status={toastStatus}
             message={toastMessage}
