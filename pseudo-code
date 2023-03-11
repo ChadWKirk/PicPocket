@@ -63,6 +63,8 @@ sorting/filtering:
 
 use all lowercase sort/filter values for example "atoz" instead of "aToz" to be able to allow for case insensitive sorting/filtering if user manually types the url
 
+get cloudinary name and preset from back end instead of storing in env in front end (unsafe) - upload using multer to handle formData in express - https://cloudinary.com/documentation/upload_images https://medium.com/the-andela-way/how-to-upload-multiple-images-using-cloudinary-and-node-js-2f053b167b80 https://youtu.be/wIOpe8S2Mk8
+
 ---
 
 TASKS:
@@ -84,8 +86,6 @@ put isLoading on imageViewPage to make it so empty imageViewPage content doesn't
 Put google stuff on sign up page too
 
 Facebook OAuth
-
-get cloudinary name and preset from back end instead of storing in env in front end (unsafe) - upload using multer to handle formData in express - https://cloudinary.com/documentation/upload_images https://medium.com/the-andela-way/how-to-upload-multiple-images-using-cloudinary-and-node-js-2f053b167b80 https://youtu.be/wIOpe8S2Mk8
 
 put termly env vars in backend as well
 

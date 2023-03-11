@@ -49,7 +49,6 @@ const UploadForm = ({
       for (let i = 0; i < e.target.files.length; i++) {
         const image = e.target.files[i];
 
-        console.log(image);
         image.isUploading = true;
         setIsUploadingForRef(!isUploadingForRef); //switch this every time upload begins to call useEffect
         targetFilesArray.push(image);
@@ -120,74 +119,59 @@ const UploadForm = ({
       let files = dt.files;
       let count = files.length;
       for (let i = 0; i < count; i++) {
-        console.log(i);
         const image = files[i];
         image.isUploading = true;
         setIsUploadingForRef(!isUploadingForRef); //switch this every time upload begins to call useEffect
         // targetFilesArray.push(image);
         setImagesToUpload((imagesToUpload) => [...imagesToUpload, image]);
         // console.log(targetFilesArray + " target files");
+        //if file type is JPEG, JPG or PNG
 
-        //to send in fetch
-        const formData = new FormData();
-        formData.append("file", image);
-        formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
-        formData.append("folder", "picpocket");
+        if (image.type == "image/jpeg" || image.type == "image/png") {
+          //to send in fetch
+          const formData = new FormData();
+          formData.append("files", image);
+          formData.append("uploaderName", curUser_real);
 
-        var uploadToMongoBody;
-
-        //send post request to cloudinary api upload endpoint url (have to use admin API
-        //from cloudinary for multi upload). Upload preset only allows jpg, jpeg or png files.
-        await fetch(
-          `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/upload`,
-          {
+          await fetch(`${domain}/upload`, {
             method: "POST",
             body: formData,
-          }
-        )
-          .then((result) =>
-            result.json().then((resJSON) => (uploadToMongoBody = resJSON))
-          )
-          .catch((err) => {
-            console.log(err);
-          });
-        //if file type is jpg, png or jpeg and successfully gets uploaded to cloudinary,
-        //send to mongoDB. Accepted file types are controlled through upload preset GUI on the cloudinary website
-        if (uploadToMongoBody.public_id) {
-          //add fields to fetch response to get ready to send to MongoDB
-          uploadToMongoBody.likes = 0;
-          uploadToMongoBody.likedBy = [];
-          uploadToMongoBody.uploadedBy = curUser_real;
-          uploadToMongoBody.title = image.name
-            .replace(".jpg", "")
-            .replace(".png", "")
-            .replace(".jpeg", "");
-          uploadToMongoBody.description = "";
-          uploadToMongoBody.price = "$0.00";
-          uploadToMongoBody.imageType = "photo";
-
-          //send to mongoDB
-          fetch(`${domain}/upload`, {
-            method: "POST",
-            headers: { "Content-type": "application/json" },
-            body: JSON.stringify(uploadToMongoBody),
           })
-            .then((res) => {
-              image.isUploading = false;
-              image.secure_url = uploadToMongoBody.secure_url;
-              image.publicId = uploadToMongoBody.public_id;
-              image.assetId = uploadToMongoBody.asset_id;
-              setImagesToUpload((imagesToUpload) => [...imagesToUpload]);
-              console.log(imagesToUpload);
-            })
+            .then((response) =>
+              response
+                .json()
+                .then((resJSON) => JSON.stringify(resJSON))
+                .then((stringJSON) => JSON.parse(stringJSON))
+                .then((parsedJSON) => {
+                  if (parsedJSON.public_id) {
+                    console.log(parsedJSON);
+                    image.isUploading = false;
+                    image.secure_url = parsedJSON.secure_url;
+                    image.publicId = parsedJSON.public_id;
+                    image.assetId = parsedJSON.asset_id;
+                    setImagesToUpload((imagesToUpload) => [...imagesToUpload]);
+                    console.log(imagesToUpload);
+                  } else {
+                    image.isError = true;
+                    image.isUploading = false;
+                    setImageError(!imageError);
+                  }
+                })
+            )
             .catch((err) => {
-              console.error(err);
+              console.log(err);
               removeImageFromUploadFrontEnd(image.name);
             });
-        } else {
-          image.isError = true;
-          image.isUploading = false;
-          setImageError(!imageError);
+        }
+        //if file type is not JPEG, PNG or JPG
+        else {
+          setTimeout(() => {
+            image.isUploading = false;
+            image.isError = true;
+            setImageError(!imageError);
+            setImagesToUpload((imagesToUpload) => [...imagesToUpload]);
+            return;
+          }, 500);
         }
       }
     }
