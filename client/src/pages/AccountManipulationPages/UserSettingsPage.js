@@ -204,10 +204,8 @@ const UserSettingsPage = ({
   }
 
   //upload profile pic
-  //cloudinary preset and file for formData
-  var CLOUDINARY_UPLOAD_PRESET = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET;
+  // file for formData
   var targetFilesArray = [];
-  var CLOUDINARY_CLOUD_NAME = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
 
   async function uploadHandler(e) {
     e.preventDefault();

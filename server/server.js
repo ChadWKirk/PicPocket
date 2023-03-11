@@ -152,7 +152,7 @@ app.use(
           .replace(".jpeg", "");
         uploadToMongoBody.description = "";
         uploadToMongoBody.imageType = "photo";
-        db_connect.collection("picpocket-pfps").insertOne(result);
+        db_connect.collection("picpocket-pfps").insertOne(uploadToMongoBody);
         //change pfp to uploaded image
         db_connect.collection("picpocket-users").updateOne(
           {
@@ -198,35 +198,6 @@ app.use(
         });
       })
       .catch(console.log("error"));
-
-    //upload new PFP to mongoDb
-    db_connect.collection("picpocket-pfps").insertOne(req.body);
-    db_connect.collection("picpocket-users").updateOne(
-      {
-        username: req.params.username,
-      },
-      {
-        //change pfp to uploaded image
-        $set: {
-          pfp: req.body.secure_url,
-        },
-      }
-    );
-    //delete old pfp from mongoDb
-    db_connect.collection("picpocket-pfps").deleteOne({ public_id: oldPFPID });
-
-    //delete old pfp from Cloudinary
-    //if old pfp is not the default purple pfp, delete it (to avoid deleting the default purple pfp)
-    if (oldPFPID != "picpocket/default_purple_pfp_ibof5p") {
-      cloudinary.uploader
-        .destroy(oldPFPID, { invalidate: true })
-        .then((result) => {
-          console.log(result);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
   }
 );
 
