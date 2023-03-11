@@ -62,6 +62,9 @@ const ImageViewPage = ({
   // whether an image is found by fetchImgInfo() or not. Determines whether "page not found" content is display or normal imageViewPage content is displayed
   const [isImgFound, setIsImgFound] = useState(true);
 
+  //whether page content is being loaded or not. changes to false once fetchImgInfo() is done fetching so blank page content doesn't show for a split second before Page Not Found content is displayed
+  const [isLoading, setIsLoading] = useState(true);
+
   //on load, pull img from url parameter :imgPublic_Id (see app.js), and get user info for img author pfp and name
   useEffect(() => {
     async function fetchImgInfo() {
@@ -76,8 +79,10 @@ const ImageViewPage = ({
           .then((parsedJSON) => {
             if (parsedJSON === "no image found") {
               setIsImgFound(false);
+              setIsLoading(false);
             } else {
               setImgInfo(parsedJSON[0]);
+              setIsLoading(false);
             }
           })
       );
@@ -418,6 +423,7 @@ const ImageViewPage = ({
                 ".jpg"
               }
               className="imgGalleryImg1"
+              loading="lazy"
             ></img>
           </a>
 
@@ -591,7 +597,7 @@ const ImageViewPage = ({
         navPositionClass={"fixed"}
         navColorClass={"white"}
       />
-      {!isImgFound && (
+      {!isLoading && !isImgFound && (
         <div className="not-found-page__contents-container">
           <div className="not-found-page__icon">
             <FontAwesomeIcon icon={faQuestionCircle} />
@@ -604,10 +610,10 @@ const ImageViewPage = ({
           </div>
         </div>
       )}
-      {isImgFound && (
+      {!isLoading && isImgFound && (
         <div className="image-view-page__top-bar-height-margin">margin</div>
       )}
-      {isImgFound && (
+      {!isLoading && isImgFound && (
         <div className="image-view-page__top-bar-container">
           <div className="image-view-page__top-bar-contents">
             <div className="image-view-page__image-author-link-container">
@@ -619,6 +625,7 @@ const ImageViewPage = ({
                   <img
                     src={imgAuthorPFP}
                     className="image-view-page__image-author-pfp"
+                    loading="lazy"
                   />
                 </a>
               </div>
@@ -676,6 +683,7 @@ const ImageViewPage = ({
               // transform: isImgZoomedIn ? `scale(3)` : "scale(1)",
               transformOrigin: transformOriginState,
             }}
+            loading="lazy"
           ></img>
           {/* </div> */}
         </div>

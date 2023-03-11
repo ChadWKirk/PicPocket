@@ -454,6 +454,7 @@ const Modal__ImageSelect = ({
                 <img
                   src={imgAuthorPFP}
                   className="image-select-modal__image-author-pfp"
+                  loading="lazy"
                 />
               </a>
             </div>
@@ -497,6 +498,7 @@ const Modal__ImageSelect = ({
               // transform: isImgZoomedIn ? `scale(3)` : "scale(1)",
               transformOrigin: transformOriginState,
             }}
+            loading="lazy"
           ></img>
         </div>
         <div className="image-select-modal__img-info-container">

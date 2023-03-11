@@ -74,6 +74,7 @@ const ImageGallerySortFilterAndSubheadingComponent = ({
             <img
               src={pfp}
               className="image-gallery__likes-page-subheading-img"
+              loading="lazy"
             />
           </a>
         </div>
