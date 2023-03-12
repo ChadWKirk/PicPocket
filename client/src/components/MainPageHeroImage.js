@@ -74,20 +74,14 @@ const MainPageHeroImage = () => {
 
   return (
     <div className="carousel__container">
-      <img
-        src={mainImage}
-        loading="lazy"
-        style={{
-          position: "absolute",
-          zIndex: "0",
-          top: "0",
-          left: "0",
-          width: "100%",
-          height: "510px",
-          objectFit: "cover",
-          opacity: "0.7",
-        }}
-      ></img>
+      <div className="carousel__black-bg-for-image">
+        <img
+          src={mainImage}
+          loading="lazy"
+          className="carousel__hero-image"
+        ></img>
+      </div>
+
       <div className="carousel__overlay">
         <p>
           The best free stock photos. Royalty free images shared by creators.
@@ -110,11 +104,15 @@ const MainPageHeroImage = () => {
         </form>
         <div className="carousel__overlay-categories">
           <p>Try these: </p>
-          <a href="/search/Nature/most-recent/all-types">Nature,</a>
-          <a href="/search/Cats/most-recent/all-types">Cats,</a>
-          <a href="/search/Dogs/most-recent/all-types">Dogs,</a>
-          <a href="/search/Tech/most-recent/all-types">Tech,</a>
-          <a href="/search/Landscape/most-recent/all-types">Landscape</a>
+          <a href="/search/Nature/?sort=most-recent&filter=all-types">
+            Nature,
+          </a>
+          <a href="/search/Cats/?sort=most-recent&filter=all-types">Cats,</a>
+          <a href="/search/Dogs/?sort=most-recent&filter=all-types">Dogs,</a>
+          <a href="/search/Tech/?sort=most-recent&filter=all-types">Tech,</a>
+          <a href="/search/Landscape/?sort=most-recent&filter=all-types">
+            Landscape
+          </a>
         </div>
       </div>
       <div

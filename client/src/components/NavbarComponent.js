@@ -250,6 +250,9 @@ const NavbarComponent = ({
           <a href="/" className="navbar__logo">
             PicPocket
           </a>
+          <a href="/" className="navbar__logo__mobile">
+            P
+          </a>
           <form
             className="navbar__search-container"
             onSubmit={(e) => onSubmit(e)}

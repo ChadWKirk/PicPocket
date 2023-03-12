@@ -18,7 +18,7 @@ const HamburgerList = ({
         </li>
         <li>
           <a
-            href={`/Account/${curUser_hyphenated}/Likes/most-recent/all-types`}
+            href={`/Account/${curUser_hyphenated}/Likes/?sort=most-recent&filter=all-types`}
           >
             Likes
           </a>

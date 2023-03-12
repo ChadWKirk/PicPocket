@@ -13,7 +13,7 @@ const Footer = ({ curUser_real, curUser_hyphenated, isLoggedIn }) => {
           </li>
           <li>
             <a
-              href={`/Account/${curUser_hyphenated}/Likes/Most-Recent/All-Types`}
+              href={`/Account/${curUser_hyphenated}/Likes/?sort=most-recent&filter=all-types`}
             >
               Likes
             </a>
