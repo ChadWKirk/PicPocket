@@ -174,6 +174,7 @@ button {
 }
 .navbar__logo {
   margin: 0;
+  z-index: 1;
   margin-bottom: 1.5px;
   line-height: 1.2;
   display: flex;
@@ -370,6 +371,7 @@ button {
   background-color: rgb(245, 245, 245);
 }
 .navbar__CTA-button-1 {
+  z-index: 1;
   padding: 0.83rem 1.4rem;
   background-color: var(--ctaYellow);
   color: rgb(25, 25, 25);
@@ -401,6 +403,7 @@ button {
   position: relative;
   color: var(--hamburgerIconColor);
   font-size: var(--hamburgerIconFontSize);
+  z-index: 1;
 }
 .navbar__hamburger-icon-x {
   font-size: 1.21rem;
@@ -477,6 +480,7 @@ button {
   }
   .navbar__contents {
     gap: 1rem;
+    padding-left: 15px;
   }
   .navbar__logo {
     font-size: 1.2rem;
@@ -902,7 +906,7 @@ button {
 }
 @media (width < 500px) {
   .image-gallery__download-button-container {
-    font-size: 0.6rem;
+    font-size: 1rem;
   }
   .image-gallery__likes-page-subheading-img {
     width: 42px;
@@ -1404,12 +1408,8 @@ button {
 /* MainPage CSS*/
 
 .mainPage__heroPicture {
-  background-size: cover;
-  min-height: 31.5rem;
-  background-color: rgba(23, 45, 212, 0.312);
-  background-blend-mode: darken;
-  /* background: url("C:\Users\Chad Kirk\Documents\mern-stuff\mern-ecommerce\client\src\4K_Nature-Wallpaper.jpg") */
-  /* no-repeat; */
+  min-height: 510px;
+  background-color: #000;
 }
 
 .signUpPage {
@@ -1434,6 +1434,7 @@ button {
   border-top-right-radius: 9px;
   border-bottom-right-radius: 9px;
   padding: 1rem;
+  padding-left: 2.25rem;
   position: relative;
 }
 
@@ -1442,8 +1443,8 @@ button {
   font-size: 1.25rem;
   transition: 0.05s ease;
   position: absolute;
-  top: 34%;
-  left: 0;
+  top: 30%;
+  left: 31%;
 }
 
 .carousel__search-button:hover .carousel__search-icon {
@@ -1479,6 +1480,8 @@ button {
 }
 
 .carousel__container {
+  max-height: 500px;
+  background-color: #000;
 }
 
 .carousel__overlay {
@@ -1581,6 +1584,7 @@ button {
   width: 100%;
   margin: auto;
   /* margin-bottom: 3.95rem; */
+  font-weight: 500;
 }
 
 .sortingBarCont1 button {
@@ -1702,24 +1706,24 @@ button {
 } */
 
 .buttonClicked {
-  color: white;
-  background-color: black;
+  color: #fff;
+  background-color: #000;
   border-radius: 25px;
-  padding: 0.75rem;
+  padding: 0.75rem 1rem;
 }
 
 .buttonClicked:hover {
-  color: white;
+  color: #fff;
 }
 
 .buttonNotClicked {
-  color: black;
+  color: #000;
   border-radius: 25px;
   padding: 0.75rem;
 }
 
 .buttonNotClicked:hover {
-  color: black;
+  color: #000;
 }
 
 .paperWorkButtons--container {
@@ -5275,7 +5279,7 @@ button {
 
 @media (width < 430px) {
   .mainPage__heroPicture {
-    height: 34.5rem;
+    /* height: 510px; */
   }
 }
 
@@ -5288,7 +5292,7 @@ button {
 
 @media (width < 559px) {
   .carousel__overlay {
-    top: 9rem;
+    top: 8rem;
   }
 }
 
@@ -5313,8 +5317,8 @@ button {
 
 @media (width < 800px) {
   .sortingBarCont1 {
-    border-bottom: 1px solid rgb(228, 228, 228);
-    padding: 1.5rem 0px 1rem 0px;
+    border-bottom: 1px solid rgb(240, 240, 240);
+    padding: 1.5rem 0px 1.5rem 0px;
   }
 }
 

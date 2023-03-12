@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+//images
+import mainImage from "../images/4k/pexels-water-rocks-4k.jpg";
+// import mainImage from "../images/4k/pexels-coffee-4k.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 const MainPageHeroImage = () => {
@@ -71,6 +74,20 @@ const MainPageHeroImage = () => {
 
   return (
     <div className="carousel__container">
+      <img
+        src={mainImage}
+        loading="lazy"
+        style={{
+          position: "absolute",
+          zIndex: "0",
+          top: "0",
+          left: "0",
+          width: "100%",
+          height: "510px",
+          objectFit: "cover",
+          opacity: "0.7",
+        }}
+      ></img>
       <div className="carousel__overlay">
         <p>
           The best free stock photos. Royalty free images shared by creators.
@@ -93,21 +110,11 @@ const MainPageHeroImage = () => {
         </form>
         <div className="carousel__overlay-categories">
           <p>Try these: </p>
-          <a href="https://picpoccket.com/search/Nature/most-recent/all-types">
-            Nature,
-          </a>
-          <a href="https://picpoccket.com/search/Cats/most-recent/all-types">
-            Cats,
-          </a>
-          <a href="https://picpoccket.com/search/Dogs/most-recent/all-types">
-            Dogs,
-          </a>
-          <a href="https://picpoccket.com/search/Tech/most-recent/all-types">
-            Tech,
-          </a>
-          <a href="https://picpoccket.com/search/Landscape/most-recent/all-types">
-            Landscape
-          </a>
+          <a href="/search/Nature/most-recent/all-types">Nature,</a>
+          <a href="/search/Cats/most-recent/all-types">Cats,</a>
+          <a href="/search/Dogs/most-recent/all-types">Dogs,</a>
+          <a href="/search/Tech/most-recent/all-types">Tech,</a>
+          <a href="/search/Landscape/most-recent/all-types">Landscape</a>
         </div>
       </div>
       <div
