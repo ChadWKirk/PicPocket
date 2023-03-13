@@ -188,9 +188,7 @@ const NavbarComponent = ({
               <a href={`/Account/${curUser_hyphenated}`}>User Settings</a>
             </li>
             <li>
-              <a href="/" onClick={signOut}>
-                Sign Out
-              </a>
+              <button onClick={signOut}>Sign Out</button>
             </li>
           </ul>
         </div>
@@ -236,11 +234,14 @@ const NavbarComponent = ({
     //   headers: { "Content-type": "application/json" },
     // });
 
+    window.location.href = "/";
     //remove user from local storage
     localStorage.removeItem("user");
 
     //dispatch logout action
     dispatch({ type: "LOGOUT" });
+
+    // window.location.href = "/";
   }
   return (
     <div data-hamOpenOrClosed={hamOpenOrClosed} data-navTheme={navColorClass}>

@@ -1,6 +1,11 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+// Google OAuth
+import { GoogleLogin } from "@react-oauth/google";
+import { useGoogleLogin } from "@react-oauth/google";
+// axios
+import axios from "axios";
 //components
 import TooltipForInputField from "../../components/TooltipForInputField";
 import ModalForYesOrNo from "../../components/ModalForYesOrNo";
@@ -19,6 +24,54 @@ const SignUpPage = ({ domain, setIsJustSignedUp }) => {
   //     navigate(`/Account/user`);
   //   }
   // }, []);
+
+  //Google OAuth
+  const login = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      //get user info from google account
+      try {
+        const data = await axios.get(
+          "https://www.googleapis.com/oauth2/v3/userinfo",
+          {
+            headers: {
+              Authorization: `Bearer ${tokenResponse.access_token}`,
+            },
+          }
+        );
+        console.log(data);
+        //sign in/up
+        console.log("oauth sign fetch sent");
+        await fetch(`${domain}/oauth/sign`, {
+          method: "POST",
+          headers: { "Content-type": "application/json" },
+          body: JSON.stringify(data),
+        }).then((response) =>
+          response
+            .json()
+            .then((resJSON) => JSON.stringify(resJSON))
+            .then((stringJSON) => JSON.parse(stringJSON))
+            .then((parsedJSON) => {
+              if (parsedJSON.status === 404) {
+                //if sign in fails
+                setInvalidCredentialsAlert(
+                  <div className="sign-in-page__invalid-username-or-password-alert-box">
+                    Invalid username or password.
+                  </div>
+                );
+              } else {
+                console.log("ok");
+                localStorage.setItem("user", JSON.stringify(parsedJSON));
+                dispatch({ type: "LOGIN", payload: parsedJSON });
+                window.location.href = "/";
+                //navigate("/");
+              }
+            })
+        );
+      } catch (err) {
+        console.log(err);
+      }
+    },
+  });
 
   //states for username, email and password input values
   const [username, setUsername] = useState("");
@@ -76,6 +129,8 @@ const SignUpPage = ({ domain, setIsJustSignedUp }) => {
       setPasswordTooltip();
     }
   }
+
+  const [invalidCredentialstAlert, setInvalidCredentialsAlert] = useState();
 
   const [yesOrNoModal, setYesOrNoModal] = useState();
   const [yesOrNoModalAnswer, setYesOrNoModalAnswer] = useState();
@@ -232,7 +287,10 @@ const SignUpPage = ({ domain, setIsJustSignedUp }) => {
           >
             Join PicPocket
           </div>
-          <button className="sign-in-page__oauth-button">
+          <button
+            onClick={() => login()}
+            className="sign-in-page__oauth-button"
+          >
             <div>
               <img src={googleOAuthIcon}></img>
               Google

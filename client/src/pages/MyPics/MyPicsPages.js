@@ -117,6 +117,24 @@ const MyPicsPage = ({
 
   //Create Image Gallery
   useEffect(() => {
+    function uncheck(index, element) {
+      let boxes = [...isCheckedArrState];
+      let box = isCheckedArrState[index];
+      box = false;
+      boxes[index] = box;
+      handleBulkArrCheck(element, index);
+      setIsCheckedArrState(boxes);
+      displayEditorInfo();
+    }
+    function check(index, element) {
+      let boxes = [...isCheckedArrState];
+      let box = isCheckedArrState[index];
+      box = true;
+      boxes[index] = box;
+      handleBulkArrCheck(element, index);
+      setIsCheckedArrState(boxes);
+      displayEditorInfo();
+    }
     imgDataMapOutcome = imgData.map((element, index) => {
       // let parts = element.public_id.split("/");  --SPLIT NOT WORKING DUE TO MESSED UP UPLOADS EARLIER. JUST NEED TO DELETE THEM
       // let result = parts[parts.length - 1];
@@ -127,21 +145,12 @@ const MyPicsPage = ({
       let elMegabytes = (elBytes / 1048576).toFixed(2);
 
       //set if checkbox is checked or not based on isCheckedArrState
-      //need to turn the onchange into a function
       if (isCheckedArrState[index]) {
         checkbox = (
           <input
             type="checkbox"
             checked={isCheckedArrState[index]}
-            onChange={() => {
-              let boxes = [...isCheckedArrState];
-              let box = isCheckedArrState[index];
-              box = false;
-              boxes[index] = box;
-              handleBulkArrCheck(element, index);
-              setIsCheckedArrState(boxes);
-              displayEditorInfo();
-            }}
+            onChange={() => uncheck(index, element)}
             id={`checkbox${index}`}
             className="checkbox"
           />
@@ -152,13 +161,7 @@ const MyPicsPage = ({
             type="checkbox"
             checked={isCheckedArrState[index]}
             onChange={() => {
-              let boxes = [...isCheckedArrState];
-              let box = isCheckedArrState[index];
-              box = true;
-              boxes[index] = box;
-              handleBulkArrCheck(element, index);
-              setIsCheckedArrState(boxes);
-              displayEditorInfo();
+              check(index, element);
             }}
             id={`checkbox${index}`}
             className="checkbox"
