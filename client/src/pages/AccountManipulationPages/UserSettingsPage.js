@@ -571,17 +571,7 @@ const UserSettingsPage = ({
       />
       <div className="user-settings-page__contents-container">
         <h1>Profile Settings</h1>
-        <h3
-          style={{
-            margin: "auto",
-            marginTop: "1rem",
-            color: "#2C343E",
-            fontSize: "4rem",
-            lineHeight: "1.2",
-          }}
-        >
-          {curUser_real}
-        </h3>
+        <h3>{curUser_real}</h3>
         <div className="user-settings-page__change-pfp-container">
           <img src={userPFP} className="profilePicBig" />
           <form>

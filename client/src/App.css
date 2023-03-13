@@ -1016,6 +1016,24 @@ button {
   margin: auto;
   color: var(--dark2);
 }
+.user-settings-page__contents-container h3 {
+  margin: auto;
+  margin-top: 1rem;
+  color: #2c343e;
+  font-size: 4rem;
+  line-height: 1.2;
+  text-align: center;
+}
+@media (width < 900px) {
+  .user-settings-page__contents-container h3 {
+    font-size: 3.25rem;
+  }
+}
+@media (width < 650px) {
+  .user-settings-page__contents-container h3 {
+    font-size: 2.75rem;
+  }
+}
 .user-settings-page__change-pfp-container {
   display: flex;
   justify-content: center;
@@ -1061,7 +1079,7 @@ button {
   width: 100%;
   border-radius: 4px;
   border: 1px solid lightgray;
-  font-size: 0.85rem;
+  font-size: 1.125rem;
   padding: 0.35rem;
   padding-left: 0.65rem;
   margin-top: 0.6rem;
@@ -1084,7 +1102,7 @@ button {
 }
 .user-settings-page__email-input {
   width: 100%;
-  font-size: 0.85rem;
+  font-size: 1.125rem;
   padding: 0.35rem 0.65rem;
   border-radius: 4px;
   margin-bottom: 6px;
@@ -1149,6 +1167,7 @@ button {
   flex-wrap: wrap;
   gap: 1rem;
   margin-bottom: 3rem;
+  width: 100%;
 }
 .changePWBtn {
   padding: 0.8rem;
@@ -1171,6 +1190,13 @@ button {
   border: none;
   border-radius: 4px;
   font-size: 1rem;
+}
+@media (width < 400px) {
+  .deleteAccountBtn,
+  .changePWBtn {
+    width: 100%;
+    text-align: center;
+  }
 }
 
 /* Page Not Found Page CSS */
