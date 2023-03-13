@@ -235,13 +235,12 @@ const NavbarComponent = ({
     // });
 
     window.location.href = "/";
+    navigate("/");
     //remove user from local storage
     localStorage.removeItem("user");
 
     //dispatch logout action
     dispatch({ type: "LOGOUT" });
-
-    // window.location.href = "/";
   }
   return (
     <div data-hamOpenOrClosed={hamOpenOrClosed} data-navTheme={navColorClass}>

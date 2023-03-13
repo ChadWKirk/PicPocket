@@ -1,6 +1,17 @@
-import React from "react";
+import { React, useState, useEffect } from "react";
 
-const Footer = ({ curUser_real, curUser_hyphenated, isLoggedIn }) => {
+const Footer = ({ curUser_real, curUser_hyphenated, isLoggedIn, domain }) => {
+  //if on main page, set footer__contents-container to have a padding-top helper class to put space between content and waves
+  const [isOnMainPage, setIsOnMainPage] = useState(false);
+  useEffect(() => {
+    //if last character of current url is a /, then that means we are on the home page
+    if (window.location.href.slice(-1) == "/") {
+      setIsOnMainPage(true);
+    } else {
+      setIsOnMainPage(false);
+    }
+  });
+
   let footerPicPocketContent;
   if (isLoggedIn) {
     footerPicPocketContent = (
@@ -55,7 +66,11 @@ const Footer = ({ curUser_real, curUser_hyphenated, isLoggedIn }) => {
   }
   return (
     <div className="footerContainer">
-      <div className="footer__contents-container">
+      <div
+        className={`footer__contents-container ${
+          isOnMainPage ? "footer__contents-container-padding-top-main-page" : ""
+        }`}
+      >
         {footerPicPocketContent}
         <div>
           <h4>Company</h4>

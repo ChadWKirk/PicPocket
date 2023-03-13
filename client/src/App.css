@@ -2724,11 +2724,15 @@ button {
 }
 .footer__contents-container {
   /* background-color: rebeccapurple; */
+  /* padding-top: 1.15rem; */
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin: auto;
   max-width: var(--siteContentsMidWidth);
+}
+.footer__contents-container-padding-top-main-page {
+  padding-top: 1.15rem;
 }
 
 .footerContainer h4 {
@@ -4596,7 +4600,7 @@ button {
     transition: 0.2s;
   }
   .image-select-modal__left-arrow-icon {
-    top: 95px;
+    top: 155px;
     left: 20px;
     color: rgba(255, 255, 255, 0.329);
     background-color: rgba(0, 0, 0, 0.1);
@@ -4604,7 +4608,7 @@ button {
     padding: 0.25rem 0.445rem;
   }
   .image-select-modal__right-arrow-icon {
-    top: 95px;
+    top: 155px;
     right: 20px;
     color: rgba(255, 255, 255, 0.329);
     background-color: rgba(0, 0, 0, 0.1);
@@ -5453,6 +5457,10 @@ button {
   .footer__contents-container {
     flex-direction: column;
     gap: 2.5rem;
+    /* padding-top: 2rem; */
+  }
+  .footer__contents-container-padding-top-main-page {
+    padding-top: 2rem;
   }
 }
 
