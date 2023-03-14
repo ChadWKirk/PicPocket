@@ -377,6 +377,7 @@ const SignUpPage = ({ domain, setIsJustSignedUp }) => {
 
               <input
                 id="password"
+                type="password"
                 onChange={(event) => setPassword(event.target.value)}
                 className={passwordInputClass}
               ></input>

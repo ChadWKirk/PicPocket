@@ -223,6 +223,7 @@ const SignInPage = ({
               <label htmlFor="password">Password: </label>
               <input
                 id="password"
+                type="password"
                 onChange={(event) => setPassword(event.target.value)}
               ></input>
               {passwordTooltip}

@@ -71,6 +71,12 @@ TASKS:
 
 styling:
 
+Keep track of scroll position to send to image modal so when you click out of the modal it navigates to previous page while maintaining the scroll position
+
+In image modal for mobile screen, put arrows inside of div that holds img and arrows and position arrows absolute to the div container so they move down when top bar flex wraps
+
+Put eye ball functionality on password field for sign up and sign in pages
+
 upload page - make it so dragging over upload form doesn't rerender image items causing them to flicker
 
 mypics - loading for submit/delete/massdelete (make loading/progress bar at top of the page like youtube), make it so that if all checkboxes are checked, selectall box checked = true and if not all of them are checked then select all checkbox checked = false, make it so when deleting all it deletes all from front end (more than 20 or so), general styling, make page responsive.
