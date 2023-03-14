@@ -1351,6 +1351,8 @@ button {
   max-width: 100vw;
   height: 40px;
   background-color: #b20000;
+  z-index: 100;
+  position: relative;
 }
 .red-banner__contents-container {
   max-width: var(--siteContentsMidWidth);
