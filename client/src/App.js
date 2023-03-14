@@ -157,17 +157,25 @@ function App() {
                 setIsShowingImageSelectModal={setIsShowingImageSelectModal}
                 imgTitleArrState={imgTitleArrState}
                 setImgTitleArrState={setImgTitleArrState}
+                page={"mainPageMostRecent"}
               />
             }
           ></Route>
           <Route
             path="/most-popular"
             element={
-              <MainPageMostPopularImages
+              <MainPage
                 domain={domain}
                 curUser_real={curUser_real}
                 curUser_hyphenated={curUser_hyphenated}
                 isLoggedIn={isLoggedIn}
+                isJustDeleted={isJustDeleted}
+                setIsJustDeleted={setIsJustDeleted}
+                isShowingImageSelectModal={isShowingImageSelectModal}
+                setIsShowingImageSelectModal={setIsShowingImageSelectModal}
+                imgTitleArrState={imgTitleArrState}
+                setImgTitleArrState={setImgTitleArrState}
+                page={"mainPageMostPopular"}
               />
             }
           ></Route>

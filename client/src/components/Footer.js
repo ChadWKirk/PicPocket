@@ -4,8 +4,10 @@ const Footer = ({ curUser_real, curUser_hyphenated, isLoggedIn, domain }) => {
   //if on main page, set footer__contents-container to have a padding-top helper class to put space between content and waves
   const [isOnMainPage, setIsOnMainPage] = useState(false);
   useEffect(() => {
-    //if last character of current url is a /, then that means we are on the home page
+    //if last character of current url is a / or last 7 chars is popular, then that means we are on the home page either most recent or most popular
     if (window.location.href.slice(-1) == "/") {
+      setIsOnMainPage(true);
+    } else if (window.location.href.slice(-7) == "popular") {
       setIsOnMainPage(true);
     } else {
       setIsOnMainPage(false);

@@ -398,7 +398,8 @@ const Modal__ImageSelect = ({
       <div
         className="image-select-modal__background"
         onClick={() => {
-          navigate("/");
+          //navigate to previous page
+          navigate(-1);
           document.body.style.overflow = "auto"; //set body overflow back to auto when closing modal
         }}
         style={{ height: `100vh` }} //get height of modal contents container and use that for height of black bg
@@ -408,7 +409,8 @@ const Modal__ImageSelect = ({
           icon={faXmark}
           className="image-select-modal__x-icon"
           onClick={() => {
-            navigate("/");
+            //navigate to previous page
+            navigate(-1);
             document.body.style.overflow = "auto"; //set body overflow back to auto when closing modal
           }}
           style={{ cursor: "pointer" }}
