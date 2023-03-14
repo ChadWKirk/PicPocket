@@ -1377,6 +1377,11 @@ button {
   .red-banner__contents-container {
     height: 30px;
   }
+  .red-banner__contents-container {
+    padding-left: 15px;
+    gap: 0.35rem;
+  }
+
   .red-banner__exclamation-icon {
     font-size: 0.85rem;
   }
