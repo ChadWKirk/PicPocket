@@ -54,6 +54,16 @@ function App() {
   const [isShowingImageSelectModal, setIsShowingImageSelectModal] =
     useState(false);
 
+  // //page to go to when clicking out of image select modal
+  // let URL = window.location.href;
+  // //get position of third slash. The reason you want third slash is because you don't want the slashes in "http://", you want the first slash after that to indicate the actual path beginning
+  // //indexOf accepts ("x", [fromIndex]), so you want to find secondSlash by searching from the firstSlash position onward. Etc.
+  // let firstSlashPosition = URL.indexOf("/");
+  // let secondSlashPosition = URL.indexOf("/", firstSlashPosition + 1);
+  // let thirdSlashPosition = URL.indexOf("/", secondSlashPosition + 1);
+  // let prevPageResult = URL.slice(thirdSlashPosition);
+  // const [prevPageForModal, setPrevPageForModal] = useState(prevPageResult);
+
   //used to give array of img titles to imageview page to use for imageSelectModal
   //to fetch img src and to go to previous or next image
   const [imgTitleArrState, setImgTitleArrState] = useState();
@@ -64,40 +74,7 @@ function App() {
   //set true or false for if user just changed password. use to decide whether to show password change success page
   const [isPasswordJustChanged, setIsPasswordJustChanged] = useState(false);
 
-  // const [curUser, setCurUser] = useState();
-  // const [loggedIn, setLoggedIn] = useState();
-
   console.log("render");
-
-  // useEffect(() => {
-  //   async function getCurUser() {
-  //     //every time app renders, get currently signed in user.
-  //     await fetch("http://localhost:5000/curUser", {
-  //       method: "GET",
-  //       headers: { "Content-type": "application/json" },
-  //     })
-  //       .then((response) => response.json()) //gets res from express and parses it into JSON for React
-  //       .then((responseJSON) => {
-  //         console.log(responseJSON + " responseJSON");
-  //         if (responseJSON == "none") {
-  //           console.log("none");
-  //           setLoggedIn(false);
-  //           setLoading(false); //now that curUser and loggedIn are set, load app's HTML
-  //           console.log(loggedIn + " false");
-  //         } else {
-  //           setCurUser(responseJSON);
-  //           setLoggedIn(true);
-  //           setLoading(false);
-  //         }
-  //       });
-  //   }
-
-  //   getCurUser();
-  // }, []);
-
-  // if (isLoading) {
-  //   return null;
-  // } else {
 
   //get user from AuthContext
   const { user } = useAuthContext();
@@ -206,6 +183,8 @@ function App() {
                 setIsShowingImageSelectModal={setIsShowingImageSelectModal}
                 imgTitleArrState={imgTitleArrState}
                 setImgTitleArrState={setImgTitleArrState}
+                // prevPageForModal={prevPageForModal}
+                // setPrevPageForModal={setPrevPageForModal}
               />
             }
           ></Route>

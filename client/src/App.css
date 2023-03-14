@@ -4607,7 +4607,7 @@ button {
     transition: 0.2s;
   }
   .image-select-modal__left-arrow-icon {
-    top: 155px;
+    top: 30vh;
     left: 20px;
     color: rgba(255, 255, 255, 0.329);
     background-color: rgba(0, 0, 0, 0.1);
@@ -4615,12 +4615,22 @@ button {
     padding: 0.25rem 0.445rem;
   }
   .image-select-modal__right-arrow-icon {
-    top: 155px;
+    top: 30vh;
     right: 20px;
     color: rgba(255, 255, 255, 0.329);
     background-color: rgba(0, 0, 0, 0.1);
     border-radius: 50%;
     padding: 0.25rem 0.445rem;
+  }
+  .image-select-modal__left-arrow-icon:hover,
+  .image-select-modal__right-arrow-icon:hover {
+    color: rgba(255, 255, 255, 0.329);
+  }
+  .image-select-modal__left-arrow-icon:active,
+  .image-select-modal__right-arrow-icon:active {
+    color: rgba(255, 255, 255, 0.329);
+    background-color: rgba(0, 0, 0, 0.4);
+    transition: 0.2s;
   }
 }
 .image-select-modal__top-bar-container {

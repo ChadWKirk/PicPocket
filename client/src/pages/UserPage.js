@@ -17,6 +17,9 @@ const UserPage = ({
   setImgTitleArrState,
   isShowingImageSelectModal,
   setIsShowingImageSelectModal,
+  prevPageForModal,
+  setPrevPageForModal,
+  getPrevPageFunc,
 }) => {
   const { username } = useParams();
 
@@ -126,6 +129,9 @@ const UserPage = ({
               imgGalleryLength={imgGalleryLength}
               curUser_real={curUser_real}
               curUser_hyphenated={curUser_hyphenated}
+              prevPageForModal={prevPageForModal}
+              setPrevPageForModal={setPrevPageForModal}
+              getPrevPageFunc={getPrevPageFunc}
               page={"userPage"}
             />
             {/* </div> */}

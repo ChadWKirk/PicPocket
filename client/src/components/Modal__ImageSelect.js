@@ -21,9 +21,16 @@ const Modal__ImageSelect = ({
   userInfo,
   setIsPrevOrNextClicked,
   isPrevOrNextClicked,
+  // prevPageForModal,
+  // setPrevPageForModal,
 }) => {
   //when modal is open, set body overflow to hidden. for some reason classlist.add wasn't working it was glitching on and off
   document.body.style.overflow = "hidden";
+
+  // console.log(prevPageForModal);
+
+  //amount of pages to jump back when clicking out of modal to get back to previous page before going into modal
+  const [amountOfPagesToJumpBack, setAmountOfPagesToJumpBack] = useState(-1);
 
   //to navigate
   let navigate = useNavigate();
@@ -31,54 +38,13 @@ const Modal__ImageSelect = ({
   //img info
   const { imgPublic_Id } = useParams();
 
-  // const [imgInfo, setImgInfo] = useState();
-
-  //user info to get author name and pfp
-  // const [userInfo, setUserInfo] = useState();
-
   //refetch img info to update like button to either liked or not liked
   const [isLiked, setIsLiked] = useState();
 
-  //on load, pull img from url parameter :imgPublic_Id (see app.js), and get user info for img author pfp and name
-  // useEffect(() => {
-  //   async function fetchImgInfo() {
-  //     await fetch(`https://picpoccket.herokuapp.com/image/${imgPublic_Id}`, {
-  //       method: "GET",
-  //       headers: { "Content-type": "application/json" },
-  //     }).then((response) =>
-  //       response
-  //         .json()
-  //         .then((resJSON) => JSON.stringify(resJSON))
-  //         .then((stringJSON) => JSON.parse(stringJSON))
-  //         .then((parsedJSON) => setImgInfo(parsedJSON[0]))
-  //     );
-  //   }
-  //   fetchImgInfo();
-  // }, [isPrevOrNextClicked, isLiked]);
-
-  //fetch user info for pfp and author name
-  // useEffect(() => {
-  //   if (imgInfo) {
-  //     async function fetchUserInfo() {
-  //       await fetch(`https://picpoccket.herokuapp.com/${imgInfo.uploadedBy}/info`, {
-  //         method: "GET",
-  //         headers: { "Content-type": "application/json" },
-  //       }).then((response) =>
-  //         response
-  //           .json()
-  //           .then((resJSON) => JSON.stringify(resJSON))
-  //           .then((stringJSON) => JSON.parse(stringJSON))
-  //           .then((parsedJSON) => setUserInfo(parsedJSON[0]))
-  //       );
-  //     }
-
-  //     fetchUserInfo();
-  //   }
-  // }, [imgInfo]);
-
-  //assigning user info to variables
+  //assigning user info to variables (user info comes from ImageViewPage)
   let imgAuthorPFP;
   let imgAuthorName;
+  let imgAuthorName_hyphenated;
   if (userInfo) {
     imgAuthorPFP =
       userInfo.pfp.slice(0, 50) +
@@ -86,9 +52,10 @@ const Modal__ImageSelect = ({
       userInfo.pfp.slice(50, userInfo.pfp.lastIndexOf(".")) +
       ".jpg";
     imgAuthorName = userInfo.username;
+    imgAuthorName_hyphenated = userInfo.username.split(" ").join("-");
   }
 
-  //assigning img info to variables
+  //assigning img info to variables (img info comes from ImageViewPage)
   let imgSrc;
   let imgTitle;
   let imgDescription;
@@ -126,8 +93,6 @@ const Modal__ImageSelect = ({
         </li>
       );
     }
-
-    // searchQuery = imageTags.join(" ") + " " + imgPublic_Ide;
 
     if (imgInfo.likedBy.includes(curUser_real)) {
       imageSelectModalLikeBtn = (
@@ -399,8 +364,12 @@ const Modal__ImageSelect = ({
         className="image-select-modal__background"
         onClick={() => {
           //navigate to previous page
-          navigate(-1);
-          document.body.style.overflow = "auto"; //set body overflow back to auto when closing modal
+          navigate(amountOfPagesToJumpBack);
+          //set body overflow back to auto when closing modal
+          //delayed to make sure it changes the next page's document.body instead of the modal's document.body
+          setTimeout(() => {
+            document.body.style.overflow = "auto";
+          }, 50);
         }}
         style={{ height: `100vh` }} //get height of modal contents container and use that for height of black bg
       ></div>
@@ -410,8 +379,12 @@ const Modal__ImageSelect = ({
           className="image-select-modal__x-icon"
           onClick={() => {
             //navigate to previous page
-            navigate(-1);
-            document.body.style.overflow = "auto"; //set body overflow back to auto when closing modal
+            navigate(amountOfPagesToJumpBack);
+            //set body overflow back to auto when closing modal
+            //delayed to make sure it changes the next page's document.body instead of the modal's document.body
+            setTimeout(() => {
+              document.body.style.overflow = "auto";
+            }, 50);
           }}
           style={{ cursor: "pointer" }}
         />
@@ -421,6 +394,7 @@ const Modal__ImageSelect = ({
               navigate(`/image/${imgTitleArrState[currentImgIndex - 1]}`);
               setIsPrevOrNextClicked(!isPrevOrNextClicked);
               setIsShowingImageSelectModal(true);
+              setAmountOfPagesToJumpBack(amountOfPagesToJumpBack - 1);
             }}
             style={{ cursor: "pointer" }}
           >
@@ -436,6 +410,9 @@ const Modal__ImageSelect = ({
               navigate(`/image/${imgTitleArrState[currentImgIndex + 1]}`);
               setIsPrevOrNextClicked(!isPrevOrNextClicked);
               setIsShowingImageSelectModal(true);
+              //subtract from amount of pages to jump back because that's how navigate works
+              //to jump back one page it is navigate(-1). to jump back 5 pages it is -5.
+              setAmountOfPagesToJumpBack(amountOfPagesToJumpBack - 1);
             }}
             style={{ cursor: "pointer" }}
           >
@@ -451,7 +428,7 @@ const Modal__ImageSelect = ({
             <div className="image-select-modal__image-author-pfp-div">
               <a
                 className="image-select-modal__image-author-pfp"
-                href={`/User/${curUser_hyphenated}`}
+                href={`/User/${imgAuthorName_hyphenated}`}
               >
                 <img
                   src={imgAuthorPFP}
@@ -462,7 +439,7 @@ const Modal__ImageSelect = ({
             </div>
 
             <a
-              href={`/User/${curUser_hyphenated}`}
+              href={`/User/${imgAuthorName_hyphenated}`}
               className="image-select-modal__image-author-name"
             >
               {imgAuthorName}

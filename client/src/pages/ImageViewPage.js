@@ -23,6 +23,8 @@ const ImageViewPage = ({
   isShowingImageSelectModal,
   setIsShowingImageSelectModal,
   imgTitleArrState,
+  // prevPageForModal,
+  // setPrevPageForModal,
 }) => {
   let navigate = useNavigate();
   //variables for related images
@@ -115,6 +117,7 @@ const ImageViewPage = ({
   //assigning user info to variables
   let imgAuthorPFP;
   let imgAuthorName;
+  let imgAuthorName_hyphenated;
   if (userInfo) {
     imgAuthorPFP =
       userInfo.pfp.slice(0, 50) +
@@ -122,6 +125,7 @@ const ImageViewPage = ({
       userInfo.pfp.slice(50, userInfo.pfp.lastIndexOf(".")) +
       ".jpg";
     imgAuthorName = userInfo.username;
+    imgAuthorName_hyphenated = userInfo.username.split(" ").join("-");
   }
 
   //assigning img info to variables
@@ -587,6 +591,8 @@ const ImageViewPage = ({
           userInfo={userInfo}
           isPrevOrNextClicked={isPrevOrNextClicked}
           setIsPrevOrNextClicked={setIsPrevOrNextClicked}
+          // prevPageForModal={prevPageForModal}
+          // setPrevPageForModal={setPrevPageForModal}
         />
       )}
       <NavbarComponent
@@ -620,7 +626,7 @@ const ImageViewPage = ({
               <div className="image-view-page__image-author-pfp-div">
                 <a
                   className="image-view-page__image-author-pfp"
-                  href={`/User/${imgAuthorName}`}
+                  href={`/User/${imgAuthorName_hyphenated}`}
                 >
                   <img
                     src={imgAuthorPFP}
@@ -631,7 +637,7 @@ const ImageViewPage = ({
               </div>
 
               <a
-                href={`/User/${imgAuthorName}`}
+                href={`/User/${imgAuthorName_hyphenated}`}
                 className="image-view-page__image-author-name"
               >
                 {imgAuthorName}
