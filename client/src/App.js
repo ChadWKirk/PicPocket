@@ -30,6 +30,7 @@ import TOSPage from "./pages/TOSPage";
 import DisclaimerPage from "./pages/DisclaimerPage";
 import ContactUsPage from "./pages/ContactUsPage";
 import CreditsPage from "./pages/CreditsPage";
+import AboutUsPage from "./pages/AboutUsPage";
 //bootstrap
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -455,6 +456,17 @@ function App() {
             path="/Contact"
             element={
               <ContactUsPage
+                domain={domain}
+                curUser_real={curUser_real}
+                curUser_hyphenated={curUser_hyphenated}
+                isLoggedIn={isLoggedIn}
+              />
+            }
+          ></Route>
+          <Route
+            path="/About"
+            element={
+              <AboutUsPage
                 domain={domain}
                 curUser_real={curUser_real}
                 curUser_hyphenated={curUser_hyphenated}

@@ -4212,6 +4212,68 @@ button {
   }
 }
 
+/* About Us Page CSS */
+.about-us-page__heading {
+  text-align: center;
+  margin: auto;
+  height: 125px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: var(--siteContentsMidWidth);
+  padding: 0 var(--sideSpacePadding);
+}
+.about-us-page__contents-container {
+  margin: auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  max-width: var(--siteContentsMidWidth);
+  margin-bottom: 3rem;
+  padding: 0 var(--sideSpacePadding);
+}
+.about-us-page__text-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  max-height: 100%;
+}
+.about-us-page__text-container p {
+  font-size: 1.2rem;
+  padding-right: 7rem;
+}
+.about-us-page__img-container {
+}
+.about-us-page__img-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+@media (width < 650px) {
+  .about-us-page__contents-container {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 2rem;
+  }
+  .about-us-page__text-container p {
+    padding-right: 0;
+  }
+  .about-us-page__img-container {
+    height: 100px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+  }
+  .about-us-page__img-container img {
+    object-position: 0px -450px;
+    object-fit: cover;
+    height: 600%;
+    width: 100%;
+  }
+  .about-us-page__heading {
+    height: 60px;
+    margin-bottom: 1rem;
+  }
+}
+
 /* Forgot Password Send Link Page CSS */
 
 .forgot-password-send-link-page__container {
