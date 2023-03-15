@@ -25,6 +25,8 @@ const ImageViewPage = ({
   imgTitleArrState,
   // prevPageForModal,
   // setPrevPageForModal,
+  imgGalleryScrollPosition,
+  setImgGalleryScrollPosition,
 }) => {
   let navigate = useNavigate();
   //variables for related images
@@ -90,7 +92,6 @@ const ImageViewPage = ({
       );
     }
     fetchImgInfo();
-    console.log("this ", imgTitleArrState);
   }, [isLiked, isPrevOrNextClicked]);
 
   //fetch user info for pfp and author name
@@ -593,6 +594,8 @@ const ImageViewPage = ({
           setIsPrevOrNextClicked={setIsPrevOrNextClicked}
           // prevPageForModal={prevPageForModal}
           // setPrevPageForModal={setPrevPageForModal}
+          imgGalleryScrollPosition={imgGalleryScrollPosition}
+          setImgGalleryScrollPosition={setImgGalleryScrollPosition}
         />
       )}
       <NavbarComponent

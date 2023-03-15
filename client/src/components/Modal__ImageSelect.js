@@ -23,6 +23,8 @@ const Modal__ImageSelect = ({
   isPrevOrNextClicked,
   // prevPageForModal,
   // setPrevPageForModal,
+  imgGalleryScrollPosition,
+  setImgGalleryScrollPosition,
 }) => {
   //when modal is open, set body overflow to hidden. for some reason classlist.add wasn't working it was glitching on and off
   document.body.style.overflow = "hidden";

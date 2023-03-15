@@ -33,7 +33,6 @@ const UserSettingsPage = ({
   useEffect(() => {
     navigate(`/Account/${curUser_hyphenated}`);
   }, []);
-
   //auth
   const { dispatch } = useAuthContext();
 

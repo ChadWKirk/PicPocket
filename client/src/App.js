@@ -54,6 +54,14 @@ function App() {
   const [isShowingImageSelectModal, setIsShowingImageSelectModal] =
     useState(false);
 
+  // scroll position user is currently at when clicking an image in an image gallery
+  // when user clicks an image, it stores the current scroll position (code is in ImageGallery component)
+  // When user clicks out of the image modal, it navigates back to previous page (not previous image if user used arrow buttons to go to a different image)
+  // And that page does window.scrollTo(imgGalleryScrollPosition) to scroll to the stored scroll position
+  // Making it seem like the modal is just popping up over the page and not going to a whole new page
+  // and so user is right back where they left off when they were looking at the image gallery
+  const [imgGalleryScrollPosition, setImgGalleryScrollPosition] = useState();
+
   // //page to go to when clicking out of image select modal
   // let URL = window.location.href;
   // //get position of third slash. The reason you want third slash is because you don't want the slashes in "http://", you want the first slash after that to indicate the actual path beginning
@@ -78,7 +86,6 @@ function App() {
 
   //get user from AuthContext
   const { user } = useAuthContext();
-  console.log(user);
   //set curUser to user.name
   const [curUser_hyphenated, setCurUser_hyphenated] = useState();
   const [curUser_real, setCurUser_real] = useState();
@@ -132,6 +139,8 @@ function App() {
                 setIsJustDeleted={setIsJustDeleted}
                 isShowingImageSelectModal={isShowingImageSelectModal}
                 setIsShowingImageSelectModal={setIsShowingImageSelectModal}
+                imgGalleryScrollPosition={imgGalleryScrollPosition}
+                setImgGalleryScrollPosition={setImgGalleryScrollPosition}
                 imgTitleArrState={imgTitleArrState}
                 setImgTitleArrState={setImgTitleArrState}
                 page={"mainPageMostRecent"}
@@ -150,6 +159,8 @@ function App() {
                 setIsJustDeleted={setIsJustDeleted}
                 isShowingImageSelectModal={isShowingImageSelectModal}
                 setIsShowingImageSelectModal={setIsShowingImageSelectModal}
+                imgGalleryScrollPosition={imgGalleryScrollPosition}
+                setImgGalleryScrollPosition={setImgGalleryScrollPosition}
                 imgTitleArrState={imgTitleArrState}
                 setImgTitleArrState={setImgTitleArrState}
                 page={"mainPageMostPopular"}
@@ -166,6 +177,8 @@ function App() {
                 isLoggedIn={isLoggedIn}
                 isShowingImageSelectModal={isShowingImageSelectModal}
                 setIsShowingImageSelectModal={setIsShowingImageSelectModal}
+                imgGalleryScrollPosition={imgGalleryScrollPosition}
+                setImgGalleryScrollPosition={setImgGalleryScrollPosition}
                 imgTitleArrState={imgTitleArrState}
                 setImgTitleArrState={setImgTitleArrState}
               />
@@ -185,6 +198,8 @@ function App() {
                 setImgTitleArrState={setImgTitleArrState}
                 // prevPageForModal={prevPageForModal}
                 // setPrevPageForModal={setPrevPageForModal}
+                imgGalleryScrollPosition={imgGalleryScrollPosition}
+                setImgGalleryScrollPosition={setImgGalleryScrollPosition}
               />
             }
           ></Route>
@@ -217,6 +232,8 @@ function App() {
                 isLoggedIn={isLoggedIn}
                 isShowingImageSelectModal={isShowingImageSelectModal}
                 setIsShowingImageSelectModal={setIsShowingImageSelectModal}
+                imgGalleryScrollPosition={imgGalleryScrollPosition}
+                setImgGalleryScrollPosition={setImgGalleryScrollPosition}
                 imgTitleArrState={imgTitleArrState}
                 setImgTitleArrState={setImgTitleArrState}
               />
@@ -233,6 +250,8 @@ function App() {
                   isLoggedIn={isLoggedIn}
                   isShowingImageSelectModal={isShowingImageSelectModal}
                   setIsShowingImageSelectModal={setIsShowingImageSelectModal}
+                  imgGalleryScrollPosition={imgGalleryScrollPosition}
+                  setImgGalleryScrollPosition={setImgGalleryScrollPosition}
                   imgTitleArrState={imgTitleArrState}
                   setImgTitleArrState={setImgTitleArrState}
                 />
@@ -253,6 +272,8 @@ function App() {
                   isLoggedIn={isLoggedIn}
                   isShowingImageSelectModal={isShowingImageSelectModal}
                   setIsShowingImageSelectModal={setIsShowingImageSelectModal}
+                  imgGalleryScrollPosition={imgGalleryScrollPosition}
+                  setImgGalleryScrollPosition={setImgGalleryScrollPosition}
                   imgTitleArrState={imgTitleArrState}
                   setImgTitleArrState={setImgTitleArrState}
                 />

@@ -12,6 +12,8 @@ const SearchResultsPage = ({
   isLoggedIn,
   isShowingImageSelectModal,
   setIsShowingImageSelectModal,
+  imgGalleryScrollPosition,
+  setImgGalleryScrollPosition,
   imgTitleArrState,
   setImgTitleArrState,
 }) => {
@@ -36,6 +38,18 @@ const SearchResultsPage = ({
   // useEffect(() => {
   //   navigate(`/search/${searchQuery}/?sort=most-recent&filter=all-types`);
   // }, [sort, filter]);
+
+  // prev scroll position for clicking out of image modal. to return to previous scroll position of previous page
+  //runs outside of useEffect to make sure it takes effect (runs after every render. useEffect using empty dependency array wasn't working)
+  window.scrollTo(imgGalleryScrollPosition);
+  if (imgGalleryScrollPosition) {
+    //stops scrolling to the position after 200ms just to make sure it takes effect and then stops once it does
+    //without this time out it will keep scrolling back to the imgGalleryScrollPosition if you try to scroll away, because it is always running
+    //but clearing the imgGalleryScrollPosition makes it not scroll to any position since nothing is there. making it window.scrollTo() (nothing)
+    setTimeout(() => {
+      setImgGalleryScrollPosition();
+    }, 200);
+  }
 
   return (
     <div>
@@ -81,6 +95,8 @@ const SearchResultsPage = ({
           setImgGalleryLength={setImgGalleryLength}
           isShowingImageSelectModal={isShowingImageSelectModal}
           setIsShowingImageSelectModal={setIsShowingImageSelectModal}
+          imgGalleryScrollPosition={imgGalleryScrollPosition}
+          setImgGalleryScrollPosition={setImgGalleryScrollPosition}
           imgTitleArrState={imgTitleArrState}
           setImgTitleArrState={setImgTitleArrState}
           page={"searchPage"}

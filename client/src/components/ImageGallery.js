@@ -17,14 +17,13 @@ const ImageGallery = ({
   setImgGalleryLength,
   isShowingImageSelectModal,
   setIsShowingImageSelectModal,
+  imgGalleryScrollPosition,
+  setImgGalleryScrollPosition,
   setImgTitleArrState,
   imgTitleArrState,
 }) => {
   // used to navigate to imageViewPage and isShowingImageSelectModal state to show modal on first navigate
   let navigate = useNavigate();
-
-  const { sortParam } = useParams();
-  console.log(sortParam);
 
   //subheading for Main Page
   let mainPageSubheading;
@@ -140,6 +139,12 @@ const ImageGallery = ({
             <a
               onClick={() => {
                 setIsShowingImageSelectModal(true);
+                let scrollYPos = window.scrollY;
+                setImgGalleryScrollPosition({
+                  top: scrollYPos,
+                  left: 0,
+                  behavior: "instant",
+                });
                 navigate(`/image/${element.public_id.slice(10)}`); //removes the picpocket/ part of public_id so only name is there like "lady-540923"
               }}
               //  href={`http://localhost:3000/image/${element.title}`}

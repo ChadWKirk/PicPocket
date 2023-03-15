@@ -67,13 +67,13 @@ get cloudinary name and preset from back end instead of storing in env in front 
 
 Keep track of previous page (main page, most popular, likes page, etc. Not previous image page. So previous page before isShowingModal is true) and scroll position to send to image modal so when you click out of the modal it navigates to previous page while maintaining the scroll position
 
+Keep track of scroll position to send to image modal so when you click out of the modal it navigates to previous page while maintaining the scroll position
+
 ---
 
 TASKS:
 
 styling:
-
-Keep track of scroll position to send to image modal so when you click out of the modal it navigates to previous page while maintaining the scroll position
 
 upload page - make it so dragging over upload form doesn't rerender image items causing them to flicker
 
