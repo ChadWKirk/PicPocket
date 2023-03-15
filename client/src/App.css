@@ -4048,6 +4048,22 @@ button {
 .sign-in-page__input-block input:focus {
   border: 2px solid black;
 }
+.sign-in-page__eye-icon {
+  position: absolute;
+  right: 1rem;
+  /* top: 47px; */
+  top: 44px;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+.sign-up-page__eye-icon {
+  position: absolute;
+  right: 1rem;
+  /* top: 47px; */
+  bottom: 15.75px;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
 .sign-in-page__input-block-username-input-red {
   border: 2px solid rgb(151, 0, 0) !important;
   font-size: 1rem;
@@ -4136,6 +4152,9 @@ button {
     flex-direction: column;
     gap: 1rem;
   }
+  /* .sign-in-page__eye-icon {
+    bottom: 88.5px;
+  } */
 }
 .sign-in-page__sign-in-button {
   font-size: 1rem;

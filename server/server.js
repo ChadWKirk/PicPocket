@@ -854,7 +854,8 @@ app.post("/SignIn", async (req, res) => {
 
         if (!passwordMatch) {
           console.log("no password matching");
-          res.status(404);
+          // res.status(404);
+          res.json("no user exists");
         } else if (passwordMatch) {
           console.log("success");
           const name = req.body.username;

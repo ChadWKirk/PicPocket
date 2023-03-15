@@ -1,5 +1,8 @@
 import { React, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+//font awesome
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
 // Google OAuth
 import { GoogleLogin } from "@react-oauth/google";
 import { useGoogleLogin } from "@react-oauth/google";
@@ -14,7 +17,6 @@ import { useAuthContext } from "../../context/useAuthContext";
 import signInPageCollageImg from "../../images/PicPocket-SignIn-Collage2.png";
 import googleOAuthIcon from "../../images/google-logo-oauth.png";
 import facebookOauthIcon from "../../images/facebook-logo-oauth.png";
-import { parse } from "@fortawesome/fontawesome-svg-core";
 
 const SignInPage = ({
   domain,
@@ -86,6 +88,10 @@ const SignInPage = ({
 
   const [usernameTooltip, setUsernameTooltip] = useState();
   const [passwordTooltip, setPasswordTooltip] = useState();
+
+  // type for password input to toggle between text and password for eye ball functionality to view password in password field
+  const [currentPasswordInputType, setCurrentPasswordInputType] =
+    useState("password");
 
   //if any tool tip is open, clicking anywhere makes it disappear
   function resetToolTipOnClick() {
@@ -223,9 +229,15 @@ const SignInPage = ({
               <label htmlFor="password">Password: </label>
               <input
                 id="password"
-                type="password"
+                type={currentPasswordInputType}
                 onChange={(event) => setPassword(event.target.value)}
               ></input>
+              <FontAwesomeIcon
+                icon={faEye}
+                className={"sign-in-page__eye-icon"}
+                onMouseDown={() => setCurrentPasswordInputType("text")}
+                onMouseUp={() => setCurrentPasswordInputType("password")}
+              />
               {passwordTooltip}
               <div
                 className="sign-in-page__dont-have-account-container"

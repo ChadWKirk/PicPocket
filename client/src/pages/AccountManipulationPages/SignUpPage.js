@@ -1,6 +1,9 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+//font awesome
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
 // Google OAuth
 import { GoogleLogin } from "@react-oauth/google";
 import { useGoogleLogin } from "@react-oauth/google";
@@ -82,6 +85,10 @@ const SignUpPage = ({ domain, setIsJustSignedUp }) => {
   const [usernameInputClass, setUsernameInputClass] = useState();
   const [emailInputClass, setEmailInputClass] = useState();
   const [passwordInputClass, setPasswordInputClass] = useState();
+
+  // type for password input to toggle between text and password for eye ball functionality to view password in password field
+  const [currentPasswordInputType, setCurrentPasswordInputType] =
+    useState("password");
 
   //don't accept special characters for username
   const [isSpecialCharacter, setIsSpecialCharacter] = useState(false);
@@ -377,10 +384,16 @@ const SignUpPage = ({ domain, setIsJustSignedUp }) => {
 
               <input
                 id="password"
-                type="password"
+                type={currentPasswordInputType}
                 onChange={(event) => setPassword(event.target.value)}
                 className={passwordInputClass}
               ></input>
+              <FontAwesomeIcon
+                icon={faEye}
+                className={"sign-up-page__eye-icon"}
+                onMouseDown={() => setCurrentPasswordInputType("text")}
+                onMouseUp={() => setCurrentPasswordInputType("password")}
+              />
               {passwordTooltip}
             </div>
             <div
