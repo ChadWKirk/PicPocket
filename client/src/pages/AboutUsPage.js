@@ -56,8 +56,8 @@ const AboutUsPage = ({
             href={`/${curUser_hyphenated}/upload`}
             className="navbar__CTA-button-1"
             style={{
-              width: "165px",
-              fontSize: "1.5rem",
+              width: "195px",
+              fontSize: "1.25rem",
               textAlign: "center",
               marginTop: "-40px",
             }}

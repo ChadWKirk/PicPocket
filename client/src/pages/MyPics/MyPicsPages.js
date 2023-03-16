@@ -140,6 +140,7 @@ const MyPicsPage = ({
       // let result = parts[parts.length - 1];
       let assetId = element.asset_id;
       let checkbox;
+      let checkboxMobile;
       let elBytes = element.bytes;
       let elKilobytes = (elBytes / 1024).toFixed(2);
       let elMegabytes = (elBytes / 1048576).toFixed(2);
@@ -155,6 +156,15 @@ const MyPicsPage = ({
             className="checkbox"
           />
         );
+        checkboxMobile = (
+          <input
+            type="checkbox"
+            checked={isCheckedArrState[index]}
+            onChange={() => uncheck(index, element)}
+            id={`checkbox${index}`}
+            className="checkbox-mobile"
+          />
+        );
       } else {
         checkbox = (
           <input
@@ -165,6 +175,17 @@ const MyPicsPage = ({
             }}
             id={`checkbox${index}`}
             className="checkbox"
+          />
+        );
+        checkboxMobile = (
+          <input
+            type="checkbox"
+            checked={isCheckedArrState[index]}
+            onChange={() => {
+              check(index, element);
+            }}
+            id={`checkbox${index}`}
+            className="checkbox-mobile"
           />
         );
       }
@@ -183,6 +204,7 @@ const MyPicsPage = ({
           data-isACheckboxChecked={isACheckboxChecked}
         >
           {checkbox}
+          {checkboxMobile}
           <label
             onClick={() => {
               handleCheck(index);
@@ -221,6 +243,7 @@ const MyPicsPage = ({
                 <p>{elMegabytes}Mb</p>
               </div>
             </div>
+            {/* {checkboxMobile} */}
           </label>
         </div>
       );
@@ -486,7 +509,7 @@ const MyPicsPage = ({
   }
 
   return (
-    <div style={{ overflow: "hidden" }}>
+    <div className="my-pics-page__container">
       <NavbarComponent
         domain={domain}
         curUser_real={curUser_real}

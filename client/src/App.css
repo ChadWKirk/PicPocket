@@ -2277,6 +2277,14 @@ button {
 }
 
 /*My Pics gallery CSS*/
+.my-pics-page__container {
+  overflow: hidden;
+}
+@media (width < 900px) {
+  .my-pics-page__container {
+    overflow: visible;
+  }
+}
 .myPicsGalleryMainContainer {
   overflow: hidden;
   margin-bottom: 5.5rem;
@@ -2306,6 +2314,12 @@ button {
   /* width: 93vw; */
   max-width: var(--siteContentsMidWidth);
   margin: auto;
+}
+@media (width < 900px) {
+  .myPicsGalleryAndEditorContainer {
+    display: flex;
+    flex-direction: column-reverse;
+  }
 }
 
 .myPicsGalleryContainer {
@@ -2408,6 +2422,16 @@ button {
   height: 100vh;
   overflow: scroll;
 }
+@media (width < 900px) {
+  .myPicsGallery {
+    gap: 0px;
+    flex-direction: column;
+    height: auto;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+  }
+}
 .mypics-image-gallery__img-and-info-container {
   width: 320px;
   height: 280px;
@@ -2446,6 +2470,16 @@ button {
   top: 10px;
   left: 10px;
   cursor: pointer;
+}
+.checkbox-mobile {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  display: none;
+  pointer-events: none;
+  position: absolute;
+  top: 44%;
+  right: var(--sideSpacePadding);
 }
 /* in my pics page, if an image is checked/selected, show all remaining checkboxes without having to hover over them */
 [data-isACheckboxChecked="true"] .checkbox {
@@ -2497,6 +2531,41 @@ button {
   gap: 1.5rem;
   font-size: 0.875rem;
 }
+@media (width < 900px) {
+  .mypics-image-gallery__img-and-info-container {
+    width: 100%;
+    padding: 0 var(--sideSpacePadding);
+  }
+  .checkbox {
+    display: none;
+    pointer-events: none;
+  }
+  .mypics-image-gallery__img-and-info-container:hover .checkbox {
+    display: none;
+    pointer-events: none;
+  }
+  [data-isACheckboxChecked="true"] .checkbox {
+    display: none;
+  }
+  .checkbox-mobile {
+    display: block;
+    pointer-events: all;
+  }
+  .mypics-image-gallery__img-label {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .mypics-image-gallery__img-container {
+    display: block;
+    width: 150px;
+    height: auto;
+  }
+  .mypics-image-gallery__img-info-container,
+  .mypics-image-gallery__img-info-title {
+    padding: 0;
+  }
+}
 
 .massIcon {
   opacity: 0.6;
@@ -2531,6 +2600,13 @@ button {
   padding-top: 0.6rem;
   border-top: 2px solid rgba(169, 169, 169, 0.21);
   background-color: #f2f2f2;
+}
+@media (width < 900px) {
+  .my-pics-editor__container {
+    position: sticky;
+    top: 80px;
+    border-bottom: 2px solid rgba(169, 169, 169, 0.21);
+  }
 }
 .my-pics-editor__eye-icon {
   font-size: 1.75rem;
@@ -2629,6 +2705,11 @@ button {
   /* border: none; */
   border: 2px solid black;
   outline: none;
+}
+@media (width < 900px) {
+  .my-pics-editor__editor-form-container {
+    display: flex;
+  }
 }
 
 .mypics-image-gallery__img-container:hover .myPicsGallery-img {
