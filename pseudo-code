@@ -79,8 +79,6 @@ upload page - make it so dragging over upload form doesn't rerender image items 
 
 mypics - loading for submit/delete/massdelete (make loading/progress bar at top of the page like youtube), make it so that if all checkboxes are checked, selectall box checked = true and if not all of them are checked then select all checkbox checked = false, make it so when deleting all it deletes all from front end (more than 20 or so), general styling, make page responsive.
 
-make about us page img not move on resize
-
 ---
 
 Facebook OAuth
