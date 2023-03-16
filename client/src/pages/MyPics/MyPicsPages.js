@@ -696,46 +696,48 @@ const MyPicsPage = ({
             }`}
             onSubmit={(e) => submitForm(e)}
           >
-            <div>
-              <div style={{ fontSize: "0.75rem" }}>
-                Title{" "}
-                <p
-                  style={{
-                    fontSize: "0.75rem",
-                    color: "red",
-                    display: "inline",
-                  }}
-                >
-                  *
-                </p>
-                <p
-                  style={{
-                    fontSize: "0.75rem",
-                    color: "red",
-                    display: "inline",
-                  }}
-                >
-                  {specialMessage}
-                </p>
-              </div>
+            <div className="my-pics-editor__editor-form-contents-container">
               <div>
-                <input
-                  id="titleInputID"
-                  className={titleClass}
-                  onChange={(e) => setTitle(e.target.value)}
-                ></input>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <img
-                  id="my-pics-editor__preview-image-for-editor"
-                  src={""}
-                ></img>
+                <div style={{ fontSize: "0.75rem" }}>
+                  Title{" "}
+                  <p
+                    style={{
+                      fontSize: "0.75rem",
+                      color: "red",
+                      display: "inline",
+                    }}
+                  >
+                    *
+                  </p>
+                  <p
+                    style={{
+                      fontSize: "0.75rem",
+                      color: "red",
+                      display: "inline",
+                    }}
+                  >
+                    {specialMessage}
+                  </p>
+                </div>
+                <div>
+                  <input
+                    id="titleInputID"
+                    className={titleClass}
+                    onChange={(e) => setTitle(e.target.value)}
+                  ></input>
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <img
+                    id="my-pics-editor__preview-image-for-editor"
+                    src={""}
+                  ></img>
+                </div>
               </div>
 
               <div className="my-pics-editor__editor-form-details-container">
@@ -749,24 +751,31 @@ const MyPicsPage = ({
                   </div>
                   <div>
                     <input
+                      style={{ marginBottom: "1rem" }}
                       id="tagsInputID"
                       onChange={(e) => setTags(e.target.value)}
                     ></input>
                   </div>
                 </div>
-                <div className="my-pics-editor__editor-form-details-sub-container">
+                <div
+                  className="my-pics-editor__editor-form-details-sub-container"
+                  style={{ flex: "1" }}
+                >
                   {/* have max length of 500 characters */}
                   <div style={{ fontSize: "0.75rem" }}>Description</div>
-                  <div>
+                  <div style={{ height: "100%" }}>
                     <textarea
+                      style={{ height: "100%" }}
                       id="descriptionInputID"
                       onChange={(e) => setDescription(e.target.value)}
                     ></textarea>
                   </div>
                 </div>
                 <div className="my-pics-editor__editor-form-details-sub-container">
-                  <div style={{ fontSize: "0.75rem" }}>Image type</div>
-                  <div>
+                  <div style={{ fontSize: "0.75rem", marginTop: "1rem" }}>
+                    Image type
+                  </div>
+                  <div className="my-pics-editor__image-type-and-btns-container">
                     <select
                       id="imageTypeInputID"
                       onChange={(e) => setImageType(e.target.value)}
@@ -774,71 +783,64 @@ const MyPicsPage = ({
                       <option value="Photo">Photo</option>
                       <option value="Illustration">Illustration</option>
                     </select>
+                    <div className="my-pics-editor__btns-container">
+                      <button
+                        style={{
+                          fontSize: "0.85em",
+                          backgroundColor: "rgb(250, 250, 250)",
+                          padding: "0.25rem",
+                          paddingLeft: "0.75rem",
+                          paddingRight: "0.75rem",
+                          border: "1px solid lightgrey",
+                          borderRadius: "2px",
+                        }}
+                      >
+                        Submit
+                      </button>
+                      {bulkArr.current[0] && (
+                        <a
+                          style={{
+                            fontSize: "0.85rem",
+                            backgroundColor: "rgb(250, 250, 250)",
+                            padding: "0.25rem",
+                            paddingLeft: "0.75rem",
+                            paddingRight: "0.75rem",
+                            border: "1px solid lightgrey",
+                            borderRadius: "2px",
+                          }}
+                          href={
+                            bulkArr.current[0].secure_url.slice(0, 50) +
+                            "q_100/fl_attachment/" +
+                            bulkArr.current[0].secure_url.slice(
+                              50,
+                              bulkArr.current[0].secure_url.lastIndexOf(".")
+                            )
+                          }
+                        >
+                          <FontAwesomeIcon icon={faDownload} />
+                        </a>
+                      )}
+                      <button
+                        type="button"
+                        onClick={(e) => deleteImageFromBackEnd(e)}
+                      >
+                        <FontAwesomeIcon
+                          icon={faTrash}
+                          style={{
+                            fontSize: "0.8rem",
+                            backgroundColor: "rgb(250, 250, 250)",
+                            padding: "0.5rem",
+                            paddingLeft: "0.87rem",
+                            paddingRight: "0.87rem",
+                            border: "1px solid lightgrey",
+                            borderRadius: "2px",
+                            marginTop: "4px",
+                          }}
+                        />
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.7rem",
-                  marginTop: "1.85rem",
-                }}
-              >
-                <button
-                  style={{
-                    fontSize: "0.85em",
-                    backgroundColor: "rgb(250, 250, 250)",
-                    padding: "0.25rem",
-                    paddingLeft: "0.75rem",
-                    paddingRight: "0.75rem",
-                    border: "1px solid lightgrey",
-                    borderRadius: "2px",
-                  }}
-                >
-                  Submit
-                </button>
-                {bulkArr.current[0] && (
-                  <a
-                    style={{
-                      fontSize: "0.85rem",
-                      backgroundColor: "rgb(250, 250, 250)",
-                      padding: "0.25rem",
-                      paddingLeft: "0.75rem",
-                      paddingRight: "0.75rem",
-                      border: "1px solid lightgrey",
-                      borderRadius: "2px",
-                    }}
-                    href={
-                      bulkArr.current[0].secure_url.slice(0, 50) +
-                      "q_100/fl_attachment/" +
-                      bulkArr.current[0].secure_url.slice(
-                        50,
-                        bulkArr.current[0].secure_url.lastIndexOf(".")
-                      )
-                    }
-                  >
-                    <FontAwesomeIcon icon={faDownload} />
-                  </a>
-                )}
-                <button
-                  type="button"
-                  onClick={(e) => deleteImageFromBackEnd(e)}
-                >
-                  <FontAwesomeIcon
-                    icon={faTrash}
-                    style={{
-                      fontSize: "0.8rem",
-                      backgroundColor: "rgb(250, 250, 250)",
-                      padding: "0.5rem",
-                      paddingLeft: "0.87rem",
-                      paddingRight: "0.87rem",
-                      border: "1px solid lightgrey",
-                      borderRadius: "2px",
-                      marginTop: "4px",
-                    }}
-                  />
-                </button>
               </div>
             </div>
           </form>
