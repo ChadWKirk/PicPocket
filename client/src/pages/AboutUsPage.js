@@ -59,7 +59,7 @@ const AboutUsPage = ({
               width: "165px",
               fontSize: "1.5rem",
               textAlign: "center",
-              marginTop: "-12px",
+              marginTop: "-40px",
             }}
           >
             Upload

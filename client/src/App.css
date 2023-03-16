@@ -1349,14 +1349,15 @@ button {
 /* Red Banner CSS */
 .red-banner__container {
   max-width: 100vw;
-  height: 40px;
+  min-height: 40px;
+  padding: 0.5rem 0.5rem 0.5rem 0px;
   background-color: #b20000;
   z-index: 100;
   position: relative;
 }
 .red-banner__contents-container {
   max-width: var(--siteContentsMidWidth);
-  height: 40px;
+  min-height: 40px;
   padding-left: var(--sideSpacePadding);
   display: flex;
   justify-content: flex-start;
@@ -1375,7 +1376,7 @@ button {
 @media (width < 650px) {
   .red-banner__container,
   .red-banner__contents-container {
-    height: 30px;
+    min-height: 30px;
   }
   .red-banner__contents-container {
     padding-left: 15px;
@@ -1383,7 +1384,7 @@ button {
   }
 
   .red-banner__exclamation-icon {
-    font-size: 0.85rem;
+    font-size: 1.25rem;
   }
   .red-banner__contents-container div {
     font-size: 0.75rem;
@@ -4229,7 +4230,7 @@ button {
   grid-template-columns: 2fr 1fr;
   max-width: var(--siteContentsMidWidth);
   margin-bottom: 3rem;
-  padding: 0 var(--sideSpacePadding);
+  padding: 0 55px;
 }
 .about-us-page__text-container {
   display: flex;
@@ -4243,11 +4244,26 @@ button {
 }
 .about-us-page__img-container {
   background-color: #e4a325;
+  overflow: hidden;
 }
 .about-us-page__img-container img {
-  width: 100%;
+  max-width: calc(var(--siteContentsMidWidth) / 3);
+  /* display: block; */
   height: 100%;
   object-fit: cover;
+}
+@media (width < 950px) {
+  .about-us-page__img-container img {
+    max-width: 400px;
+  }
+}
+@media (width < 750px) {
+  .about-us-page__contents-container {
+    padding: 0 27.5px;
+  }
+  .about-us-page__img-container img {
+    max-width: 300px;
+  }
 }
 @media (width < 650px) {
   .about-us-page__contents-container {
@@ -4264,14 +4280,25 @@ button {
     overflow: hidden;
   }
   .about-us-page__img-container img {
-    object-position: 0px -450px;
+    object-position: 0px -635px;
     object-fit: cover;
-    height: 600%;
-    width: 100%;
+    height: 850%;
+    max-width: 200%;
   }
   .about-us-page__heading {
     height: 60px;
     margin-bottom: 1rem;
+  }
+}
+@media (width < 450px) {
+  .about-us-page__img-container {
+    height: 40px;
+  }
+  .about-us-page__img-container img {
+    object-position: 0px -520px;
+    max-width: 450px;
+    height: 550px;
+    width: 450px;
   }
 }
 
