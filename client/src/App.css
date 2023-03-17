@@ -2615,9 +2615,9 @@ button {
     font-size: 1.15rem;
     line-height: 1.85;
   }
-}@media(width < 530px){
-  .mypics-image-gallery__img-and-info-container{
-    
+}
+@media (width < 530px) {
+  .mypics-image-gallery__img-and-info-container {
   }
 }
 @media (width < 520px) {
