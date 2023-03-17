@@ -16,6 +16,34 @@ const MyPicsPage = ({
   curUser_hyphenated,
   isLoggedIn,
 }) => {
+  //get screen width. at Xpx setIsScreenMobile(true)
+  const [isScreenMobile, setIsScreenMobile] = useState();
+  const [windowSize, setWindowSize] = useState(getWindowSize());
+  useEffect(() => {
+    function handleWindowResize() {
+      setWindowSize(getWindowSize());
+    }
+
+    window.addEventListener("resize", handleWindowResize);
+
+    return () => {
+      window.removeEventListener("resize", handleWindowResize);
+    };
+  }, []);
+  function getWindowSize() {
+    const { innerWidth, innerHeight } = window;
+    return { innerWidth, innerHeight };
+  }
+  useEffect(() => {
+    if (windowSize.innerWidth < 530) {
+      setIsScreenMobile(true);
+      console.log(isScreenMobile);
+    } else {
+      setIsScreenMobile(false);
+      console.log(isScreenMobile);
+    }
+  }, [windowSize]);
+
   let navigate = useNavigate();
   const { username } = useParams();
 
@@ -189,67 +217,128 @@ const MyPicsPage = ({
           />
         );
       }
-
-      return (
-        <div
-          onClick={(e) => {
-            displayEditorInfo();
-          }}
-          key={element.asset_id}
-          className={`${
-            isCheckedArrState[index]
-              ? "mypics-image-gallery__img-and-info-container border"
-              : "mypics-image-gallery__img-and-info-container"
-          }`}
-          data-isACheckboxChecked={isACheckboxChecked}
-        >
-          {checkbox}
-          {checkboxMobile}
-          <label
-            onClick={() => {
-              handleCheck(index);
-              handleBulkArrLabel(element, index);
+      //if screen width is over 460px, then display desktop version of image gallery item
+      let imageItem;
+      if (isScreenMobile == false) {
+        imageItem = (
+          <div
+            onClick={(e) => {
+              displayEditorInfo();
             }}
-            className="mypics-image-gallery__img-label"
+            className={`${
+              isCheckedArrState[index]
+                ? "mypics-image-gallery__img-and-info-container border"
+                : "mypics-image-gallery__img-and-info-container"
+            }`}
+            data-isACheckboxChecked={isACheckboxChecked}
           >
-            <div
-              className="mypics-image-gallery__img-container"
-              // href={`/image/${result.replaceAll(" ", "-")}`}
+            {checkbox}
+            {checkboxMobile}
+            <label
+              onClick={() => {
+                handleCheck(index);
+                handleBulkArrLabel(element, index);
+              }}
+              className="mypics-image-gallery__img-label"
             >
-              <img
-                src={
-                  element.secure_url.slice(0, 50) +
-                  "q_60/c_scale,w_600/dpr_auto/" +
-                  element.secure_url.slice(
-                    50,
-                    element.secure_url.lastIndexOf(".")
-                  ) +
-                  ".jpg"
-                } //how the images come in. uses slice to input quality into url and change everything to jpg
-                alt="img"
-                className="mypics-image-gallery__img"
-              ></img>
-            </div>
-            <div className="mypics-image-gallery__img-info-container">
-              <div>
-                <p className="mypics-image-gallery__img-info-title">
-                  {imgData[index].title}
-                </p>
+              <div
+                className="mypics-image-gallery__img-container"
+                // href={`/image/${result.replaceAll(" ", "-")}`}
+              >
+                <img
+                  src={
+                    element.secure_url.slice(0, 50) +
+                    "q_60/c_scale,w_600/dpr_auto/" +
+                    element.secure_url.slice(
+                      50,
+                      element.secure_url.lastIndexOf(".")
+                    ) +
+                    ".jpg"
+                  } //how the images come in. uses slice to input quality into url and change everything to jpg
+                  alt="img"
+                  className="mypics-image-gallery__img"
+                ></img>
               </div>
-              <div className="mypics-img-gallery__img-info-size-container">
-                <p>
-                  {element.width} x {element.height}
-                </p>
-                <p>{elMegabytes}Mb</p>
+              <div className="mypics-image-gallery__img-info-container">
+                <div>
+                  <p className="mypics-image-gallery__img-info-title">
+                    {imgData[index].title}
+                  </p>
+                </div>
+                <div className="mypics-img-gallery__img-info-size-container">
+                  <p>
+                    {element.width} x {element.height}
+                  </p>
+                  <p>{elMegabytes}Mb</p>
+                </div>
               </div>
-            </div>
-            {/* {checkboxMobile} */}
-          </label>
-        </div>
-      );
+            </label>
+          </div>
+        );
+      }
+      //if screen width is under Xpx, then display mobile version of image gallery item
+      if (isScreenMobile == true) {
+        imageItem = (
+          <div
+            onClick={(e) => {
+              displayEditorInfo();
+            }}
+            className={`${
+              isCheckedArrState[index]
+                ? "mypics-image-gallery__img-and-info-container border"
+                : "mypics-image-gallery__img-and-info-container"
+            }`}
+            data-isACheckboxChecked={isACheckboxChecked}
+          >
+            {checkbox}
+            {checkboxMobile}
+            <label
+              onClick={() => {
+                handleCheck(index);
+                handleBulkArrLabel(element, index);
+              }}
+              className="mypics-image-gallery__img-label"
+            >
+              <div
+                className="mypics-image-gallery__img-container"
+                // href={`/image/${result.replaceAll(" ", "-")}`}
+              >
+                <img
+                  src={
+                    element.secure_url.slice(0, 50) +
+                    "q_60/c_scale,w_600/dpr_auto/" +
+                    element.secure_url.slice(
+                      50,
+                      element.secure_url.lastIndexOf(".")
+                    ) +
+                    ".jpg"
+                  } //how the images come in. uses slice to input quality into url and change everything to jpg
+                  alt="img"
+                  className="mypics-image-gallery__img"
+                ></img>
+              </div>
+              <div className="mypics-image-gallery__img-info-container">
+                <div>
+                  <p className="mypics-image-gallery__img-info-title">
+                    {imgData[index].title}
+                  </p>
+                </div>
+                <div className="mypics-img-gallery__img-info-size-container">
+                  <p>
+                    {element.width} x mobile {element.height}
+                  </p>
+                  <p>{elMegabytes}Mb</p>
+                </div>
+              </div>
+            </label>
+          </div>
+        );
+      }
+
+      return <div key={element.asset_id}>{imageItem}</div>;
     });
     setImgGallery(imgDataMapOutcome);
-  }, [imgData, sort, filter, isCheckedArrState]);
+  }, [imgData, sort, filter, isCheckedArrState, windowSize]);
 
   //handle push / filter bulkArr when clicking checkbox (for mass download/delete)
   //if it is already in bulkArr, remove it from bulkArr. If it is not, push it to bulkArr.

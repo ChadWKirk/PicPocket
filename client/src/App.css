@@ -2553,6 +2553,11 @@ button {
   [data-isACheckboxChecked="true"] .checkbox {
     display: none;
   }
+  .mypics-image-gallery__img-and-info-container:hover {
+    background-color: #f3f3f3;
+    box-shadow: none;
+    transition: 0.3s ease-in-out;
+  }
   .checkbox-mobile {
     display: block;
     pointer-events: all;
@@ -2560,6 +2565,7 @@ button {
   .border {
     box-shadow: none !important;
     border-bottom: 0.5px solid rgb(243, 243, 243) !important;
+    background-color: #f3f3f3;
   }
   .mypics-image-gallery__img-label {
     flex-direction: row;
@@ -2608,6 +2614,10 @@ button {
     width: 350px;
     font-size: 1.15rem;
     line-height: 1.85;
+  }
+}@media(width < 530px){
+  .mypics-image-gallery__img-and-info-container{
+    
   }
 }
 @media (width < 520px) {
@@ -2780,6 +2790,8 @@ button {
   gap: 0.7rem;
   margin-top: 1.85rem;
 }
+.my-pics-editor__editor-for-small-screens {
+}
 @media (width < 900px) {
   .my-pics-editor__container {
     position: sticky;
@@ -2790,6 +2802,7 @@ button {
   .my-pics-editor__choose-image-div {
     margin-top: 1rem;
   }
+
   .my-pics-editor__editor-form-container {
     max-width: 100%;
   }
@@ -2828,19 +2841,14 @@ button {
     top: 70px;
   }
 }
-/* @media(width < 460px){
-  .my-pics-editor__editor-form-contents-container {
-    display: flex;
-    flex-direction: column;
-    padding: 1rem;
+@media (width < 530px) {
+  .my-pics-editor__container {
+    display: none;
   }
-  .my-pics-editor__editor-form-details-container {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    padding-bottom: 0.9rem;
+  .my-pics-editor__editor-for-small-screens {
+    height: 300px;
   }
-} */
+}
 
 .mypics-image-gallery__img-container:hover .myPicsGallery-img {
 }
