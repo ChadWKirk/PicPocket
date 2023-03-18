@@ -596,7 +596,7 @@ const MyPicsPage = ({
   }
 
   return (
-    <div className="my-pics-page__container">
+    <div className="mypics-page__container">
       <NavbarComponent
         domain={domain}
         curUser_real={curUser_real}
@@ -605,13 +605,13 @@ const MyPicsPage = ({
         navPositionClass={"fixed"}
         navColorClass={"white"}
       />
-      <div className="myPicsGalleryMainContainer">
+      <div className="mypics-page__above-gallery-section-container">
         <Toast
           status={toastStatus}
           message={toastMessage}
           closeToast={closeToast}
         />
-        <div className="myPicsGalleryHeadingAndSortContainer">
+        <div className="mypics-page__heading-container">
           <div className="mypics-page__heading">
             <h2>Your Pics</h2>
             <p>
@@ -621,7 +621,7 @@ const MyPicsPage = ({
           </div>
         </div>
       </div>
-      <div className="myPicsGalleryAndEditorContainer">
+      <div className="mypics-image-gallery__gallery-and-editor-container">
         <div>
           <div className="mypics-image-gallery__sort-bar-container">
             <div className="mypics-image-gallery__sort-bar__sort-filter-dropdown-checkbox-container">
@@ -758,7 +758,7 @@ const MyPicsPage = ({
 
             {bulkButtons}
           </div>
-          <div className="myPicsGallery">{imgGallery}</div>
+          <div className="mypics-image-gallery__container">{imgGallery}</div>
         </div>
 
         <div className="my-pics-editor__container">

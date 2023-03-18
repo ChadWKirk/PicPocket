@@ -1877,39 +1877,14 @@ button {
 
 .galleryContainer {
 }
-
-.gallery {
+.galleryHeadingAndSortContainer {
+  /* height: 130px;
+  padding: 1.25rem;
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  padding-left: 20px;
-  background-color: rgba(197, 208, 216, 0.545);
-  border-top: 2px solid rgba(169, 169, 169, 0.21);
-}
-
-.gallery a {
-  position: relative;
-  flex-grow: 1;
-  height: 300px;
-  cursor: pointer;
-  background-color: rgb(43, 43, 43);
-}
-
-.gallery-img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  transition: 0.14s ease;
-}
-
-.gallery a:hover .gallery-img {
-  opacity: 0.8;
-  transition: 0.1s ease;
-}
-
-.gallery::after {
-  content: "";
-  flex-grow: 999;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 72%; */
 }
 
 /* Image View Page CSS */
@@ -1974,18 +1949,31 @@ button {
   padding-right: 6.75rem;
 }
 
-/*My Pics gallery CSS*/
-.my-pics-page__container {
+/* My Pics Page CSS */
+
+.mypics-page__container {
   overflow: hidden;
 }
 @media (width < 900px) {
-  .my-pics-page__container {
+  .mypics-page__container {
     overflow: visible;
   }
 }
-.myPicsGalleryMainContainer {
+.mypics-page__above-gallery-section-container {
   overflow: hidden;
   margin-bottom: 5.5rem;
+}
+.mypics-page__heading-container {
+  height: 130px;
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 72%;
+  padding: 2rem;
+  margin: auto;
+  /* margin-top: 1.5rem; */
 }
 .mypics-page__heading {
   font-size: 2rem;
@@ -2005,7 +1993,10 @@ button {
   margin-top: -1.6rem;
   color: rgb(118, 118, 118);
 }
-.myPicsGalleryAndEditorContainer {
+
+/*My Pics Gallery CSS*/
+
+.mypics-image-gallery__gallery-and-editor-container {
   display: grid;
   grid-template-columns: 70% 1fr;
   grid-template-rows: auto;
@@ -2014,39 +2005,11 @@ button {
   margin: auto;
 }
 @media (width < 900px) {
-  .myPicsGalleryAndEditorContainer {
+  .mypics-image-gallery__gallery-and-editor-container {
     display: flex;
     flex-direction: column-reverse;
   }
 }
-
-.myPicsGalleryContainer {
-  width: 80%;
-}
-
-.galleryHeadingAndSortContainer {
-  /* height: 130px;
-  padding: 1.25rem;
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 72%; */
-}
-
-.myPicsGalleryHeadingAndSortContainer {
-  height: 130px;
-  padding: 1.25rem;
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 72%;
-  padding: 2rem;
-  margin: auto;
-  /* margin-top: 1.5rem; */
-}
-
 .mypics-image-gallery__sort-bar-container {
   gap: 20px;
   padding: 1rem;
@@ -2100,7 +2063,7 @@ button {
   margin-right: 2.5rem;
   font-size: 1.14rem;
 }
-.myPicsGallery {
+.mypics-image-gallery__container {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
@@ -2113,7 +2076,7 @@ button {
   overflow: scroll;
 }
 @media (width < 900px) {
-  .myPicsGallery {
+  .mypics-image-gallery__container {
     gap: 0px;
     flex-direction: column;
     height: auto;
@@ -2536,18 +2499,8 @@ button {
   }
 }
 
-.mypics-image-gallery__img-container:hover .myPicsGallery-img {
-}
-
-.image-overlay-container {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 100%;
-  width: 100%;
-  opacity: 1;
+.mypics-image-gallery__img-container:hover
+  .mypics-image-gallery__container-img {
 }
 
 .gallery a:hover .image-overlay-contents-delete {
@@ -2600,24 +2553,24 @@ button {
   transition: 0.1s ease;
 }
 
-.myPicsgallery::after {
+.mypics-image-gallery__container::after {
   content: "";
   flex-grow: 999;
 }
 
 /* mypics gallery scrollbar */
 
-.myPicsGallery::-webkit-scrollbar {
+.mypics-image-gallery__container::-webkit-scrollbar {
   width: 10px;
 }
 
-.myPicsGallery::-webkit-scrollbar-thumb {
+.mypics-image-gallery__container::-webkit-scrollbar-thumb {
   background: rgb(60, 92, 161);
   border-radius: 5px;
   height: 10px;
 }
 
-.myPicsGallery::-webkit-scrollbar-corner {
+.mypics-image-gallery__container::-webkit-scrollbar-corner {
   background: rgba(0, 0, 0, 0);
 }
 
