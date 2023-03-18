@@ -5,32 +5,33 @@ import { useAuthContext } from "./context/useAuthContext";
 import Footer from "./components/Footer";
 
 //pages
-import NotFoundPage from "./pages/NotFoundPage";
-import MainPage from "./pages/MainPage/MainPage";
-import MainPageMostPopularImages from "./pages/MainPage/MainPageMostPopularImages";
-import UserSettingsPage from "./pages/AccountManipulationPages/UserSettingsPage";
-import UserPage from "./pages/UserPage";
-import SignInPage from "./pages/AccountManipulationPages/SignInPage";
-import SignUpPage from "./pages/AccountManipulationPages/SignUpPage";
-import SignUpSuccessPage from "./pages/AccountManipulationPages/SignUpSuccessPage";
+import AboutUsPage from "./pages/AboutUsPage";
+import ContactUsPage from "./pages/ContactUsPage";
+import CreditsPage from "./pages/CreditsPage";
+import ChangePasswordPage from "./pages/AccountManipulationPages/ChangePasswordPage";
 import DelSuccessPage from "./pages/AccountManipulationPages/DelSuccessPage";
-import SearchResultPage from "./pages/SearchResultsPages/SearchResultPage";
-import MyPicsPage from "./pages/MyPics/MyPicsPages";
-import UploadPage from "./pages/UploadPage";
+import DisclaimerPage from "./pages/DisclaimerPage";
+import EmailVerifyPage from "./pages/AccountManipulationPages/EmailVerifyPage";
+import ForgotPasswordResetPage from "./pages/AccountManipulationPages/ForgotPasswordPages/ForgotPasswordResetPage";
 import ImageViewPage from "./pages/ImageViewPage";
 import LikesPage from "./pages/MyLikes/LikesPage";
 import LikeTestPage from "./pages/MyLikes/LikeTestPage";
-import ChangePasswordPage from "./pages/AccountManipulationPages/ChangePasswordPage";
+import MyPicsPage from "./pages/MyPics/MyPicsPages";
+import MainPage from "./pages/MainPage/MainPage";
+import MainPageMostPopularImages from "./pages/MainPage/MainPageMostPopularImages";
+import NotFoundPage from "./pages/NotFoundPage";
 import PasswordChangeSuccessPage from "./pages/AccountManipulationPages/PasswordChangeSuccessPage";
-import SendForgotPasswordPage from "./pages/AccountManipulationPages/ForgotPasswordPages/ForgotPasswordSendLinkPage";
-import ForgotPasswordResetPage from "./pages/AccountManipulationPages/ForgotPasswordPages/ForgotPasswordResetPage";
-import EmailVerifyPage from "./pages/AccountManipulationPages/EmailVerifyPage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
+import SendForgotPasswordPage from "./pages/AccountManipulationPages/ForgotPasswordPages/ForgotPasswordSendLinkPage";
+import SignInPage from "./pages/AccountManipulationPages/SignInPage";
+import SignUpPage from "./pages/AccountManipulationPages/SignUpPage";
+import SignUpSuccessPage from "./pages/AccountManipulationPages/SignUpSuccessPage";
+import SearchResultPage from "./pages/SearchResultsPages/SearchResultPage";
 import TOSPage from "./pages/TOSPage";
-import DisclaimerPage from "./pages/DisclaimerPage";
-import ContactUsPage from "./pages/ContactUsPage";
-import CreditsPage from "./pages/CreditsPage";
-import AboutUsPage from "./pages/AboutUsPage";
+import UserSettingsPage from "./pages/AccountManipulationPages/UserSettingsPage";
+import UserPage from "./pages/UserPage";
+import UploadPage from "./pages/UploadPage";
+
 //bootstrap
 import "bootstrap/dist/css/bootstrap.min.css";
 
