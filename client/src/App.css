@@ -2108,6 +2108,9 @@ button {
   box-shadow: 0px 5px 8px 0px rgba(85, 85, 85, 0.673);
   transition: 0.3s ease-in-out;
 }
+.heightmore {
+  height: 300px !important;
+}
 .mypics-image-gallery__img-and-info-container:hover .checkbox {
   display: block;
 }
@@ -2439,7 +2442,52 @@ button {
   gap: 0.7rem;
   margin-top: 1.85rem;
 }
-.my-pics-editor__editor-for-small-screens {
+.my-pics-editor__editor-form-container-mobile-open {
+  height: 300px;
+}
+.my-pics-editor__editor-form-contents-container-mobile-open {
+  height: 300px;
+}
+@media (width < 530px) {
+  .my-pics-editor__editor-form-details-sub-containerInput {
+    width: 100%;
+    height: 1.75rem;
+
+    border-radius: 4px;
+    /* border: 2px solid black; */
+    /* border: none; */
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.35rem;
+    padding-left: 0.5rem;
+    margin-top: 0.6rem;
+  }
+}
+.my-pics-editor__editor-form-details-container-mobile-open {
+  height: 300px;
+}
+.my-pics-editor__editor-form-details-sub-container-mobile-open {
+}
+.my-pics-editor__editor-form-details-sub-container-mobile-open textarea {
+  width: 100%;
+  border-radius: 4px;
+  border: 1px solid lightgray;
+  font-size: 0.85rem;
+  /* font-weight: 600; */
+  padding: 0.35rem;
+  padding-left: 0.5rem;
+  margin-top: 0.6rem;
+  /* min-height: 16.5vw; */
+  resize: none;
+}
+.my-pics-editor__editor-form-details-sub-container-mobile-open input {
+  width: 100%;
+  height: 1.75rem;
+  border-radius: 4px;
+}
+.my-pics-editor__image-type-and-btns-container-mobile-open {
+}
+.my-pics-editor__btns-container-mobile-open {
 }
 @media (width < 900px) {
   .my-pics-editor__container {

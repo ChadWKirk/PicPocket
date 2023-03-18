@@ -44,6 +44,8 @@ const MyPicsPage = ({
   let navigate = useNavigate();
   const { username } = useParams();
 
+  const [isImageItemOpen, setIsImageItemOpen] = useState(false);
+
   //if user tries to go to a user's my pics page that they aren't logged in as
   //change url to url with their curUser name
   //if user tries to get to my pics page and they aren't logged in at all, app.js takes cares of it by using Navigate element
@@ -278,7 +280,8 @@ const MyPicsPage = ({
         imageItem = (
           <div
             onClick={(e) => {
-              displayEditorInfo();
+              displayEditorInfo(index);
+              setIsImageItemOpen(true);
             }}
             className={`${
               isCheckedArrState[index]
@@ -286,6 +289,7 @@ const MyPicsPage = ({
                 : "mypics-image-gallery__img-and-info-container"
             }`}
             data-isACheckboxChecked={isACheckboxChecked}
+            id={`imageItemContainer${index}`}
           >
             {checkbox}
             {checkboxMobile}
@@ -315,17 +319,171 @@ const MyPicsPage = ({
                 ></img>
               </div>
               <div className="mypics-image-gallery__img-info-container">
-                <div>
-                  <p className="mypics-image-gallery__img-info-title">
-                    {imgData[index].title}
-                  </p>
-                </div>
-                <div className="mypics-img-gallery__img-info-size-container">
-                  <p>
-                    {element.width} x mobile {element.height}
-                  </p>
-                  <p>{elMegabytes}Mb</p>
-                </div>
+                {isImageItemOpen && (
+                  <form
+                    className={`${
+                      bulkArr.current.length == 1
+                        ? "my-pics-editor__editor-form-container-mobile-open"
+                        : "gone"
+                    }`}
+                    onSubmit={(e) => submitForm(e)}
+                  >
+                    <div className="my-pics-editor__editor-form-contents-container-mobile-open">
+                      <div>
+                        <div style={{ fontSize: "0.75rem" }}>
+                          Title{" "}
+                          <p
+                            style={{
+                              fontSize: "0.75rem",
+                              color: "red",
+                              display: "inline",
+                            }}
+                          >
+                            *
+                          </p>
+                          <p
+                            style={{
+                              fontSize: "0.75rem",
+                              color: "red",
+                              display: "inline",
+                            }}
+                          >
+                            {specialMessage}
+                          </p>
+                        </div>
+                        <div>
+                          <input
+                            id="titleInputID"
+                            className={titleClass}
+                            onChange={(e) => setTitle(e.target.value)}
+                          ></input>
+                        </div>
+                      </div>
+
+                      <div className="my-pics-editor__editor-form-details-container-mobile-open">
+                        <div className="my-pics-editor__editor-form-details-sub-container-mobile-open">
+                          {/* don't allow anything but letters and numbers. no special characters */}
+                        </div>
+                        <div className="my-pics-editor__editor-form-details-sub-container-mobile-open">
+                          {/* copy how cloudinary lets you add tags. maybe bootstrap */}
+                          <div style={{ fontSize: "0.75rem" }}>
+                            Tags (Separate with commas. Ex: tag, tags)
+                          </div>
+                          <div>
+                            <input
+                              style={{ marginBottom: "1rem" }}
+                              id="tagsInputID"
+                              onChange={(e) => setTags(e.target.value)}
+                            ></input>
+                          </div>
+                        </div>
+                        <div
+                          className="my-pics-editor__editor-form-details-sub-container-mobile-open"
+                          style={{ flex: "1" }}
+                        >
+                          {/* have max length of 500 characters */}
+                          <div style={{ fontSize: "0.75rem" }}>Description</div>
+                          <div style={{ height: "100%" }}>
+                            <textarea
+                              style={{ height: "100%" }}
+                              id="descriptionInputID"
+                              onChange={(e) => setDescription(e.target.value)}
+                            ></textarea>
+                          </div>
+                        </div>
+                        <div className="my-pics-editor__editor-form-details-sub-container-mobile-open">
+                          <div
+                            style={{ fontSize: "0.75rem", marginTop: "1rem" }}
+                          >
+                            Image type
+                          </div>
+                          <div className="my-pics-editor__image-type-and-btns-container-mobile-open">
+                            <select
+                              id="imageTypeInputID"
+                              onChange={(e) => setImageType(e.target.value)}
+                            >
+                              <option value="Photo">Photo</option>
+                              <option value="Illustration">Illustration</option>
+                            </select>
+                            <div className="my-pics-editor__btns-container-mobile-open">
+                              <button
+                                style={{
+                                  fontSize: "0.85em",
+                                  backgroundColor: "rgb(250, 250, 250)",
+                                  padding: "0.25rem",
+                                  paddingLeft: "0.75rem",
+                                  paddingRight: "0.75rem",
+                                  border: "1px solid lightgrey",
+                                  borderRadius: "2px",
+                                }}
+                              >
+                                Submit
+                              </button>
+                              {bulkArr.current[0] && (
+                                <a
+                                  style={{
+                                    fontSize: "0.85rem",
+                                    backgroundColor: "rgb(250, 250, 250)",
+                                    padding: "0.25rem",
+                                    paddingLeft: "0.75rem",
+                                    paddingRight: "0.75rem",
+                                    border: "1px solid lightgrey",
+                                    borderRadius: "2px",
+                                  }}
+                                  href={
+                                    bulkArr.current[0].secure_url.slice(0, 50) +
+                                    "q_100/fl_attachment/" +
+                                    bulkArr.current[0].secure_url.slice(
+                                      50,
+                                      bulkArr.current[0].secure_url.lastIndexOf(
+                                        "."
+                                      )
+                                    )
+                                  }
+                                >
+                                  <FontAwesomeIcon icon={faDownload} />
+                                </a>
+                              )}
+                              <button
+                                type="button"
+                                onClick={(e) => deleteImageFromBackEnd(e)}
+                              >
+                                <FontAwesomeIcon
+                                  icon={faTrash}
+                                  style={{
+                                    fontSize: "0.8rem",
+                                    backgroundColor: "rgb(250, 250, 250)",
+                                    padding: "0.5rem",
+                                    paddingLeft: "0.87rem",
+                                    paddingRight: "0.87rem",
+                                    border: "1px solid lightgrey",
+                                    borderRadius: "2px",
+                                    marginTop: "4px",
+                                  }}
+                                />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                )}
+                {!isImageItemOpen && (
+                  <>
+                    <div>
+                      <p className="mypics-image-gallery__img-info-title">
+                        {imgData[index].title}
+                      </p>
+                    </div>
+                    <div className="mypics-img-gallery__img-info-size-container">
+                      <p>
+                        {element.width} x mobile {element.height}
+                      </p>
+                      <p>{elMegabytes}Mb</p>
+                    </div>
+                  </>
+                )}
               </div>
             </label>
           </div>
@@ -374,8 +532,15 @@ const MyPicsPage = ({
   }
 
   //set editor info
-  function displayEditorInfo() {
+  function displayEditorInfo(index) {
     if (bulkArr.current.length > 0) {
+      if (isImageItemOpen) {
+        setTimeout(() => {
+          document
+            .getElementById(`imageItemContainer${index}`)
+            .classList.add("heightmore");
+        }, 20);
+      }
       console.log(bulkArr.current[0].title + " this");
       document.querySelector("#titleInputID").value = bulkArr.current[0].title;
       setTitle(bulkArr.current[0].title);
