@@ -1,5 +1,7 @@
 # PicPocket
 
+![GitHub last commit](https://img.shields.io/github/last-commit/ChadWKirk/PicPocket) ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/ChadWKirk/PicPocket) ![GitHub all releases](https://img.shields.io/github/downloads/ChadWKirk/PicPocket/total?label=Downloads)
+
 PicPocket is an image sharing website made with the MERN stack.
 
 ## Description
