@@ -7,10 +7,12 @@ PicPocket is an image sharing website made with the MERN stack.
 ## Description
 
 ### This application allows users to:
+
 - create and delete their account with a bio and profile picture
 - like, share, upload and download their own images
 
 ### This application features:
+
 - Using cloudinary as image host CDN. Useful for transformations with quality and size etc.
 - Using MongoDB as database for sorting, filtering and searching to display the desired images
 - Host on heroku (server) and netlify (client)
@@ -42,7 +44,7 @@ This is a MERN stack application, meaning I used MongoDB, Express, React and Nod
 
 ### MongoDB
 
-MongoDB is used for storing, receiving and manipulating data that resides in a database. 
+MongoDB is used for storing, receiving and manipulating data that resides in a database.
 
 Upload pipeline:
 
@@ -86,10 +88,12 @@ Some of the packages I used in this project include:
 - Install NodeJS
 - Install MongoDB
 - Create Cloudinary Account (free)
+
 ### To Host:
+
 - Create Heroku Account
 - Create Netlify Account (free)
 
 ## Instructions
 
-- 
+-
