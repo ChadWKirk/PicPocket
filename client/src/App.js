@@ -9,7 +9,6 @@ import AboutUsPage from "./pages/AboutUsPage";
 import ContactUsPage from "./pages/ContactUsPage";
 import CreditsPage from "./pages/CreditsPage";
 import ChangePasswordPage from "./pages/AccountManipulationPages/ChangePasswordPage";
-import DelSuccessPage from "./pages/AccountManipulationPages/DelSuccessPage";
 import DisclaimerPage from "./pages/DisclaimerPage";
 import EmailVerifyPage from "./pages/AccountManipulationPages/EmailVerifyPage";
 import ForgotPasswordResetPage from "./pages/AccountManipulationPages/ForgotPasswordPages/ForgotPasswordResetPage";
@@ -326,17 +325,6 @@ function App() {
             path="/SignUp/:username/Success"
             element={
               isJustSignedUp ? <SignUpSuccessPage /> : <Navigate to="/" />
-            }
-          ></Route>
-          <Route
-            path="/delSuccess"
-            element={
-              <DelSuccessPage
-                domain={domain}
-                curUser_real={curUser_real}
-                curUser_hyphenated={curUser_hyphenated}
-                isLoggedIn={isLoggedIn}
-              />
             }
           ></Route>
           <Route
