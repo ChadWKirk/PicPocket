@@ -1,6 +1,5 @@
 import { React, useEffect, useState, useRef } from "react";
 //components
-import UploadFormSideBar from "./UploadFormSideBar";
 import FileList from "./FileList";
 //font awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

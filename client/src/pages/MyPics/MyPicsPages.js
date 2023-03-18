@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from "react";
-import WhiteNavBar from "../../components/WhiteNavBar";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useAuthContext } from "./context/useAuthContext";
 //components
@@ -15,10 +15,8 @@ import EmailVerifyPage from "./pages/AccountManipulationPages/EmailVerifyPage";
 import ForgotPasswordResetPage from "./pages/AccountManipulationPages/ForgotPasswordPages/ForgotPasswordResetPage";
 import ImageViewPage from "./pages/ImageViewPage";
 import LikesPage from "./pages/MyLikes/LikesPage";
-import LikeTestPage from "./pages/MyLikes/LikeTestPage";
 import MyPicsPage from "./pages/MyPics/MyPicsPages";
 import MainPage from "./pages/MainPage/MainPage";
-import MainPageMostPopularImages from "./pages/MainPage/MainPageMostPopularImages";
 import NotFoundPage from "./pages/NotFoundPage";
 import PasswordChangeSuccessPage from "./pages/AccountManipulationPages/PasswordChangeSuccessPage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
@@ -205,7 +203,6 @@ function App() {
               />
             }
           ></Route>
-          <Route path="/like-test" element={<LikeTestPage />}></Route>
           <Route
             path={`/Account/:username`}
             element={

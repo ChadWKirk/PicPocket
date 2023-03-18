@@ -1,7 +1,4 @@
 import React from "react";
-// import NavBar from "../../components/NavBar";
-import Logo from "../../components/Logo";
-import SearchBar from "../../components/SearchBar";
 
 const DelSuccessPage = ({ curUser_real, curUser_hyphenated, loggedIn }) => {
   return (

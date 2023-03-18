@@ -9,7 +9,6 @@ import {
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
-import WhiteNavBar from "../components/WhiteNavBar";
 import { useParams } from "react-router-dom";
 import Modal__ImageSelect from "../components/Modal__ImageSelect";
 import NavbarComponent from "../components/NavbarComponent";
