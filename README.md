@@ -15,6 +15,7 @@ PicPocket is an image sharing website made with the MERN stack.
 - Using MongoDB as database for sorting, filtering and searching to display the desired images
 - Host on heroku (server) and netlify (client)
 - Password hashing with bcryptjs
+- Useage of jsonwebtoken to provide users with tokens once they log in to keep track of the session
 - Using React-Router-Dom to handle routes on the front end
 - Lazy load images
 - Skeleton load images. Grabs primary color, width and height from loading image to create a div with img dimensions and primary color for background to be placeholder.
@@ -59,9 +60,24 @@ React is a front end framework based in Javascript. It was built by several Face
 
 React also allows you to create reuseable components, making it easier and more efficient in building the UI. These components behave sort of like regular javascript functions, except they combine javascript and html together, which is called JSX. You can pass properties to these components, like you would pass parameters to a Javascript function. This is very useful for allowing a change of one property's state to make a change to multiple components.
 
+Some of the cool things I did with React in this project are:
+
+- Use React-Router-Dom to navigate between pages on the front end. Also to get URL parameters from the URL
+- use an event listener to get the width of the window. When the window gets below a certain width, change the state of another const to true in order to conditionally render an element only when screen is mobile sized
+- Have an isLoading const that only turns false once fetch request is finished. This allowed me to conditionally render elements only when loading is done, so all elements can load in at the same time
+- plenty more
+
 ### NodeJS
 
 NodeJS is a Javascript runtime that allows you to execute Javascript code outside of a browser. It runs on the V8 Javascript engine, making it very fast. NodeJS also allows you to use the NPM package manager, which gives you access to thousands of packages to help you build anything you want. Express (above) is an NPM package that makes it easier to handle HTTP requests in NodeJS.
+
+Some of the packages I used in this project include:
+
+- Express
+- BcryptJS (for password hashing)
+- Nodemailer (to send email confirmation emails and reset password emails)
+- Validator (to check if an email is a real email or a password is strong enough)
+- jsonwebtoken (to create a token for when user logs in so they stay logged in even after they close their browser and open it back up)
 
 # How To Run:
 
