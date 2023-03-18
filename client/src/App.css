@@ -1262,7 +1262,9 @@ button {
   .not-found-page__link {
     font-size: 1.5rem;
   }
-} /* Email Verify Page CSS */
+}
+
+/* Email Verify Page CSS */
 .email-verify-page__container {
   background-color: var(--offWhite);
   height: 100%;
@@ -1390,88 +1392,6 @@ button {
     font-size: 0.75rem;
   }
 }
-/* .logo h1 {
-  font-size: 1.5rem;
-}
-
-.logo__color-white {
-  color: white;
-  transition: color 0.15s ease-in-out;
-  margin: 0;
-} */
-
-.navbar__darken {
-  background-color: rgb(55, 57, 65);
-}
-
-.search__container {
-  flex-grow: 1;
-  position: relative;
-}
-
-.search__button {
-  border: none;
-  background: none;
-  position: absolute;
-  top: 9px;
-  right: 18px;
-}
-
-.search__bar {
-  border: none;
-  background-color: #f7f7f7;
-  border-radius: 7px;
-  width: 100%;
-  flex-grow: 1;
-  font-size: 1.125rem;
-  font-weight: 500;
-  color: #707070;
-  padding: 0.7rem 1.35rem;
-  /* padding-right: 64px; */
-  outline: none;
-}
-
-.search__icon {
-  color: #747474;
-  font-size: 1.25rem;
-  transition: 0.05s ease;
-}
-
-.search__button:hover .search__icon {
-  color: #3d6098;
-  transition: 0.05s ease;
-}
-
-.dropDownMenu {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: #3d6098;
-  color: #e7e7e7;
-  height: 35px;
-}
-
-.dropDownMenu .btn-primary {
-  background-color: #3d6098;
-  color: #e7e7e7;
-  border: none;
-  padding: 0;
-  margin-left: calc(100% / 3.6);
-  font-weight: 600;
-  font-size: 1rem;
-  height: 35px;
-}
-
-.dropDownMenu .btn-primary:hover {
-  background-color: #3d6098;
-  color: orange;
-}
-
-.dropDownMenu__button {
-  margin: auto;
-  color: red;
-  flex: 1;
-}
 
 .profile-pic__small {
   border-radius: 50%;
@@ -1479,54 +1399,11 @@ button {
   height: 30px;
 }
 
-/* .image-gallery__image-author-profile-pic {
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-} */
-
-.navbarArrowIconDownwardsWHITENAVBAR {
-  color: rgb(173, 173, 173);
-  transition: 0.1s linear;
-  margin-left: 7px;
-  margin-bottom: 6px;
-}
-
-.navbar__account-button-container:hover .navbarArrowIconDownwardsWHITENAVBAR {
-  color: rgb(149, 149, 149);
-}
-
-/* .navbar__CTA-button-1--hamopen {
-  padding: 0.83rem 1.4rem;
-  background-color: var(--ctaYellow);
-  color: rgb(25, 25, 25);
-  font-weight: 500;
-  border-radius: 6px;
-  font-size: 1rem;
-
-  box-shadow: 0px 0px 0px 1px var(--ctaYellow);
-  transition: box-shadow 0.1s ease-out;
-} */
-
-/* .navbar__hamburger-icon-bars--hamopen {
-  font-size: 1.41rem;
-} */
-
-/* .navbar__account-button-container a {
-  display: flex;
-  align-items: center;
-} */
-
 /* MainPage CSS*/
 
 .mainPage__heroPicture {
   min-height: 510px;
   background-color: #000;
-}
-
-.signUpPage {
-  height: 100vh;
-  /* background: url("C:\Users\Chad Kirk\Documents\mern-stuff\mern-ecommerce\client\src\pexels-jakub-novacek-924824.jpg"); */
 }
 
 /* Home Page Navbar Searchbar */
@@ -1654,51 +1531,6 @@ button {
 
 /*Search Results and My Likes Gallery CSS*/
 
-.likesModalCont {
-  position: absolute;
-  height: 100vh;
-  width: 100vw;
-  background-color: rgba(0, 0, 0, 0.5);
-  color: rgb(233, 233, 233);
-  z-index: 100000000000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.likesModalDiv {
-  background-color: rgb(133, 166, 185);
-  border-radius: 2px;
-  padding: 3rem;
-}
-
-.likesModalButtonCont {
-  display: flex;
-  justify-content: space-around;
-  gap: 1rem;
-  width: 100%;
-}
-
-.likesModalButtonCont button {
-  color: white;
-  background-color: rgb(62, 123, 158);
-  padding: 0.5rem 2rem;
-  border-radius: 3px;
-}
-
-.likesModalButtonCont button:hover {
-  color: white;
-  background-color: rgb(42, 82, 105);
-  padding: 0.5rem 2rem;
-  border-radius: 3px;
-}
-
-.imgGallerySectionCont1 {
-  width: 100%;
-  margin: auto;
-  padding: 0 6px 0 6px;
-}
-
 .sortingBarCont1 {
   display: flex;
   justify-content: center;
@@ -1715,17 +1547,6 @@ button {
 .sortingBarCont1 button {
   font-size: 1rem;
 }
-
-/* .fixed { */
-/* opacity: 1; */
-/* z-index: 1000; */
-/* position: fixed; */
-/* top: 0; */
-/* left: 0; */
-/* right: 0; */
-/* background-color: rgb(23, 26, 35); */
-/* transition: 0.2s ease-in-out; */
-/* } */
 
 .fixed {
   z-index: 1000;
@@ -1795,40 +1616,6 @@ button {
   border-bottom: 2px dotted black;
   transition: 0.4s !important;
 }
-
-/* .image-gallery__image-container {
-  position: relative;
-  font-size: 1rem;
-  color: rgb(73, 73, 73);
-  background-color: rgb(248, 245, 235);
-  overflow: hidden;
-  overflow-y: hidden;
-  margin: 15px;
-} */
-
-/* imgoverlay black thing */
-/* .image-gallery__image-container:hover::after {
-  opacity: 1;
-  box-shadow: inset 0px 0px 30px 60px rgba(0, 0, 0, 0.15);
-  content: "";
-  display: inline-block;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: -390px;
-  width: 490%;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.image-gallery__image-overlay-container {
-  opacity: 0;
-}
-
-.image-gallery__image-container:hover .image-gallery__image-overlay-container {
-  opacity: 1;
-  position: initial;
-} */
 
 .buttonClicked {
   color: #fff;
@@ -1948,42 +1735,6 @@ button {
   }
 }
 
-/* .image-gallery__image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.image-gallery__like-button-container {
-  cursor: pointer;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: white;
-  text-decoration: none;
-  color: rgb(73, 73, 73);
-  border-radius: 10px;
-  padding: 20.5px;
-  z-index: 100;
-}
-
-.image-gallery__like-button-icon {
-  font-size: 1rem;
-  border-radius: 10px;
-  pointer-events: none;
-  position: absolute;
-  z-index: 100;
-  top: 13px;
-  left: 13.5px;
-}
-
-.image-gallery__like-button-icon-filled {
-  color: red;
-  z-index: 105;
-  animation: likeAnimation 0.4s;
-} */
-
 @keyframes likeAnimation {
   from {
     font-size: 1.25rem;
@@ -1999,6 +1750,7 @@ button {
   }
 }
 
+/* Waves background for Join Now on main page */
 .box {
   --mask: radial-gradient(52.4px at 50% 71.5px, #000 99%, #0000 101%)
       calc(50% - 52px) 0/104px 51% repeat-x,
@@ -2122,56 +1874,6 @@ button {
     color: red;
   }
 }
-/* 
-.image-gallery__download-button-container {
-  cursor: pointer;
-  position: absolute;
-  z-index: 100;
-  bottom: 12px;
-  right: 10px;
-  background-color: white;
-  text-decoration: none;
-  color: rgb(73, 73, 73);
-  border-radius: 10px;
-  padding: 8.5px 13px;
-}
-
-.image-gallery__download-button-icon {
-  z-index: 100;
-  pointer-events: none;
-  border-radius: 10px;
-}
-
-.image-gallery__like-button-container:hover {
-  background-color: #f1f1f1;
-} */
-
-/* .image-gallery__download-button-container:hover {
-  background-color: #f1f1f1;
-}
-
-.image-gallery__image-author-link-container {
-  cursor: pointer;
-  position: absolute;
-  bottom: 0px;
-  left: 3px;
-  text-decoration: none;
-  color: #f1f1f1;
-  font-weight: 800;
-  font-size: 1rem;
-  border-radius: 10px;
-  padding: 0.75rem;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  gap: 0.425rem;
-}
-
-.image-gallery__image-author-link-container:hover {
-  background: none;
-  color: #f1f1f1;
-  text-decoration: underline;
-} */
 
 .galleryContainer {
 }
@@ -2262,10 +1964,6 @@ button {
   padding-right: 1.75rem;
 }
 
-.imageViewPageMainImg {
-  /* width: 62%; */
-}
-
 .imgViewPageTitleLikesCont {
   display: flex;
   /* width: 100vw; */
@@ -2348,14 +2046,6 @@ button {
   margin: auto;
   /* margin-top: 1.5rem; */
 }
-
-/* .image-gallery__sort-filter-dropdown-container {
-  gap: 1.25rem;
-  margin: auto;
-  justify-content: center;
-  margin-bottom: 2rem;
-  margin-top: 2rem;
-} */
 
 .mypics-image-gallery__sort-bar-container {
   gap: 20px;
@@ -2663,10 +2353,6 @@ button {
   padding: 0.25rem;
   border-radius: 4px;
 }
-
-/* .image-gallery__dropdown-button {
-  display: flex;
-} */
 
 /* My Pics Editor Form CSS */
 
@@ -4407,9 +4093,6 @@ button {
   object-fit: cover;
 }
 
-@media (width < 650px) {
-}
-
 @media (width < 800px) {
   .sign-in-page__contents-container {
     flex-direction: column;
@@ -5734,19 +5417,6 @@ button {
 @media (width < 314px) {
   .carousel__overlay {
     top: 6.5rem;
-  }
-}
-
-/* @media (width < 420px) {
-  .paperWorkButtons--container {
-    overflow-x: scroll;
-    justify-content: flex-start;
-  }
-} */
-
-@media (width < 430px) {
-  .mainPage__heroPicture {
-    /* height: 510px; */
   }
 }
 
