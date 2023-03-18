@@ -2444,9 +2444,13 @@ button {
 }
 .my-pics-editor__editor-form-container-mobile-open {
   height: 300px;
+  /* background-color: cadetblue; */
+  max-width: 190px;
+  padding-top: 0.5rem;
 }
 .my-pics-editor__editor-form-contents-container-mobile-open {
   height: 300px;
+  /* background-color: oldlace; */
 }
 @media (width < 530px) {
   .my-pics-editor__editor-form-details-sub-containerInput {
@@ -2460,11 +2464,14 @@ button {
     font-weight: 600;
     padding: 0.35rem;
     padding-left: 0.5rem;
-    margin-top: 0.6rem;
+    margin-top: 0;
   }
 }
 .my-pics-editor__editor-form-details-container-mobile-open {
-  height: 300px;
+  /* height: 300px; */
+  display: flex;
+  flex-direction: column;
+  gap: 1.55rem;
 }
 .my-pics-editor__editor-form-details-sub-container-mobile-open {
 }
@@ -2476,7 +2483,7 @@ button {
   /* font-weight: 600; */
   padding: 0.35rem;
   padding-left: 0.5rem;
-  margin-top: 0.6rem;
+  margin-top: 0;
   /* min-height: 16.5vw; */
   resize: none;
 }
@@ -2486,8 +2493,27 @@ button {
   border-radius: 4px;
 }
 .my-pics-editor__image-type-and-btns-container-mobile-open {
+  display: flex;
+  height: 30px;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 0.5rem;
 }
 .my-pics-editor__btns-container-mobile-open {
+  display: flex;
+  gap: 1rem;
+}
+.my-pics-editor__btns-container-mobile-open button {
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+}
+.my-pics-editor__btns-container-mobile-open a {
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  text-align: center;
 }
 @media (width < 900px) {
   .my-pics-editor__container {

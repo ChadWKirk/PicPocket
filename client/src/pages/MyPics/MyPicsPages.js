@@ -6,7 +6,7 @@ import Toast from "../../components/Toast";
 import NavbarComponent from "../../components/NavbarComponent";
 //font awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
 
 const MyPicsPage = ({
@@ -367,11 +367,10 @@ const MyPicsPage = ({
                         <div className="my-pics-editor__editor-form-details-sub-container-mobile-open">
                           {/* copy how cloudinary lets you add tags. maybe bootstrap */}
                           <div style={{ fontSize: "0.75rem" }}>
-                            Tags (Separate with commas. Ex: tag, tags)
+                            Tags (Use commas. Ex: tag, tags)
                           </div>
                           <div>
                             <input
-                              style={{ marginBottom: "1rem" }}
                               id="tagsInputID"
                               onChange={(e) => setTags(e.target.value)}
                             ></input>
@@ -393,7 +392,10 @@ const MyPicsPage = ({
                         </div>
                         <div className="my-pics-editor__editor-form-details-sub-container-mobile-open">
                           <div
-                            style={{ fontSize: "0.75rem", marginTop: "1rem" }}
+                            style={{
+                              fontSize: "0.75rem",
+                              marginTop: "-1.5rem",
+                            }}
                           >
                             Image type
                           </div>
@@ -408,27 +410,19 @@ const MyPicsPage = ({
                             <div className="my-pics-editor__btns-container-mobile-open">
                               <button
                                 style={{
-                                  fontSize: "0.85em",
                                   backgroundColor: "rgb(250, 250, 250)",
-                                  padding: "0.25rem",
-                                  paddingLeft: "0.75rem",
-                                  paddingRight: "0.75rem",
-                                  border: "1px solid lightgrey",
-                                  borderRadius: "2px",
+                                  border: "2px solid darkgreen",
+                                  color: "green",
                                 }}
                               >
-                                Submit
+                                <FontAwesomeIcon icon={faCheck} />
                               </button>
                               {bulkArr.current[0] && (
                                 <a
                                   style={{
-                                    fontSize: "0.85rem",
                                     backgroundColor: "rgb(250, 250, 250)",
-                                    padding: "0.25rem",
-                                    paddingLeft: "0.75rem",
-                                    paddingRight: "0.75rem",
-                                    border: "1px solid lightgrey",
-                                    borderRadius: "2px",
+                                    border: "2px solid silver",
+                                    color: "darkblue",
                                   }}
                                   href={
                                     bulkArr.current[0].secure_url.slice(0, 50) +
@@ -447,20 +441,13 @@ const MyPicsPage = ({
                               <button
                                 type="button"
                                 onClick={(e) => deleteImageFromBackEnd(e)}
+                                style={{
+                                  backgroundColor: "rgb(250, 250, 250)",
+                                  border: "2px solid darkred",
+                                  color: "red",
+                                }}
                               >
-                                <FontAwesomeIcon
-                                  icon={faTrash}
-                                  style={{
-                                    fontSize: "0.8rem",
-                                    backgroundColor: "rgb(250, 250, 250)",
-                                    padding: "0.5rem",
-                                    paddingLeft: "0.87rem",
-                                    paddingRight: "0.87rem",
-                                    border: "1px solid lightgrey",
-                                    borderRadius: "2px",
-                                    marginTop: "4px",
-                                  }}
-                                />
+                                <FontAwesomeIcon icon={faTrash} />
                               </button>
                             </div>
                           </div>
@@ -478,7 +465,7 @@ const MyPicsPage = ({
                     </div>
                     <div className="mypics-img-gallery__img-info-size-container">
                       <p>
-                        {element.width} x mobile {element.height}
+                        {element.width} x {element.height}
                       </p>
                       <p>{elMegabytes}Mb</p>
                     </div>
