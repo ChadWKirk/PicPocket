@@ -44,7 +44,15 @@ const MyPicsPage = ({
   let navigate = useNavigate();
   const { username } = useParams();
 
-  const [isImageItemOpen, setIsImageItemOpen] = useState(true);
+  //create an array of image items with all as false
+  //when one is clicked, in the displayEditor function it checks if bulk arr length is greater than 0
+  //if so, change that index of imgItemArr to true
+  //when imgItemArr[index] is true, show form
+  const [isImageItemOpen, setIsImageItemOpen] = useState(false);
+  //array of image items to decide which one to show mobile open form in
+  let imgItemArr = [];
+  //imgItemArr state
+  const [imgItemArrState, setImgItemArrState] = useState(imgItemArr);
 
   //if user tries to go to a user's my pics page that they aren't logged in as
   //change url to url with their curUser name
@@ -140,6 +148,11 @@ const MyPicsPage = ({
       isCheckedArr[i] = false;
     }
     setIsCheckedArrState(isCheckedArr);
+    //set all imgItemsClicked to false by default
+    for (let i = 0; i < imgData.length; i++) {
+      imgItemArr[i] = false;
+    }
+    setImgItemArrState(imgItemArr);
   }, [sort, filter, isDeletingOrDownloading]);
 
   //Create Image Gallery
@@ -161,6 +174,24 @@ const MyPicsPage = ({
       handleBulkArrCheck(element, index);
       setIsCheckedArrState(boxes);
       displayEditorInfo();
+    }
+    function showMobileForm(index, element) {
+      //set all to false again
+      let imgItems = [];
+      for (let i = 0; i < imgItemArrState.length; i++) {
+        imgItems[i] = false;
+      }
+
+      let imgItem = imgItemArrState[index];
+      imgItem = true;
+      imgItems[index] = imgItem;
+      setImgItemArrState(imgItems);
+      setTimeout(() => {
+        document
+          .getElementById(`imageItemContainer${index}`)
+          .classList.add("heightmore");
+      }, 20);
+      displayEditorInfo(index);
     }
     imgDataMapOutcome = imgData.map((element, index) => {
       // let parts = element.public_id.split("/");  --SPLIT NOT WORKING DUE TO MESSED UP UPLOADS EARLIER. JUST NEED TO DELETE THEM
@@ -280,8 +311,7 @@ const MyPicsPage = ({
         imageItem = (
           <div
             onClick={(e) => {
-              displayEditorInfo(index);
-              // setIsImageItemOpen(true);
+              showMobileForm(index, element);
             }}
             className={`${
               isCheckedArrState[index]
@@ -319,7 +349,7 @@ const MyPicsPage = ({
                 ></img>
               </div>
               <div className="mypics-image-gallery__img-info-container">
-                {isImageItemOpen && (
+                {imgItemArrState[index] && (
                   <form
                     className={`${
                       bulkArr.current.length == 1
@@ -456,7 +486,7 @@ const MyPicsPage = ({
                     </div>
                   </form>
                 )}
-                {!isImageItemOpen && (
+                {!imgItemArrState[index] && (
                   <>
                     <div>
                       <p className="mypics-image-gallery__img-info-title">
@@ -480,6 +510,7 @@ const MyPicsPage = ({
       return <div key={element.asset_id}>{imageItem}</div>;
     });
     setImgGallery(imgDataMapOutcome);
+    console.log(imgItemArr);
   }, [imgData, sort, filter, isCheckedArrState, windowSize]);
 
   //handle push / filter bulkArr when clicking checkbox (for mass download/delete)
@@ -521,13 +552,8 @@ const MyPicsPage = ({
   //set editor info
   function displayEditorInfo(index) {
     if (bulkArr.current.length > 0) {
-      if (isImageItemOpen) {
-        setTimeout(() => {
-          document
-            .getElementById(`imageItemContainer${index}`)
-            .classList.add("heightmore");
-        }, 20);
-      }
+      imgItemArr[index] = true;
+      console.log(imgItemArr);
       console.log(bulkArr.current[0].title + " this");
       document.querySelector("#titleInputID").value = bulkArr.current[0].title;
       setTitle(bulkArr.current[0].title);

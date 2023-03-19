@@ -2521,6 +2521,12 @@ button {
   display: flex;
   flex-direction: column;
   gap: 1.55rem;
+  width: 390px;
+}
+@media (width < 650px) {
+  .my-pics-editor__editor-form-details-container-mobile-open {
+    width: auto;
+  }
 }
 .my-pics-editor__editor-form-details-sub-container-mobile-open {
 }
