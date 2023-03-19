@@ -164,34 +164,80 @@ const MyPicsPage = ({
       boxes[index] = box;
       handleBulkArrCheck(element, index);
       setIsCheckedArrState(boxes);
-      displayEditorInfo();
+      // displayEditorInfo();
+      if (isScreenMobile) {
+        //set so title info shows when unchecked
+        let imgItems = [];
+        for (let i = 0; i < imgItemArrState.length; i++) {
+          imgItems[i] = imgItemArrState[i];
+        }
+        //get current index of array
+        let imgItem = imgItemArrState[index];
+        imgItem = false;
+        //change index to false
+        imgItems[index] = imgItem;
+        setImgItemArrState(imgItems);
+        setTimeout(() => {
+          const allElements = document.querySelectorAll("*");
+          allElements.forEach((element) => {
+            element.classList.remove("heightmore");
+          });
+        }, 30);
+      }
     }
     function check(index, element) {
+      console.log("check");
       let boxes = [...isCheckedArrState];
       let box = isCheckedArrState[index];
       box = true;
       boxes[index] = box;
       handleBulkArrCheck(element, index);
       setIsCheckedArrState(boxes);
-      displayEditorInfo();
+      //if using mobile, run showMobileForm
+      if (isScreenMobile) {
+        // setTimeout(() => {
+        showMobileForm(index, element);
+        setTimeout(() => {
+          document
+            .getElementById(`imageItemContainer${index}`)
+            .classList.add("heightmore");
+        }, 40);
+        // }, 20);
+      }
     }
     function showMobileForm(index, element) {
+      console.log("showmobileform");
       //set all to false again
       let imgItems = [];
       for (let i = 0; i < imgItemArrState.length; i++) {
         imgItems[i] = false;
       }
-
+      //get current index of array
       let imgItem = imgItemArrState[index];
-      imgItem = true;
+      //if only one checked, set to true to show form, and increase height to fit form
+      if (bulkArr.current.length == 1) {
+        imgItem = true;
+        setTimeout(() => {
+          document
+            .getElementById(`imageItemContainer${index}`)
+            .classList.add("heightmore");
+        }, 20);
+      } else {
+        //if more than one is checked, remove increased height from all
+        setTimeout(() => {
+          const allElements = document.querySelectorAll("*");
+          allElements.forEach((element) => {
+            element.classList.remove("heightmore");
+          });
+        }, 30);
+      }
+      //change index depending on if only one checked or not
       imgItems[index] = imgItem;
       setImgItemArrState(imgItems);
+      //run display editor function to get img info
       setTimeout(() => {
-        document
-          .getElementById(`imageItemContainer${index}`)
-          .classList.add("heightmore");
-      }, 20);
-      displayEditorInfo(index);
+        displayEditorInfo(index);
+      }, 10);
     }
     imgDataMapOutcome = imgData.map((element, index) => {
       // let parts = element.public_id.split("/");  --SPLIT NOT WORKING DUE TO MESSED UP UPLOADS EARLIER. JUST NEED TO DELETE THEM
@@ -209,7 +255,10 @@ const MyPicsPage = ({
           <input
             type="checkbox"
             checked={isCheckedArrState[index]}
-            onChange={() => uncheck(index, element)}
+            onChange={() => {
+              uncheck(index, element);
+              displayEditorInfo(index);
+            }}
             id={`checkbox${index}`}
             className="checkbox"
           />
@@ -218,7 +267,11 @@ const MyPicsPage = ({
           <input
             type="checkbox"
             checked={isCheckedArrState[index]}
-            onChange={() => uncheck(index, element)}
+            onChange={() => {
+              uncheck(index, element);
+              // showMobileForm(index, element);
+              // displayEditorInfo(index);
+            }}
             id={`checkbox${index}`}
             className="checkbox-mobile"
           />
@@ -230,6 +283,7 @@ const MyPicsPage = ({
             checked={isCheckedArrState[index]}
             onChange={() => {
               check(index, element);
+              displayEditorInfo(index);
             }}
             id={`checkbox${index}`}
             className="checkbox"
@@ -241,6 +295,8 @@ const MyPicsPage = ({
             checked={isCheckedArrState[index]}
             onChange={() => {
               check(index, element);
+              // displayEditorInfo(index);
+              console.log(bulkArr.current.length);
             }}
             id={`checkbox${index}`}
             className="checkbox-mobile"
@@ -312,6 +368,7 @@ const MyPicsPage = ({
           <div
             onClick={(e) => {
               showMobileForm(index, element);
+              console.log("click");
             }}
             className={`${
               isCheckedArrState[index]
@@ -510,7 +567,7 @@ const MyPicsPage = ({
       return <div key={element.asset_id}>{imageItem}</div>;
     });
     setImgGallery(imgDataMapOutcome);
-    console.log(imgItemArr);
+    // console.log(imgItemArr);
   }, [imgData, sort, filter, isCheckedArrState, windowSize]);
 
   //handle push / filter bulkArr when clicking checkbox (for mass download/delete)
@@ -546,15 +603,16 @@ const MyPicsPage = ({
     } else if (bulkArr.current.length <= 0) {
       setIsACheckboxChecked(false);
     }
-    console.log(bulkArr.current);
+    // console.log(bulkArr.current);
   }
 
   //set editor info
   function displayEditorInfo(index) {
+    console.log("displayededitorinfo");
     if (bulkArr.current.length > 0) {
-      imgItemArr[index] = true;
-      console.log(imgItemArr);
-      console.log(bulkArr.current[0].title + " this");
+      // imgItemArr[index] = true;
+      // console.log(imgItemArr);
+      // console.log(bulkArr.current[0].title + " this");
       document.querySelector("#titleInputID").value = bulkArr.current[0].title;
       setTitle(bulkArr.current[0].title);
       document.querySelector("#tagsInputID").value =
@@ -756,19 +814,19 @@ const MyPicsPage = ({
   //don't accept special characters
   let titleClass;
   if (/[~`!#$%\^&*+=\\[\]\\;,/{}|\\":<>\?]/g.test(title)) {
-    console.log("special");
+    // console.log("special");
     titleClass = "my-pics-editor__editor-form-details-sub-containerInputRed";
   } else {
-    console.log("no special");
+    // console.log("no special");
     titleClass = "my-pics-editor__editor-form-details-sub-containerInput";
   }
 
   let specialMessage;
   if (/[~`!#$%\^&*+=\\[\]\\;,/{}|\\":<>\?]/g.test(title)) {
-    console.log("special");
+    // console.log("special");
     specialMessage = " No Special Characters";
   } else {
-    console.log("no special");
+    // console.log("no special");
     specialMessage = "";
   }
 
