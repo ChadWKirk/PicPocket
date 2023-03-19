@@ -44,7 +44,7 @@ const MyPicsPage = ({
   let navigate = useNavigate();
   const { username } = useParams();
 
-  const [isImageItemOpen, setIsImageItemOpen] = useState(false);
+  const [isImageItemOpen, setIsImageItemOpen] = useState(true);
 
   //if user tries to go to a user's my pics page that they aren't logged in as
   //change url to url with their curUser name
@@ -281,7 +281,7 @@ const MyPicsPage = ({
           <div
             onClick={(e) => {
               displayEditorInfo(index);
-              setIsImageItemOpen(true);
+              // setIsImageItemOpen(true);
             }}
             className={`${
               isCheckedArrState[index]

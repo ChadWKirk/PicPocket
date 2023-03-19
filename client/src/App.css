@@ -2063,6 +2063,20 @@ button {
   margin-right: 2.5rem;
   font-size: 1.14rem;
 }
+@media (width < 530px) {
+  .mypics-image-gallery__dropdown-button {
+    width: 90px !important;
+  }
+  .mypics-image-gallery__dropdown-button .btn-primary {
+    /* width: 1000px; */
+    padding: 0;
+  }
+
+  .mypics-image-gallery__sort-bar__download-delete-all-btn-container {
+    margin-right: 0.5rem;
+    gap: 1.2rem;
+  }
+}
 .mypics-image-gallery__container {
   display: flex;
   flex-wrap: wrap;
@@ -2110,6 +2124,11 @@ button {
 }
 .heightmore {
   height: 300px !important;
+}
+@media (width < 380px) {
+  .heightmore {
+    height: 350px !important;
+  }
 }
 .mypics-image-gallery__img-and-info-container:hover .checkbox {
   display: block;
@@ -2445,12 +2464,22 @@ button {
 .my-pics-editor__editor-form-container-mobile-open {
   height: 300px;
   /* background-color: cadetblue; */
-  max-width: 190px;
+  width: 300px;
   padding-top: 0.5rem;
+}
+@media (width < 460px) {
+  .my-pics-editor__editor-form-container-mobile-open {
+    width: 190px;
+  }
 }
 .my-pics-editor__editor-form-contents-container-mobile-open {
   height: 300px;
   /* background-color: oldlace; */
+}
+@media (width < 380px) {
+  .my-pics-editor__editor-form-contents-container-mobile-open {
+    margin-top: -0.3rem;
+  }
 }
 @media (width < 530px) {
   .my-pics-editor__editor-form-details-sub-containerInput {
@@ -2499,6 +2528,14 @@ button {
   justify-content: space-between;
   width: 100%;
   gap: 0.5rem;
+}
+@media (width < 380px) {
+  .my-pics-editor__image-type-and-btns-container-mobile-open {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 1rem;
+  }
 }
 .my-pics-editor__btns-container-mobile-open {
   display: flex;
