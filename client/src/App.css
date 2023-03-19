@@ -60,7 +60,7 @@
   --navArrowIconColorHover: rgb(116, 116, 116);
   --navSearchDisplay: flex;
   --hamburgerIconColor: #4a4a4a;
-  --navOutline: solid 1px #e7e7e762;
+  --navOutline: solid 1px #f0f0f0;
   --navbarHeightMargin: 80px;
 }
 
@@ -2020,13 +2020,27 @@ button {
   gap: 20px;
   padding: 1rem;
   padding-left: 1.5rem;
-  background-color: rgba(199, 216, 228, 0.545);
+  background-color: #e0eaf0;
   /* background-color: #fff; */
   /* border-top: 2px solid rgba(169, 169, 169, 0.21); */
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid #bbcad3;
+}
+@media (width < 900px) {
+  .mypics-image-gallery__sort-bar-container {
+    position: sticky;
+    top: 79px;
+    z-index: 99;
+  }
+}
+@media (width < 530px) {
+  .mypics-image-gallery__sort-bar-container {
+    position: sticky;
+    top: 69px;
+    z-index: 99;
+  }
 }
 .mypics-image-gallery__sort-bar__sort-filter-dropdown-checkbox-container {
   display: flex;
@@ -2607,12 +2621,9 @@ button {
     top: 70px;
   }
 }
-@media (width < 530px) {
+@media (width < 900px) {
   .my-pics-editor__container {
     display: none;
-  }
-  .my-pics-editor__editor-for-small-screens {
-    height: 300px;
   }
 }
 

@@ -34,7 +34,7 @@ const MyPicsPage = ({
     return { innerWidth, innerHeight };
   }
   useEffect(() => {
-    if (windowSize.innerWidth < 530) {
+    if (windowSize.innerWidth < 900) {
       setIsScreenMobile(true);
     } else {
       setIsScreenMobile(false);
