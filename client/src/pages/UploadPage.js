@@ -95,7 +95,6 @@ const UploadPage = ({
         navColorClass={"white"}
       />
       {banner}
-      {/* <div className="upload-page__container"> */}
       <div className="upload-page__form-and-list-container">
         <UploadForm
           domain={domain}
@@ -109,7 +108,6 @@ const UploadPage = ({
           verifiedValue={verifiedValue}
         />
       </div>
-      {/* </div> */}
     </div>
   );
 };

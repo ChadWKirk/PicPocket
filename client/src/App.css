@@ -2779,6 +2779,12 @@ button {
   align-items: center;
   flex-direction: column;
   gap: 10px;
+  padding: 3rem 0 0 0;
+}
+@media (width < 650px) {
+  .upload-page__form-and-list-container {
+    padding: 2.1rem 0 0rem 0;
+  }
 }
 .uploadPageTitle {
   font-size: 36px;
@@ -2795,7 +2801,8 @@ button {
   display: flex;
   justify-content: center;
   padding: 1rem 0;
-  margin-top: 3.25rem;
+  /* margin-top: 3.25rem; */
+  /* margin-bottom: 1rem; */
   transition: 0.1s ease;
   /* background-color: red; */
 }
@@ -2961,11 +2968,20 @@ button {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  margin-top: 0.9rem;
+  margin-top: 1.7rem;
+  margin-bottom: 2.25rem;
+}
+@media (width < 650px) {
+  .upload-page__file-list {
+    margin-top: 1.1rem;
+    margin-bottom: 2.25rem;
+  }
 }
 
 .upload-page__image-item {
   margin: auto;
+  /* margin-top: -2.7rem; */
+
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -2981,6 +2997,11 @@ button {
   border-radius: 20px;
   /* animation: fadeIn 0.4s; */
 }
+/* @media (width < 650px) {
+  .upload-page__image-item {
+    margin-top: -1.05rem;
+  }
+} */
 .upload-page__image-item-div {
   width: 300px;
   height: 280px;
@@ -3192,7 +3213,7 @@ button {
   bottom: 0px;
   width: 100%;
   padding: 0.75rem 0;
-  margin-top: 0.7rem;
+  margin-bottom: 0rem;
   background-color: rgb(229, 238, 226);
   display: flex;
   justify-content: center;

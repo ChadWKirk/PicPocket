@@ -202,10 +202,6 @@ const UploadForm = ({
         onDragEnter={() => setIsDragActive(true)}
       >
         <div className="upload-page__upload-form-contents">
-          {/* <div className="upload-page__upload-form-side-bar-container">
-            <UploadFormSideBar imagesToUpload={imagesToUpload} />
-          </div> */}
-
           <input
             type="file"
             multiple
