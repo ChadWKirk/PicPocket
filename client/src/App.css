@@ -1961,10 +1961,16 @@ button {
 }
 .mypics-page__above-gallery-section-container {
   overflow: hidden;
-  margin-bottom: 5.5rem;
+  margin-bottom: 3.5rem;
+}
+@media (width < 900px) {
+  .mypics-page__above-gallery-section-container {
+    margin-bottom: 2.375rem;
+  }
 }
 .mypics-page__heading-container {
-  height: 130px;
+  /* height: 130px; */
+  /* background-color: rebeccapurple; */
   padding: 1.25rem;
   display: flex;
   align-items: center;
