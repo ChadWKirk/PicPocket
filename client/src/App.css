@@ -2236,6 +2236,7 @@ button {
     margin-top: 3px;
     box-shadow: none;
     border-bottom: 0.5px solid rgb(243, 243, 243);
+    overflow: hidden;
   }
   .checkbox {
     display: none;

@@ -156,8 +156,12 @@ const MyPicsPage = ({
   }, [sort, filter, isDeletingOrDownloading]);
 
   //Create Image Gallery
+  //use this to pass index from map to useEffect
+  const [indexx, setIndexx] = useState();
+  //create gallery
   useEffect(() => {
     function uncheck(index, element) {
+      setIndexx(index);
       let boxes = [...isCheckedArrState];
       let box = isCheckedArrState[index];
       box = false;
@@ -177,69 +181,77 @@ const MyPicsPage = ({
         //change index to false
         imgItems[index] = imgItem;
         setImgItemArrState(imgItems);
-        setTimeout(() => {
-          const allElements = document.querySelectorAll("*");
-          allElements.forEach((element) => {
-            element.classList.remove("heightmore");
-          });
-        }, 30);
+        // setTimeout(() => {
+        //   const allElements = document.querySelectorAll("*");
+        //   allElements.forEach((element) => {
+        //     element.classList.remove("heightmore");
+        //   });
+        // }, 30);
       }
     }
     function check(index, element) {
       console.log("check");
+      setIndexx(index);
       let boxes = [...isCheckedArrState];
       let box = isCheckedArrState[index];
       box = true;
       boxes[index] = box;
       handleBulkArrCheck(element, index);
       setIsCheckedArrState(boxes);
+
       //if using mobile, run showMobileForm
       if (isScreenMobile) {
         // setTimeout(() => {
         showMobileForm(index, element);
-        if (bulkArr.current.length == 1) {
-          setTimeout(() => {
-            document
-              .getElementById(`imageItemContainer${index}`)
-              .classList.add("heightmore");
-          }, 40);
-        }
+        // if (bulkArr.current.length == 1) {
+        //   setTimeout(() => {
+        //     document
+        //       .getElementById(`imageItemContainer${index}`)
+        //       .classList.add("heightmore");
+        //   }, 40);
+        // }
         // }, 20);
       }
     }
     function showMobileForm(index, element) {
       console.log("showmobileform");
+
+      //set indexx to index of selected image item. pass indexx to useEffect that runs displayEditorInfo(index) after imgItemArrState changes at the end of this function
+      setIndexx(index);
       //set all to false again
       let imgItems = [];
       for (let i = 0; i < imgItemArrState.length; i++) {
         imgItems[i] = false;
       }
+
       //get current index of array
       let imgItem = imgItemArrState[index];
       //if only one checked, set to true to show form, and increase height to fit form
       if (bulkArr.current.length == 1) {
         imgItem = true;
-        setTimeout(() => {
-          document
-            .getElementById(`imageItemContainer${index}`)
-            .classList.add("heightmore");
-        }, 20);
+        // setTimeout(() => {
+        //   document
+        //     .getElementById(`imageItemContainer${index}`)
+        //     .classList.add("heightmore");
+        // }, 20);
       } else {
         //if more than one is checked, remove increased height from all
-        setTimeout(() => {
-          const allElements = document.querySelectorAll("*");
-          allElements.forEach((element) => {
-            element.classList.remove("heightmore");
-          });
-        }, 30);
+        // setTimeout(() => {
+        //   const allElements = document.querySelectorAll("*");
+        //   allElements.forEach((element) => {
+        //     element.classList.remove("heightmore");
+        //   });
+        // }, 30);
       }
       //change index depending on if only one checked or not
       imgItems[index] = imgItem;
+      //set state. runs useEffect that runs displayEditorInfo(index)
       setImgItemArrState(imgItems);
+
       //run display editor function to get img info
-      setTimeout(() => {
-        displayEditorInfo(index);
-      }, 10);
+      // setTimeout(() => {
+      //   displayEditorInfo(index);
+      // }, 10);
     }
     imgDataMapOutcome = imgData.map((element, index) => {
       // let parts = element.public_id.split("/");  --SPLIT NOT WORKING DUE TO MESSED UP UPLOADS EARLIER. JUST NEED TO DELETE THEM
@@ -311,7 +323,7 @@ const MyPicsPage = ({
         imageItem = (
           <div
             onClick={(e) => {
-              displayEditorInfo();
+              displayEditorInfo(index);
             }}
             className={`${
               isCheckedArrState[index]
@@ -569,7 +581,6 @@ const MyPicsPage = ({
       return <div key={element.asset_id}>{imageItem}</div>;
     });
     setImgGallery(imgDataMapOutcome);
-    // console.log(imgItemArr);
   }, [imgData, sort, filter, isCheckedArrState, windowSize]);
 
   //handle push / filter bulkArr when clicking checkbox (for mass download/delete)
@@ -611,8 +622,12 @@ const MyPicsPage = ({
   //set editor info
   function displayEditorInfo(index) {
     console.log("displayededitorinfo");
+    console.log(index, " index variable");
     //if bulkArr has one selected and it is not already currently open
     if (bulkArr.current.length == 1 && imgItemArrState[index] == false) {
+      console.log("false");
+      console.log(bulkArr.current.length, " length");
+      console.log(imgItemArrState[index], " real");
       document.querySelector("#titleInputID").value = bulkArr.current[0].title;
       setTitle(bulkArr.current[0].title);
       document.querySelector("#tagsInputID").value =
@@ -635,10 +650,18 @@ const MyPicsPage = ({
     }
     //if bulkArr has one selected and it is already currently open
     else if (bulkArr.current.length == 1 && imgItemArrState[index] == true) {
+      console.log("true");
+      console.log(bulkArr.current.length, " length");
+      console.log(imgItemArrState[index], " real");
+
       return;
     }
     // if multiple images are selected
     else {
+      console.log("null");
+      console.log(bulkArr.current.length, " length");
+      console.log(imgItemArrState[index], " real");
+
       document.querySelector("#titleInputID").value = null;
       document.querySelector("#tagsInputID").value = null;
       document.querySelector("#descriptionInputID").value = null;
@@ -647,6 +670,36 @@ const MyPicsPage = ({
         null;
     }
   }
+  // run this when imgItemArrState changes from showMobileForm, check or uncheck
+  useEffect(() => {
+    displayEditorInfo(indexx);
+    //if uncheck
+    if (imgItemArrState[indexx] == false) {
+      console.log("uncheck");
+      setTimeout(() => {
+        const allElements = document.querySelectorAll("*");
+        allElements.forEach((element) => {
+          element.classList.remove("heightmore");
+        });
+      }, 1);
+    }
+    //if only one checked, set to true to show form, and increase height to fit form
+    else if (bulkArr.current.length == 1) {
+      console.log("bulkArr is 1");
+      setTimeout(() => {
+        document
+          .getElementById(`imageItemContainer${indexx}`)
+          .classList.add("heightmore");
+      }, 1);
+    } //if more than one is checked, remove increased height from all
+    else if (bulkArr.current.length != 1) {
+      console.log("bulkArr is not 1");
+      const allElements = document.querySelectorAll("*");
+      allElements.forEach((element) => {
+        element.classList.remove("heightmore");
+      });
+    }
+  }, [imgItemArrState]);
 
   //when a box is checked or unchecked, change isCheckedArrState accordingly
   function handleCheck(position) {
