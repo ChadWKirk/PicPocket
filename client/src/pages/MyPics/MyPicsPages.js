@@ -609,10 +609,8 @@ const MyPicsPage = ({
   //set editor info
   function displayEditorInfo(index) {
     console.log("displayededitorinfo");
-    if (bulkArr.current.length > 0) {
-      // imgItemArr[index] = true;
-      // console.log(imgItemArr);
-      // console.log(bulkArr.current[0].title + " this");
+    //if bulkArr has one selected and it is not already currently open
+    if (bulkArr.current.length == 1 && imgItemArrState[index] == false) {
       document.querySelector("#titleInputID").value = bulkArr.current[0].title;
       setTitle(bulkArr.current[0].title);
       document.querySelector("#tagsInputID").value =
@@ -632,7 +630,13 @@ const MyPicsPage = ({
           bulkArr.current[0].secure_url.lastIndexOf(".")
         ) +
         ".jpg";
-    } else {
+    }
+    //if bulkArr has one selected and it is already currently open
+    else if (bulkArr.current.length == 1 && imgItemArrState[index] == true) {
+      return;
+    }
+    // if multiple images are selected
+    else {
       document.querySelector("#titleInputID").value = null;
       document.querySelector("#tagsInputID").value = null;
       document.querySelector("#descriptionInputID").value = null;
