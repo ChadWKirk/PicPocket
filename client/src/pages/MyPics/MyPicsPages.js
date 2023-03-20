@@ -197,11 +197,13 @@ const MyPicsPage = ({
       if (isScreenMobile) {
         // setTimeout(() => {
         showMobileForm(index, element);
-        setTimeout(() => {
-          document
-            .getElementById(`imageItemContainer${index}`)
-            .classList.add("heightmore");
-        }, 40);
+        if (bulkArr.current.length == 1) {
+          setTimeout(() => {
+            document
+              .getElementById(`imageItemContainer${index}`)
+              .classList.add("heightmore");
+          }, 40);
+        }
         // }, 20);
       }
     }
