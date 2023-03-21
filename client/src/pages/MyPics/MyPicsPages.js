@@ -174,7 +174,7 @@ const MyPicsPage = ({
   useEffect(() => {
     //set all imgItemsClicked to false by default
     for (let i = 0; i < imgData.length; i++) {
-      imgItemArr[i] = false;
+      imgItemArr[i] = { isOpen: false, isChecked: false };
     }
     setImgItemArrState(imgItemArr);
   }, [imgData]);
@@ -184,26 +184,43 @@ const MyPicsPage = ({
   const [indexx, setIndexx] = useState();
   //create gallery
   useEffect(() => {
-    function uncheck(index, element) {
-      setIndexx(index);
-      let boxes = [...isCheckedArrState];
-      let box = isCheckedArrState[index];
-      box = false;
-      boxes[index] = box;
-      handleBulkArrCheck(element, index);
-      setIsCheckedArrState(boxes);
-      // displayEditorInfo();
-      if (isScreenMobile) {
+    //wait for imgItemArrState to populate before running useEffect
+    //to get conditional rendering to work. otherwise it will say can not read property isOpen of undefined
+    if (imgItemArrState.length > 0) {
+      console.log(imgItemArr);
+      function uncheck(index, element) {
+        setIndexx(index);
+        let boxes = [...isCheckedArrState];
+        let box = isCheckedArrState[index];
+        box = false;
+        boxes[index] = box;
+        handleBulkArrCheck(element, index);
+        setIsCheckedArrState(boxes);
+        // displayEditorInfo();
+        // if (isScreenMobile) {
         //set so title info shows when unchecked
         let imgItems = [];
         for (let i = 0; i < imgItemArrState.length; i++) {
-          imgItems[i] = imgItemArrState[i];
+          imgItems[i] = {
+            isOpen: imgItemArrState[i].isOpen,
+            isChecked: imgItemArrState[i].isChecked,
+          };
         }
         //get current index of array
         let imgItem = imgItemArrState[index];
-        imgItem = false;
+        imgItem = { isOpen: false, isChecked: false };
         //change index to false
         imgItems[index] = imgItem;
+        //check if only one is remaining to checked to set to open true or not
+        if (
+          imgItems.filter((element) => element.isChecked == true).length == 1
+        ) {
+          imgItems.forEach((element) => {
+            if (element.isChecked) {
+              element.isOpen = true;
+            }
+          });
+        }
         setImgItemArrState(imgItems);
         // setTimeout(() => {
         //   const allElements = document.querySelectorAll("*");
@@ -211,400 +228,416 @@ const MyPicsPage = ({
         //     element.classList.remove("heightmore");
         //   });
         // }, 30);
-      }
-    }
-    function check(index, element) {
-      console.log("check");
-      setIndexx(index);
-      let boxes = [...isCheckedArrState];
-      let box = isCheckedArrState[index];
-      box = true;
-      boxes[index] = box;
-      handleBulkArrCheck(element, index);
-      setIsCheckedArrState(boxes);
-
-      //if using mobile, run showMobileForm
-      if (isScreenMobile) {
-        // setTimeout(() => {
-        showMobileForm(index, element);
-        // if (bulkArr.current.length == 1) {
-        //   setTimeout(() => {
-        //     document
-        //       .getElementById(`imageItemContainer${index}`)
-        //       .classList.add("heightmore");
-        //   }, 40);
         // }
-        // }, 20);
       }
-    }
-    function showMobileForm(index, element) {
-      console.log("showmobileform");
+      function check(index, element) {
+        console.log("check");
+        setIndexx(index);
+        let boxes = [...isCheckedArrState];
+        let box = isCheckedArrState[index];
+        box = true;
+        boxes[index] = box;
+        handleBulkArrCheck(element, index);
+        setIsCheckedArrState(boxes);
 
-      //set indexx to index of selected image item. pass indexx to useEffect that runs displayEditorInfo(index) after imgItemArrState changes at the end of this function
-      setIndexx(index);
-      //set all to false again
-      let imgItems = [];
-      for (let i = 0; i < imgItemArrState.length; i++) {
-        imgItems[i] = false;
+        //if using mobile, run showMobileForm
+        if (isScreenMobile) {
+          // setTimeout(() => {
+          showMobileForm(index, element);
+          // if (bulkArr.current.length == 1) {
+          //   setTimeout(() => {
+          //     document
+          //       .getElementById(`imageItemContainer${index}`)
+          //       .classList.add("heightmore");
+          //   }, 40);
+          // }
+          // }, 20);
+        }
       }
+      function showMobileForm(index, element) {
+        console.log("showmobileform");
 
-      //get current index of array
-      let imgItem = imgItemArrState[index];
-      //if only one checked, set to true to show form, and increase height to fit form
-      if (bulkArr.current.length == 1) {
-        imgItem = true;
+        //set indexx to index of selected image item. pass indexx to useEffect that runs displayEditorInfo(index) after imgItemArrState changes at the end of this function
+        setIndexx(index);
+        //set all to false again
+        let imgItems = [];
+        for (let i = 0; i < imgItemArrState.length; i++) {
+          imgItems[i] = {
+            isOpen: imgItemArrState[i].isOpen,
+            isChecked: imgItemArrState[i].isChecked,
+          };
+        }
+
+        //get current index of array
+        let imgItem = imgItemArrState[index];
+        //if only one checked, set to true to show form, and increase height to fit form
+        if (bulkArr.current.length == 1) {
+          imgItem.isOpen = true;
+          imgItem.isChecked = true;
+          // setTimeout(() => {
+          //   document
+          //     .getElementById(`imageItemContainer${index}`)
+          //     .classList.add("heightmore");
+          // }, 20);
+        } else {
+          //set all isOpen to false + set is checked to true
+          imgItems.forEach((element) => {
+            element.isOpen = false;
+          });
+          imgItem.isChecked = true;
+          //if more than one is checked, remove increased height from all
+          // setTimeout(() => {
+          //   const allElements = document.querySelectorAll("*");
+          //   allElements.forEach((element) => {
+          //     element.classList.remove("heightmore");
+          //   });
+          // }, 30);
+        }
+        //change index depending on if only one checked or not
+        imgItems[index] = imgItem;
+        //set state. runs useEffect that runs displayEditorInfo(index)
+        setImgItemArrState(imgItems);
+
+        //run display editor function to get img info
         // setTimeout(() => {
-        //   document
-        //     .getElementById(`imageItemContainer${index}`)
-        //     .classList.add("heightmore");
-        // }, 20);
-      } else {
-        //if more than one is checked, remove increased height from all
-        // setTimeout(() => {
-        //   const allElements = document.querySelectorAll("*");
-        //   allElements.forEach((element) => {
-        //     element.classList.remove("heightmore");
-        //   });
-        // }, 30);
+        //   displayEditorInfo(index);
+        // }, 10);
       }
-      //change index depending on if only one checked or not
-      imgItems[index] = imgItem;
-      //set state. runs useEffect that runs displayEditorInfo(index)
-      setImgItemArrState(imgItems);
+      imgDataMapOutcome = imgData.map((element, index) => {
+        // let parts = element.public_id.split("/");  --SPLIT NOT WORKING DUE TO MESSED UP UPLOADS EARLIER. JUST NEED TO DELETE THEM
+        // let result = parts[parts.length - 1];
+        let assetId = element.asset_id;
+        let checkbox;
+        let checkboxMobile;
+        let elBytes = element.bytes;
+        let elKilobytes = (elBytes / 1024).toFixed(2);
+        let elMegabytes = (elBytes / 1048576).toFixed(2);
 
-      //run display editor function to get img info
-      // setTimeout(() => {
-      //   displayEditorInfo(index);
-      // }, 10);
-    }
-    imgDataMapOutcome = imgData.map((element, index) => {
-      // let parts = element.public_id.split("/");  --SPLIT NOT WORKING DUE TO MESSED UP UPLOADS EARLIER. JUST NEED TO DELETE THEM
-      // let result = parts[parts.length - 1];
-      let assetId = element.asset_id;
-      let checkbox;
-      let checkboxMobile;
-      let elBytes = element.bytes;
-      let elKilobytes = (elBytes / 1024).toFixed(2);
-      let elMegabytes = (elBytes / 1048576).toFixed(2);
-
-      //set if checkbox is checked or not based on isCheckedArrState
-      if (isCheckedArrState[index]) {
-        checkbox = (
-          <input
-            type="checkbox"
-            checked={isCheckedArrState[index]}
-            onChange={() => {
-              uncheck(index, element);
-              displayEditorInfo(index);
-            }}
-            id={`checkbox${index}`}
-            className="checkbox"
-          />
-        );
-        checkboxMobile = (
-          <input
-            type="checkbox"
-            checked={isCheckedArrState[index]}
-            onChange={() => {
-              uncheck(index, element);
-              // showMobileForm(index, element);
-              // displayEditorInfo(index);
-            }}
-            id={`checkbox${index}`}
-            className="checkbox-mobile"
-          />
-        );
-      } else {
-        checkbox = (
-          <input
-            type="checkbox"
-            checked={isCheckedArrState[index]}
-            onChange={() => {
-              check(index, element);
-              displayEditorInfo(index);
-            }}
-            id={`checkbox${index}`}
-            className="checkbox"
-          />
-        );
-        checkboxMobile = (
-          <input
-            type="checkbox"
-            checked={isCheckedArrState[index]}
-            onChange={() => {
-              check(index, element);
-              // displayEditorInfo(index);
-              console.log(bulkArr.current.length);
-            }}
-            id={`checkbox${index}`}
-            className="checkbox-mobile"
-          />
-        );
-      }
-      //if screen width is over 460px, then display desktop version of image gallery item
-      let imageItem;
-      if (isScreenMobile == false) {
-        imageItem = (
-          <div
-            onClick={(e) => {
-              displayEditorInfo(index);
-            }}
-            className={`${
-              isCheckedArrState[index]
-                ? "mypics-image-gallery__img-and-info-container border"
-                : "mypics-image-gallery__img-and-info-container"
-            }`}
-            data-isACheckboxChecked={isACheckboxChecked}
-          >
-            {checkbox}
-            {checkboxMobile}
-            <label
-              onClick={() => {
-                handleCheck(index);
-                handleBulkArrLabel(element, index);
+        //set if checkbox is checked or not based on isCheckedArrState
+        if (isCheckedArrState[index]) {
+          checkbox = (
+            <input
+              type="checkbox"
+              checked={isCheckedArrState[index]}
+              onChange={() => {
+                uncheck(index, element);
+                displayEditorInfo(index);
               }}
-              className="mypics-image-gallery__img-label"
-            >
-              <div
-                className="mypics-image-gallery__img-container"
-                // href={`/image/${result.replaceAll(" ", "-")}`}
-              >
-                <img
-                  src={
-                    element.secure_url.slice(0, 50) +
-                    "q_60/c_scale,w_600/dpr_auto/" +
-                    element.secure_url.slice(
-                      50,
-                      element.secure_url.lastIndexOf(".")
-                    ) +
-                    ".jpg"
-                  } //how the images come in. uses slice to input quality into url and change everything to jpg
-                  alt="img"
-                  className="mypics-image-gallery__img"
-                ></img>
-              </div>
-              <div className="mypics-image-gallery__img-info-container">
-                <div>
-                  <p className="mypics-image-gallery__img-info-title">
-                    {imgData[index].title}
-                  </p>
-                </div>
-                <div className="mypics-img-gallery__img-info-size-container">
-                  <p>
-                    {element.width} x {element.height}
-                  </p>
-                  <p>{elMegabytes}Mb</p>
-                </div>
-              </div>
-            </label>
-          </div>
-        );
-      }
-      //if screen width is under Xpx, then display mobile version of image gallery item
-      if (isScreenMobile == true) {
-        imageItem = (
-          <div
-            onClick={(e) => {
-              displayEditorInfo(index);
-            }}
-            className={`${
-              isCheckedArrState[index]
-                ? "mypics-image-gallery__img-and-info-container border"
-                : "mypics-image-gallery__img-and-info-container"
-            }`}
-            data-isACheckboxChecked={isACheckboxChecked}
-            id={`imageItemContainer${index}`}
-          >
-            {checkbox}
-            {checkboxMobile}
-            <label
-              onClick={() => {
-                handleCheck(index);
-                handleBulkArrLabel(element, index);
+              id={`checkbox${index}`}
+              className="checkbox"
+            />
+          );
+          checkboxMobile = (
+            <input
+              type="checkbox"
+              checked={isCheckedArrState[index]}
+              onChange={() => {
+                uncheck(index, element);
+                // showMobileForm(index, element);
+                // displayEditorInfo(index);
               }}
-              className="mypics-image-gallery__img-label"
+              id={`checkbox${index}`}
+              className="checkbox-mobile"
+            />
+          );
+        } else {
+          checkbox = (
+            <input
+              type="checkbox"
+              checked={isCheckedArrState[index]}
+              onChange={() => {
+                check(index, element);
+                displayEditorInfo(index);
+              }}
+              id={`checkbox${index}`}
+              className="checkbox"
+            />
+          );
+          checkboxMobile = (
+            <input
+              type="checkbox"
+              checked={isCheckedArrState[index]}
+              onChange={() => {
+                check(index, element);
+                displayEditorInfo(index);
+              }}
+              id={`checkbox${index}`}
+              className="checkbox-mobile"
+            />
+          );
+        }
+        //if screen width is over 460px, then display desktop version of image gallery item
+        let imageItem;
+        if (isScreenMobile == false) {
+          imageItem = (
+            <div
+              onClick={(e) => {
+                displayEditorInfo(index);
+              }}
+              className={`${
+                isCheckedArrState[index]
+                  ? "mypics-image-gallery__img-and-info-container border"
+                  : "mypics-image-gallery__img-and-info-container"
+              }`}
+              data-isACheckboxChecked={isACheckboxChecked}
             >
-              <div
-                className="mypics-image-gallery__img-container"
-                // href={`/image/${result.replaceAll(" ", "-")}`}
+              {checkbox}
+              {checkboxMobile}
+              <label
+                onClick={() => {
+                  handleCheck(index);
+                  handleBulkArrLabel(element, index);
+                }}
+                className="mypics-image-gallery__img-label"
               >
-                <img
-                  src={
-                    element.secure_url.slice(0, 50) +
-                    "q_60/c_scale,w_600/dpr_auto/" +
-                    element.secure_url.slice(
-                      50,
-                      element.secure_url.lastIndexOf(".")
-                    ) +
-                    ".jpg"
-                  } //how the images come in. uses slice to input quality into url and change everything to jpg
-                  alt="img"
-                  className="mypics-image-gallery__img"
-                ></img>
-              </div>
-              <div className="mypics-image-gallery__img-info-container">
-                {imgItemArrState[index] && (
-                  <form
-                    className={`${
-                      bulkArr.current.length == 1
-                        ? "my-pics-editor__editor-form-container-mobile-open"
-                        : "gone"
-                    }`}
-                    onSubmit={(e) => submitForm(e)}
-                  >
-                    <div className="my-pics-editor__editor-form-contents-container-mobile-open">
-                      <div>
-                        <div style={{ fontSize: "0.75rem" }}>
-                          Title{" "}
-                          <p
-                            style={{
-                              fontSize: "0.75rem",
-                              color: "red",
-                              display: "inline",
-                            }}
-                          >
-                            *
-                          </p>
-                          <p
-                            style={{
-                              fontSize: "0.75rem",
-                              color: "red",
-                              display: "inline",
-                            }}
-                          >
-                            {specialMessage}
-                          </p>
-                        </div>
+                <div
+                  className="mypics-image-gallery__img-container"
+                  // href={`/image/${result.replaceAll(" ", "-")}`}
+                >
+                  <img
+                    src={
+                      element.secure_url.slice(0, 50) +
+                      "q_60/c_scale,w_600/dpr_auto/" +
+                      element.secure_url.slice(
+                        50,
+                        element.secure_url.lastIndexOf(".")
+                      ) +
+                      ".jpg"
+                    } //how the images come in. uses slice to input quality into url and change everything to jpg
+                    alt="img"
+                    className="mypics-image-gallery__img"
+                  ></img>
+                </div>
+                <div className="mypics-image-gallery__img-info-container">
+                  <div>
+                    <p className="mypics-image-gallery__img-info-title">
+                      {imgData[index].title}
+                    </p>
+                  </div>
+                  <div className="mypics-img-gallery__img-info-size-container">
+                    <p>
+                      {element.width} x {element.height}
+                    </p>
+                    <p>{elMegabytes}Mb</p>
+                  </div>
+                </div>
+              </label>
+            </div>
+          );
+        }
+        //if screen width is under Xpx, then display mobile version of image gallery item
+        if (isScreenMobile == true) {
+          imageItem = (
+            <div
+              onClick={(e) => {
+                displayEditorInfo(index);
+              }}
+              className={`${
+                isCheckedArrState[index]
+                  ? "mypics-image-gallery__img-and-info-container border"
+                  : "mypics-image-gallery__img-and-info-container"
+              }`}
+              data-isACheckboxChecked={isACheckboxChecked}
+              id={`imageItemContainer${index}`}
+            >
+              {checkbox}
+              {checkboxMobile}
+              <label
+                onClick={() => {
+                  handleCheck(index);
+                  handleBulkArrLabel(element, index);
+                }}
+                className="mypics-image-gallery__img-label"
+              >
+                <div
+                  className="mypics-image-gallery__img-container"
+                  // href={`/image/${result.replaceAll(" ", "-")}`}
+                >
+                  <img
+                    src={
+                      element.secure_url.slice(0, 50) +
+                      "q_60/c_scale,w_600/dpr_auto/" +
+                      element.secure_url.slice(
+                        50,
+                        element.secure_url.lastIndexOf(".")
+                      ) +
+                      ".jpg"
+                    } //how the images come in. uses slice to input quality into url and change everything to jpg
+                    alt="img"
+                    className="mypics-image-gallery__img"
+                  ></img>
+                </div>
+                <div className="mypics-image-gallery__img-info-container">
+                  {imgItemArrState[index].isOpen && (
+                    <form
+                      className={`${
+                        bulkArr.current.length == 1
+                          ? "my-pics-editor__editor-form-container-mobile-open"
+                          : "gone"
+                      }`}
+                      onSubmit={(e) => submitForm(e)}
+                    >
+                      <div className="my-pics-editor__editor-form-contents-container-mobile-open">
                         <div>
-                          <input
-                            id="titleInputID"
-                            className={titleClass}
-                            onChange={(e) => setTitle(e.target.value)}
-                          ></input>
-                        </div>
-                      </div>
-
-                      <div className="my-pics-editor__editor-form-details-container-mobile-open">
-                        <div className="my-pics-editor__editor-form-details-sub-container-mobile-open">
-                          {/* don't allow anything but letters and numbers. no special characters */}
-                        </div>
-                        <div className="my-pics-editor__editor-form-details-sub-container-mobile-open">
-                          {/* copy how cloudinary lets you add tags. maybe bootstrap */}
                           <div style={{ fontSize: "0.75rem" }}>
-                            Tags (Use commas. Ex: tag, tags)
+                            Title{" "}
+                            <p
+                              style={{
+                                fontSize: "0.75rem",
+                                color: "red",
+                                display: "inline",
+                              }}
+                            >
+                              *
+                            </p>
+                            <p
+                              style={{
+                                fontSize: "0.75rem",
+                                color: "red",
+                                display: "inline",
+                              }}
+                            >
+                              {specialMessage}
+                            </p>
                           </div>
                           <div>
                             <input
-                              id="tagsInputID"
-                              onChange={(e) => setTags(e.target.value)}
+                              id="titleInputID"
+                              className={titleClass}
+                              onChange={(e) => setTitle(e.target.value)}
                             ></input>
                           </div>
                         </div>
-                        <div
-                          className="my-pics-editor__editor-form-details-sub-container-mobile-open"
-                          style={{ flex: "1" }}
-                        >
-                          {/* have max length of 500 characters */}
-                          <div style={{ fontSize: "0.75rem" }}>Description</div>
-                          <div style={{ height: "100%" }}>
-                            <textarea
-                              style={{ height: "100%" }}
-                              id="descriptionInputID"
-                              onChange={(e) => setDescription(e.target.value)}
-                            ></textarea>
+
+                        <div className="my-pics-editor__editor-form-details-container-mobile-open">
+                          <div className="my-pics-editor__editor-form-details-sub-container-mobile-open">
+                            {/* don't allow anything but letters and numbers. no special characters */}
                           </div>
-                        </div>
-                        <div className="my-pics-editor__editor-form-details-sub-container-mobile-open">
+                          <div className="my-pics-editor__editor-form-details-sub-container-mobile-open">
+                            {/* copy how cloudinary lets you add tags. maybe bootstrap */}
+                            <div style={{ fontSize: "0.75rem" }}>
+                              Tags (Use commas. Ex: tag, tags)
+                            </div>
+                            <div>
+                              <input
+                                id="tagsInputID"
+                                onChange={(e) => setTags(e.target.value)}
+                              ></input>
+                            </div>
+                          </div>
                           <div
-                            style={{
-                              fontSize: "0.75rem",
-                              marginTop: "-1.5rem",
-                            }}
+                            className="my-pics-editor__editor-form-details-sub-container-mobile-open"
+                            style={{ flex: "1" }}
                           >
-                            Image type
+                            {/* have max length of 500 characters */}
+                            <div style={{ fontSize: "0.75rem" }}>
+                              Description
+                            </div>
+                            <div style={{ height: "100%" }}>
+                              <textarea
+                                style={{ height: "100%" }}
+                                id="descriptionInputID"
+                                onChange={(e) => setDescription(e.target.value)}
+                              ></textarea>
+                            </div>
                           </div>
-                          <div className="my-pics-editor__image-type-and-btns-container-mobile-open">
-                            <select
-                              id="imageTypeInputID"
-                              onChange={(e) => setImageType(e.target.value)}
+                          <div className="my-pics-editor__editor-form-details-sub-container-mobile-open">
+                            <div
+                              style={{
+                                fontSize: "0.75rem",
+                                marginTop: "-1.5rem",
+                              }}
                             >
-                              <option value="Photo">Photo</option>
-                              <option value="Illustration">Illustration</option>
-                            </select>
-                            <div className="my-pics-editor__btns-container-mobile-open">
-                              <button
-                                style={{
-                                  backgroundColor: "rgb(250, 250, 250)",
-                                  border: "2px solid darkgreen",
-                                  color: "green",
-                                }}
+                              Image type
+                            </div>
+                            <div className="my-pics-editor__image-type-and-btns-container-mobile-open">
+                              <select
+                                id="imageTypeInputID"
+                                onChange={(e) => setImageType(e.target.value)}
                               >
-                                <FontAwesomeIcon icon={faCheck} />
-                              </button>
-                              {bulkArr.current[0] && (
-                                <a
+                                <option value="Photo">Photo</option>
+                                <option value="Illustration">
+                                  Illustration
+                                </option>
+                              </select>
+                              <div className="my-pics-editor__btns-container-mobile-open">
+                                <button
                                   style={{
                                     backgroundColor: "rgb(250, 250, 250)",
-                                    border: "2px solid silver",
-                                    color: "darkblue",
+                                    border: "2px solid darkgreen",
+                                    color: "green",
                                   }}
-                                  href={
-                                    bulkArr.current[0].secure_url.slice(0, 50) +
-                                    "q_100/fl_attachment/" +
-                                    bulkArr.current[0].secure_url.slice(
-                                      50,
-                                      bulkArr.current[0].secure_url.lastIndexOf(
-                                        "."
-                                      )
-                                    )
-                                  }
                                 >
-                                  <FontAwesomeIcon icon={faDownload} />
-                                </a>
-                              )}
-                              <button
-                                type="button"
-                                onClick={(e) => deleteImageFromBackEnd(e)}
-                                style={{
-                                  backgroundColor: "rgb(250, 250, 250)",
-                                  border: "2px solid darkred",
-                                  color: "red",
-                                }}
-                              >
-                                <FontAwesomeIcon icon={faTrash} />
-                              </button>
+                                  <FontAwesomeIcon icon={faCheck} />
+                                </button>
+                                {bulkArr.current[0] && (
+                                  <a
+                                    style={{
+                                      backgroundColor: "rgb(250, 250, 250)",
+                                      border: "2px solid silver",
+                                      color: "darkblue",
+                                    }}
+                                    href={
+                                      bulkArr.current[0].secure_url.slice(
+                                        0,
+                                        50
+                                      ) +
+                                      "q_100/fl_attachment/" +
+                                      bulkArr.current[0].secure_url.slice(
+                                        50,
+                                        bulkArr.current[0].secure_url.lastIndexOf(
+                                          "."
+                                        )
+                                      )
+                                    }
+                                  >
+                                    <FontAwesomeIcon icon={faDownload} />
+                                  </a>
+                                )}
+                                <button
+                                  type="button"
+                                  onClick={(e) => deleteImageFromBackEnd(e)}
+                                  style={{
+                                    backgroundColor: "rgb(250, 250, 250)",
+                                    border: "2px solid darkred",
+                                    color: "red",
+                                  }}
+                                >
+                                  <FontAwesomeIcon icon={faTrash} />
+                                </button>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </form>
-                )}
-                {!imgItemArrState[index] && (
-                  <>
-                    <div>
-                      <p className="mypics-image-gallery__img-info-title">
-                        {imgData[index].title}
-                      </p>
-                    </div>
-                    <div className="mypics-img-gallery__img-info-size-container">
-                      <p>
-                        {element.width} x {element.height}
-                      </p>
-                      <p>{elMegabytes}Mb</p>
-                    </div>
-                  </>
-                )}
-              </div>
-            </label>
-          </div>
-        );
-      }
+                    </form>
+                  )}
+                  {!imgItemArrState[index].isOpen && (
+                    <>
+                      <div>
+                        <p className="mypics-image-gallery__img-info-title">
+                          {imgData[index].title}
+                        </p>
+                      </div>
+                      <div className="mypics-img-gallery__img-info-size-container">
+                        <p>
+                          {element.width} x {element.height}
+                        </p>
+                        <p>{elMegabytes}Mb</p>
+                      </div>
+                    </>
+                  )}
+                </div>
+              </label>
+            </div>
+          );
+        }
 
-      return <div key={element.asset_id}>{imageItem}</div>;
-    });
-    setImgGallery(imgDataMapOutcome);
-    console.log(imgItemArrState, " img item arr");
+        return <div key={element.asset_id}>{imageItem}</div>;
+      });
+      setImgGallery(imgDataMapOutcome);
+      console.log(imgItemArrState, " img item arr");
+    }
   }, [
     imgData,
     sort,
@@ -717,6 +750,13 @@ const MyPicsPage = ({
       document.querySelector("#imageTypeInputID").value = null;
       document.querySelector("#my-pics-editor__preview-image-for-editor").src =
         null;
+      //remove added height when multiple images are checked
+      setTimeout(() => {
+        const allElements = document.querySelectorAll("*");
+        allElements.forEach((element) => {
+          element.classList.remove("heightmore");
+        });
+      }, 1);
     }
   }
   // run this when imgItemArrState changes from showMobileForm, check or uncheck
