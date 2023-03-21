@@ -687,7 +687,7 @@ const MyPicsPage = ({
   //set editor info
   function displayEditorInfo(index) {
     //if bulkArr has one selected and it is not already currently open
-    if (bulkArr.current.length == 1 && imgItemArrState[index] == false) {
+    if (bulkArr.current.length == 1 && imgItemArrState[index].isOpen == false) {
       console.log("false");
       console.log(bulkArr.current.length, " length");
       console.log(imgItemArrState[index], " real");
@@ -717,13 +717,13 @@ const MyPicsPage = ({
           ".jpg";
       }, 1);
 
-      //now set imgItemArrState[index] to true
+      //now set imgItemArrState[index].isOpen and isChecked to true
       let imgItems = [];
       for (let i = 0; i < imgItemArrState.length; i++) {
-        imgItems[i] = false;
+        imgItems[i] = { isOpen: false, isChecked: false };
       }
       //set to true to show form, and increase height to fit form
-      imgItems[index] = true;
+      imgItems[index] = { isOpen: true, isChecked: true };
       setTimeout(() => {
         document
           .getElementById(`imageItemContainer${index}`)
@@ -732,7 +732,10 @@ const MyPicsPage = ({
       setImgItemArrState(imgItems);
     }
     //if bulkArr has one selected and it is already currently open
-    else if (bulkArr.current.length == 1 && imgItemArrState[index] == true) {
+    else if (
+      bulkArr.current.length == 1 &&
+      imgItemArrState[index].isOpen == true
+    ) {
       console.log("true");
       console.log(bulkArr.current.length, " length");
       console.log(imgItemArrState[index], " real");
