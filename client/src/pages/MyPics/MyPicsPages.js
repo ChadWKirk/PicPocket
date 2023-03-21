@@ -120,6 +120,27 @@ const MyPicsPage = ({
   //change this state when deleting or downloading
   const [isDeletingOrDownloading, setIsDeletingOrDownloading] = useState(false);
 
+  //don't accept special characters
+  const [titleClass, setTitleClass] = useState(
+    "my-pics-editor__editor-form-details-sub-containerInput"
+  );
+  const [specialMessage, setSpecialMessage] = useState("");
+  if (/[~`!#$%\^&*+=\\[\]\\;,/{}|\\":<>\?]/g.test(title)) {
+    console.log("special");
+    setTimeout(() => {
+      setTitleClass(
+        "my-pics-editor__editor-form-details-sub-containerInputRed"
+      );
+      setSpecialMessage(" No Special Characters");
+    }, 10);
+  } else {
+    // console.log("no special");
+    setTimeout(() => {
+      setTitleClass("my-pics-editor__editor-form-details-sub-containerInput");
+      setSpecialMessage("");
+    }, 10);
+  }
+
   //get images
   useEffect(() => {
     //reset bulkArr when changing sort/filter
@@ -148,12 +169,15 @@ const MyPicsPage = ({
       isCheckedArr[i] = false;
     }
     setIsCheckedArrState(isCheckedArr);
+  }, [sort, filter, isDeletingOrDownloading]);
+
+  useEffect(() => {
     //set all imgItemsClicked to false by default
     for (let i = 0; i < imgData.length; i++) {
       imgItemArr[i] = false;
     }
     setImgItemArrState(imgItemArr);
-  }, [sort, filter, isDeletingOrDownloading]);
+  }, [imgData]);
 
   //Create Image Gallery
   //use this to pass index from map to useEffect
@@ -381,8 +405,7 @@ const MyPicsPage = ({
         imageItem = (
           <div
             onClick={(e) => {
-              showMobileForm(index, element);
-              console.log("click");
+              displayEditorInfo(index);
             }}
             className={`${
               isCheckedArrState[index]
@@ -581,7 +604,16 @@ const MyPicsPage = ({
       return <div key={element.asset_id}>{imageItem}</div>;
     });
     setImgGallery(imgDataMapOutcome);
-  }, [imgData, sort, filter, isCheckedArrState, windowSize]);
+    console.log(imgItemArrState, " img item arr");
+  }, [
+    imgData,
+    sort,
+    filter,
+    isCheckedArrState,
+    imgItemArrState,
+    titleClass,
+    windowSize,
+  ]);
 
   //handle push / filter bulkArr when clicking checkbox (for mass download/delete)
   //if it is already in bulkArr, remove it from bulkArr. If it is not, push it to bulkArr.
@@ -621,39 +653,56 @@ const MyPicsPage = ({
 
   //set editor info
   function displayEditorInfo(index) {
-    console.log("displayededitorinfo");
-    console.log(index, " index variable");
     //if bulkArr has one selected and it is not already currently open
     if (bulkArr.current.length == 1 && imgItemArrState[index] == false) {
       console.log("false");
       console.log(bulkArr.current.length, " length");
       console.log(imgItemArrState[index], " real");
-      document.querySelector("#titleInputID").value = bulkArr.current[0].title;
-      setTitle(bulkArr.current[0].title);
-      document.querySelector("#tagsInputID").value =
-        bulkArr.current[0].tags.join(", "); //makes the tags array display with ", " separating items instead of just a comma. To play nice with split to create array on submit
-      setTags(bulkArr.current[0].tags.join(", "));
-      document.querySelector("#descriptionInputID").value =
-        bulkArr.current[0].description;
-      setDescription(bulkArr.current[0].description);
-      document.querySelector("#imageTypeInputID").value =
-        bulkArr.current[0].imageType;
-      setImageType(bulkArr.current[0].imageType);
-      document.querySelector("#my-pics-editor__preview-image-for-editor").src =
-        bulkArr.current[0].secure_url.slice(0, 50) +
-        "q_60/c_scale,w_600/dpr_auto/" +
-        bulkArr.current[0].secure_url.slice(
-          50,
-          bulkArr.current[0].secure_url.lastIndexOf(".")
-        ) +
-        ".jpg";
+      //set editor fields
+      setTimeout(() => {
+        document.querySelector("#titleInputID").value =
+          bulkArr.current[0].title;
+        setTitle(bulkArr.current[0].title);
+        document.querySelector("#tagsInputID").value =
+          bulkArr.current[0].tags.join(", "); //makes the tags array display with ", " separating items instead of just a comma. To play nice with split to create array on submit
+        setTags(bulkArr.current[0].tags.join(", "));
+        document.querySelector("#descriptionInputID").value =
+          bulkArr.current[0].description;
+        setDescription(bulkArr.current[0].description);
+        document.querySelector("#imageTypeInputID").value =
+          bulkArr.current[0].imageType;
+        setImageType(bulkArr.current[0].imageType);
+        document.querySelector(
+          "#my-pics-editor__preview-image-for-editor"
+        ).src =
+          bulkArr.current[0].secure_url.slice(0, 50) +
+          "q_60/c_scale,w_600/dpr_auto/" +
+          bulkArr.current[0].secure_url.slice(
+            50,
+            bulkArr.current[0].secure_url.lastIndexOf(".")
+          ) +
+          ".jpg";
+      }, 1);
+
+      //now set imgItemArrState[index] to true
+      let imgItems = [];
+      for (let i = 0; i < imgItemArrState.length; i++) {
+        imgItems[i] = false;
+      }
+      //set to true to show form, and increase height to fit form
+      imgItems[index] = true;
+      setTimeout(() => {
+        document
+          .getElementById(`imageItemContainer${index}`)
+          .classList.add("heightmore");
+      }, 1);
+      setImgItemArrState(imgItems);
     }
     //if bulkArr has one selected and it is already currently open
     else if (bulkArr.current.length == 1 && imgItemArrState[index] == true) {
       console.log("true");
       console.log(bulkArr.current.length, " length");
       console.log(imgItemArrState[index], " real");
-
       return;
     }
     // if multiple images are selected
@@ -671,35 +720,36 @@ const MyPicsPage = ({
     }
   }
   // run this when imgItemArrState changes from showMobileForm, check or uncheck
-  useEffect(() => {
-    displayEditorInfo(indexx);
-    //if uncheck
-    if (imgItemArrState[indexx] == false) {
-      console.log("uncheck");
-      setTimeout(() => {
-        const allElements = document.querySelectorAll("*");
-        allElements.forEach((element) => {
-          element.classList.remove("heightmore");
-        });
-      }, 1);
-    }
-    //if only one checked, set to true to show form, and increase height to fit form
-    else if (bulkArr.current.length == 1) {
-      console.log("bulkArr is 1");
-      setTimeout(() => {
-        document
-          .getElementById(`imageItemContainer${indexx}`)
-          .classList.add("heightmore");
-      }, 1);
-    } //if more than one is checked, remove increased height from all
-    else if (bulkArr.current.length != 1) {
-      console.log("bulkArr is not 1");
-      const allElements = document.querySelectorAll("*");
-      allElements.forEach((element) => {
-        element.classList.remove("heightmore");
-      });
-    }
-  }, [imgItemArrState]);
+  // useEffect(() => {
+  //   // console.log(imgItemArrState.length, " img arr length");
+  //   displayEditorInfo(indexx);
+  //   //if uncheck
+  //   if (imgItemArrState[indexx] == false) {
+  //     console.log("uncheck");
+  //     setTimeout(() => {
+  //       const allElements = document.querySelectorAll("*");
+  //       allElements.forEach((element) => {
+  //         element.classList.remove("heightmore");
+  //       });
+  //     }, 1);
+  //   }
+  //   //if only one checked, set to true to show form, and increase height to fit form
+  //   else if (bulkArr.current.length == 1) {
+  //     console.log("bulkArr is 1");
+  //     setTimeout(() => {
+  //       document
+  //         .getElementById(`imageItemContainer${indexx}`)
+  //         .classList.add("heightmore");
+  //     }, 1);
+  //   } //if more than one is checked, remove increased height from all
+  //   else if (bulkArr.current.length != 1) {
+  //     console.log("bulkArr is not 1");
+  //     const allElements = document.querySelectorAll("*");
+  //     allElements.forEach((element) => {
+  //       element.classList.remove("heightmore");
+  //     });
+  //   }
+  // }, [imgItemArrState]);
 
   //when a box is checked or unchecked, change isCheckedArrState accordingly
   function handleCheck(position) {
@@ -869,24 +919,6 @@ const MyPicsPage = ({
         </div>
       </div>
     );
-  }
-  //don't accept special characters
-  let titleClass;
-  if (/[~`!#$%\^&*+=\\[\]\\;,/{}|\\":<>\?]/g.test(title)) {
-    // console.log("special");
-    titleClass = "my-pics-editor__editor-form-details-sub-containerInputRed";
-  } else {
-    // console.log("no special");
-    titleClass = "my-pics-editor__editor-form-details-sub-containerInput";
-  }
-
-  let specialMessage;
-  if (/[~`!#$%\^&*+=\\[\]\\;,/{}|\\":<>\?]/g.test(title)) {
-    // console.log("special");
-    specialMessage = " No Special Characters";
-  } else {
-    // console.log("no special");
-    specialMessage = "";
   }
 
   return (
