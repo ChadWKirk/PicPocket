@@ -189,6 +189,7 @@ const MyPicsPage = ({
     if (imgItemArrState.length > 0) {
       console.log(imgItemArr);
       function uncheck(index, element) {
+        console.log("uncheck function");
         setIndexx(index);
         let boxes = [...isCheckedArrState];
         let box = isCheckedArrState[index];
@@ -215,9 +216,38 @@ const MyPicsPage = ({
         if (
           imgItems.filter((element) => element.isChecked == true).length == 1
         ) {
-          imgItems.forEach((element) => {
+          imgItems.forEach((element, index) => {
             if (element.isChecked) {
               element.isOpen = true;
+              if (isScreenMobile) {
+                setTimeout(() => {
+                  document
+                    .getElementById(`imageItemContainer${index}`)
+                    .classList.add("heightmore");
+                  document.querySelector("#titleInputID").value =
+                    bulkArr.current[0].title;
+                  setTitle(bulkArr.current[0].title);
+                  document.querySelector("#tagsInputID").value =
+                    bulkArr.current[0].tags.join(", "); //makes the tags array display with ", " separating items instead of just a comma. To play nice with split to create array on submit
+                  setTags(bulkArr.current[0].tags.join(", "));
+                  document.querySelector("#descriptionInputID").value =
+                    bulkArr.current[0].description;
+                  setDescription(bulkArr.current[0].description);
+                  document.querySelector("#imageTypeInputID").value =
+                    bulkArr.current[0].imageType;
+                  setImageType(bulkArr.current[0].imageType);
+                  document.querySelector(
+                    "#my-pics-editor__preview-image-for-editor"
+                  ).src =
+                    bulkArr.current[0].secure_url.slice(0, 50) +
+                    "q_60/c_scale,w_600/dpr_auto/" +
+                    bulkArr.current[0].secure_url.slice(
+                      50,
+                      bulkArr.current[0].secure_url.lastIndexOf(".")
+                    ) +
+                    ".jpg";
+                }, 1);
+              }
             }
           });
         }
@@ -242,8 +272,11 @@ const MyPicsPage = ({
 
         //if using mobile, run showMobileForm
         if (isScreenMobile) {
+          setTimeout(() => {
+            showMobileForm(index);
+          }, 1);
           // setTimeout(() => {
-          showMobileForm(index, element);
+          // showMobileForm(index, element);
           // if (bulkArr.current.length == 1) {
           //   setTimeout(() => {
           //     document
@@ -686,6 +719,7 @@ const MyPicsPage = ({
 
   //set editor info
   function displayEditorInfo(index) {
+    console.log("display function");
     //if bulkArr has one selected and it is not already currently open
     if (bulkArr.current.length == 1 && imgItemArrState[index].isOpen == false) {
       console.log("false");
