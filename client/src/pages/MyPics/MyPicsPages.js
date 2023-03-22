@@ -187,7 +187,6 @@ const MyPicsPage = ({
     //wait for imgItemArrState to populate before running useEffect
     //to get conditional rendering to work. otherwise it will say can not read property isOpen of undefined
     if (imgItemArrState.length > 0) {
-      console.log(imgItemArr);
       function uncheck(index, element) {
         console.log("uncheck function");
         setIndexx(index);
@@ -271,21 +270,21 @@ const MyPicsPage = ({
         setIsCheckedArrState(boxes);
 
         //if using mobile, run showMobileForm
-        if (isScreenMobile) {
-          setTimeout(() => {
-            showMobileForm(index);
-          }, 1);
-          // setTimeout(() => {
-          // showMobileForm(index, element);
-          // if (bulkArr.current.length == 1) {
-          //   setTimeout(() => {
-          //     document
-          //       .getElementById(`imageItemContainer${index}`)
-          //       .classList.add("heightmore");
-          //   }, 40);
-          // }
-          // }, 20);
-        }
+        // if (isScreenMobile) {
+        setTimeout(() => {
+          showMobileForm(index);
+        }, 1);
+        // setTimeout(() => {
+        // showMobileForm(index, element);
+        // if (bulkArr.current.length == 1) {
+        //   setTimeout(() => {
+        //     document
+        //       .getElementById(`imageItemContainer${index}`)
+        //       .classList.add("heightmore");
+        //   }, 40);
+        // }
+        // }, 20);
+        // }
       }
       function showMobileForm(index, element) {
         console.log("showmobileform");
@@ -669,7 +668,7 @@ const MyPicsPage = ({
         return <div key={element.asset_id}>{imageItem}</div>;
       });
       setImgGallery(imgDataMapOutcome);
-      console.log(imgItemArrState, " img item arr");
+      console.log(imgItemArrState, " img item arr state gallery");
     }
   }, [
     imgData,
@@ -678,7 +677,8 @@ const MyPicsPage = ({
     isCheckedArrState,
     imgItemArrState,
     titleClass,
-    windowSize,
+    // windowSize,
+    isScreenMobile,
   ]);
 
   //handle push / filter bulkArr when clicking checkbox (for mass download/delete)
@@ -716,7 +716,24 @@ const MyPicsPage = ({
     }
     // console.log(bulkArr.current);
   }
-
+  //run this when changing from mobile to desktop and vice versa
+  useEffect(() => {
+    console.log(imgItemArrState, " img item arr state useEffect");
+    //if there is only one checked, that means it will be set to isOpen = true
+    //to get displayEditorInfo to work properly, isOpen must be false to start off with so it will add the height and fill the editor fields
+    //...make copy of array, find the isOpen=true one and set it to false,then set array to copy (with false instead of true),
+    //then displayEditorInfo takes the index from foreach function and displays form then sets index to true
+    let imgItemArrStateCopy = imgItemArrState;
+    if (bulkArr.current.length == 1) {
+      imgItemArrStateCopy.forEach((element, index) => {
+        if (element.isOpen) {
+          element.isOpen = false;
+          setImgItemArrState(imgItemArrStateCopy);
+          displayEditorInfo(index);
+        }
+      });
+    }
+  }, [isScreenMobile]);
   //set editor info
   function displayEditorInfo(index) {
     console.log("display function");
@@ -750,6 +767,7 @@ const MyPicsPage = ({
           ) +
           ".jpg";
       }, 1);
+      console.log(imgItemArrState, " img item arr state display func 1");
 
       //now set imgItemArrState[index].isOpen and isChecked to true
       let imgItems = [];
@@ -764,6 +782,7 @@ const MyPicsPage = ({
           .classList.add("heightmore");
       }, 1);
       setImgItemArrState(imgItems);
+      console.log(imgItemArrState, " img item arr state display func 2");
     }
     //if bulkArr has one selected and it is already currently open
     else if (
