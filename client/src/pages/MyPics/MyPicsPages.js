@@ -254,13 +254,11 @@ const MyPicsPage = ({
           });
         }
         setImgItemArrState(imgItems);
-        // setTimeout(() => {
-        //   const allElements = document.querySelectorAll("*");
-        //   allElements.forEach((element) => {
-        //     element.classList.remove("heightmore");
-        //   });
-        // }, 30);
-        // }
+        //if not all are checked, set isSelectAllState to false to uncheck Select All checkbox
+        if (bulkArr.current.length < imgItemArrState.length) {
+          isSelectAll.current = false;
+          setIsSelectAllState(false);
+        }
       }
       function check(index, element) {
         console.log("check");
@@ -277,17 +275,16 @@ const MyPicsPage = ({
         setTimeout(() => {
           showMobileForm(index);
         }, 1);
-        // setTimeout(() => {
-        // showMobileForm(index, element);
-        // if (bulkArr.current.length == 1) {
-        //   setTimeout(() => {
-        //     document
-        //       .getElementById(`imageItemContainer${index}`)
-        //       .classList.add("heightmore");
-        //   }, 40);
-        // }
-        // }, 20);
-        // }
+        //if all are checked, set isSelectAllState to true to check Select All checkbox
+        if (bulkArr.current.length == imgItemArrState.length) {
+          isSelectAll.current = true;
+          setIsSelectAllState(true);
+        }
+        //if not all are checked, set isSelectAllState to false to uncheck Select All checkbox
+        if (bulkArr.current.length < imgItemArrState.length) {
+          isSelectAll.current = false;
+          setIsSelectAllState(false);
+        }
       }
       function showMobileForm(index, element) {
         console.log("showmobileform");
@@ -309,34 +306,17 @@ const MyPicsPage = ({
         if (bulkArr.current.length == 1) {
           imgItem.isOpen = true;
           imgItem.isChecked = true;
-          // setTimeout(() => {
-          //   document
-          //     .getElementById(`imageItemContainer${index}`)
-          //     .classList.add("heightmore");
-          // }, 20);
         } else {
           //set all isOpen to false + set is checked to true
           imgItems.forEach((element) => {
             element.isOpen = false;
           });
           imgItem.isChecked = true;
-          //if more than one is checked, remove increased height from all
-          // setTimeout(() => {
-          //   const allElements = document.querySelectorAll("*");
-          //   allElements.forEach((element) => {
-          //     element.classList.remove("heightmore");
-          //   });
-          // }, 30);
         }
         //change index depending on if only one checked or not
         imgItems[index] = imgItem;
         //set state. runs useEffect that runs displayEditorInfo(index)
         setImgItemArrState(imgItems);
-
-        //run display editor function to get img info
-        // setTimeout(() => {
-        //   displayEditorInfo(index);
-        // }, 10);
       }
       imgDataMapOutcome = imgData.map((element, index) => {
         // let parts = element.public_id.split("/");  --SPLIT NOT WORKING DUE TO MESSED UP UPLOADS EARLIER. JUST NEED TO DELETE THEM
@@ -721,6 +701,11 @@ const MyPicsPage = ({
   //set editor info
   function displayEditorInfo(index) {
     console.log("display function");
+    //if not all are checked, set isSelectAllState to false to uncheck Select All checkbox
+    if (bulkArr.current.length < imgItemArrState.length) {
+      isSelectAll.current = false;
+      setIsSelectAllState(false);
+    }
     //if bulkArr has one selected and it is not already currently open
     if (bulkArr.current.length == 1 && imgItemArrState[index].isOpen == false) {
       console.log("false");
@@ -797,37 +782,6 @@ const MyPicsPage = ({
       }, 1);
     }
   }
-  // run this when imgItemArrState changes from showMobileForm, check or uncheck
-  // useEffect(() => {
-  //   // console.log(imgItemArrState.length, " img arr length");
-  //   displayEditorInfo(indexx);
-  //   //if uncheck
-  //   if (imgItemArrState[indexx] == false) {
-  //     console.log("uncheck");
-  //     setTimeout(() => {
-  //       const allElements = document.querySelectorAll("*");
-  //       allElements.forEach((element) => {
-  //         element.classList.remove("heightmore");
-  //       });
-  //     }, 1);
-  //   }
-  //   //if only one checked, set to true to show form, and increase height to fit form
-  //   else if (bulkArr.current.length == 1) {
-  //     console.log("bulkArr is 1");
-  //     setTimeout(() => {
-  //       document
-  //         .getElementById(`imageItemContainer${indexx}`)
-  //         .classList.add("heightmore");
-  //     }, 1);
-  //   } //if more than one is checked, remove increased height from all
-  //   else if (bulkArr.current.length != 1) {
-  //     console.log("bulkArr is not 1");
-  //     const allElements = document.querySelectorAll("*");
-  //     allElements.forEach((element) => {
-  //       element.classList.remove("heightmore");
-  //     });
-  //   }
-  // }, [imgItemArrState]);
 
   //when a box is checked or unchecked, change isCheckedArrState accordingly
   function handleCheck(position) {
