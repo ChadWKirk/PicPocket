@@ -71,22 +71,43 @@ const ImageItem = ({
         className="upload-page__image-item-error-x-icon"
       />
     );
-    imageBanner = (
-      <li
-        className="upload-page__image-item-error-helper upload-page__image-item"
-        key={image.name}
-      >
-        {/* <img src={image.secure_url} width={100} height={100}></img> */}
-        <div>JPG, JPEG or PNG Only</div>
-        <div className="upload-page__image-item-title">
-          {image.name
-            .replace(".jpg", "")
-            .replace(".png", "")
-            .replace(".jpeg", "")}
-        </div>
-        <div className="upload-page__uploading-icon">{imageStatusIcon}</div>
-      </li>
-    );
+    //if image size exceeds 10MB
+    if (image.size / 1048576 > 10) {
+      imageBanner = (
+        <li
+          className="upload-page__image-item-error-helper upload-page__image-item"
+          key={image.name}
+        >
+          {/* <img src={image.secure_url} width={100} height={100}></img> */}
+          <div>10MB File Size Limit Exceeded.</div>
+          <div className="upload-page__image-item-title">
+            {image.name
+              .replace(".jpg", "")
+              .replace(".png", "")
+              .replace(".jpeg", "")}
+          </div>
+          <div className="upload-page__uploading-icon">{imageStatusIcon}</div>
+        </li>
+      );
+    } else {
+      //if incorrect file type but under 10MB
+      imageBanner = (
+        <li
+          className="upload-page__image-item-error-helper upload-page__image-item"
+          key={image.name}
+        >
+          {/* <img src={image.secure_url} width={100} height={100}></img> */}
+          <div>JPG, JPEG or PNG Only</div>
+          <div className="upload-page__image-item-title">
+            {image.name
+              .replace(".jpg", "")
+              .replace(".png", "")
+              .replace(".jpeg", "")}
+          </div>
+          <div className="upload-page__uploading-icon">{imageStatusIcon}</div>
+        </li>
+      );
+    }
   }
 
   return <div>{imageBanner}</div>;

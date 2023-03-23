@@ -861,10 +861,12 @@ const MyPicsPage = ({
       body: JSON.stringify(publicIDArr),
     })
       .then((res) => {
-        setIsDeletingOrDownloading(!isDeletingOrDownloading);
-        setToastStatus("Success");
-        setToastMessage("Pic(s) successfully deleted.");
-        toastDissappear();
+        setTimeout(() => {
+          setIsDeletingOrDownloading(!isDeletingOrDownloading);
+          setToastStatus("Success");
+          setToastMessage("Pic(s) successfully deleted.");
+          toastDissappear();
+        }, 10);
       })
       .catch((err) => {
         console.error(err);

@@ -44,13 +44,19 @@ const UploadForm = ({
       for (let i = 0; i < e.target.files.length; i++) {
         const image = e.target.files[i];
 
+        //how many bytes are in a MB
+        let mbMultiplier = 1048576;
+
         image.isUploading = true;
         setIsUploadingForRef(!isUploadingForRef); //switch this every time upload begins to call useEffect
         targetFilesArray.push(image);
         setImagesToUpload((imagesToUpload) => [...imagesToUpload, image]);
-        console.log(targetFilesArray + " target files");
-        //if file type is JPEG, JPG or PNG
-        if (image.type == "image/jpeg" || image.type == "image/png") {
+        console.log(e.target.files);
+        //if file type is JPEG, JPG or PNG, or file is under 10 megabytes
+        if (
+          (image.type == "image/jpeg" && image.size / mbMultiplier <= 10) ||
+          (image.type == "image/png" && image.size / mbMultiplier <= 10)
+        ) {
           //to send in fetch
           const formData = new FormData();
           formData.append("files", image);
@@ -86,7 +92,7 @@ const UploadForm = ({
               removeImageFromUploadFrontEnd(image.name);
             });
         }
-        //if file type is not JPEG, PNG or JPG
+        //if file type is not JPEG, PNG or JPG, or over 10MB
         else {
           setTimeout(() => {
             image.isUploading = false;
@@ -272,7 +278,8 @@ const UploadForm = ({
             </div>
 
             <div className="upload-page__upload-form-caption">
-              Supported Files: JPEG, JPG, PNG
+              Supported Files: JPEG, JPG, PNG{" "}
+              <i style={{ fontSize: "0.85rem" }}>File Limit: 10MB</i>
             </div>
           </div>
         </div>
