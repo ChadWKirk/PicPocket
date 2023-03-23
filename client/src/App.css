@@ -2404,6 +2404,7 @@ button {
 .my-pics-editor__editor-form-details-sub-container {
   font-size: 1.25rem;
   margin-top: 1.7rem;
+  position: relative;
   /* display: flex; */
   /* flex-direction: column; */
   /* justify-content: center; */
@@ -2429,6 +2430,13 @@ button {
   margin-top: 0.6rem;
   /* min-height: 16.5vw; */
   resize: none;
+}
+.my-pics-editor__description-char-count {
+  position: absolute;
+  bottom: -1rem;
+  right: 1.05rem;
+  font-size: 0.8rem;
+  color: var(--dark4);
 }
 .textArea1 {
   /*idk where this is used at at this point*/

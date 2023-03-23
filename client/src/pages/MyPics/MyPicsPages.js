@@ -107,6 +107,15 @@ const MyPicsPage = ({
   const [tags, setTags] = useState("");
   const [imageType, setImageType] = useState("");
 
+  //description textarea char count - maxLength is in HTML on textarea element
+  const [descriptionCharCount, setDescriptionCharCount] = useState(
+    description.length
+  );
+
+  useEffect(() => {
+    setDescriptionCharCount(description.length);
+  }, [description]);
+
   //get colors from image for when you submit an edit to it to carry them over
   const [colors, setColors] = useState();
 
@@ -1208,14 +1217,17 @@ const MyPicsPage = ({
                   className="my-pics-editor__editor-form-details-sub-container"
                   style={{ flex: "1" }}
                 >
-                  {/* have max length of 500 characters */}
                   <div style={{ fontSize: "0.75rem" }}>Description</div>
                   <div style={{ height: "7.75rem" }}>
                     <textarea
+                      maxLength={70}
                       style={{ height: "100%" }}
                       id="descriptionInputID"
                       onChange={(e) => setDescription(e.target.value)}
                     ></textarea>
+                    <p className="my-pics-editor__description-char-count">
+                      {descriptionCharCount}/{70}
+                    </p>
                   </div>
                 </div>
                 <div className="my-pics-editor__editor-form-details-sub-container">
