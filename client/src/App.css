@@ -138,6 +138,10 @@ button {
   display: none;
 }
 
+.pointer-events__none {
+  pointer-events: none;
+}
+
 /* Gallery Heading CSS */
 .galleryHeadingAndSortContainer {
   margin-top: 3rem;
@@ -2036,7 +2040,7 @@ button {
     z-index: 99;
   }
 }
-@media (width < 530px) {
+@media (width < 650px) {
   .mypics-image-gallery__sort-bar-container {
     position: sticky;
     top: 69px;
@@ -2083,6 +2087,7 @@ button {
   gap: 1.65rem;
   margin-right: 2.5rem;
   font-size: 1.14rem;
+  height: 1px;
 }
 @media (width < 530px) {
   .mypics-image-gallery__dropdown-button {
@@ -3872,6 +3877,22 @@ button {
   bottom: 40px;
   left: 50%;
   transform: translate(-200px, 0);
+  z-index: 100;
+}
+
+.toastSuccess-mobile {
+  width: 100%;
+  max-height: 58px;
+  padding: 1.15rem 1rem;
+  background-color: green;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1rem;
+  color: white;
+  position: sticky;
+  top: 125px;
+  z-index: 100;
 }
 
 .toastError {
@@ -3889,6 +3910,7 @@ button {
   bottom: 40px;
   left: 50%;
   transform: translate(-200px, 0);
+  z-index: 100;
 }
 
 .reachedTheEndCont {

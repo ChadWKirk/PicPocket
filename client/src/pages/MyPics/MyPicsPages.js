@@ -6,7 +6,12 @@ import Toast from "../../components/Toast";
 import NavbarComponent from "../../components/NavbarComponent";
 //font awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCheck,
+  faEye,
+  faSpinner,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
 
 const MyPicsPage = ({
@@ -142,6 +147,13 @@ const MyPicsPage = ({
       );
       setSpecialMessage(" No Special Characters");
     }, 10);
+  } else if (title == "") {
+    setTimeout(() => {
+      setTitleClass(
+        "my-pics-editor__editor-form-details-sub-containerInputRed"
+      );
+      setSpecialMessage(" Must Have Name");
+    }, 10);
   } else {
     // console.log("no special");
     setTimeout(() => {
@@ -149,6 +161,20 @@ const MyPicsPage = ({
       setSpecialMessage("");
     }, 10);
   }
+
+  //submit buttons to change when submitting to add a loading spinner
+  const [submitButton, setSubmitButton] = useState(<button>Submit</button>);
+  const [mobileSubmitButton, setMobileSubmitButton] = useState(
+    <button
+      style={{
+        backgroundColor: "rgb(250, 250, 250)",
+        border: "2px solid darkgreen",
+        color: "green",
+      }}
+    >
+      <FontAwesomeIcon icon={faCheck} />
+    </button>
+  );
 
   //get images
   useEffect(() => {
@@ -578,21 +604,13 @@ const MyPicsPage = ({
                                 id="imageTypeInputID"
                                 onChange={(e) => setImageType(e.target.value)}
                               >
-                                <option value="Photo">Photo</option>
-                                <option value="Illustration">
+                                <option value="photo">Photo</option>
+                                <option value="illustration">
                                   Illustration
                                 </option>
                               </select>
                               <div className="my-pics-editor__btns-container-mobile-open">
-                                <button
-                                  style={{
-                                    backgroundColor: "rgb(250, 250, 250)",
-                                    border: "2px solid darkgreen",
-                                    color: "green",
-                                  }}
-                                >
-                                  <FontAwesomeIcon icon={faCheck} />
-                                </button>
+                                {mobileSubmitButton}
                                 {bulkArr.current[0] && (
                                   <a
                                     style={{
@@ -669,6 +687,11 @@ const MyPicsPage = ({
     imgItemArrState,
     titleClass,
     windowSize,
+    mobileSubmitButton,
+    title,
+    description,
+    tags,
+    imageType,
   ]);
 
   //handle push / filter bulkArr when clicking checkbox (for mass download/delete)
@@ -710,6 +733,7 @@ const MyPicsPage = ({
   //set editor info
   function displayEditorInfo(index) {
     console.log("display function");
+    console.log(bulkArr.current[0]);
     //if not all are checked, set isSelectAllState to false to uncheck Select All checkbox
     if (bulkArr.current.length < imgItemArrState.length) {
       isSelectAll.current = false;
@@ -807,11 +831,47 @@ const MyPicsPage = ({
 
   async function submitForm(e) {
     e.preventDefault();
+    console.log(bulkArr.current[0], " bulk arr 0", title, " title");
+
     if (
       titleClass == "my-pics-editor__editor-form-details-sub-containerInputRed"
     ) {
       return;
     }
+    setSubmitButton(
+      <button style={{ pointerEvents: "none", backgroundColor: "#e7e7e7" }}>
+        Submit{" "}
+        <FontAwesomeIcon
+          icon={faSpinner}
+          className="fa-spin"
+          style={{ marginLeft: "0.4rem" }}
+        />
+      </button>
+    );
+    if (isScreenMobile) {
+      setMobileSubmitButton(
+        <button
+          style={{
+            backgroundColor: "#e7e7e7",
+            border: "none",
+            color: "green",
+            pointerEvents: "none",
+            fontSize: "1.55rem",
+            display: "flex",
+            justifyContent: "center",
+            alignContent: "center",
+            paddingTop: "0.25rem",
+          }}
+        >
+          <FontAwesomeIcon icon={faSpinner} className="fa-spin" />
+        </button>
+      );
+    }
+    //make everything unclickable until submit is finished
+    const allElements = document.querySelectorAll("*");
+    allElements.forEach((element) => {
+      element.classList.add("pointer-events__none");
+    });
     bulkArr.current[0].title = title;
     bulkArr.current[0].description = description;
     bulkArr.current[0].tags = tags.split(", "); //turn string into array
@@ -822,10 +882,31 @@ const MyPicsPage = ({
       headers: { "Content-type": "application/json" },
       body: JSON.stringify(bulkArr.current[0]),
     }).then((res) => {
+      allElements.forEach((element) => {
+        element.classList.remove("pointer-events__none");
+      });
       setIsDeletingOrDownloading(!isDeletingOrDownloading);
-      setToastStatus("Success");
-      setToastMessage("Your pic was updated successfully.");
-      toastDissappear();
+      if (!isScreenMobile) {
+        setToastStatus("Success");
+        setToastMessage("Your pic was updated successfully.");
+        toastDissappear();
+      } else if (isScreenMobile) {
+        setToastStatus("Success-mobile");
+        setToastMessage("Your pic was updated successfully.");
+        toastDissappear();
+      }
+      setSubmitButton(<button>Submit</button>);
+      setMobileSubmitButton(
+        <button
+          style={{
+            backgroundColor: "rgb(250, 250, 250)",
+            border: "2px solid darkgreen",
+            color: "green",
+          }}
+        >
+          <FontAwesomeIcon icon={faCheck} />
+        </button>
+      );
     });
     // .catch((err) => notify_edit_failure);
   }
@@ -918,7 +999,12 @@ const MyPicsPage = ({
           <FontAwesomeIcon
             icon={faTrash}
             className="massIcon"
-            onClick={() => massDeleteImages()}
+            onClick={() => {
+              massDeleteImages();
+              setTimeout(() => {
+                setIsHoveredMassDeleteButton(false);
+              }, 100);
+            }}
             onMouseEnter={() => {
               setTimeout(() => {
                 setIsHoveredMassDeleteButton(true);
@@ -940,7 +1026,12 @@ const MyPicsPage = ({
           <FontAwesomeIcon
             icon={faDownload}
             className="massIcon"
-            onClick={() => massDownloadImages()}
+            onClick={() => {
+              massDownloadImages();
+              setTimeout(() => {
+                setIsHoveredMassDownloadButton(false);
+              }, 100);
+            }}
             onMouseEnter={() => {
               setTimeout(() => {
                 setIsHoveredMassDownloadButton(true);
@@ -975,11 +1066,6 @@ const MyPicsPage = ({
         navColorClass={"white"}
       />
       <div className="mypics-page__above-gallery-section-container">
-        <Toast
-          status={toastStatus}
-          message={toastMessage}
-          closeToast={closeToast}
-        />
         <div className="mypics-page__heading-container">
           <div className="mypics-page__heading">
             <h2>Your Pics</h2>
@@ -992,6 +1078,11 @@ const MyPicsPage = ({
       </div>
       <div className="mypics-image-gallery__gallery-and-editor-container">
         <div>
+          <Toast
+            status={toastStatus}
+            message={toastMessage}
+            closeToast={closeToast}
+          />
           <div className="mypics-image-gallery__sort-bar-container">
             <div className="mypics-image-gallery__sort-bar__sort-filter-dropdown-checkbox-container">
               <input
@@ -1243,7 +1334,7 @@ const MyPicsPage = ({
                       <option value="illustration">Illustration</option>
                     </select>
                     <div className="my-pics-editor__btns-container">
-                      <button>Submit</button>
+                      {submitButton}
                       {bulkArr.current[0] && (
                         <a
                           style={{
