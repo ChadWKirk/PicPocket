@@ -980,6 +980,7 @@ button {
   }
   .image-gallery__image-author-link-container {
     opacity: 0;
+    pointer-events: none;
   }
 }
 @media (width < 500px) {

@@ -71,7 +71,11 @@ const Modal__ImageSelect = ({
   const [tagListScrollPosition, setTagListScrollPosition] = useState(0);
 
   if (imgInfo) {
-    imgSrc = imgInfo.secure_url;
+    imgSrc =
+      imgInfo.secure_url.slice(0, 50) +
+      "q_60/c_scale,w_700/dpr_auto/" +
+      imgInfo.secure_url.slice(50, imgInfo.secure_url.lastIndexOf(".")) +
+      ".jpg";
     imgTitle = imgInfo.title;
     if (imgInfo.description == "") {
       imgDescription = <em>No Description Given</em>;
