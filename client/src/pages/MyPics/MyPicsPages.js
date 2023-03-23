@@ -1210,7 +1210,7 @@ const MyPicsPage = ({
                 >
                   {/* have max length of 500 characters */}
                   <div style={{ fontSize: "0.75rem" }}>Description</div>
-                  <div style={{ height: "100%" }}>
+                  <div style={{ height: "7.75rem" }}>
                     <textarea
                       style={{ height: "100%" }}
                       id="descriptionInputID"
@@ -1227,33 +1227,15 @@ const MyPicsPage = ({
                       id="imageTypeInputID"
                       onChange={(e) => setImageType(e.target.value)}
                     >
-                      <option value="Photo">Photo</option>
-                      <option value="Illustration">Illustration</option>
+                      <option value="photo">Photo</option>
+                      <option value="illustration">Illustration</option>
                     </select>
                     <div className="my-pics-editor__btns-container">
-                      <button
-                        style={{
-                          fontSize: "0.85em",
-                          backgroundColor: "rgb(250, 250, 250)",
-                          padding: "0.25rem",
-                          paddingLeft: "0.75rem",
-                          paddingRight: "0.75rem",
-                          border: "1px solid lightgrey",
-                          borderRadius: "2px",
-                        }}
-                      >
-                        Submit
-                      </button>
+                      <button>Submit</button>
                       {bulkArr.current[0] && (
                         <a
                           style={{
                             fontSize: "0.85rem",
-                            backgroundColor: "rgb(250, 250, 250)",
-                            padding: "0.25rem",
-                            paddingLeft: "0.75rem",
-                            paddingRight: "0.75rem",
-                            border: "1px solid lightgrey",
-                            borderRadius: "2px",
                           }}
                           href={
                             bulkArr.current[0].secure_url.slice(0, 50) +
@@ -1274,14 +1256,7 @@ const MyPicsPage = ({
                         <FontAwesomeIcon
                           icon={faTrash}
                           style={{
-                            fontSize: "0.8rem",
-                            backgroundColor: "rgb(250, 250, 250)",
-                            padding: "0.5rem",
-                            paddingLeft: "0.87rem",
-                            paddingRight: "0.87rem",
-                            border: "1px solid lightgrey",
-                            borderRadius: "2px",
-                            marginTop: "4px",
+                            fontSize: "0.85rem",
                           }}
                         />
                       </button>
