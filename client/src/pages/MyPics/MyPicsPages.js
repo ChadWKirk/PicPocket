@@ -4,6 +4,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Toast from "../../components/Toast";
 import NavbarComponent from "../../components/NavbarComponent";
+import ProgressBar from "../../components/ProgressBar";
 //font awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -175,6 +176,9 @@ const MyPicsPage = ({
       <FontAwesomeIcon icon={faCheck} />
     </button>
   );
+
+  // progress bar state. gets set to progressbar component when submitform starts
+  const [progressBar, setProgressBar] = useState();
 
   //get images
   useEffect(() => {
@@ -831,13 +835,13 @@ const MyPicsPage = ({
 
   async function submitForm(e) {
     e.preventDefault();
-    console.log(bulkArr.current[0], " bulk arr 0", title, " title");
-
     if (
       titleClass == "my-pics-editor__editor-form-details-sub-containerInputRed"
     ) {
       return;
     }
+    setProgressBar();
+
     setSubmitButton(
       <button style={{ pointerEvents: "none", backgroundColor: "#e7e7e7" }}>
         Submit{" "}
@@ -872,6 +876,9 @@ const MyPicsPage = ({
     allElements.forEach((element) => {
       element.classList.add("pointer-events__none");
     });
+    //start progress bar
+    setProgressBar(<ProgressBar playStatus="play" />);
+    //set for fetch post body
     bulkArr.current[0].title = title;
     bulkArr.current[0].description = description;
     bulkArr.current[0].tags = tags.split(", "); //turn string into array
@@ -882,6 +889,12 @@ const MyPicsPage = ({
       headers: { "Content-type": "application/json" },
       body: JSON.stringify(bulkArr.current[0]),
     }).then((res) => {
+      //make progress bar finish
+      setProgressBar(<ProgressBar playStatus="finish" />);
+      // //set progress bar to default after it finishes
+      setTimeout(() => {
+        setProgressBar();
+      }, 500);
       allElements.forEach((element) => {
         element.classList.remove("pointer-events__none");
       });
@@ -1057,6 +1070,7 @@ const MyPicsPage = ({
 
   return (
     <div className="mypics-page__container">
+      {progressBar}
       <NavbarComponent
         domain={domain}
         curUser_real={curUser_real}

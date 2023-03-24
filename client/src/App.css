@@ -166,6 +166,50 @@ button {
   color: rgb(118, 118, 118);
 }
 
+/* Progress Bar CSS */
+
+.progress-bar__main {
+  width: 0px;
+  height: 4px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgb(103, 187, 103);
+  z-index: 100000;
+}
+.progress-bar__start {
+  animation: progressBar-start;
+  animation-duration: 1s;
+  animation-timing-function: ease-in;
+}
+
+.progress-bar__pause {
+  animation-play-state: paused;
+}
+.progress-bar__finish {
+  animation: progressBar-finish;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes progressBar-start {
+  from {
+    width: 0px;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes progressBar-finish {
+  from {
+    width: 9%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
 /* NavBar CSS */
 .navbar__height-margin {
   height: var(--navbarHeightMargin);
