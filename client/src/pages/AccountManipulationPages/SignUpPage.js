@@ -44,7 +44,7 @@ const SignUpPage = ({ domain, setIsJustSignedUp }) => {
         console.log(data);
         //sign in/up
         console.log("oauth sign fetch sent");
-        await fetch(`${domain}/oauth/sign`, {
+        await fetch(`${domain}/oauth/sign/google`, {
           method: "POST",
           headers: { "Content-type": "application/json" },
           body: JSON.stringify(data),

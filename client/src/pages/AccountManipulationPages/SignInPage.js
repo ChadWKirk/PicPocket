@@ -35,7 +35,7 @@ const SignInPage = ({
   // }, []);
 
   //Google OAuth
-  const login = useGoogleLogin({
+  const googleLogin = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       //get user info from google account
       try {
@@ -50,7 +50,7 @@ const SignInPage = ({
         console.log(data);
         //sign in/up
         console.log("oauth sign fetch sent");
-        await fetch(`${domain}/oauth/sign`, {
+        await fetch(`${domain}/oauth/sign/google`, {
           method: "POST",
           headers: { "Content-type": "application/json" },
           body: JSON.stringify(data),
@@ -81,6 +81,81 @@ const SignInPage = ({
       }
     },
   });
+
+  // Facebook OAuth
+  // get prettier to not say fb is undefined
+  /*global FB*/
+  //import facebook's javascript sdk
+  window.fbAsyncInit = function () {
+    FB.init({
+      appId: "790444795516757",
+      xfbml: true,
+      version: "v2.6",
+    });
+
+    FB.getLoginStatus(function (response) {
+      //this.statusChangeCallback(response);
+    });
+  };
+
+  (function (d, s, id) {
+    var js,
+      fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {
+      return;
+    }
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  })(document, "script", "facebook-jssdk");
+  // log in with facebook log in button
+  async function fbLoginFetch(response) {
+    console.log("oauth sign fetch sent");
+    fetch(`${domain}/oauth/sign/facebook`, {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify(response),
+    })
+      .then((response) =>
+        response
+          .json()
+          .then((resJSON) => JSON.stringify(resJSON))
+          .then((stringJSON) => JSON.parse(stringJSON))
+          .then((parsedJSON) => {
+            if (parsedJSON.status === 404) {
+              //if sign in fails
+              setInvalidCredentialsAlert(
+                <div className="sign-in-page__invalid-username-or-password-alert-box">
+                  Invalid username or password.
+                </div>
+              );
+            } else {
+              console.log("ok");
+              localStorage.setItem("user", JSON.stringify(parsedJSON));
+              dispatch({ type: "LOGIN", payload: parsedJSON });
+              window.location.href = "/";
+              //navigate("/");
+            }
+          })
+      )
+      .catch((err) => console.log(err));
+  }
+  function FBLogin() {
+    FB.login(
+      function (response) {
+        if (response.status === "connected") {
+          // Logged into your webpage and Facebook.
+          console.log(response.name);
+          fbLoginFetch(response);
+        } else {
+          // The person is not logged into your webpage or we are unable to tell.
+          console.log("they didnt log in with fb");
+        }
+      },
+      { scope: "public_profile" }
+    );
+  }
 
   //states for username, email and password input values
   const [username, setUsername] = useState("");
@@ -197,7 +272,7 @@ const SignInPage = ({
             </div>
           )}
           <button
-            onClick={() => login()}
+            onClick={() => googleLogin()}
             className="sign-in-page__oauth-button"
           >
             <div>
@@ -205,7 +280,10 @@ const SignInPage = ({
               Google
             </div>
           </button>
-          <button className="sign-in-page__oauth-button">
+          <button
+            className="sign-in-page__oauth-button"
+            onClick={() => FBLogin()}
+          >
             <div>
               <img src={facebookOauthIcon}></img>Facebook
             </div>

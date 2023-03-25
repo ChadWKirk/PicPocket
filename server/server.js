@@ -754,9 +754,83 @@ app.post("/:username/verify/:token", (req, res) => {
   );
 });
 
-//OAuth Sign In/Up
-app.post("/oauth/sign", (req, res) => {
-  console.log("oauth sign in");
+// OAuth Sign In/Up For Facebook
+app.post("/oauth/sign/facebook", (req, res) => {
+  console.log(req.body);
+
+  let db_connect = dbo.getDb();
+
+  //if email already belongs to a normal type account, respond saying email is already in use
+  db_connect
+    .collection("picpocket-users")
+    .findOne(
+      { $and: [{ email: req.body.data.email }, { type: "normal" }] },
+      function (err, user) {
+        if (err) {
+          console.log(err);
+          res.json("error");
+        } else if (user) {
+          console.log("Email already in use by non-OAuth account.");
+          res.json("Email already in use by non-OAuth account.");
+          return;
+        } else if (!user) {
+          //if email is not already in use by a normal type account
+          db_connect.collection("picpocket-users").findOne(
+            //see if OAuth account already exists via email and username
+            {
+              $and: [
+                { username: req.body.data.name },
+                { email: req.body.data.email },
+                { type: "OAuth" },
+              ],
+            },
+            async function (err, user) {
+              if (err) {
+                console.log(err);
+                res.send("err");
+              }
+              if (!user) {
+                //if no user is found, sign up then sign in
+                console.log("user is new");
+                async function insertNew() {}
+                db_connect.collection("picpocket-users").insertOne(
+                  {
+                    type: "OAuth",
+                    username: req.body.data.name,
+                    email: req.body.data.email,
+                    verified: true,
+                    bio: "",
+                    pfp: "https://res.cloudinary.com/dtyg4ctfr/image/upload/v1674238936/PicPocket/default_purple_pfp_ibof5p.jpg",
+                  },
+                  function (err, user) {
+                    if (err) {
+                      throw err;
+                    } else {
+                      //create token to send in email verification link
+                      const name = req.body.data.name;
+                      const token = createToken(user.insertedId);
+                      res.status(200).json({ name, token });
+                    }
+                    insertNew();
+                  }
+                );
+              } else if (user) {
+                // if user already exists, sign in
+                console.log("success");
+                const name = req.body.data.name;
+                const token = createToken(user.insertedId);
+                res.status(200).json({ name, token });
+              }
+            }
+          );
+        }
+      }
+    );
+});
+
+//OAuth Sign In/Up For GOOGLE
+app.post("/oauth/sign/google", (req, res) => {
+  console.log("oauth sign in google");
   console.log(req.body.data);
   let db_connect = dbo.getDb();
 
