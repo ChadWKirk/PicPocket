@@ -93,7 +93,9 @@ const Modal__ImageSelect = ({
     for (let i = 0; i < imgInfo.tags.length; i++) {
       imgTags.push(
         <li>
-          <a href={`/search/${imgInfo.tags[i]}/most-recent/all-types`}>
+          <a
+            href={`/search/${imgInfo.tags[i]}?sort=most-recent&filter=all-types`}
+          >
             {imgInfo.tags[i]}
           </a>
         </li>

@@ -77,7 +77,17 @@ styling:
 
 upload page - make it so dragging over upload form doesn't rerender image items causing them to flicker
 
+navbar transition speed up
+
+hamburger list fade out on unclick rather than instant
+
+make mobile form title field 100% width when right under 900px in my pics
+
+give proper space above and below mobile form in my pics
+
 ---
+
+add description field char limit on mobile in my pics
 
 Facebook OAuth - https://morioh.com/p/e37dfcf12462
 

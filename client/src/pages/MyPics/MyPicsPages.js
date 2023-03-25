@@ -108,9 +108,9 @@ const MyPicsPage = ({
   const [isSelectAllState, setIsSelectAllState] = useState(false);
 
   //values to set editor form fields to
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState("l");
   const [description, setDescription] = useState("");
-  const [tags, setTags] = useState("");
+  const [tags, setTags] = useState();
   const [imageType, setImageType] = useState("");
 
   //description textarea char count - maxLength is in HTML on textarea element
@@ -179,6 +179,9 @@ const MyPicsPage = ({
 
   // progress bar state. gets set to progressbar component when submitform starts
   const [progressBar, setProgressBar] = useState();
+
+  //title input max length. if too long cloudinary won't accept it
+  const titleInputMaxLength = 230;
 
   //get images
   useEffect(() => {
@@ -558,6 +561,7 @@ const MyPicsPage = ({
                               id="titleInputID"
                               className={titleClass}
                               onChange={(e) => setTitle(e.target.value)}
+                              maxLength={titleInputMaxLength}
                             ></input>
                           </div>
                         </div>
@@ -575,6 +579,10 @@ const MyPicsPage = ({
                               <input
                                 id="tagsInputID"
                                 onChange={(e) => setTags(e.target.value)}
+                                style={{
+                                  padding: "0.35rem",
+                                  paddingLeft: "0.5rem",
+                                }}
                               ></input>
                             </div>
                           </div>
@@ -941,15 +949,27 @@ const MyPicsPage = ({
       })
         .then((res) => {
           setIsDeletingOrDownloading(!isDeletingOrDownloading);
-          setToastStatus("Success");
-          setToastMessage("Pic(s) successfully deleted.");
-          toastDissappear();
+          if (!isScreenMobile) {
+            setToastStatus("Success");
+            setToastMessage("Pic(s) successfully deleted.");
+            toastDissappear();
+          } else if (isScreenMobile) {
+            setToastStatus("Success-mobile");
+            setToastMessage("Pic(s) successfully deleted.");
+            toastDissappear();
+          }
         })
         .catch((err) => {
           console.error(err);
-          setToastStatus("Error");
-          setToastMessage("Error. Deletion unsuccessful");
-          toastDissappear();
+          if (!isScreenMobile) {
+            setToastStatus("Error");
+            setToastMessage("Error. Deletion unsuccessful");
+            toastDissappear();
+          } else if (isScreenMobile) {
+            setToastStatus("Error-mobile");
+            setToastMessage("Error. Deletion unsuccessful");
+            toastDissappear();
+          }
         });
     }
   }
@@ -966,16 +986,28 @@ const MyPicsPage = ({
       .then((res) => {
         setTimeout(() => {
           setIsDeletingOrDownloading(!isDeletingOrDownloading);
-          setToastStatus("Success");
-          setToastMessage("Pic(s) successfully deleted.");
-          toastDissappear();
+          if (!isScreenMobile) {
+            setToastStatus("Success");
+            setToastMessage("Pic(s) successfully deleted.");
+            toastDissappear();
+          } else if (isScreenMobile) {
+            setToastStatus("Success-mobile");
+            setToastMessage("Pic(s) successfully deleted.");
+            toastDissappear();
+          }
         }, 10);
       })
       .catch((err) => {
         console.error(err);
-        setToastStatus("Error");
-        setToastMessage("Error. Deletion unsuccessful");
-        toastDissappear();
+        if (!isScreenMobile) {
+          setToastStatus("Error");
+          setToastMessage("Error. Deletion unsuccessful");
+          toastDissappear();
+        } else if (isScreenMobile) {
+          setToastStatus("Error-mobile");
+          setToastMessage("Error. Deletion unsuccessful");
+          toastDissappear();
+        }
       });
   }
 
@@ -1285,6 +1317,7 @@ const MyPicsPage = ({
                     id="titleInputID"
                     className={titleClass}
                     onChange={(e) => setTitle(e.target.value)}
+                    maxLength={titleInputMaxLength}
                   ></input>
                 </div>
                 <div
