@@ -91,6 +91,12 @@ add description field char limit on mobile in my pics
 
 optimize images in sign in and up pages
 
+get netlify to not update with every commit
+
+get upload to work on netlify
+
+log in button is weird on netlify
+
 Facebook OAuth - https://morioh.com/p/e37dfcf12462 - https://developers.facebook.com/docs/facebook-login/web
 
 put termly env vars in backend
