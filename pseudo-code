@@ -93,7 +93,9 @@ optimize images in sign in and up pages
 
 get netlify to not update with every commit
 
-get upload to work on netlify
+get upload to work on netlify - I think it is due to how multer gets the image from the empty images folder in server
+
+take google oauth out of test mode
 
 log in button is weird on netlify
 
