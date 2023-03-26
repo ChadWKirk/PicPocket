@@ -95,8 +95,6 @@ add description field char limit on mobile in my pics
 
 optimize images in sign in and up pages
 
-get netlify to not update with every commit - remove repo from settings to avoid continuous deployment
-
 get upload to work on netlify - I think it is due to having to upload the image to the server first to use multer or something
 
 update googleoauth to picpoccket url so it works in build

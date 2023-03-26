@@ -1,0 +1,1 @@
+This is a placeholder file put in the images folder because an empty image folder doesn't get pushed to heroku. Keep this here to keep upload image working.
