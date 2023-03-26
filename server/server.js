@@ -1,4 +1,5 @@
 const express = require("express");
+const https = require("https");
 const fs = require("fs");
 const app = express();
 const path = require("path");
@@ -26,6 +27,12 @@ const fileStorageEngine = multer.diskStorage({
 });
 const upload = multer({ storage: fileStorageEngine });
 
+//for mkcert to run https localhost
+const options = {
+  key: fs.readFileSync(`./node_modules/mkcert/src/cert.key`),
+  cert: fs.readFileSync(`./node_modules/mkcert/src/cert.crt`),
+};
+
 //cloudinary image hosting
 const cloudinary = require("cloudinary").v2;
 
@@ -46,12 +53,23 @@ app.get("/", (req, res) => {
   res.send("ok");
 });
 
-app.listen(port, () => {
+// for https
+
+https.createServer(options, app).listen(port, () => {
   dbo.connectToServer((err) => {
     if (err) console.log(err);
   });
   console.log("server has connected.");
 });
+
+// for normal
+
+// app.listen(port, () => {
+//   dbo.connectToServer((err) => {
+//     if (err) console.log(err);
+//   });
+//   console.log("server has connected.");
+// });
 
 //upload image(s) post
 app.use("/upload", upload.array("files", 200), async (req, res) => {
@@ -764,7 +782,7 @@ app.post("/oauth/sign/facebook", (req, res) => {
   db_connect
     .collection("picpocket-users")
     .findOne(
-      { $and: [{ email: req.body.data.email }, { type: "normal" }] },
+      { $and: [{ email: req.body.email }, { type: "normal" }] },
       function (err, user) {
         if (err) {
           console.log(err);
@@ -779,8 +797,8 @@ app.post("/oauth/sign/facebook", (req, res) => {
             //see if OAuth account already exists via email and username
             {
               $and: [
-                { username: req.body.data.name },
-                { email: req.body.data.email },
+                { username: req.body.name },
+                { email: req.body.email },
                 { type: "OAuth" },
               ],
             },
@@ -796,8 +814,8 @@ app.post("/oauth/sign/facebook", (req, res) => {
                 db_connect.collection("picpocket-users").insertOne(
                   {
                     type: "OAuth",
-                    username: req.body.data.name,
-                    email: req.body.data.email,
+                    username: req.body.name,
+                    email: req.body.email,
                     verified: true,
                     bio: "",
                     pfp: "https://res.cloudinary.com/dtyg4ctfr/image/upload/v1674238936/PicPocket/default_purple_pfp_ibof5p.jpg",
@@ -807,7 +825,7 @@ app.post("/oauth/sign/facebook", (req, res) => {
                       throw err;
                     } else {
                       //create token to send in email verification link
-                      const name = req.body.data.name;
+                      const name = req.body.name;
                       const token = createToken(user.insertedId);
                       res.status(200).json({ name, token });
                     }
@@ -817,7 +835,7 @@ app.post("/oauth/sign/facebook", (req, res) => {
               } else if (user) {
                 // if user already exists, sign in
                 console.log("success");
-                const name = req.body.data.name;
+                const name = req.body.name;
                 const token = createToken(user.insertedId);
                 res.status(200).json({ name, token });
               }

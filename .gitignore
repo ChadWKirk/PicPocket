@@ -12,6 +12,12 @@ config.env
 # testing
 /coverage
 
+# https
+ca.crt
+ca.key
+cert.crt
+cert.key
+
 # production
 build/
 

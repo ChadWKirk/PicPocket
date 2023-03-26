@@ -146,14 +146,17 @@ const SignInPage = ({
       function (response) {
         if (response.status === "connected") {
           // Logged into your webpage and Facebook.
-          console.log(response.name);
-          fbLoginFetch(response);
+          console.log(response);
+          FB.api("/me", { fields: "name,email" }, function (response) {
+            console.log(response);
+            fbLoginFetch(response);
+          });
         } else {
           // The person is not logged into your webpage or we are unable to tell.
           console.log("they didnt log in with fb");
         }
       },
-      { scope: "public_profile" }
+      { scope: "public_profile, email" }
     );
   }
 

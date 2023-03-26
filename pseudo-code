@@ -69,6 +69,10 @@ Keep track of previous page (main page, most popular, likes page, etc. Not previ
 
 Keep track of scroll position to send to image modal so when you click out of the modal it navigates to previous page while maintaining the scroll position
 
+Facebook OAuth - https://morioh.com/p/e37dfcf12462 - https://developers.facebook.com/docs/facebook-login/web - https://developers.facebook.com/docs/javascript/reference/FB.api/ - https://stackoverflow.com/questions/32436662/email-scope-is-not-working-which-is-used-in-fb-login
+
+mkcert - use HTTPS on localhost to work with facebook OAuth (it doesn't work on http, only https). - install mkcert on both client and server, mkcert create-ca and mkcert create-cert on each, import the options in server.js and use https.createserver with those options, in react put https=true and ssl_cert_file path to crt file and ssl_key_file to key file path and set domain to https://localhost:5000 - https://ncoughlin.com/posts/https-on-localhost-with-react/#update-react-script
+
 ---
 
 TASKS:
@@ -91,15 +95,15 @@ add description field char limit on mobile in my pics
 
 optimize images in sign in and up pages
 
-get netlify to not update with every commit
+get netlify to not update with every commit - remove repo from settings to avoid continuous deployment
 
-get upload to work on netlify - I think it is due to how multer gets the image from the empty images folder in server
+get upload to work on netlify - I think it is due to having to upload the image to the server first to use multer or something
 
-take google oauth out of test mode
+update googleoauth to picpoccket url so it works in build
 
-log in button is weird on netlify
+handle oauth "account already made with that email" error
 
-Facebook OAuth - https://morioh.com/p/e37dfcf12462 - https://developers.facebook.com/docs/facebook-login/web
+log in button looks weird on netlify
 
 put termly env vars in backend
 

@@ -34,7 +34,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   //domain for fetch routes. either localhost or heroku depending on if you are developing or building to deploy to netlify
-  let domain = "http://localhost:5000";
+  // let domain = "http://localhost:5000";
+  let domain = "https://localhost:5000";
   // let domain = "https://picpoccket.herokuapp.com";
 
   //When someone deletes their account, they will be navigated back to main page

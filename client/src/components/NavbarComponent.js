@@ -234,6 +234,38 @@ const NavbarComponent = ({
     //   headers: { "Content-type": "application/json" },
     // });
 
+    //log out of facebook
+    // Facebook OAuth
+    //make prettier stop trippin sayin fb is undefined
+    /*global FB*/
+    //import facebook's javascript sdk
+    window.fbAsyncInit = function () {
+      FB.init({
+        appId: "790444795516757",
+        xfbml: true,
+        version: "v2.6",
+      });
+
+      FB.getLoginStatus(function (response) {
+        //this.statusChangeCallback(response);
+      });
+    };
+
+    (function (d, s, id) {
+      var js,
+        fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) {
+        return;
+      }
+      js = d.createElement(s);
+      js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    })(document, "script", "facebook-jssdk");
+    FB.logout(function (response) {
+      // Person is now logged out
+    });
+
     window.location.href = "/";
     navigate("/");
     //remove user from local storage
