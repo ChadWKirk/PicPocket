@@ -38,6 +38,8 @@ function App() {
   let domain = "https://localhost:5000";
   // let domain = "https://picpoccket.herokuapp.com";
 
+  // testing for netlify CD
+
   //When someone deletes their account, they will be navigated back to main page
   //and a red banner will show saying their account has successfully been deleted
   //until they refresh or go to a different page to reset the state to false.
