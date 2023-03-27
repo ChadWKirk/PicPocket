@@ -14,6 +14,8 @@ Frontend is hosted on Netlify - Install Netlify CLI in client folder > npm run b
 
 Backend is hosted on Heroku - Install Heroku CLI in server folder > git add . > git commit -am "message" > git push heroku main
 
+https://devcenter.heroku.com/articles/git
+
 Have domain variable in App.js to toggle between using localhost for fetch routes or heroku domain for fetch routes to make it easier to develop
 
 Email:
@@ -93,15 +95,17 @@ give proper space above and below mobile form in my pics
 
 add description field char limit on mobile in my pics
 
-optimize images in sign in and up pages
+set up save image on mobile
 
-get upload to work on netlify - I think it is due to having to upload the image to the server first to use multer or something
+set up swiping motion for image modal
+
+get heightmore to work on my pics page for mobile
 
 update googleoauth to picpoccket url so it works in build
 
 handle oauth "account already made with that email" error
 
-log in button looks weird on netlify
+log in button looks weird on build
 
 put termly env vars in backend
 

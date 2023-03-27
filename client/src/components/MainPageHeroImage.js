@@ -76,7 +76,7 @@ const MainPageHeroImage = () => {
     <div className="carousel__container">
       <div className="carousel__black-bg-for-image">
         <img
-          src={mainImage}
+          src="https://res.cloudinary.com/dtyg4ctfr/image/upload/q_40/dpr_auto/v1679876969/pexels-water-rocks-4k-full_mssmdr.jpg"
           loading="lazy"
           className="carousel__hero-image"
         ></img>

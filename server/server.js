@@ -55,21 +55,21 @@ app.get("/", (req, res) => {
 
 // for https
 
-https.createServer(options, app).listen(port, () => {
-  dbo.connectToServer((err) => {
-    if (err) console.log(err);
-  });
-  console.log("server has connected.");
-});
-
-// for normal
-
-// app.listen(port, () => {
+// https.createServer(options, app).listen(port, () => {
 //   dbo.connectToServer((err) => {
 //     if (err) console.log(err);
 //   });
 //   console.log("server has connected.");
 // });
+
+// for normal
+
+app.listen(port, () => {
+  dbo.connectToServer((err) => {
+    if (err) console.log(err);
+  });
+  console.log("server has connected.");
+});
 
 //upload image(s) post
 app.use("/upload", upload.array("files", 200), async (req, res) => {

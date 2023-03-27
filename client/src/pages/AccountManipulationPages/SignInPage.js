@@ -346,7 +346,7 @@ const SignInPage = ({
         <div className="sign-in-page__collage-image-container">
           <img
             className="sign-in-page__collage-image"
-            src={signInPageCollageImg}
+            src="https://res.cloudinary.com/dtyg4ctfr/image/upload/q_40/dpr_auto/v1679877712/PicPocket-SignIn-Collage2-min_xd12qc.jpg"
           ></img>
         </div>
       </div>
