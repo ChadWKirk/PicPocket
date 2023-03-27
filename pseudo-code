@@ -81,6 +81,12 @@ TASKS:
 
 styling:
 
+add browser comatibility
+
+add blurry low quality image as background of div for lazy loading for main paige hero image
+
+get image modal to load stuff faster
+
 upload page - make it so dragging over upload form doesn't rerender image items causing them to flicker
 
 navbar transition speed up
