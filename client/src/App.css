@@ -2575,7 +2575,7 @@ button {
   width: 300px;
   padding-top: 0.5rem;
 }
-@media(width > 530px){
+@media (width > 530px) {
   .my-pics-editor__editor-form-container-mobile-open {
     margin-top: -2.6rem;
   }
@@ -5171,7 +5171,7 @@ button {
   justify-content: center;
   align-items: center;
   position: absolute;
-  top: 27%;
+  top: 37%;
   left: -9px;
   padding: 0.5rem;
   padding-right: 3.5rem;
@@ -5190,7 +5190,7 @@ button {
   justify-content: center;
   align-items: center;
   position: absolute;
-  top: 27%;
+  top: 37%;
   right: -11px;
   padding: 0.5rem;
   padding-left: 5rem;
@@ -5233,6 +5233,7 @@ button {
   border-radius: 5px;
   padding: 0.45rem 1.5rem;
   cursor: pointer;
+  white-space: nowrap;
 }
 .image-select-modal__img-tags-list ul li:hover {
   background-color: var(--ctaYellow);
@@ -5581,6 +5582,7 @@ button {
   border-radius: 5px;
   padding: 0.45rem 1.5rem;
   cursor: pointer;
+  white-space: nowrap;
 }
 .image-view-page__img-tags-list ul li:hover {
   background-color: var(--ctaYellow);
