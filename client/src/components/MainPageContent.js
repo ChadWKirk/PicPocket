@@ -17,6 +17,7 @@ const MainPageContent = ({
   setImgGalleryScrollPosition,
   setImgTitleArrState,
   imgTitleArrState,
+  setImgToLoadInFirstModal,
   page,
 }) => {
   //if account has just been deleted, render RedBanner. See comment in App.js for more.
@@ -113,6 +114,7 @@ const MainPageContent = ({
           setImgGalleryScrollPosition={setImgGalleryScrollPosition}
           imgTitleArrState={imgTitleArrState}
           setImgTitleArrState={setImgTitleArrState}
+          setImgToLoadInFirstModal={setImgToLoadInFirstModal}
         />
       </div>
 

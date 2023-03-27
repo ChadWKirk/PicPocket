@@ -21,6 +21,7 @@ const ImageGallery = ({
   setImgGalleryScrollPosition,
   setImgTitleArrState,
   imgTitleArrState,
+  setImgToLoadInFirstModal,
 }) => {
   // used to navigate to imageViewPage and isShowingImageSelectModal state to show modal on first navigate
   let navigate = useNavigate();
@@ -97,6 +98,8 @@ const ImageGallery = ({
       let givenPublic_Id = element.public_id.slice(10); //give titleArr the public_id of element, minus the "picpocket/" part
       titleArr.push(givenPublic_Id);
       let likeButton;
+      //for first img modal to load like button without fetch
+      let isImgLiked;
 
       if (element.likedBy.includes(curUser_real)) {
         likeButton = (
@@ -107,6 +110,7 @@ const ImageGallery = ({
             ></FontAwesomeIcon>
           </div>
         );
+        isImgLiked = true;
       } else {
         likeButton = (
           <div>
@@ -116,6 +120,7 @@ const ImageGallery = ({
             ></FontAwesomeIcon>
           </div>
         );
+        isImgLiked = false;
       }
 
       // function navigateToImageViewPage() {
@@ -139,6 +144,30 @@ const ImageGallery = ({
             <a
               onClick={() => {
                 setIsShowingImageSelectModal(true);
+                setImgToLoadInFirstModal({
+                  imgAuthorPFP: element.test[0].pfp,
+                  imgAuthorName: element.uploadedBy,
+                  imgSrc:
+                    element.secure_url.slice(0, 50) +
+                    "q_60/c_scale,w_700/dpr_auto/" +
+                    element.secure_url.slice(
+                      50,
+                      element.secure_url.lastIndexOf(".")
+                    ) +
+                    ".jpg",
+                  imgTitle: element.title,
+                  imgDescription: element.description,
+                  imgLikes: element.likes,
+                  imgDownloadURL:
+                    element.secure_url.slice(0, 50) +
+                    "q_100/fl_attachment/" +
+                    element.secure_url.slice(
+                      50,
+                      element.secure_url.lastIndexOf(".")
+                    ),
+                  imgTags: element.tags,
+                  isImgLiked: isImgLiked,
+                });
                 let scrollYPos = window.scrollY;
                 setImgGalleryScrollPosition({
                   top: scrollYPos,

@@ -599,7 +599,15 @@ const MyPicsPage = ({
                                 style={{ height: "100%" }}
                                 id="descriptionInputID"
                                 onChange={(e) => setDescription(e.target.value)}
+                                maxLength={70}
                               ></textarea>
+                              <p className="my-pics-editor__description-char-count-mobile">
+                                {
+                                  document.querySelector("#descriptionInputID")
+                                    .value.length
+                                }
+                                /{70}
+                              </p>
                             </div>
                           </div>
                           <div className="my-pics-editor__editor-form-details-sub-container-mobile-open">

@@ -2193,11 +2193,11 @@ button {
   transition: 0.3s ease-in-out;
 }
 .heightmore {
-  height: 300px !important;
+  height: 350px !important;
 }
 @media (width < 380px) {
   .heightmore {
-    height: 350px !important;
+    height: 410px !important;
   }
 }
 .mypics-image-gallery__img-and-info-container:hover .checkbox {
@@ -2494,6 +2494,10 @@ button {
   font-size: 0.8rem;
   color: var(--dark4);
 }
+.my-pics-editor__description-char-count-mobile {
+  font-size: 0.6rem;
+  color: var(--dark4);
+}
 .textArea1 {
   /*idk where this is used at at this point*/
   width: 100%;
@@ -2571,9 +2575,15 @@ button {
   width: 300px;
   padding-top: 0.5rem;
 }
+@media(width > 530px){
+  .my-pics-editor__editor-form-container-mobile-open {
+    margin-top: -2.6rem;
+  }
+}
 @media (width < 460px) {
   .my-pics-editor__editor-form-container-mobile-open {
     width: 190px;
+    margin-top: -1.25rem;
   }
 }
 .my-pics-editor__editor-form-contents-container-mobile-open {
@@ -2582,7 +2592,7 @@ button {
 }
 @media (width < 380px) {
   .my-pics-editor__editor-form-contents-container-mobile-open {
-    margin-top: -0.3rem;
+    margin-top: -0.4rem;
   }
 }
 @media (width < 530px) {

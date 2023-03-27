@@ -38,8 +38,6 @@ function App() {
   // let domain = "https://localhost:5000";
   // let domain = "https://picpoccket.herokuapp.com";
 
-  // testing for netlify CD
-
   //When someone deletes their account, they will be navigated back to main page
   //and a red banner will show saying their account has successfully been deleted
   //until they refresh or go to a different page to reset the state to false.
@@ -55,6 +53,8 @@ function App() {
   //used to show image select modal or not
   const [isShowingImageSelectModal, setIsShowingImageSelectModal] =
     useState(false);
+  //store image being clicked on to show modal here so it loads instantly when modal first comes up
+  const [imgToLoadInFirstModal, setImgToLoadInFirstModal] = useState();
 
   // scroll position user is currently at when clicking an image in an image gallery
   // when user clicks an image, it stores the current scroll position (code is in ImageGallery component)
@@ -145,6 +145,7 @@ function App() {
                 setImgGalleryScrollPosition={setImgGalleryScrollPosition}
                 imgTitleArrState={imgTitleArrState}
                 setImgTitleArrState={setImgTitleArrState}
+                setImgToLoadInFirstModal={setImgToLoadInFirstModal}
                 page={"mainPageMostRecent"}
               />
             }
@@ -202,6 +203,7 @@ function App() {
                 // setPrevPageForModal={setPrevPageForModal}
                 imgGalleryScrollPosition={imgGalleryScrollPosition}
                 setImgGalleryScrollPosition={setImgGalleryScrollPosition}
+                imgToLoadInFirstModal={imgToLoadInFirstModal}
               />
             }
           ></Route>

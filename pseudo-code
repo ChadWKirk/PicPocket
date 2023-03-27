@@ -85,8 +85,6 @@ add browser comatibility
 
 add blurry low quality image as background of div for lazy loading for main paige hero image
 
-get image modal to load stuff faster
-
 upload page - make it so dragging over upload form doesn't rerender image items causing them to flicker
 
 navbar transition speed up
@@ -98,8 +96,6 @@ make mobile form title field 100% width when right under 900px in my pics
 give proper space above and below mobile form in my pics
 
 ---
-
-add description field char limit on mobile in my pics
 
 set up save image on mobile
 

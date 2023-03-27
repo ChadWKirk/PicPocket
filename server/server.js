@@ -28,10 +28,10 @@ const fileStorageEngine = multer.diskStorage({
 const upload = multer({ storage: fileStorageEngine });
 
 //for mkcert to run https localhost
-const options = {
-  key: fs.readFileSync(`./node_modules/mkcert/src/cert.key`),
-  cert: fs.readFileSync(`./node_modules/mkcert/src/cert.crt`),
-};
+// const options = {
+//   key: fs.readFileSync(`./node_modules/mkcert/src/cert.key`),
+//   cert: fs.readFileSync(`./node_modules/mkcert/src/cert.crt`),
+// };
 
 //cloudinary image hosting
 const cloudinary = require("cloudinary").v2;

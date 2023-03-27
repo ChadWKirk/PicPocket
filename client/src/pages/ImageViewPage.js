@@ -26,6 +26,7 @@ const ImageViewPage = ({
   // setPrevPageForModal,
   imgGalleryScrollPosition,
   setImgGalleryScrollPosition,
+  imgToLoadInFirstModal,
 }) => {
   let navigate = useNavigate();
   //variables for related images
@@ -145,7 +146,11 @@ const ImageViewPage = ({
   let scrollByPxAmount;
   const [tagListScrollPosition, setTagListScrollPosition] = useState(0);
   if (imgInfo) {
-    imgSrc = imgInfo.secure_url;
+    imgSrc =
+      imgInfo.secure_url.slice(0, 50) +
+      "q_60/c_scale,w_700/dpr_auto/" +
+      imgInfo.secure_url.slice(50, imgInfo.secure_url.lastIndexOf(".")) +
+      ".jpg";
     imgTitle = imgInfo.title;
     // use this for paddingTop of skeleton loading div to get aspect ratio
     aspectRatio = imgInfo.height / imgInfo.width;
@@ -595,6 +600,7 @@ const ImageViewPage = ({
           // setPrevPageForModal={setPrevPageForModal}
           imgGalleryScrollPosition={imgGalleryScrollPosition}
           setImgGalleryScrollPosition={setImgGalleryScrollPosition}
+          imgToLoadInFirstModal={imgToLoadInFirstModal}
         />
       )}
       <NavbarComponent

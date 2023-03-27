@@ -25,6 +25,7 @@ const Modal__ImageSelect = ({
   // setPrevPageForModal,
   imgGalleryScrollPosition,
   setImgGalleryScrollPosition,
+  imgToLoadInFirstModal,
 }) => {
   //when modal is open, set body overflow to hidden. for some reason classlist.add wasn't working it was glitching on and off
   document.body.style.overflow = "hidden";
@@ -44,8 +45,8 @@ const Modal__ImageSelect = ({
   const [isLiked, setIsLiked] = useState();
 
   //assigning user info to variables (user info comes from ImageViewPage)
-  let imgAuthorPFP;
-  let imgAuthorName;
+  let imgAuthorPFP = imgToLoadInFirstModal.imgAuthorPFP;
+  let imgAuthorName = imgToLoadInFirstModal.imgAuthorName;
   let imgAuthorName_hyphenated;
   if (userInfo) {
     imgAuthorPFP =
@@ -58,13 +59,47 @@ const Modal__ImageSelect = ({
   }
 
   //assigning img info to variables (img info comes from ImageViewPage)
-  let imgSrc;
-  let imgTitle;
-  let imgDescription;
-  let imgLikes;
-  let imgDownloadURL;
-  let imgTags = [];
+  let imgSrc = imgToLoadInFirstModal.imgSrc;
+  let imgTitle = imgToLoadInFirstModal.title;
+  let imgDescription = imgToLoadInFirstModal.description;
+  let imgLikes = imgToLoadInFirstModal.likes;
+  let imgDownloadURL = imgToLoadInFirstModal.imgDownloadURL;
+  let imgTags = imgToLoadInFirstModal.imgTags;
   let imageSelectModalLikeBtn;
+  //to load like button before fetch
+  if (imgToLoadInFirstModal.isImgLiked) {
+    imageSelectModalLikeBtn = (
+      <button
+        className="image-select-modal__main-like-button"
+        onClick={(e) => handleMainLike(e)}
+      >
+        <FontAwesomeIcon
+          icon={faHeart}
+          className="image-select-modal__main-like-button-icon-unliked image-select-modal__main-like-button-icon-liked"
+        ></FontAwesomeIcon>
+        <div className="image-select-modal__main-like-button-text">Unlike</div>
+        <div className="image-select-modal__main-like-button-text">
+          {/* {imgInfo.likedBy.length} */}
+        </div>
+      </button>
+    );
+  } else {
+    imageSelectModalLikeBtn = (
+      <button
+        className="image-select-modal__main-like-button"
+        onClick={(e) => handleMainLike(e)}
+      >
+        <FontAwesomeIcon
+          icon={farHeart}
+          className="image-select-modal__main-like-button-icon-unliked"
+        ></FontAwesomeIcon>
+        <div className="image-select-modal__main-like-button-text">Like</div>
+        <div className="image-select-modal__main-like-button-text">
+          {/* {imgInfo.likedBy.length} */}
+        </div>
+      </button>
+    );
+  }
   //for tag list scroll animation
   let tagListIDWidth;
   let scrollByPxAmount;
@@ -90,6 +125,7 @@ const Modal__ImageSelect = ({
       "q_100/fl_attachment/" +
       imgInfo.secure_url.slice(50, imgInfo.secure_url.lastIndexOf("."));
 
+    imgTags = [];
     for (let i = 0; i < imgInfo.tags.length; i++) {
       imgTags.push(
         <li>

@@ -14,6 +14,7 @@ const MainPage = ({
   imgTitleArrState,
   imgGalleryScrollPosition,
   setImgGalleryScrollPosition,
+  setImgToLoadInFirstModal,
   page,
 }) => {
   //if user deletes their account, they get navigated back to main page. make main page start at top of page to show JustDeleted banner
@@ -38,6 +39,7 @@ const MainPage = ({
         setImgTitleArrState={setImgTitleArrState}
         isJustDeleted={isJustDeleted}
         setIsJustDeleted={setIsJustDeleted}
+        setImgToLoadInFirstModal={setImgToLoadInFirstModal}
       />
     </div>
   );
