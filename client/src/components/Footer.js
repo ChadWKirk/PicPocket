@@ -67,7 +67,7 @@ const Footer = ({ curUser_real, curUser_hyphenated, isLoggedIn, domain }) => {
     );
   }
   return (
-    <div className="footerContainer">
+    <footer className="footerContainer">
       <div
         className={`footer__contents-container ${
           isOnMainPage ? "footer__contents-container-padding-top-main-page" : ""
@@ -107,7 +107,7 @@ const Footer = ({ curUser_real, curUser_hyphenated, isLoggedIn, domain }) => {
           <div>Copyright © 2023 PicPocket</div>
         </div>
       </div>
-    </div>
+    </footer>
   );
 };
 

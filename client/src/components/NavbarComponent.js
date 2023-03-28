@@ -275,7 +275,7 @@ const NavbarComponent = ({
     dispatch({ type: "LOGOUT" });
   }
   return (
-    <div data-hamOpenOrClosed={hamOpenOrClosed} data-navTheme={navColorClass}>
+    <nav data-hamOpenOrClosed={hamOpenOrClosed} data-navTheme={navColorClass}>
       <div className="navbar__height-margin"></div>
       <div className={`navbar__container ${navPositionClass}`}>
         <div className="navbar__contents">
@@ -317,7 +317,7 @@ const NavbarComponent = ({
           signOut={signOut}
         />
       </div>
-    </div>
+    </nav>
   );
 };
 

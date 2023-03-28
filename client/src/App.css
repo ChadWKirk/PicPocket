@@ -293,6 +293,8 @@ button {
   border: none;
   border-top-left-radius: 9px;
   border-bottom-left-radius: 9px;
+  border-top-right-radius: 0px;
+  border-top-left-radius: 0px;
   /* max-width: 38rem; */
   width: 100%;
   font-size: 1.15rem;
@@ -338,6 +340,7 @@ button {
   text-decoration: none;
   transition: 0.2s;
   width: 50px;
+  z-index: 1;
 }
 .navbar__login-button:hover {
   color: rgb(232, 232, 232);
@@ -1562,10 +1565,12 @@ button {
   padding: 0 15px;
 }
 
-.carousel__overlay p {
+.carousel__overlay h1 {
   max-width: 35ch;
+  font-weight: 700;
   margin: auto;
-  /* line-height: 1.4; */
+  font-size: 2rem;
+  line-height: 1.5;
 }
 
 .carousel__overlay-categories {

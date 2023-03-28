@@ -34,7 +34,7 @@ const MainPageHeroImage = () => {
   }
 
   return (
-    <div className="carousel__container">
+    <header className="carousel__container">
       <div className="carousel__black-bg-for-image">
         <img
           src="https://res.cloudinary.com/dtyg4ctfr/image/upload/q_40/dpr_auto/v1679876969/pexels-water-rocks-4k-full_mssmdr.jpg"
@@ -44,9 +44,9 @@ const MainPageHeroImage = () => {
       </div>
 
       <div className="carousel__overlay">
-        <p>
+        <h1>
           The best free stock photos. Royalty free images shared by creators.
-        </p>
+        </h1>
         <form
           className="carousel__search-container"
           onSubmit={(e) => onSubmit(e)}
@@ -83,7 +83,7 @@ const MainPageHeroImage = () => {
       >
         {/* <img className="heroImage" src={heroImage} alt="Hero Image" /> */}
       </div>
-    </div>
+    </header>
   );
 };
 

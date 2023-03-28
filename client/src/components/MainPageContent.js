@@ -82,42 +82,47 @@ const MainPageContent = ({
         {redBanner}
         <MainPageHeroImage />
       </div>
-      <div className="sortingBarCont1">
-        <a
-          href="/"
-          className={`${
-            page == "mainPageMostRecent" ? "buttonClicked" : "buttonNotClicked"
-          }`}
-        >
-          Most Recent
-        </a>
-        <a
-          href="/most-popular"
-          className={`${
-            page == "mainPageMostPopular" ? "buttonClicked" : "buttonNotClicked"
-          }`}
-        >
-          Most Popular
-        </a>
-      </div>
-      <div className="image-gallery__container">
-        <ImageGallery
-          domain={domain}
-          curUser_real={curUser_real}
-          curUser_hyphenated={curUser_hyphenated}
-          isLoggedIn={isLoggedIn}
-          setImgGalleryLength={setImgGalleryLength}
-          page={page}
-          isShowingImageSelectModal={isShowingImageSelectModal}
-          setIsShowingImageSelectModal={setIsShowingImageSelectModal}
-          imgGalleryScrollPosition={imgGalleryScrollPosition}
-          setImgGalleryScrollPosition={setImgGalleryScrollPosition}
-          imgTitleArrState={imgTitleArrState}
-          setImgTitleArrState={setImgTitleArrState}
-          setImgToLoadInFirstModal={setImgToLoadInFirstModal}
-        />
-      </div>
-
+      <main>
+        <div className="sortingBarCont1">
+          <a
+            href="/"
+            className={`${
+              page == "mainPageMostRecent"
+                ? "buttonClicked"
+                : "buttonNotClicked"
+            }`}
+          >
+            Most Recent
+          </a>
+          <a
+            href="/most-popular"
+            className={`${
+              page == "mainPageMostPopular"
+                ? "buttonClicked"
+                : "buttonNotClicked"
+            }`}
+          >
+            Most Popular
+          </a>
+        </div>
+        <div className="image-gallery__container">
+          <ImageGallery
+            domain={domain}
+            curUser_real={curUser_real}
+            curUser_hyphenated={curUser_hyphenated}
+            isLoggedIn={isLoggedIn}
+            setImgGalleryLength={setImgGalleryLength}
+            page={page}
+            isShowingImageSelectModal={isShowingImageSelectModal}
+            setIsShowingImageSelectModal={setIsShowingImageSelectModal}
+            imgGalleryScrollPosition={imgGalleryScrollPosition}
+            setImgGalleryScrollPosition={setImgGalleryScrollPosition}
+            imgTitleArrState={imgTitleArrState}
+            setImgTitleArrState={setImgTitleArrState}
+            setImgToLoadInFirstModal={setImgToLoadInFirstModal}
+          />
+        </div>
+      </main>
       <div className="joinNowContainer box">
         <h1>Want to contribute?</h1>
         <h3>Upload your own stock photos in minutes.</h3>
