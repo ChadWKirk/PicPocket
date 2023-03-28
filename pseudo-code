@@ -101,8 +101,6 @@ update googleoauth to picpoccket url so it works in build
 
 handle oauth "account already made with that email" error
 
-log in button looks weird on build
-
 put termly env vars in backend
 
 handle errors for blank fields etc.
