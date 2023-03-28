@@ -65,15 +65,33 @@ const MainPageHeroImage = () => {
         </form>
         <div className="carousel__overlay-categories">
           <p>Try these: </p>
-          <a href="/search/Nature/?sort=most-recent&filter=all-types">
-            Nature,
-          </a>
-          <a href="/search/Cats/?sort=most-recent&filter=all-types">Cats,</a>
-          <a href="/search/Dogs/?sort=most-recent&filter=all-types">Dogs,</a>
-          <a href="/search/Tech/?sort=most-recent&filter=all-types">Tech,</a>
-          <a href="/search/Landscape/?sort=most-recent&filter=all-types">
-            Landscape
-          </a>
+          <ul>
+            <li>
+              <a href="/search/Nature/?sort=most-recent&filter=all-types">
+                Nature,
+              </a>
+            </li>
+            <li>
+              <a href="/search/Cats/?sort=most-recent&filter=all-types">
+                Cats,
+              </a>
+            </li>
+            <li>
+              <a href="/search/Dogs/?sort=most-recent&filter=all-types">
+                Dogs,
+              </a>
+            </li>
+            <li>
+              <a href="/search/Tech/?sort=most-recent&filter=all-types">
+                Tech,
+              </a>
+            </li>
+            <li>
+              <a href="/search/Landscape/?sort=most-recent&filter=all-types">
+                Landscape
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
       <div

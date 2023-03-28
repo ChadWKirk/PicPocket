@@ -30,7 +30,7 @@ const ImageGallery = ({
   let mainPageSubheading;
   if (page == "mainPageMostRecent" || page == "mainPageMostPopular") {
     mainPageSubheading = (
-      <h1 className="image-gallery__main-page-subheading">Free Stock Photos</h1>
+      <h2 className="image-gallery__main-page-subheading">Free Stock Photos</h2>
     );
   } else {
     mainPageSubheading = <div className="displayNone"></div>;
@@ -135,12 +135,12 @@ const ImageGallery = ({
             style={{
               width: `${element.width}px`,
               paddingTop: `${paddingTop}%`,
-              height: "100px", //for some reason, adding an artbitrary height knocks off that extra couple hundred pixels off the bottom.
+              height: "100px", //add height that is smaller than the image's height so bottom of background doesn't stick out.
               background: `${elementBGColor}`,
               color: `${elementBGColor}`,
             }}
           >
-            ddd
+            placeholder text for background of image
             <a
               onClick={() => {
                 setIsShowingImageSelectModal(true);

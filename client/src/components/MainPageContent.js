@@ -70,18 +70,18 @@ const MainPageContent = ({
 
   return (
     <div>
-      <div className="mainPage__heroPicture">
-        <NavbarComponent
-          domain={domain}
-          curUser_real={curUser_real}
-          curUser_hyphenated={curUser_hyphenated}
-          isLoggedIn={isLoggedIn}
-          navPositionClass={navPositionClass}
-          navColorClass={navColorClass}
-        />
-        {redBanner}
-        <MainPageHeroImage />
-      </div>
+      <NavbarComponent
+        domain={domain}
+        curUser_real={curUser_real}
+        curUser_hyphenated={curUser_hyphenated}
+        isLoggedIn={isLoggedIn}
+        navPositionClass={navPositionClass}
+        navColorClass={navColorClass}
+      />
+      {redBanner}
+      {/* <div className="mainPage__heroPicture"> */}
+      <MainPageHeroImage />
+      {/* </div> */}
       <main>
         <div className="sortingBarCont1">
           <a
@@ -123,11 +123,11 @@ const MainPageContent = ({
           />
         </div>
       </main>
-      <div className="joinNowContainer box">
-        <h1>Want to contribute?</h1>
+      <section className="joinNowContainer box">
+        <h2>Want to contribute?</h2>
         <h3>Upload your own stock photos in minutes.</h3>
         <a href="/signup">Join Now</a>
-      </div>
+      </section>
     </div>
   );
 };

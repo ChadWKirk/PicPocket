@@ -24,24 +24,22 @@ const MainPage = ({
     }
   }, [isJustDeleted]);
   return (
-    <div>
-      <MainPageContent
-        domain={domain}
-        curUser_real={curUser_real}
-        curUser_hyphenated={curUser_hyphenated}
-        isLoggedIn={isLoggedIn}
-        page={page}
-        isShowingImageSelectModal={isShowingImageSelectModal}
-        setIsShowingImageSelectModal={setIsShowingImageSelectModal}
-        imgGalleryScrollPosition={imgGalleryScrollPosition}
-        setImgGalleryScrollPosition={setImgGalleryScrollPosition}
-        imgTitleArrState={imgTitleArrState}
-        setImgTitleArrState={setImgTitleArrState}
-        isJustDeleted={isJustDeleted}
-        setIsJustDeleted={setIsJustDeleted}
-        setImgToLoadInFirstModal={setImgToLoadInFirstModal}
-      />
-    </div>
+    <MainPageContent
+      domain={domain}
+      curUser_real={curUser_real}
+      curUser_hyphenated={curUser_hyphenated}
+      isLoggedIn={isLoggedIn}
+      page={page}
+      isShowingImageSelectModal={isShowingImageSelectModal}
+      setIsShowingImageSelectModal={setIsShowingImageSelectModal}
+      imgGalleryScrollPosition={imgGalleryScrollPosition}
+      setImgGalleryScrollPosition={setImgGalleryScrollPosition}
+      imgTitleArrState={imgTitleArrState}
+      setImgTitleArrState={setImgTitleArrState}
+      isJustDeleted={isJustDeleted}
+      setIsJustDeleted={setIsJustDeleted}
+      setImgToLoadInFirstModal={setImgToLoadInFirstModal}
+    />
   );
 };
 

@@ -279,7 +279,11 @@ const NavbarComponent = ({
       <div className="navbar__height-margin"></div>
       <div className={`navbar__container ${navPositionClass}`}>
         <div className="navbar__contents">
-          <a href="/" className="navbar__logo">
+          <a
+            href="/"
+            className="navbar__logo"
+            aria-label="Logo, link to home page"
+          >
             PicPocket
           </a>
           <a href="/" className="navbar__logo__mobile">
