@@ -3651,6 +3651,12 @@ button {
   /* margin-right: 1rem; */
   color: rgb(119, 119, 119) !important;
   background-color: var(--offWhite) !important;
+  font-weight: 300;
+  padding: 0.55rem 0.8rem;
+  border-radius: 4px;
+  transition: 0.2s;
+  margin-top: 1.4rem;
+  float: right;
 }
 
 .contact-page__send-button-loading-icon {

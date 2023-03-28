@@ -166,6 +166,7 @@ function App() {
                 setImgGalleryScrollPosition={setImgGalleryScrollPosition}
                 imgTitleArrState={imgTitleArrState}
                 setImgTitleArrState={setImgTitleArrState}
+                setImgToLoadInFirstModal={setImgToLoadInFirstModal}
                 page={"mainPageMostPopular"}
               />
             }
@@ -184,6 +185,7 @@ function App() {
                 setImgGalleryScrollPosition={setImgGalleryScrollPosition}
                 imgTitleArrState={imgTitleArrState}
                 setImgTitleArrState={setImgTitleArrState}
+                setImgToLoadInFirstModal={setImgToLoadInFirstModal}
               />
             }
           ></Route>
@@ -239,6 +241,7 @@ function App() {
                 setImgGalleryScrollPosition={setImgGalleryScrollPosition}
                 imgTitleArrState={imgTitleArrState}
                 setImgTitleArrState={setImgTitleArrState}
+                setImgToLoadInFirstModal={setImgToLoadInFirstModal}
               />
             }
           ></Route>
@@ -279,6 +282,7 @@ function App() {
                   setImgGalleryScrollPosition={setImgGalleryScrollPosition}
                   imgTitleArrState={imgTitleArrState}
                   setImgTitleArrState={setImgTitleArrState}
+                  setImgToLoadInFirstModal={setImgToLoadInFirstModal}
                 />
               ) : (
                 <Navigate to="/SignUp" />

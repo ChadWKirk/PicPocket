@@ -22,6 +22,7 @@ const UserPage = ({
   prevPageForModal,
   setPrevPageForModal,
   getPrevPageFunc,
+  setImgToLoadInFirstModal,
 }) => {
   const { username } = useParams();
 
@@ -163,6 +164,7 @@ const UserPage = ({
               setImgGalleryScrollPosition={setImgGalleryScrollPosition}
               imgTitleArrState={imgTitleArrState}
               setImgTitleArrState={setImgTitleArrState}
+              setImgToLoadInFirstModal={setImgToLoadInFirstModal}
               page={"userPage"}
             />
           </div>

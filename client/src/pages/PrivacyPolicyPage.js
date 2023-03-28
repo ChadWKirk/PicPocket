@@ -28,7 +28,7 @@ const PrivacyPolicyPage = ({
         navColorClass={"white"}
       />
       <PaperWorkButtons whatPage={"privacy"} />
-      <div name="termly-embed" data-id={privacyID} data-type="iframe"></div>
+      <main name="termly-embed" data-id={privacyID} data-type="iframe"></main>
     </div>
   );
 };

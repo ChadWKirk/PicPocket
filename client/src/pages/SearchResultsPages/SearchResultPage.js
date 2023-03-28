@@ -16,6 +16,7 @@ const SearchResultsPage = ({
   setImgGalleryScrollPosition,
   imgTitleArrState,
   setImgTitleArrState,
+  setImgToLoadInFirstModal,
 }) => {
   //search parameters eg: ?sort=most-recent  ... to get params use searchParams.get("x") eg: searchParams.get("sort")
   let [searchParams, setSearchParams] = useSearchParams();
@@ -99,6 +100,7 @@ const SearchResultsPage = ({
           setImgGalleryScrollPosition={setImgGalleryScrollPosition}
           imgTitleArrState={imgTitleArrState}
           setImgTitleArrState={setImgTitleArrState}
+          setImgToLoadInFirstModal={setImgToLoadInFirstModal}
           page={"searchPage"}
         />
       </div>

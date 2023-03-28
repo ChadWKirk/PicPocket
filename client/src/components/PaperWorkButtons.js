@@ -28,37 +28,37 @@ const PaperWorkButtons = ({ whatPage }) => {
     }
   }
   let disclaimerBtn = (
-    <a href="/Disclaimer">
-      <button className="inactivePWorkBtn">Disclaimer</button>
+    <a href="/Disclaimer" className="inactivePWorkBtn">
+      Disclaimer
     </a>
   );
   let privacyBtn = (
-    <a href="/Privacy-Policy">
-      <button className="inactivePWorkBtn">Privacy Policy</button>
+    <a href="/Privacy-Policy" className="inactivePWorkBtn">
+      Privacy Policy
     </a>
   );
   let tosBtn = (
-    <a href="/Terms-And-Conditions">
-      <button className="inactivePWorkBtn">Terms and Conditions</button>
+    <a href="/Terms-And-Conditions" className="inactivePWorkBtn">
+      Terms and Conditions
     </a>
   );
 
   if (whatPage == "disclaimer") {
     disclaimerBtn = (
-      <a href="/Disclaimer">
-        <button className="activePWorkBtn">Disclaimer</button>
+      <a href="/Disclaimer" className="activePWorkBtn">
+        Disclaimer
       </a>
     );
   } else if (whatPage == "privacy") {
     privacyBtn = (
-      <a href="/Privacy-Policy">
-        <button className="activePWorkBtn">Privacy Policy</button>
+      <a href="/Privacy-Policy" className="activePWorkBtn">
+        Privacy Policy
       </a>
     );
   } else if (whatPage == "tos") {
     tosBtn = (
-      <a href="/Terms-And-Conditions">
-        <button className="activePWorkBtn">Terms and Conditions</button>
+      <a href="/Terms-And-Conditions" className="activePWorkBtn">
+        Terms and Conditions
       </a>
     );
   }

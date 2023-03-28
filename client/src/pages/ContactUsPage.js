@@ -183,9 +183,9 @@ const ContactUsPage = ({
         navColorClass={"black"}
       />
 
-      <div className="contact-page__form-container">
+      <main className="contact-page__form-container">
         <h1>Contact Us</h1>
-        <div style={{ width: "100%" }}>
+        <section style={{ width: "100%" }}>
           <form onSubmit={(e) => onSubmit(e)}>
             <div className="contact-page__input-container">
               <label htmlFor="nameInput">Name: {nameErrorText}</label>
@@ -227,20 +227,17 @@ const ContactUsPage = ({
               {messageTooltip}
               <div className="contact-page__buttons-container">
                 <div className="contact-page__buttons-container-subcontainer">
-                  <button
-                    onClick={() => navigate(`/`)}
-                    className="contact-page__cancel-button"
-                  >
+                  <a href="/" className="contact-page__cancel-button">
                     Back To Home
-                  </button>
+                  </a>
                   {sendButton}
                 </div>
               </div>
               {successOrErrMessage}
             </div>
           </form>
-        </div>
-      </div>
+        </section>
+      </main>
     </div>
   );
 };

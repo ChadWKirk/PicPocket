@@ -28,7 +28,11 @@ const DisclaimerPage = ({
         navColorClass={"white"}
       />
       <PaperWorkButtons whatPage={"disclaimer"} />
-      <div name="termly-embed" data-id={disclaimerID} data-type="iframe"></div>
+      <main
+        name="termly-embed"
+        data-id={disclaimerID}
+        data-type="iframe"
+      ></main>
     </div>
   );
 };

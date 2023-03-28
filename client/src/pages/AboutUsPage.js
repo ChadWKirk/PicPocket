@@ -1,8 +1,6 @@
 import { React } from "react";
 //components
 import NavbarComponent from "../components/NavbarComponent";
-//images
-import yellowCamImg from "../images/yellow-camera-about-us.jpg";
 
 const AboutUsPage = ({
   domain,
@@ -21,7 +19,7 @@ const AboutUsPage = ({
         navColorClass={"white"}
       />
       <h1 className="about-us-page__heading">About PicPocket</h1>
-      <div className="about-us-page__contents-container">
+      <main className="about-us-page__contents-container">
         <div className="about-us-page__text-container">
           <div>
             <h3>The Mission</h3>
@@ -66,9 +64,12 @@ const AboutUsPage = ({
           </a>
         </div>
         <div className="about-us-page__img-container">
-          <img src={yellowCamImg}></img>
+          <img
+            src="https://res.cloudinary.com/dtyg4ctfr/image/upload/q_60/dpr_auto/v1680027135/PicPocket/yellow-camera-about-us_wfnaef.jpg"
+            loading="lazy"
+          ></img>
         </div>
-      </div>
+      </main>
     </div>
   );
 };

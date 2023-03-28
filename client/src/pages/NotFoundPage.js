@@ -24,17 +24,17 @@ const NotFoundPage = ({
         navPositionClass={"fixed"}
         navColorClass={"black"}
       />
-      <div className="not-found-page__contents-container">
+      <main className="not-found-page__contents-container">
         <div className="not-found-page__icon">
           <FontAwesomeIcon icon={faQuestionCircle} />
         </div>
-        <div className="not-found-page__message">
+        <h1 className="not-found-page__message">
           Sorry, this page could not be found.
-        </div>
+        </h1>
         <div className="not-found-page__link">
           <a href="/">Go Back Home</a>
         </div>
-      </div>
+      </main>
     </div>
   );
 };

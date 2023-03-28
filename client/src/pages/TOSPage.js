@@ -23,7 +23,7 @@ const TOSPage = ({ domain, curUser_real, curUser_hyphenated, isLoggedIn }) => {
         navColorClass={"white"}
       />
       <PaperWorkButtons whatPage={"tos"} />
-      <div name="termly-embed" data-id={TOSID} data-type="iframe"></div>
+      <main name="termly-embed" data-id={TOSID} data-type="iframe"></main>
     </div>
   );
 };
