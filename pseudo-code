@@ -103,8 +103,6 @@ handle oauth "account already made with that email" error
 
 put termly env vars in backend
 
-handle errors for blank fields etc.
-
 ---
 
 How to manage images:
