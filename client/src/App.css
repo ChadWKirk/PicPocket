@@ -1509,6 +1509,8 @@ button {
   border: none;
   border-top-left-radius: 9px;
   border-bottom-left-radius: 9px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
   max-width: 38rem;
   width: 100%;
   font-size: 1.15rem;
@@ -4930,11 +4932,6 @@ button {
   flex-wrap: wrap;
   gap: 1rem;
 }
-@media (width < 650px) {
-  .image-select-modal__top-bar-container {
-    /* padding: 0 1rem 0 0.25rem; */
-  }
-}
 @media (width < 375px) {
   .image-view-page__top-bar-container {
     height: 110px;
@@ -4942,14 +4939,6 @@ button {
   }
   .image-view-page__top-bar-height-margin {
     height: 110px;
-  }
-  .image-select-modal__top-bar-container {
-    /* height: 120px;
-    padding-top: 0.75rem;
-    padding-bottom: 1rem;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.75rem; */
   }
 }
 .image-select-modal__image-author-link-container {
@@ -4995,29 +4984,10 @@ button {
 }
 .image-select-modal__image-author-name {
   color: var(--dark2);
-  /* text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-  max-width: 100%;
-  flex-shrink: 10;
-  background-color: rgb(167, 167, 167); */
 }
 .image-select-modal__image-author-name:hover {
   color: var(--dark2);
 }
-/* @media (width < 650px) {
-  .image-select-modal__image-author-pfp {
-    width: 35px;
-    height: 35px;
-  }
-  .image-select-modal__image-author-pfp::after {
-    width: 35px;
-    height: 35px;
-  }
-  .image-select-modal__image-author-link-container {
-    font-size: 0.75rem;
-  }
-} */
 .image-select-modal__top-bar-buttons-container {
   display: flex;
   gap: 0.75rem;
@@ -5176,8 +5146,8 @@ button {
   font-weight: 500;
   font-style: italic;
   margin-top: 1.925rem;
-  /* max-width: 48%; */
-  /* margin-top: 0.72rem; */
+  width: 100%;
+  word-wrap: break-word;
 }
 @media (width < 650px) {
   .image-select-modal__img-title,
@@ -5564,6 +5534,7 @@ button {
   .image-view-page__img-title,
   .image-view-page__img-description {
     max-width: 100%;
+    word-wrap: break-word;
   }
 }
 .image-view-page__img-tags-container {
