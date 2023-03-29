@@ -900,6 +900,8 @@ const MyPicsPage = ({
     //if tags actually have something in them upon submit
     if (tags != "") {
       bulkArr.current[0].tags = tags.split(", "); //turn string into array
+    } else if (tags == "") {
+      bulkArr.current[0].tags = [];
     }
 
     bulkArr.current[0].imageType = imageType.toLowerCase();
