@@ -288,7 +288,7 @@ const MyPicsPage = ({
                       bulkArr.current[0].secure_url.lastIndexOf(".")
                     ) +
                     ".jpg";
-                }, 1);
+                }, 100);
               } else {
                 displayEditorInfo(index);
               }
@@ -798,7 +798,7 @@ const MyPicsPage = ({
         document
           .getElementById(`imageItemContainer${index}`)
           .classList.add("heightmore");
-      }, 1);
+      }, 100);
       setImgItemArrState(imgItems);
     }
     //if bulkArr has one selected and it is already currently open
@@ -829,7 +829,7 @@ const MyPicsPage = ({
         allElements.forEach((element) => {
           element.classList.remove("heightmore");
         });
-      }, 1);
+      }, 100);
     }
   }
 
