@@ -567,30 +567,10 @@ const MyPicsPage = ({
                         </div>
 
                         <div className="my-pics-editor__editor-form-details-container-mobile-open">
-                          <div className="my-pics-editor__editor-form-details-sub-container-mobile-open">
-                            {/* don't allow anything but letters and numbers. no special characters */}
-                          </div>
-                          <div className="my-pics-editor__editor-form-details-sub-container-mobile-open">
-                            {/* copy how cloudinary lets you add tags. maybe bootstrap */}
-                            <div style={{ fontSize: "0.75rem" }}>
-                              Tags (Use commas. Ex: tag, tags)
-                            </div>
-                            <div>
-                              <input
-                                id="tagsInputID"
-                                onChange={(e) => setTags(e.target.value)}
-                                style={{
-                                  padding: "0.35rem",
-                                  paddingLeft: "0.5rem",
-                                }}
-                              ></input>
-                            </div>
-                          </div>
                           <div
                             className="my-pics-editor__editor-form-details-sub-container-mobile-open"
                             style={{ flex: "1" }}
                           >
-                            {/* have max length of 500 characters */}
                             <div style={{ fontSize: "0.75rem" }}>
                               Description
                             </div>
@@ -611,10 +591,27 @@ const MyPicsPage = ({
                             </div>
                           </div>
                           <div className="my-pics-editor__editor-form-details-sub-container-mobile-open">
+                            {/* copy how cloudinary lets you add tags. maybe bootstrap */}
+                            <div style={{ fontSize: "0.75rem" }}>
+                              Tags (Use commas. Ex: tag, tags)
+                            </div>
+                            <div>
+                              <input
+                                id="tagsInputID"
+                                onChange={(e) => setTags(e.target.value)}
+                                style={{
+                                  padding: "0.35rem",
+                                  paddingLeft: "0.5rem",
+                                }}
+                              ></input>
+                            </div>
+                          </div>
+
+                          <div className="my-pics-editor__editor-form-details-sub-container-mobile-open">
                             <div
                               style={{
                                 fontSize: "0.75rem",
-                                marginTop: "-1.5rem",
+                                marginTop: "1rem",
                               }}
                             >
                               Image type

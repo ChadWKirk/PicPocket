@@ -95,7 +95,11 @@ make mobile form title field 100% width when right under 900px in my pics
 
 set up swiping motion for image modal
 
-get heightmore to work on my pics page for mobile
+fix sign out (fb is undefined)
+
+get heightmore to work on my pics page for ios
+
+redesign mypics editor for mobile
 
 update googleoauth to picpoccket url so it works in build
 

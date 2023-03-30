@@ -2230,14 +2230,6 @@ button {
   box-shadow: 0px 5px 8px 0px rgba(85, 85, 85, 0.673);
   transition: 0.3s ease-in-out;
 }
-.heightmore {
-  height: 350px !important;
-}
-@media (width < 380px) {
-  .heightmore {
-    height: 410px !important;
-  }
-}
 .mypics-image-gallery__img-and-info-container:hover .checkbox {
   display: block;
 }
@@ -2431,6 +2423,14 @@ button {
     width: 162px;
   }
 }
+.heightmore {
+  height: 390px;
+}
+@media (width < 380px) {
+  .heightmore {
+    height: 430px;
+  }
+}
 
 .massIcon {
   opacity: 0.6;
@@ -2610,18 +2610,19 @@ button {
 .my-pics-editor__editor-form-container-mobile-open {
   height: 300px;
   /* background-color: cadetblue; */
-  width: 300px;
-  padding-top: 0.5rem;
+  width: 88%;
+  /* background-color: rebeccapurple; */
+  /* padding-top: 0.5rem; */
+  margin-top: -2.9rem;
 }
-@media (width > 530px) {
+/* @media (width > 530px) {
   .my-pics-editor__editor-form-container-mobile-open {
     margin-top: -2.6rem;
   }
-}
+} */
 @media (width < 460px) {
   .my-pics-editor__editor-form-container-mobile-open {
-    width: 190px;
-    margin-top: -1.25rem;
+    width: 79%;
   }
 }
 .my-pics-editor__editor-form-contents-container-mobile-open {
@@ -2630,13 +2631,13 @@ button {
 }
 @media (width < 380px) {
   .my-pics-editor__editor-form-contents-container-mobile-open {
-    margin-top: -0.4rem;
+    margin-top: -2rem;
   }
 }
 @media (width < 530px) {
   .my-pics-editor__editor-form-details-sub-containerInput {
     width: 100%;
-    height: 1.75rem;
+    /* height: 1.75rem; */
 
     border-radius: 4px;
     /* border: 2px solid black; */
@@ -2645,15 +2646,16 @@ button {
     font-weight: 600;
     padding: 0.35rem;
     padding-left: 0.5rem;
-    margin-top: 0;
+    /* margin-top: 0; */
   }
 }
 .my-pics-editor__editor-form-details-container-mobile-open {
   /* height: 300px; */
   display: flex;
   flex-direction: column;
-  gap: 1.55rem;
-  width: 390px;
+  gap: 0.55rem;
+  margin-top: 1.9rem;
+  /* width: 390px; */
 }
 @media (width < 650px) {
   .my-pics-editor__editor-form-details-container-mobile-open {
