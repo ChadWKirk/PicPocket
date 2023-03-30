@@ -1089,25 +1089,25 @@ button {
   max-width: 500px;
   margin: auto;
 }
-.user-settings-page__contents-container h1 {
+.user-settings-page__contents-container header {
   margin: auto;
   color: var(--dark2);
 }
-.user-settings-page__contents-container h3 {
+.user-settings-page__contents-container h2 {
   margin: auto;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   color: #2c343e;
   font-size: 4rem;
   line-height: 1.2;
   text-align: center;
 }
 @media (width < 900px) {
-  .user-settings-page__contents-container h3 {
+  .user-settings-page__contents-container h2 {
     font-size: 3.25rem;
   }
 }
 @media (width < 650px) {
-  .user-settings-page__contents-container h3 {
+  .user-settings-page__contents-container h2 {
     font-size: 2.75rem;
   }
 }
@@ -1143,7 +1143,7 @@ button {
   border-radius: 6px;
   font-size: 1rem;
 }
-.user-settings-page__contents-container h2 {
+.user-settings-page__contents-container h3 {
   color: var(--dark2);
   font-size: 1.25rem;
   font-weight: 500;

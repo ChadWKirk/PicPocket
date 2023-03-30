@@ -552,6 +552,7 @@ const UserSettingsPage = ({
   return (
     <div
       onClick={() => {
+        // when clicking anywhere, make tooltip(s) dissappear and if inputs are red due to error set those to default
         setEmailErrorText();
         setEmailInputClass("user-settings-page__email-input");
         setEmailTooltip();
@@ -560,17 +561,22 @@ const UserSettingsPage = ({
         setPasswordTooltip();
       }}
     >
-      <NavbarComponent
-        domain={domain}
-        curUser_real={curUser_real}
-        curUser_hyphenated={curUser_hyphenated}
-        isLoggedIn={isLoggedIn}
-        navPositionClass={"fixed"}
-        navColorClass={"white"}
-      />
-      <div className="user-settings-page__contents-container">
-        <h1>Profile Settings</h1>
-        <h3>{curUser_real}</h3>
+      <header>
+        <NavbarComponent
+          domain={domain}
+          curUser_real={curUser_real}
+          curUser_hyphenated={curUser_hyphenated}
+          isLoggedIn={isLoggedIn}
+          navPositionClass={"fixed"}
+          navColorClass={"white"}
+        />
+      </header>
+
+      <main className="user-settings-page__contents-container">
+        <header>
+          <h1>Profile Settings</h1>
+        </header>
+        <h2>{curUser_real}</h2>
         <div className="user-settings-page__change-pfp-container">
           <img src={userPFP} className="profilePicBig" />
           <form>
@@ -596,7 +602,7 @@ const UserSettingsPage = ({
         </div>
         <div className="user-settings-page__change-bio-container">
           <form onSubmit={(e) => submitNewBio(e)}>
-            <h2>Short Bio:</h2>
+            <h3>Short Bio:</h3>
             <textarea
               maxLength={70}
               className="user-settings-page__bio-textarea"
@@ -619,12 +625,12 @@ const UserSettingsPage = ({
           <div className="user-settings-page__change-email-container">
             <form onSubmit={(e) => changeEmail(e)}>
               <div style={{ position: "relative" }}>
-                <h2>
+                <h3>
                   Email:{" "}
                   <p className="sign-in-page__already-exists-message">
                     {emailErrorText}
                   </p>
-                </h2>
+                </h3>
 
                 <input
                   value={emailValue}
@@ -641,7 +647,7 @@ const UserSettingsPage = ({
                 style={{ display: "flex", gap: "0.8rem" }}
               ></div>
               <div style={{ position: "relative" }}>
-                <h2
+                <h3
                   style={{
                     display: "flex",
                     gap: "0.1rem",
@@ -664,7 +670,7 @@ const UserSettingsPage = ({
                   <p className="sign-in-page__already-exists-message">
                     {passwordErrorText}
                   </p>
-                </h2>
+                </h3>
 
                 <input
                   type="password"
@@ -700,7 +706,7 @@ const UserSettingsPage = ({
             Delete account
           </button>
         </div>
-      </div>
+      </main>
     </div>
   );
 };
