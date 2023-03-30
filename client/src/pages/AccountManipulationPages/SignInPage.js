@@ -254,20 +254,28 @@ const SignInPage = ({
   }
 
   return (
-    <div
+    <main
       className="sign-in-page__container"
       onClick={() => {
         resetToolTipOnClick();
       }}
     >
       <div className="sign-in-page__contents-container">
-        <div className="sign-in-page__form-container">
-          <div style={{ fontSize: "1rem", fontWeight: "300" }}>PicPocket</div>
-          <div
-            style={{ fontSize: "2rem", color: "#f5c000", fontWeight: "500" }}
-          >
-            Log in to your account
-          </div>
+        <section className="sign-in-page__form-container">
+          <header>
+            <div style={{ fontSize: "1rem", fontWeight: "300" }}>PicPocket</div>
+            <h1
+              style={{
+                fontSize: "2rem",
+                color: "#f5c000",
+                fontWeight: "500",
+                marginTop: "0.5rem",
+              }}
+            >
+              Log in to your account
+            </h1>
+          </header>
+
           {resetPasswordLinkJustSent && (
             <div className="sign-in-page__reset-password-link-sent-banner">
               You will receive an email with instructions on how to reset your
@@ -342,15 +350,15 @@ const SignInPage = ({
               Sign In
             </button>
           </form>
-        </div>
-        <div className="sign-in-page__collage-image-container">
+        </section>
+        <aside className="sign-in-page__collage-image-container">
           <img
             className="sign-in-page__collage-image"
             src="https://res.cloudinary.com/dtyg4ctfr/image/upload/q_40/dpr_auto/v1679877712/PicPocket-SignIn-Collage2-min_xd12qc.jpg"
           ></img>
-        </div>
+        </aside>
       </div>
-    </div>
+    </main>
   );
 };
 
