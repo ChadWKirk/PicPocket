@@ -106,19 +106,21 @@ const ForgotPasswordSendLinkPage = ({
   }
 
   return (
-    <div
+    <main
       className="forgot-password-send-link-page__container"
       onClick={() => {
         setEmailTooltip();
       }}
     >
       <div className="forgot-password-send-link-page__contents-container">
-        <div className="forgot-password-send-link-page__form-container">
-          <div style={{ fontSize: "1rem", fontWeight: "300" }}>PicPocket</div>
-          <div className="forgot-password-send-link-page__heading">
-            Reset your password
-          </div>
-          <div
+        <section className="forgot-password-send-link-page__form-container">
+          <header>
+            <div style={{ fontSize: "1rem", fontWeight: "300" }}>PicPocket</div>
+            <h1 className="forgot-password-send-link-page__heading">
+              Reset your password
+            </h1>
+          </header>
+          <p
             style={{
               fontSize: "0.8rem",
               marginTop: "0.7rem",
@@ -128,7 +130,7 @@ const ForgotPasswordSendLinkPage = ({
             To reset your password, enter your email below and submit. An email
             will be sent to you with instructions about how to complete the
             process.
-          </div>
+          </p>
           <form onSubmit={onSubmit}>
             <div
               className="forgot-password-send-link-page__input-block"
@@ -144,15 +146,15 @@ const ForgotPasswordSendLinkPage = ({
             </div>
             {resetPasswordButton}
           </form>
-        </div>
-        <div className="forgot-password-send-link-page__collage-image-container">
+        </section>
+        <aside className="forgot-password-send-link-page__collage-image-container">
           <img
             className="forgot-password-send-link-page__collage-image"
             src={signInPageCollageImg}
           ></img>
-        </div>
+        </aside>
       </div>
-    </div>
+    </main>
   );
 };
 

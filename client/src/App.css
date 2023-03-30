@@ -555,6 +555,10 @@ button {
   color: white;
   font-size: 1.2rem;
 }
+.navbar__hamburger-list-container ul li button {
+  color: white;
+  font-size: 1.2rem;
+}
 .navbar__hamburger-list-container ul li a:hover {
   color: lightgray;
 }
@@ -4516,10 +4520,12 @@ button {
   font-size: 2rem;
   color: var(--ctaYellow);
   font-weight: 500;
+  margin: 0.45rem 0 1.5rem 0;
 }
 @media (width < 380px) {
   .forgot-password-send-link-page__heading {
     font-size: 1.45rem;
+    margin: 0.7rem 0 1.2rem 0;
   }
 }
 .forgot-password-send-link-page__form-container button {

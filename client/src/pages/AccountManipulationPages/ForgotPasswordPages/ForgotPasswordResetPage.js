@@ -198,8 +198,10 @@ const ForgotPasswordResetPage = ({
         navColorClass={"black"}
       />
       {!isTokenExpired && (
-        <div className="change-password-page__form-container">
-          <h1>Reset Password</h1>
+        <main className="change-password-page__form-container">
+          <header>
+            <h1>Reset Password</h1>
+          </header>
           <div style={{ width: "100%" }}>
             <form onSubmit={(e) => onSubmit(e)}>
               <div className="change-password-page__input-container">
@@ -252,7 +254,7 @@ const ForgotPasswordResetPage = ({
               </div>
             </form>
           </div>
-        </div>
+        </main>
       )}
       {isTokenExpired && (
         <div
