@@ -257,6 +257,7 @@ const SignInPage = ({
     <main
       className="sign-in-page__container"
       onClick={() => {
+        //when clicking anywhere, make all tooltips dissappear
         resetToolTipOnClick();
       }}
     >

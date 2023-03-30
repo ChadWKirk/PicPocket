@@ -351,9 +351,10 @@ const SignUpPage = ({ domain, setIsJustSignedUp }) => {
   }
 
   return (
-    <div
+    <main
       className="sign-in-page__container"
       onClick={() => {
+        //when clicking anywhere, make all tooltips dissappear and if input is red due to error return it to default
         resetToolTipOnClick();
         setEmailAlreadyExistsText();
         setUsernameAlreadyExistsText();
@@ -365,13 +366,21 @@ const SignUpPage = ({ domain, setIsJustSignedUp }) => {
     >
       {yesOrNoModal}
       <div className="sign-in-page__contents-container">
-        <div className="sign-in-page__form-container">
-          <div style={{ fontSize: "1rem", fontWeight: "300" }}>PicPocket</div>
-          <div
-            style={{ fontSize: "2rem", color: "#f5c000", fontWeight: "500" }}
-          >
-            Join PicPocket
-          </div>
+        <section className="sign-in-page__form-container">
+          <header>
+            <div style={{ fontSize: "1rem", fontWeight: "300" }}>PicPocket</div>
+            <h1
+              style={{
+                fontSize: "2rem",
+                color: "#f5c000",
+                fontWeight: "500",
+                marginTop: "0.6rem",
+              }}
+            >
+              Join PicPocket
+            </h1>
+          </header>
+
           <button
             onClick={() => googleLogin()}
             className="sign-in-page__oauth-button"
@@ -492,15 +501,15 @@ const SignUpPage = ({ domain, setIsJustSignedUp }) => {
               Sign Up
             </button>
           </form>
-        </div>
-        <div className="sign-in-page__collage-image-container">
+        </section>
+        <aside className="sign-in-page__collage-image-container">
           <img
             className="sign-in-page__collage-image"
             src="https://res.cloudinary.com/dtyg4ctfr/image/upload/q_40/dpr_auto/v1679877712/PicPocket-SignIn-Collage2-min_xd12qc.jpg"
           ></img>
-        </div>
+        </aside>
       </div>
-    </div>
+    </main>
   );
 };
 
