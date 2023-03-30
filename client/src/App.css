@@ -230,7 +230,7 @@ button {
   justify-content: center;
   outline: var(--navOutline);
   transition: background-color 0.5s;
-  z-index: 99999999999999999999999999;
+  z-index: 9;
   position: var(--navPosition);
   left: var(--navLeft);
   right: var(--navRight);
@@ -1536,6 +1536,8 @@ button {
 
 .carousel__container {
   max-height: 510px;
+  position: relative;
+  z-index: 1;
 }
 .carousel__black-bg-for-image {
   background-color: #000;
