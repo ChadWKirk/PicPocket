@@ -186,6 +186,7 @@ const ChangePasswordPage = ({
   return (
     <div
       onClick={() => {
+        //when clicking anywhere, make all tooltips dissappear and if input is red due to error return it to default
         setConfirmNewPasswordTooltip();
         setCurrentPasswordTooltip();
         setNewPasswordTooltip();
@@ -197,26 +198,30 @@ const ChangePasswordPage = ({
         setCurrentPasswordInputClass();
       }}
     >
-      <NavbarComponent
-        domain={domain}
-        curUser_real={curUser_real}
-        curUser_hyphenated={curUser_hyphenated}
-        isLoggedIn={isLoggedIn}
-        navPositionClass={"fixed"}
-        navColorClass={"black"}
-      />
-      <div className="site-tree__container">
-        <a
-          className="site-tree__past-link"
-          href={`/Account/${curUser_hyphenated}`}
-        >
-          Account
-        </a>
-        <div>{">"}</div>
-        <div style={{ fontWeight: "500" }}>Change Password</div>
-      </div>
-      <div className="change-password-page__form-container">
-        <h1>Change Password</h1>
+      <header>
+        <NavbarComponent
+          domain={domain}
+          curUser_real={curUser_real}
+          curUser_hyphenated={curUser_hyphenated}
+          isLoggedIn={isLoggedIn}
+          navPositionClass={"fixed"}
+          navColorClass={"black"}
+        />
+        <nav className="site-tree__container">
+          <a
+            className="site-tree__past-link"
+            href={`/Account/${curUser_hyphenated}`}
+          >
+            Account
+          </a>
+          <div>{">"}</div>
+          <div style={{ fontWeight: "500" }}>Change Password</div>
+        </nav>
+      </header>
+      <main className="change-password-page__form-container">
+        <header>
+          <h1>Change Password</h1>
+        </header>
         <div style={{ width: "100%" }}>
           <form onSubmit={(e) => onSubmit(e)}>
             <div className="change-password-page__input-container">
@@ -276,18 +281,18 @@ const ChangePasswordPage = ({
               <div className="change-password-page__buttons-container">
                 <div className="change-password-page__buttons-container-subcontainer">
                   {changePasswordButton}
-                  <button
-                    onClick={() => navigate(`/Account/${curUser_hyphenated}`)}
+                  <a
+                    href={`/Account/${curUser_hyphenated}`}
                     className="change-password-page__cancel-button"
                   >
                     Cancel
-                  </button>
+                  </a>
                 </div>
               </div>
             </div>
           </form>
         </div>
-      </div>
+      </main>
     </div>
   );
 };

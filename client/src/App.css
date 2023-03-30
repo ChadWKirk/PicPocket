@@ -3871,9 +3871,19 @@ button {
 
 .change-password-page__cancel-button {
   /* margin-right: 1rem; */
-  color: rgb(119, 119, 119) !important;
-  background-color: var(--offWhite) !important;
+  color: rgb(119, 119, 119);
+  background-color: var(--offWhite);
   margin-right: 1.05rem;
+  margin-top: 1.4rem;
+  float: right;
+  font-weight: 300;
+  padding: 0.55rem 0.8rem;
+  border-radius: 4px;
+  transition: 0.2s;
+}
+.change-password-page__cancel-button:hover {
+  background-color: #f5f5f5;
+  color: rgb(119, 119, 119);
 }
 
 @media (width < 340px) {
