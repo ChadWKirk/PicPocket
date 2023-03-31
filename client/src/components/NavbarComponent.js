@@ -52,6 +52,33 @@ const NavbarComponent = ({
     }
   }, [curUser_real]);
 
+  //import facebook oauth javascript sdk
+  //make prettier stop trippin sayin fb is undefined
+  /*global FB*/
+  window.fbAsyncInit = function () {
+    FB.init({
+      appId: "790444795516757",
+      xfbml: true,
+      version: "v2.6",
+    });
+
+    FB.getLoginStatus(function (response) {
+      //this.statusChangeCallback(response);
+    });
+  };
+
+  (function (d, s, id) {
+    var js,
+      fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {
+      return;
+    }
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  })(document, "script", "facebook-jssdk");
+
   //check if ham menu is open or closed. sets data-hamOpenOrClosed attribute to use appropriate CSS variable values for navbar
   const [hamDataIsOpen, setHamDataIsOpen] = useState(false);
   let hamOpenOrClosed;
@@ -229,45 +256,14 @@ const NavbarComponent = ({
 
   const { dispatch } = useAuthContext();
   async function signOut() {
-    // await fetch("http://localhost:5000/SignOut", {
-    //   method: "POST",
-    //   headers: { "Content-type": "application/json" },
-    // });
+    window.location.href = "/";
+    // navigate("/");
 
     //log out of facebook
-    // Facebook OAuth
-    //make prettier stop trippin sayin fb is undefined
-    /*global FB*/
-    //import facebook's javascript sdk
-    window.fbAsyncInit = function () {
-      FB.init({
-        appId: "790444795516757",
-        xfbml: true,
-        version: "v2.6",
-      });
-
-      FB.getLoginStatus(function (response) {
-        //this.statusChangeCallback(response);
-      });
-    };
-
-    (function (d, s, id) {
-      var js,
-        fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) {
-        return;
-      }
-      js = d.createElement(s);
-      js.id = id;
-      js.src = "//connect.facebook.net/en_US/sdk.js";
-      fjs.parentNode.insertBefore(js, fjs);
-    })(document, "script", "facebook-jssdk");
     FB.logout(function (response) {
       // Person is now logged out
     });
 
-    window.location.href = "/";
-    navigate("/");
     //remove user from local storage
     localStorage.removeItem("user");
 

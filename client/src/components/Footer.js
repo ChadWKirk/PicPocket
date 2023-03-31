@@ -1,6 +1,25 @@
 import { React, useState, useEffect } from "react";
+import { useAuthContext } from "../context/useAuthContext";
 
 const Footer = ({ curUser_real, curUser_hyphenated, isLoggedIn, domain }) => {
+  const { dispatch } = useAuthContext();
+  //make prettier stop trippin sayin fb is undefined
+  /*global FB*/
+  async function signOut() {
+    window.location.href = "/";
+    // navigate("/");
+
+    //log out of facebook
+    FB.logout(function (response) {
+      // Person is now logged out
+    });
+
+    //remove user from local storage
+    localStorage.removeItem("user");
+
+    //dispatch logout action
+    dispatch({ type: "LOGOUT" });
+  }
   //if on main page, set footer__contents-container to have a padding-top helper class to put space between content and waves
   const [isOnMainPage, setIsOnMainPage] = useState(false);
   useEffect(() => {
@@ -43,6 +62,9 @@ const Footer = ({ curUser_real, curUser_hyphenated, isLoggedIn, domain }) => {
           </li>
           <li>
             <a href={`/Account/${curUser_hyphenated}`}>User Settings</a>
+          </li>
+          <li>
+            <button onClick={signOut}>Sign Out</button>
           </li>
         </ul>
       </div>

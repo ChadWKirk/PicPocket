@@ -34,9 +34,7 @@ const HamburgerList = ({
           <a href={`/Account/${curUser_hyphenated}`}>User Settings</a>
         </li>
         <li>
-          <button onClick={signOut}>
-            Sign Out
-          </button>
+          <button onClick={signOut}>Sign Out</button>
         </li>
       </ul>
     );

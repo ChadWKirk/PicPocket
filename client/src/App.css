@@ -562,6 +562,9 @@ button {
 .navbar__hamburger-list-container ul li a:hover {
   color: lightgray;
 }
+.navbar__hamburger-list-container ul li button:hover {
+  color: lightgray;
+}
 .navbar__hamburger-list-container ul li {
   background-color: black !important;
 }
@@ -2897,6 +2900,16 @@ button {
 }
 
 .footerContainer a:hover {
+  color: rgb(220, 218, 218);
+}
+.footerContainer button {
+  font-size: 1rem;
+  font-weight: 300;
+  color: rgb(194, 193, 193);
+  text-decoration: none;
+}
+
+.footerContainer button:hover {
   color: rgb(220, 218, 218);
 }
 
