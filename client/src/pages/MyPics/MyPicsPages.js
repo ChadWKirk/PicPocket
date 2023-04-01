@@ -785,7 +785,7 @@ const MyPicsPage = ({
             bulkArr.current[0].secure_url.lastIndexOf(".")
           ) +
           ".jpg";
-      }, 1);
+      }, 100);
 
       //now set imgItemArrState[index].isOpen and isChecked to true
       let imgItems = [];
