@@ -168,11 +168,14 @@ button {
 }
 .galleryHeading h2 {
   font-size: 3.125rem;
+  padding: 0 1.5rem;
 }
 .galleryHeading p {
   font-size: 1rem;
-  margin-top: -1.6rem;
+  margin-top: -0.6rem;
   color: rgb(118, 118, 118);
+  word-wrap: break-word;
+  width: 81%;
 }
 
 /* Progress Bar CSS */

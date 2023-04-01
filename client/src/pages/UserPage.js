@@ -122,7 +122,9 @@ const UserPage = ({
             <div className="galleryHeading">
               <img src={pfp} className="profilePicBig" />
               <h2>{username.split("-").join(" ")}</h2>
-              <p>{bio}</p>
+              <p>
+                "<i>{bio}</i>"
+              </p>
             </div>
           </div>
 
