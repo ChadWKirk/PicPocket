@@ -18,15 +18,20 @@ import googleOAuthIcon from "../../images/google-logo-oauth.png";
 import facebookOauthIcon from "../../images/facebook-logo-oauth.png";
 import signInPageCollageImg from "../../images/PicPocket-SignIn-Collage2.png";
 
-const SignUpPage = ({ domain, setIsJustSignedUp }) => {
+const SignUpPage = ({
+  domain,
+  isLoggedIn,
+  curUser_hyphenated,
+  setIsJustSignedUp,
+}) => {
   let navigate = useNavigate();
   const { dispatch } = useAuthContext();
-  //if user is already logged in, redirect to their account page
-  // useEffect(() => {
-  //   if (loggedIn) {
-  //     navigate(`/Account/user`);
-  //   }
-  // }, []);
+  // if user is already logged in, redirect to their account page
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate(`/Account/${curUser_hyphenated}`);
+    }
+  }, []);
 
   //Google OAuth
   const googleLogin = useGoogleLogin({
