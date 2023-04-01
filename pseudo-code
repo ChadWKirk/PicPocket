@@ -95,10 +95,6 @@ set up swiping motion for image modal
 
 maybe make image select modal arrows a little more visible
 
-get heightmore to work on my pics page for ios (avoid using setTimeout and run in a promise or useEffect or something)
-
-redesign mypics editor for mobile
-
 update googleoauth to picpoccket url so it works in build
 
 handle oauth "account already made with that email" error
