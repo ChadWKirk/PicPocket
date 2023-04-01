@@ -246,7 +246,7 @@ function App() {
             }
           ></Route>
           <Route
-            path={`/Account/:username/My-Pics/:sort/:filter`}
+            path={`/Account/:username/My-Pics`}
             element={
               isLoggedIn ? (
                 <MyPicsPage

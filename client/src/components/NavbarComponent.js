@@ -205,11 +205,7 @@ const NavbarComponent = ({
               </a>
             </li>
             <li>
-              <a
-                href={`/Account/${curUser_hyphenated}/My-Pics/most-recent/all-types`}
-              >
-                My Pics
-              </a>
+              <a href={`/Account/${curUser_hyphenated}/My-Pics`}>My Pics</a>
             </li>
             <li>
               <a href={`/Account/${curUser_hyphenated}`}>User Settings</a>

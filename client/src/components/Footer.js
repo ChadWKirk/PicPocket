@@ -51,11 +51,7 @@ const Footer = ({ curUser_real, curUser_hyphenated, isLoggedIn, domain }) => {
             </a>
           </li>
           <li>
-            <a
-              href={`/Account/${curUser_hyphenated}/My-Pics/Most-Recent/All-Types`}
-            >
-              My Pics
-            </a>
+            <a href={`/Account/${curUser_hyphenated}/My-Pics`}>My Pics</a>
           </li>
           <li>
             <a href={`/${curUser_hyphenated}/Upload`}>Upload</a>

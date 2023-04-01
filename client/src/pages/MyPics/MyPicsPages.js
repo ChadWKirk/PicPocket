@@ -1204,7 +1204,7 @@ const MyPicsPage = ({
                 <Dropdown.Item
                   className="mypics-image-gallery__dropdown-item"
                   onClick={() => {
-                    setSort("aToz");
+                    setSort("atoz");
                     setSortTitle("A - Z");
                   }}
                 >
@@ -1213,7 +1213,7 @@ const MyPicsPage = ({
                 <Dropdown.Item
                   className="mypics-image-gallery__dropdown-item"
                   onClick={() => {
-                    setSort("zToa");
+                    setSort("ztoa");
                     setSortTitle("Z - A");
                   }}
                 >
@@ -1222,7 +1222,7 @@ const MyPicsPage = ({
                 <Dropdown.Item
                   className="mypics-image-gallery__dropdown-item"
                   onClick={() => {
-                    setSort("leastLikes");
+                    setSort("leastlikes");
                     setSortTitle("Least Popular");
                   }}
                 >
@@ -1231,7 +1231,7 @@ const MyPicsPage = ({
                 <Dropdown.Item
                   className="mypics-image-gallery__dropdown-item"
                   onClick={() => {
-                    setSort("mostLikes");
+                    setSort("mostlikes");
                     setSortTitle("Popular");
                   }}
                 >
@@ -1255,7 +1255,7 @@ const MyPicsPage = ({
                 <Dropdown.Item
                   className="mypics-image-gallery__dropdown-item"
                   onClick={() => {
-                    setFilter("Photo");
+                    setFilter("photo");
                     setFilterTitle("Photo");
                   }}
                 >
@@ -1264,7 +1264,7 @@ const MyPicsPage = ({
                 <Dropdown.Item
                   className="mypics-image-gallery__dropdown-item"
                   onClick={() => {
-                    setFilter("Illustration");
+                    setFilter("illustration");
                     setFilterTitle("Illustration");
                   }}
                 >
