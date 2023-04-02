@@ -320,11 +320,7 @@ const UploadForm = ({
             <button className={browseButtonAllDoneClass}>Browse</button>
           </div>
           All done?
-          <a
-            href={`/Account/${curUser_hyphenated}/My-Pics/most-recent/all-types`}
-          >
-            Edit Images
-          </a>
+          <a href={`/Account/${curUser_hyphenated}/My-Pics`}>Edit Images</a>
         </div>
       )}
     </div>
