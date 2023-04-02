@@ -35,17 +35,12 @@ const ChangePasswordPage = ({
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
 
-  //input type
+  // type for password input to toggle between text and password for eye ball functionality to view password in password field
   const [isCurrentPasswordVisible, setIsCurrentPasswordVisible] =
     useState(false);
   const [isNewPasswordVisible, setIsNewPasswordVisible] = useState(false);
   const [isConfirmNewPasswordVisible, setIsConfirmNewPasswordVisible] =
     useState(false);
-  const [currentPasswordInputType, setCurrentPasswordInputType] =
-    useState("password");
-  const [newPasswordInputType, setNewPasswordInputType] = useState("password");
-  const [confirmNewPasswordInputType, setConfirmNewPasswordInputType] =
-    useState("password");
 
   //tooltips
   const [currentPasswordTooltip, setCurrentPasswordTooltip] = useState();
