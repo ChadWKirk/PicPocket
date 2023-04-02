@@ -1414,9 +1414,16 @@ button {
 }
 
 @media (width < 650px) {
-  .green-banner__container,
+  .green-banner__container {
+    position: absolute;
+    top: 70px;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    height: auto;
+    width: 100%;
+  }
   .green-banner__contents-container {
-    height: 30px;
+    padding-right: 2rem;
   }
   .green-banner__exclamation-icon {
     font-size: 0.85rem;
@@ -1433,7 +1440,7 @@ button {
   min-height: 40px;
   padding: 0.5rem 0.5rem 0.5rem 0px;
   background-color: #b20000;
-  z-index: 100;
+  z-index: 5;
   position: absolute;
   top: 80px;
 }
@@ -1441,6 +1448,7 @@ button {
   max-width: var(--siteContentsMidWidth);
   min-height: 40px;
   padding-left: var(--sideSpacePadding);
+  padding-right: 2rem;
   display: flex;
   justify-content: flex-start;
   align-items: center;

@@ -56,19 +56,23 @@ const UploadPage = ({
   useEffect(() => {
     if (verifiedValue === false) {
       setBanner(
-        <RedBanner
-          Message={
-            "Please confirm your email before uploading. To resend the verification link, go to User Settings and click Resend Verification Link."
-          }
-        />
+        <div style={{ height: "55px" }}>
+          <RedBanner
+            Message={
+              "Please confirm your email before uploading. To resend the verification link, go to User Settings and click Resend Verification Link."
+            }
+          />
+        </div>
       );
     } else if (verifiedValue === true && isJustVerified === true) {
       setBanner(
-        <GreenBanner
-          Message={
-            "Your email has been successfully verified! You can now upload Pics!"
-          }
-        />
+        <div style={{ height: "25px" }}>
+          <GreenBanner
+            Message={
+              "Your email has been successfully verified! You can now upload Pics!"
+            }
+          />
+        </div>
       );
     } else if (verifiedValue === true) {
       setBanner();
