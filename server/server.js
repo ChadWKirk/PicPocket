@@ -479,7 +479,7 @@ app.post("/send-forgot-password-link", (req, res) => {
             name: user.username,
             linkName: user.username.split(" ").join("-"),
             token: resetPWToken,
-            link: `http://localhost:3000/${user.username}/reset-password/${resetPWToken}`,
+            link: `http://picpoccket.com/${user.username}/reset-password/${resetPWToken}`,
           },
         };
 
@@ -701,7 +701,7 @@ app.post("/change-email", (req, res) => {
                               text: `Hi! There, You have recently visited
                   our website and entered your email.
                   Please follow the given link to verify your email
-                  localhost:3000/${req.body.username}/verify/${user.verifyToken}
+                  https://picpoccket.com/${req.body.username}/verify/${user.verifyToken}
                   Thanks`,
                             };
 

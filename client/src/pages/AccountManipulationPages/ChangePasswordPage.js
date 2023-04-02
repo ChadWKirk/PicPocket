@@ -36,6 +36,11 @@ const ChangePasswordPage = ({
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
 
   //input type
+  const [isCurrentPasswordVisible, setIsCurrentPasswordVisible] =
+    useState(false);
+  const [isNewPasswordVisible, setIsNewPasswordVisible] = useState(false);
+  const [isConfirmNewPasswordVisible, setIsConfirmNewPasswordVisible] =
+    useState(false);
   const [currentPasswordInputType, setCurrentPasswordInputType] =
     useState("password");
   const [newPasswordInputType, setNewPasswordInputType] = useState("password");
@@ -101,7 +106,7 @@ const ChangePasswordPage = ({
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify({
-          username: username,
+          username: curUser_real,
           currentPassword: currentPassword,
           newPassword: newPassword,
           confirmNewPassword: confirmNewPassword,
@@ -231,15 +236,20 @@ const ChangePasswordPage = ({
               <input
                 id="currentPassInput"
                 className={currentPasswordInputClass}
-                type={currentPasswordInputType}
+                type={isCurrentPasswordVisible ? "text" : "password"}
                 onChange={(e) => setCurrentPassword(e.target.value)}
               ></input>
-              <FontAwesomeIcon
-                icon={faEye}
-                className={"change-password-page__eye-icon"}
-                onMouseDown={() => setCurrentPasswordInputType("text")}
-                onMouseUp={() => setCurrentPasswordInputType("password")}
-              />
+              <div
+                className="change-password-page__eye-icon-container"
+                onClick={() =>
+                  setIsCurrentPasswordVisible(!isCurrentPasswordVisible)
+                }
+              >
+                <FontAwesomeIcon
+                  icon={faEye}
+                  className={"change-password-page__eye-icon"}
+                />
+              </div>
               {currentPasswordTooltip}
             </div>
             <div className="change-password-page__input-container">
@@ -249,15 +259,18 @@ const ChangePasswordPage = ({
               <input
                 id="newPassInput"
                 className={newPasswordInputClass}
-                type={newPasswordInputType}
+                type={isNewPasswordVisible ? "text" : "password"}
                 onChange={(e) => setNewPassword(e.target.value)}
               ></input>
-              <FontAwesomeIcon
-                icon={faEye}
-                className={"change-password-page__eye-icon"}
-                onMouseDown={() => setNewPasswordInputType("text")}
-                onMouseUp={() => setNewPasswordInputType("password")}
-              />
+              <div
+                className="change-password-page__eye-icon-container"
+                onClick={() => setIsNewPasswordVisible(!isNewPasswordVisible)}
+              >
+                <FontAwesomeIcon
+                  icon={faEye}
+                  className={"change-password-page__eye-icon"}
+                />
+              </div>
               {newPasswordTooltip}
             </div>
             <div className="change-password-page__input-container">
@@ -267,15 +280,21 @@ const ChangePasswordPage = ({
               <input
                 id="confirmNewPassInput"
                 className={confirmNewPasswordInputClass}
-                type={confirmNewPasswordInputType}
+                type={isConfirmNewPasswordVisible ? "text" : "password"}
                 onChange={(e) => setConfirmNewPassword(e.target.value)}
               ></input>
-              <FontAwesomeIcon
-                icon={faEye}
-                className={"change-password-page__eye-icon-last"}
-                onMouseDown={() => setConfirmNewPasswordInputType("text")}
-                onMouseUp={() => setConfirmNewPasswordInputType("password")}
-              />
+              <div
+                className="change-password-page__eye-icon-last-container"
+                onClick={() =>
+                  setIsConfirmNewPasswordVisible(!isConfirmNewPasswordVisible)
+                }
+              >
+                <FontAwesomeIcon
+                  icon={faEye}
+                  className={"change-password-page__eye-icon-last"}
+                />
+              </div>
+
               {confirmNewPasswordTooltip}
 
               <div className="change-password-page__buttons-container">

@@ -3813,7 +3813,7 @@ button {
   border-radius: 4px;
   padding: 0rem 0.5rem;
   position: relative;
-  padding-right: 2.5rem;
+  padding-right: 3.75rem;
 }
 
 .change-password-page__input-container input:focus {
@@ -3833,22 +3833,37 @@ button {
 .change-password-page__input-container textarea:focus {
   border: 2px solid black;
 }
-
-.change-password-page__eye-icon {
+.change-password-page__eye-icon-container {
+  /* background-color: rgba(0, 0, 0, 0.3); */
+  height: 50px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
-  right: 1rem;
+  right: 0rem;
   /* top: 47px; */
-  bottom: 19px;
+  bottom: 0px;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+.change-password-page__eye-icon {
+}
+.change-password-page__eye-icon-last-container {
+  /* background-color: rgba(0, 0, 0, 0.3); */
+  height: 50px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 0rem;
+  /* top: 47px; */
+  bottom: 85px;
   font-size: 0.8rem;
   cursor: pointer;
 }
 .change-password-page__eye-icon-last {
-  position: absolute;
-  right: 1rem;
-  /* top: 47px; */
-  bottom: 105px;
-  font-size: 0.8rem;
-  cursor: pointer;
 }
 
 .change-password-page__input-container textarea {
@@ -3915,20 +3930,25 @@ button {
   color: rgb(119, 119, 119);
 }
 
-@media (width < 340px) {
+@media (width < 380px) {
   .change-password-page__buttons-container-subcontainer {
     flex-direction: column;
-    gap: 0;
+    gap: 1rem;
     margin-left: auto;
     margin-right: auto;
     display: flex;
+    width: 100%;
+  }
+  .change-password-page__buttons-container-subcontainer button {
+    width: 100%;
   }
   .change-password-page__cancel-button {
     width: 100%;
     margin: 0;
+    text-align: center;
   }
-  .change-password-page__eye-icon-last {
-    bottom: 169px;
+  .change-password-page__eye-icon-last-container {
+    bottom: 143px;
   }
 }
 
