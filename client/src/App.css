@@ -521,7 +521,7 @@ button {
 }
 .navbar__hamburger-icon-x {
   font-size: 1.5rem;
-  color: #f1f1f1;
+  color: #f7f7f7;
   padding-left: 3px;
 }
 .navbar__hamburger-icon-x:focus {
@@ -534,9 +534,9 @@ button {
   overflow-y: auto;
   width: 100vw;
   height: calc(100vh - 80px);
-  background-color: black;
+  background-color: #000;
   color: white;
-  border-top: 1px solid rgb(61, 61, 61);
+  border-top: 2px solid #212121;
   position: fixed;
   top: 80px;
   left: 0;
@@ -555,24 +555,26 @@ button {
   /* padding-right: 0.4rem !important; */
 }
 .navbar__hamburger-list-container ul li a {
-  color: white;
+  color: #f7f7f7;
   font-size: 1.2rem;
+  font-weight: 500;
 }
 .navbar__hamburger-list-container ul li button {
-  color: white;
+  color: #f7f7f7;
   font-size: 1.2rem;
+  font-weight: 500;
 }
 .navbar__hamburger-list-container ul li a:hover {
-  color: lightgray;
+  color: var(--dark4);
 }
 .navbar__hamburger-list-container ul li button:hover {
-  color: lightgray;
+  color: var(--dark4);
 }
 .navbar__hamburger-list-container ul li {
   background-color: black !important;
 }
 .navbar__hamburger-list-grey-divider {
-  border-top: 1px solid rgb(61, 61, 61);
+  border-top: 2px solid #212121;
   margin: 30px 0 16px 0px;
   width: 90%;
 }
