@@ -4236,6 +4236,7 @@ button {
   height: 50%;
 }
 .sign-in-page__oauth-button {
+  color: #000;
 }
 .sign-in-page__oauth-button:hover {
   outline: 2px solid rgba(128, 128, 128, 0.222);
@@ -4289,26 +4290,44 @@ button {
   height: 45px;
   border: 2px solid rgb(228, 228, 228);
   border-radius: 4px;
-  padding: 0rem 0.75rem;
+  padding: 0rem 3.75rem 0rem 0.75rem;
 }
 .sign-in-page__input-block input:focus {
   border: 2px solid black;
 }
-.sign-in-page__eye-icon {
+.sign-in-page__eye-icon-container {
+  /* background-color: rgba(3, 3, 3, 0.3); */
+  height: 45px;
+  width: 40px;
   position: absolute;
-  right: 1rem;
+  right: 0rem;
   /* top: 47px; */
-  top: 44px;
+  top: 26px;
   font-size: 0.8rem;
   cursor: pointer;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sign-in-page__eye-icon {
+}
+.sign-up-page__eye-icon-container {
+  /* background-color: rgba(0, 0, 0, 0.3); */
+  height: 45px;
+  width: 40px;
+  position: absolute;
+  right: 0rem;
+  /* top: 47px; */
+  bottom: 0px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .sign-up-page__eye-icon {
-  position: absolute;
-  right: 1rem;
-  /* top: 47px; */
-  bottom: 15.75px;
-  font-size: 0.8rem;
-  cursor: pointer;
 }
 .sign-in-page__input-block-username-input-red {
   border: 2px solid rgb(151, 0, 0) !important;

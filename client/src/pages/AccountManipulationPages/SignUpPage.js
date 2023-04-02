@@ -170,8 +170,7 @@ const SignUpPage = ({
   const [passwordInputClass, setPasswordInputClass] = useState();
 
   // type for password input to toggle between text and password for eye ball functionality to view password in password field
-  const [currentPasswordInputType, setCurrentPasswordInputType] =
-    useState("password");
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   //don't accept special characters for username
   const [isSpecialCharacter, setIsSpecialCharacter] = useState(false);
@@ -479,16 +478,20 @@ const SignUpPage = ({
 
               <input
                 id="password"
-                type={currentPasswordInputType}
+                type={isPasswordVisible ? "text" : "password"}
                 onChange={(event) => setPassword(event.target.value)}
                 className={passwordInputClass}
               ></input>
-              <FontAwesomeIcon
-                icon={faEye}
-                className={"sign-up-page__eye-icon"}
-                onMouseDown={() => setCurrentPasswordInputType("text")}
-                onMouseUp={() => setCurrentPasswordInputType("password")}
-              />
+              <div
+                className="sign-up-page__eye-icon-container"
+                onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+              >
+                <FontAwesomeIcon
+                  icon={faEye}
+                  className={"sign-up-page__eye-icon"}
+                />
+              </div>
+
               {passwordTooltip}
             </div>
             <div

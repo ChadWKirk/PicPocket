@@ -168,8 +168,7 @@ const SignInPage = ({
   const [passwordTooltip, setPasswordTooltip] = useState();
 
   // type for password input to toggle between text and password for eye ball functionality to view password in password field
-  const [currentPasswordInputType, setCurrentPasswordInputType] =
-    useState("password");
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   //if any tool tip is open, clicking anywhere makes it disappear
   function resetToolTipOnClick() {
@@ -319,15 +318,19 @@ const SignInPage = ({
               <label htmlFor="password">Password: </label>
               <input
                 id="password"
-                type={currentPasswordInputType}
+                type={isPasswordVisible ? "text" : "password"}
                 onChange={(event) => setPassword(event.target.value)}
               ></input>
-              <FontAwesomeIcon
-                icon={faEye}
-                className={"sign-in-page__eye-icon"}
-                onMouseDown={() => setCurrentPasswordInputType("text")}
-                onMouseUp={() => setCurrentPasswordInputType("password")}
-              />
+              <div
+                className="sign-in-page__eye-icon-container"
+                onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+              >
+                <FontAwesomeIcon
+                  icon={faEye}
+                  className={"sign-in-page__eye-icon"}
+                />
+              </div>
+
               {passwordTooltip}
               <div
                 className="sign-in-page__dont-have-account-container"
