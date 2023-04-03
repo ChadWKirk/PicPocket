@@ -91,6 +91,14 @@ const ForgotPasswordSendLinkPage = ({
                   Email does not belong to any account.
                 </div>
               );
+              setResetPasswordButton(
+                <button
+                  type="submit"
+                  className="forgot-password-send-link-page__sign-in-button"
+                >
+                  Reset Password
+                </button>
+              );
             } else if (parsedJSON === "Email is not valid") {
               console.log(parsedJSON);
               setEmailInputClass("red-input-border");
@@ -98,6 +106,14 @@ const ForgotPasswordSendLinkPage = ({
                 <div className="sign-in-page__already-exists-message">
                   Email is not a valid address.
                 </div>
+              );
+              setResetPasswordButton(
+                <button
+                  type="submit"
+                  className="forgot-password-send-link-page__sign-in-button"
+                >
+                  Reset Password
+                </button>
               );
             }
           })
