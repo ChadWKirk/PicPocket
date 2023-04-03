@@ -411,91 +411,95 @@ app.post("/send-forgot-password-link", (req, res) => {
   }
 
   //check if req.body.email belongs to any existing account
+  //use regex option i to search for any email that matches, case insensitive
   let db_connect = dbo.getDb();
 
   db_connect
     .collection("picpocket-users")
-    .findOne({ email: req.body.email }, async function (err, user) {
-      if (err) {
-        console.log(err);
-        res.json("error");
-      } else if (user) {
-        //create token that expires in 60 minutes
-        let resetPWToken = crypto.randomBytes(32).toString("hex");
+    .findOne(
+      { email: { $regex: req.body.email, $options: "i" } },
+      async function (err, user) {
+        if (err) {
+          console.log(err);
+          res.json("error");
+        } else if (user) {
+          //create token that expires in 60 minutes
+          let resetPWToken = crypto.randomBytes(32).toString("hex");
 
-        //create hash of token to store in DB
-        const salt = await bcrypt.genSalt(10);
-        const hash = {
-          token: await bcrypt.hash(resetPWToken, salt),
-          createdAt: {
-            type: Date,
-            default: new Date(),
-            expires: new Date().setMinutes(new Date().getMinutes() + 60),
-          },
-        };
-        //add token to forgotPWToken field in user
-        db_connect
-          .collection("picpocket-users")
-          .updateOne(
-            { email: req.body.email },
-            { $set: { forgotPWToken: hash } }
-          );
-        //send email to req.body.email containing link that contains token
-        const transporter = nodemailer.createTransport({
-          host: "smtp.zoho.com",
-          port: 465,
-          secure: true,
-          auth: {
-            user: process.env.EMAIL_SENDER_USER,
-            pass: process.env.EMAIL_SENDER_PASS,
-          },
-        });
+          //create hash of token to store in DB
+          const salt = await bcrypt.genSalt(10);
+          const hash = {
+            token: await bcrypt.hash(resetPWToken, salt),
+            createdAt: {
+              type: Date,
+              default: new Date(),
+              expires: new Date().setMinutes(new Date().getMinutes() + 60),
+            },
+          };
+          //add token to forgotPWToken field in user
+          db_connect
+            .collection("picpocket-users")
+            .updateOne(
+              { email: req.body.email },
+              { $set: { forgotPWToken: hash } }
+            );
+          //send email to req.body.email containing link that contains token
+          const transporter = nodemailer.createTransport({
+            host: "smtp.zoho.com",
+            port: 465,
+            secure: true,
+            auth: {
+              user: process.env.EMAIL_SENDER_USER,
+              pass: process.env.EMAIL_SENDER_PASS,
+            },
+          });
 
-        //point to template folder
-        const handlebarsOptions = {
-          viewEngine: {
-            partialsDir: path.resolve("./views/"),
-            defaultLayout: false,
-          },
-          viewPath: path.resolve("./views/"),
-        };
+          //point to template folder
+          const handlebarsOptions = {
+            viewEngine: {
+              partialsDir: path.resolve("./views/"),
+              defaultLayout: false,
+            },
+            viewPath: path.resolve("./views/"),
+          };
 
-        //use template file
-        transporter.use("compile", hbs(handlebarsOptions));
+          //use template file
+          transporter.use("compile", hbs(handlebarsOptions));
 
-        const mailConfigurations = {
-          // It should be a string of sender/server email
-          from: "administrator@picpoccket.com",
+          const mailConfigurations = {
+            // It should be a string of sender/server email
+            from: "administrator@picpoccket.com",
 
-          to: req.body.email,
+            to: req.body.email,
 
-          // Subject of Email
-          subject: "PicPocket Password Reset Link",
+            // Subject of Email
+            subject: "PicPocket Password Reset Link",
 
-          template: "passwordReset", //name of template file in views folder - email.handlebars
+            template: "passwordReset", //name of template file in views folder - email.handlebars
 
-          context: {
-            //variables to use in email.handlebars
-            name: user.username,
-            linkName: user.username.split(" ").join("-"),
-            token: resetPWToken,
-            link: `http://picpoccket.com/${user.username}/reset-password/${resetPWToken}`,
-          },
-        };
+            context: {
+              //variables to use in email.handlebars
+              name: user.username,
+              linkName: user.username.split(" ").join("-"),
+              token: resetPWToken,
+              link: `http://picpoccket.com/${user.username}/reset-password/${resetPWToken}`,
+            },
+          };
 
-        transporter.sendMail(mailConfigurations, function (error, info) {
-          if (error) {
-            throw Error(error);
-          } else {
-            console.log("Email Sent Successfully");
-            console.log(info);
-            res.json("forgot password link sent");
-          }
-        });
-      } else {
-        res.json("email does not belong to any account");
+          transporter.sendMail(mailConfigurations, function (error, info) {
+            if (error) {
+              throw Error(error);
+            } else {
+              console.log("Email Sent Successfully");
+              console.log(info);
+              res.json("forgot password link sent");
+            }
+          });
+        } else {
+          res.json("email does not belong to any account");
+        }
       }
-    });
+    );
 });
 
 //Check if forgot password token is expired when going to reset password page
@@ -928,7 +932,7 @@ app.post("/SignIn", async (req, res) => {
   db_connect.collection("picpocket-users").findOne(
     //see if user exists via name and password
     {
-      username: req.body.username,
+      username: { $regex: req.body.username, $options: "i" },
     },
     async function (err, user) {
       if (err) {
@@ -950,7 +954,7 @@ app.post("/SignIn", async (req, res) => {
           res.json("no user exists");
         } else if (passwordMatch) {
           console.log("success");
-          const name = req.body.username;
+          const name = user.username;
           const token = createToken(user.insertedId);
           res.status(200).json({ name, token });
         }
