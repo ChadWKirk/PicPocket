@@ -53,6 +53,8 @@ function App() {
   //used to show image select modal or not
   const [isShowingImageSelectModal, setIsShowingImageSelectModal] =
     useState(false);
+  //each render makes body overflow auto. this is overridden when modal shows up but once modal is exited it is back to auto
+  document.body.style.overflow = "auto";
   //store image being clicked on to show modal here so it loads instantly when modal first comes up
   const [imgToLoadInFirstModal, setImgToLoadInFirstModal] = useState();
 
