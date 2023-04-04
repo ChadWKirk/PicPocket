@@ -67,9 +67,23 @@ use all lowercase sort/filter values for example "atoz" instead of "aToz" to be 
 
 get cloudinary name and preset from back end instead of storing in env in front end (unsafe) - upload using multer to handle formData in express - https://cloudinary.com/documentation/upload_images https://medium.com/the-andela-way/how-to-upload-multiple-images-using-cloudinary-and-node-js-2f053b167b80 https://youtu.be/wIOpe8S2Mk8
 
-Keep track of previous page (main page, most popular, likes page, etc. Not previous image page. So previous page before isShowingModal is true) and scroll position to send to image modal so when you click out of the modal it navigates to previous page while maintaining the scroll position
+Image Select Modal:
 
-Keep track of scroll position to send to image modal so when you click out of the modal it navigates to previous page while maintaining the scroll position
+When an image in the image gallery component is clicked:
+
+- store page that image gallery is in (home page, search results page, etc.)
+- set isShowingModal to true
+- navigate to image view page of that image
+- fetch image and user information to show in the modal from image view page
+- a modal appears showing the image and it's details along with like and download buttons and a left and right arrow buttons to either go to the next image or the previous image in the gallery.
+
+When clicking the black background of the page or the X button, it uses navigate() to navigate back to the page where the image gallery resided when the modal first appeared.
+
+//old To get the number of pages to navigate back to get to that page, a state starts at -1 and decreases by 1 each time an arrow button is clicked. For example, if a user clicks an image in an image gallery to open the modal and then clicks the forward arrow 1 time and then the back arrow 1 time, clicking out of the modal will navigate(-3) to go back 3 pages and returning to where the image gallery is.
+
+It also keeps a state of scroll position before image is clicked, so when user exits the modal they get automatically scrolled to the position they were at before they opened the modal so they don't lose their place in the image gallery.
+
+When clicking the back or forward buttons for the browser, the Image View Page rerenders when the URL changes, causing a refetch of the imginfo and userInfo.
 
 Facebook OAuth - https://morioh.com/p/e37dfcf12462 - https://developers.facebook.com/docs/facebook-login/web - https://developers.facebook.com/docs/javascript/reference/FB.api/ - https://stackoverflow.com/questions/32436662/email-scope-is-not-working-which-is-used-in-fb-login
 

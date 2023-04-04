@@ -22,8 +22,8 @@ const ImageViewPage = ({
   isShowingImageSelectModal,
   setIsShowingImageSelectModal,
   imgTitleArrState,
-  // prevPageForModal,
-  // setPrevPageForModal,
+  prevPageForModal,
+  setPrevPageForModal,
   imgGalleryScrollPosition,
   setImgGalleryScrollPosition,
   imgToLoadInFirstModal,
@@ -33,6 +33,13 @@ const ImageViewPage = ({
   let searchQuery;
   let imageURL;
   const [imageFetchID, setImageFetchID] = useState();
+
+  //get first url and when url changes (from back button or arrows) change url state which runs imgInfo useEffect
+  const [url, setUrl] = useState(window.location.href);
+  useEffect(() => {
+    setUrl(window.location.href);
+    console.log(url, " url");
+  });
 
   //img info
   const { imgPublic_Id } = useParams();
@@ -92,7 +99,7 @@ const ImageViewPage = ({
       );
     }
     fetchImgInfo();
-  }, [isLiked, isPrevOrNextClicked]);
+  }, [isLiked, isPrevOrNextClicked, url]);
 
   //fetch user info for pfp and author name
   useEffect(() => {
@@ -596,8 +603,8 @@ const ImageViewPage = ({
           userInfo={userInfo}
           isPrevOrNextClicked={isPrevOrNextClicked}
           setIsPrevOrNextClicked={setIsPrevOrNextClicked}
-          // prevPageForModal={prevPageForModal}
-          // setPrevPageForModal={setPrevPageForModal}
+          prevPageForModal={prevPageForModal}
+          setPrevPageForModal={setPrevPageForModal}
           imgGalleryScrollPosition={imgGalleryScrollPosition}
           setImgGalleryScrollPosition={setImgGalleryScrollPosition}
           imgToLoadInFirstModal={imgToLoadInFirstModal}

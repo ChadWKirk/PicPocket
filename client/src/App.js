@@ -66,15 +66,15 @@ function App() {
   // and so user is right back where they left off when they were looking at the image gallery
   const [imgGalleryScrollPosition, setImgGalleryScrollPosition] = useState();
 
-  // //page to go to when clicking out of image select modal
-  // let URL = window.location.href;
-  // //get position of third slash. The reason you want third slash is because you don't want the slashes in "http://", you want the first slash after that to indicate the actual path beginning
-  // //indexOf accepts ("x", [fromIndex]), so you want to find secondSlash by searching from the firstSlash position onward. Etc.
-  // let firstSlashPosition = URL.indexOf("/");
-  // let secondSlashPosition = URL.indexOf("/", firstSlashPosition + 1);
-  // let thirdSlashPosition = URL.indexOf("/", secondSlashPosition + 1);
-  // let prevPageResult = URL.slice(thirdSlashPosition);
-  // const [prevPageForModal, setPrevPageForModal] = useState(prevPageResult);
+  //page to go to when clicking out of image select modal
+  let URL = window.location.href;
+  //get position of third slash. The reason you want third slash is because you don't want the slashes in "http://", you want the first slash after that to indicate the actual path beginning
+  //indexOf accepts ("x", [fromIndex]), so you want to find secondSlash by searching from the firstSlash position onward. Etc.
+  let firstSlashPosition = URL.indexOf("/");
+  let secondSlashPosition = URL.indexOf("/", firstSlashPosition + 1);
+  let thirdSlashPosition = URL.indexOf("/", secondSlashPosition + 1);
+  let prevPageResult = URL.slice(thirdSlashPosition);
+  const [prevPageForModal, setPrevPageForModal] = useState(prevPageResult);
 
   //used to give array of img titles to imageview page to use for imageSelectModal
   //to fetch img src and to go to previous or next image
@@ -203,8 +203,8 @@ function App() {
                 setIsShowingImageSelectModal={setIsShowingImageSelectModal}
                 imgTitleArrState={imgTitleArrState}
                 setImgTitleArrState={setImgTitleArrState}
-                // prevPageForModal={prevPageForModal}
-                // setPrevPageForModal={setPrevPageForModal}
+                prevPageForModal={prevPageForModal}
+                setPrevPageForModal={setPrevPageForModal}
                 imgGalleryScrollPosition={imgGalleryScrollPosition}
                 setImgGalleryScrollPosition={setImgGalleryScrollPosition}
                 imgToLoadInFirstModal={imgToLoadInFirstModal}

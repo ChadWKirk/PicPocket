@@ -21,8 +21,8 @@ const Modal__ImageSelect = ({
   userInfo,
   setIsPrevOrNextClicked,
   isPrevOrNextClicked,
-  // prevPageForModal,
-  // setPrevPageForModal,
+  prevPageForModal,
+  setPrevPageForModal,
   imgGalleryScrollPosition,
   setImgGalleryScrollPosition,
   imgToLoadInFirstModal,
@@ -30,7 +30,7 @@ const Modal__ImageSelect = ({
   //when modal is open, set body overflow to hidden. for some reason classlist.add wasn't working it was glitching on and off
   document.body.style.overflow = "hidden";
 
-  // console.log(prevPageForModal);
+  console.log(prevPageForModal);
 
   //amount of pages to jump back when clicking out of modal to get back to previous page before going into modal
   const [amountOfPagesToJumpBack, setAmountOfPagesToJumpBack] = useState(-1);
@@ -408,7 +408,8 @@ const Modal__ImageSelect = ({
         className="image-select-modal__background"
         onClick={() => {
           //navigate to previous page
-          navigate(amountOfPagesToJumpBack);
+          // navigate(amountOfPagesToJumpBack);
+          navigate(prevPageForModal);
           //set body overflow back to auto when closing modal
           //delayed to make sure it changes the next page's document.body instead of the modal's document.body
           setTimeout(() => {
@@ -423,7 +424,8 @@ const Modal__ImageSelect = ({
           className="image-select-modal__x-icon"
           onClick={() => {
             //navigate to previous page
-            navigate(amountOfPagesToJumpBack);
+            // navigate(amountOfPagesToJumpBack);
+            navigate(prevPageForModal);
             //set body overflow back to auto when closing modal
             //delayed to make sure it changes the next page's document.body instead of the modal's document.body
             setTimeout(() => {
