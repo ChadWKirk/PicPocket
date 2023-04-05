@@ -2639,6 +2639,36 @@ button {
   border: 1px solid lightgrey;
   border-radius: 2px;
 }
+.my-pics-editor__del-yes-or-no {
+  position: absolute;
+  background-color: #b20000;
+  font-size: 1.25rem;
+  color: rgb(255, 255, 255);
+  display: flex;
+  text-align: center;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+  max-width: 250px;
+  top: 18px;
+  left: 0px;
+  box-shadow: 3px 3px 5px 0px rgb(196, 188, 188);
+  padding: 0.5rem 1rem;
+}
+.my-pics-editor__del-yes-or-no-heading {
+}
+.my-pics-editor__del-yes-or-no-btns-container {
+  display: flex;
+}
+.my-pics-editor__del-yes-or-no-btns-container button {
+  font-size: 1.25rem;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+}
+.my-pics-editor__del-yes-or-no-btns-container button:hover {
+  background-color: #dddddd;
+}
 .my-pics-editor__editor-form-container-mobile-open {
   /* min-height: 300px; */
   /* background-color: cadetblue; */

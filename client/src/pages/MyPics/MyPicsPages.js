@@ -1410,6 +1410,19 @@ const MyPicsPage = ({
                           <FontAwesomeIcon icon={faDownload} />
                         </a>
                       )}
+                      <div className="my-pics-editor__del-yes-or-no">
+                        <div className="my-pics-editor__del-yes-or-no-heading">
+                          Delete?
+                        </div>
+                        <div className="my-pics-editor__del-yes-or-no-btns-container">
+                          <button style={{ borderRight: "1.5px solid #fff" }}>
+                            No
+                          </button>
+                          <button style={{ borderLeft: "1.5px solid #fff" }}>
+                            Yes
+                          </button>
+                        </div>
+                      </div>
                       <button
                         type="button"
                         onClick={(e) => deleteImageFromBackEnd(e)}
