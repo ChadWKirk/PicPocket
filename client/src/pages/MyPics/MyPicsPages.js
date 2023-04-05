@@ -177,6 +177,37 @@ const MyPicsPage = ({
     </button>
   );
 
+  //modal for delete yes or no
+  const [delYesOrNoModal, setDelYesOrNoModal] = useState();
+
+  //function that shows delete yes or no modal
+  function showDelYesOrNoModal(e) {
+    setDelYesOrNoModal(
+      <div className="my-pics-editor__del-yes-or-no">
+        <div className="my-pics-editor__del-yes-or-no-heading">Delete?</div>
+        <div className="my-pics-editor__del-yes-or-no-btns-container">
+          <button
+            type="button"
+            style={{ borderRight: "1.5px solid #fff" }}
+            onClick={() => setDelYesOrNoModal()}
+          >
+            No
+          </button>
+          <button
+            type="button"
+            style={{ borderLeft: "1.5px solid #fff" }}
+            onClick={() => {
+              deleteImageFromBackEnd(e);
+              setDelYesOrNoModal();
+            }}
+          >
+            Yes
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   // progress bar state. gets set to progressbar component when submitform starts
   const [progressBar, setProgressBar] = useState();
 
@@ -946,6 +977,7 @@ const MyPicsPage = ({
   //single delete button in editor form function
   async function deleteImageFromBackEnd() {
     let publicIdArr = [];
+
     for (let p = 0; p < bulkArr.current.length + 1; p++) {
       // publicIdArr.push(bulkArr.current[p].public_id);
 
@@ -1410,22 +1442,10 @@ const MyPicsPage = ({
                           <FontAwesomeIcon icon={faDownload} />
                         </a>
                       )}
-                      <div className="my-pics-editor__del-yes-or-no">
-                        <div className="my-pics-editor__del-yes-or-no-heading">
-                          Delete?
-                        </div>
-                        <div className="my-pics-editor__del-yes-or-no-btns-container">
-                          <button style={{ borderRight: "1.5px solid #fff" }}>
-                            No
-                          </button>
-                          <button style={{ borderLeft: "1.5px solid #fff" }}>
-                            Yes
-                          </button>
-                        </div>
-                      </div>
+                      {delYesOrNoModal}
                       <button
                         type="button"
-                        onClick={(e) => deleteImageFromBackEnd(e)}
+                        onClick={(e) => showDelYesOrNoModal(e)}
                       >
                         <FontAwesomeIcon
                           icon={faTrash}
