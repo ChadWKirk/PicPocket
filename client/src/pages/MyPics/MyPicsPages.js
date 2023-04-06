@@ -180,7 +180,10 @@ const MyPicsPage = ({
   //modal for delete yes or no
   const [delYesOrNoModal, setDelYesOrNoModal] = useState();
 
-  //function that shows delete yes or no modal
+  //modal for mass delete yes or no
+  const [massDelYesOrNoModal, setMassDelYesOrNoModal] = useState();
+
+  //function that shows delete yes or no modal for single pic delete
   function showDelYesOrNoModal(e) {
     setDelYesOrNoModal(
       <div className="my-pics-editor__del-yes-or-no">
@@ -208,11 +211,46 @@ const MyPicsPage = ({
     );
   }
 
+  //function that shows delete yes or no modal for mass pic delete
+  function showMassDelYesOrNoModal(e) {
+    setMassDelYesOrNoModal(
+      <div className="my-pics-editor__mass-del-yes-or-no">
+        <div className="my-pics-editor__del-yes-or-no-heading">Delete?</div>
+        <div className="my-pics-editor__del-yes-or-no-btns-container">
+          <button
+            type="button"
+            style={{ borderRight: "1.5px solid #fff" }}
+            onClick={() => setMassDelYesOrNoModal()}
+          >
+            No
+          </button>
+          <button
+            type="button"
+            style={{ borderLeft: "1.5px solid #fff" }}
+            onClick={() => {
+              massDeleteImages();
+              setMassDelYesOrNoModal();
+            }}
+          >
+            Yes
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   // progress bar state. gets set to progressbar component when submitform starts
   const [progressBar, setProgressBar] = useState();
 
   //title input max length. if too long cloudinary won't accept it
   const titleInputMaxLength = 230;
+
+  //function to show delete confirm box on mobile
+  function showDeleteConfirmBox(e) {
+    if (window.confirm("Delete pics?")) {
+      deleteImageFromBackEnd(e);
+    }
+  }
 
   //get images
   useEffect(() => {
@@ -685,7 +723,7 @@ const MyPicsPage = ({
                                 )}
                                 <button
                                   type="button"
-                                  onClick={(e) => deleteImageFromBackEnd(e)}
+                                  onClick={(e) => showDeleteConfirmBox(e)}
                                   style={{
                                     backgroundColor: "rgb(250, 250, 250)",
                                     border: "2px solid darkred",
@@ -994,11 +1032,11 @@ const MyPicsPage = ({
           setIsDeletingOrDownloading(!isDeletingOrDownloading);
           if (!isScreenMobile) {
             setToastStatus("Success");
-            setToastMessage("Pic(s) successfully deleted.");
+            setToastMessage("Pic successfully deleted.");
             toastDissappear();
           } else if (isScreenMobile) {
             setToastStatus("Success-mobile");
-            setToastMessage("Pic(s) successfully deleted.");
+            setToastMessage("Pic successfully deleted.");
             toastDissappear();
           }
         })
@@ -1017,6 +1055,17 @@ const MyPicsPage = ({
     }
   }
 
+  //when mass delete button is clicked, either show confirm box on mobile or delete yes or no modal on desktop
+  function showMassDeleteYesOrNo() {
+    if (isScreenMobile) {
+      if (window.confirm("Delete pics?")) {
+        massDeleteImages();
+      }
+    } else {
+      showMassDelYesOrNoModal();
+    }
+  }
+
   //mass delete images
   async function massDeleteImages() {
     let publicIDArr = bulkArr.current.map((a) => a.public_id);
@@ -1031,11 +1080,15 @@ const MyPicsPage = ({
           setIsDeletingOrDownloading(!isDeletingOrDownloading);
           if (!isScreenMobile) {
             setToastStatus("Success");
-            setToastMessage("Pic(s) successfully deleted.");
+            setToastMessage(
+              `${bulkArr.current.length} Pic(s) successfully deleted.`
+            );
             toastDissappear();
           } else if (isScreenMobile) {
             setToastStatus("Success-mobile");
-            setToastMessage("Pic(s) successfully deleted.");
+            setToastMessage(
+              `${bulkArr.current.length} Pic(s) successfully deleted.`
+            );
             toastDissappear();
           }
         }, 10);
@@ -1084,11 +1137,12 @@ const MyPicsPage = ({
     bulkButtons = (
       <div className="mypics-image-gallery__sort-bar__download-delete-all-btn-container">
         <div style={{ position: "relative" }}>
+          {massDelYesOrNoModal}
           <FontAwesomeIcon
             icon={faTrash}
             className="massIcon"
             onClick={() => {
-              massDeleteImages();
+              showMassDeleteYesOrNo();
               setTimeout(() => {
                 setIsHoveredMassDeleteButton(false);
               }, 100);
