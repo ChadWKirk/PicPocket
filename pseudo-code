@@ -1,11 +1,5 @@
 https://github.com/ChadWKirk/PicPocket.git
 
-Concepts to brush up on:
-
-React state (when it visibly updates, how to increment state using previous state)
-JSON parsing (JSON.parse(), JSON.stringify(), response.json())
-How to handle individual components in an array (ToDo tutorial)
-
 Hosting and git workflow:
 
 Complete app is on github in above link
@@ -17,6 +11,34 @@ Backend is hosted on Heroku - Install Heroku CLI in server folder > git add . > 
 https://devcenter.heroku.com/articles/git
 
 Have domain variable in App.js to toggle between using localhost for fetch routes or heroku domain for fetch routes to make it easier to develop
+
+Routing:
+
+1. Front End
+
+- uses react-router-dom (npm i react-router-dom)
+- Surround App in BrowserRouter in index.js
+- Uses Routes and Route from rrd in App.js to decide which js file (aka page) is shown when browser is in certain route (ex. /SignUp)
+- Footer is outside of routes because it's on every page
+
+2. Back End
+
+- Uses NodeJS and Express (npm i express)
+- To retreive and/or manipulate data, uses fetch api unless AXIOS is required to use things like Multer for image upload
+
+App.js states:
+
+The states in App.js are there so one page can change a state and then it will get passed to a completely different page.
+
+For example:
+
+User goes to UserSettingsPage > Deletes their account > sets isJustDeleted to true > gets navigated to MainPage (navigate doesn't rerender/re-initiate state so it stays true) > if isJustDeleted is true, show account deleted banner.
+
+Pages:
+
+Not Found Page - This page appears when someone goes to a route that is not defined. For example: if someone tries going to picpoccket.com/signuppppppp or picpoccket.com/idk, it will display the Not Found Page.
+
+Main Page -
 
 Email:
 
