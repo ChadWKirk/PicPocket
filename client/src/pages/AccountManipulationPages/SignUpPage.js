@@ -146,6 +146,16 @@ const SignUpPage = ({
                   </div>
                 </div>
               );
+            }
+            if (parsedJSON == "Email already in use by non-OAuth account.") {
+              setInvalidCredentialsAlert(
+                <div className="sign-in-page__invalid-username-or-password-alert-box">
+                  Email is already in use by non-OAuth account.{" "}
+                  <div>
+                    <a href="/send-forgot">Forgot Password?</a>
+                  </div>
+                </div>
+              );
             } else {
               console.log("ok");
               localStorage.setItem("user", JSON.stringify(parsedJSON));
