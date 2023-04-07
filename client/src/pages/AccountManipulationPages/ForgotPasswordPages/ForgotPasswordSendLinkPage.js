@@ -138,8 +138,8 @@ const ForgotPasswordSendLinkPage = ({
           </header>
           <p
             style={{
-              fontSize: "0.8rem",
-              marginTop: "0.7rem",
+              // fontSize: "0.8rem",
+              // marginTop: "0.7rem",
               maxWidth: "70ch",
             }}
           >

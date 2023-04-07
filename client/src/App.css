@@ -4683,6 +4683,11 @@ button {
   align-items: flex-start;
   margin-top: -10rem;
 }
+@media (width < 800px) {
+  .forgot-password-send-link-page__form-container p {
+    margin-top: 0.7rem;
+  }
+}
 .forgot-password-send-link-page__heading {
   /* fontSize: "2rem", color: "#f5c000", fontWeight: "500" */
   font-size: 2rem;
@@ -4692,7 +4697,7 @@ button {
 }
 @media (width < 380px) {
   .forgot-password-send-link-page__heading {
-    font-size: 1.45rem;
+    font-size: 1.95rem;
     margin: 0.7rem 0 1.2rem 0;
   }
 }
