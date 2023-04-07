@@ -202,7 +202,3 @@ Sign up:
 server:
 
 - fix "can not read collection" error that you get sometimes when server loads. Something with database not being ready yet.
-
-misc:
-
-- need to hash passwords
