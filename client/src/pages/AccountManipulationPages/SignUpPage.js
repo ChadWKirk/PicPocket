@@ -63,16 +63,23 @@ const SignUpPage = ({
                 //if sign in fails
                 setInvalidCredentialsAlert(
                   <div className="sign-in-page__invalid-username-or-password-alert-box">
-                    Invalid username or password.
+                    Invalid username or password.{" "}
+                    <div>
+                      <a href="/send-forgot">Forgot Password?</a>
+                    </div>
                   </div>
                 );
               }
               if (parsedJSON == "Email already in use by non-OAuth account.") {
                 setInvalidCredentialsAlert(
                   <div className="sign-in-page__invalid-username-or-password-alert-box">
-                    Email is already in use by non-OAuth account.
+                    Email is already in use by non-OAuth account.{" "}
+                    <div>
+                      <a href="/send-forgot">Forgot Password?</a>
+                    </div>
                   </div>
                 );
+                console.log("email in use");
               } else {
                 console.log("ok");
                 localStorage.setItem("user", JSON.stringify(parsedJSON));
@@ -133,7 +140,10 @@ const SignUpPage = ({
               //if sign in fails
               setInvalidCredentialsAlert(
                 <div className="sign-in-page__invalid-username-or-password-alert-box">
-                  Invalid username or password.
+                  Invalid username or password.{" "}
+                  <div>
+                    <a href="/send-forgot">Forgot Password?</a>
+                  </div>
                 </div>
               );
             } else {
@@ -414,6 +424,7 @@ const SignUpPage = ({
             <div>or</div>
             <div className="sign-in-page__or-line"></div>
           </div>
+          {invalidCredentialstAlert}
           <form onSubmit={onSubmit}>
             <div className="sign-in-page__input-block">
               <label htmlFor="username">

@@ -4345,12 +4345,19 @@ button {
   width: 100px;
 }
 .sign-in-page__invalid-username-or-password-alert-box {
-  background-color: red;
+  background-color: #b20000;
   color: white;
   padding: 1.7rem;
   margin-top: 1rem;
   width: 100%;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.sign-in-page__invalid-username-or-password-alert-box a {
+  color: #fff;
+  text-decoration: underline;
 }
 .sign-in-page__contents-container form {
   display: flex;

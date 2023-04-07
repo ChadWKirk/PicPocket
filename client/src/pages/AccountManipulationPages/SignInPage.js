@@ -64,14 +64,20 @@ const SignInPage = ({
                 //if sign in fails
                 setInvalidCredentialsAlert(
                   <div className="sign-in-page__invalid-username-or-password-alert-box">
-                    Invalid username or password.
+                    Invalid username or password.{" "}
+                    <div>
+                      <a href="/send-forgot">Forgot Password?</a>
+                    </div>
                   </div>
                 );
               }
               if (parsedJSON == "Email already in use by non-OAuth account.") {
                 setInvalidCredentialsAlert(
                   <div className="sign-in-page__invalid-username-or-password-alert-box">
-                    Email is already in use by non-OAuth account.
+                    Email is already in use by non-OAuth account.{" "}
+                    <div>
+                      <a href="/send-forgot">Forgot Password?</a>
+                    </div>
                   </div>
                 );
               } else {
@@ -134,7 +140,10 @@ const SignInPage = ({
               //if sign in fails
               setInvalidCredentialsAlert(
                 <div className="sign-in-page__invalid-username-or-password-alert-box">
-                  Invalid username or password.
+                  Invalid username or password.{" "}
+                  <div>
+                    <a href="/send-forgot">Forgot Password?</a>
+                  </div>
                 </div>
               );
             } else {
@@ -243,7 +252,10 @@ const SignInPage = ({
               //if sign in fails
               setInvalidCredentialsAlert(
                 <div className="sign-in-page__invalid-username-or-password-alert-box">
-                  Invalid username or password.
+                  Invalid username or password.{" "}
+                  <div>
+                    <a href="/send-forgot">Forgot Password?</a>
+                  </div>
                 </div>
               );
               // window.alert("Account does not exist. Sign in failed.");
