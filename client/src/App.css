@@ -1826,6 +1826,16 @@ button {
   color: rgb(85, 85, 85);
 }
 
+.paperwork__main {
+  padding: 0 var(--sideSpacePadding);
+  margin-top: 4.25rem;
+}
+@media (width < 650px) {
+  .paperwork__main {
+    padding: 0 1rem;
+  }
+}
+
 .inactivePWorkBtn {
   position: relative;
   color: black;
