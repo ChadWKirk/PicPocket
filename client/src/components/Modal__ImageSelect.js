@@ -30,7 +30,7 @@ const Modal__ImageSelect = ({
   //when modal is open, set body overflow to hidden. for some reason classlist.add wasn't working it was glitching on and off
   document.body.style.overflow = "hidden";
 
-  console.log(prevPageForModal);
+  //if image.uploadedBy == imageauthorname, show edit and delete buttons
 
   //amount of pages to jump back when clicking out of modal to get back to previous page before going into modal
   const [amountOfPagesToJumpBack, setAmountOfPagesToJumpBack] = useState(-1);
