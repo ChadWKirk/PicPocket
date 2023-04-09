@@ -91,8 +91,11 @@ app.use("/upload", upload.array("files", 200), async (req, res) => {
         .split(" ")
         .join("-")
         .replace(".jpg", "")
+        .replace(".JPG", "")
         .replace(".png", "")
-        .replace(".jpeg", "")}-${randomNumber}`,
+        .replace(".PNG", "")
+        .replace(".jpeg", "")
+        .replace(".JPEG", "")}-${randomNumber}`,
       colors: true,
     })
     .then((result) => {
@@ -104,8 +107,11 @@ app.use("/upload", upload.array("files", 200), async (req, res) => {
       uploadToMongoBody.uploadedBy = req.body.uploaderName;
       uploadToMongoBody.title = req.files[0].originalname
         .replace(".jpg", "")
+        .replace(".JPG", "")
         .replace(".png", "")
-        .replace(".jpeg", "");
+        .replace(".PNG", "")
+        .replace(".jpeg", "")
+        .replace(".JPEG", "");
       uploadToMongoBody.description = "";
       uploadToMongoBody.imageType = "photo";
       db_connect.collection("picpocket-images").insertOne(result);
@@ -153,8 +159,11 @@ app.use(
           .split(" ")
           .join("-")
           .replace(".jpg", "")
+          .replace(".JPG", "")
           .replace(".png", "")
-          .replace(".jpeg", "")}-${randomNumber}`,
+          .replace(".PNG", "")
+          .replace(".jpeg", "")
+          .replace(".JPEG", "")}-${randomNumber}`,
         colors: true,
       })
       .then((result) => {
@@ -166,8 +175,11 @@ app.use(
         uploadToMongoBody.uploadedBy = req.body.uploaderName;
         uploadToMongoBody.title = req.file.originalname
           .replace(".jpg", "")
+          .replace(".JPG", "")
           .replace(".png", "")
-          .replace(".jpeg", "");
+          .replace(".PNG", "")
+          .replace(".jpeg", "")
+          .replace(".JPEG", "");
         uploadToMongoBody.description = "";
         uploadToMongoBody.imageType = "photo";
         db_connect.collection("picpocket-pfps").insertOne(uploadToMongoBody);
