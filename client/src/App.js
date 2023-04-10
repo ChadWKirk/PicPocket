@@ -86,7 +86,7 @@ function App() {
   //set true or false for if user just changed password. use to decide whether to show password change success page
   const [isPasswordJustChanged, setIsPasswordJustChanged] = useState(false);
 
-  console.log("render");
+  // console.log("render");
 
   //get user from AuthContext
   const { user } = useAuthContext();
@@ -100,7 +100,7 @@ function App() {
       setCurUser_real(user.name);
       setCurUser_hyphenated(user.name.split(" ").join("-"));
       setIsLoggedIn(true);
-      console.log(isLoggedIn);
+      // console.log(isLoggedIn);
     } else {
       setCurUser_real();
       setCurUser_hyphenated();
