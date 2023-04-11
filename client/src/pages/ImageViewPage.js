@@ -4,7 +4,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronLeft,
   faChevronRight,
+  faPenToSquare,
   faQuestionCircle,
+  faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
@@ -151,6 +153,10 @@ const ImageViewPage = ({
   //for tag list scroll animation
   let tagListIDWidth;
   let scrollByPxAmount;
+  // if image.uploadedBy == imageauthorname, show edit and delete buttons
+  let editBtn;
+  let deleteBtn;
+
   const [tagListScrollPosition, setTagListScrollPosition] = useState(0);
   if (imgInfo) {
     imgSrc =
@@ -218,6 +224,20 @@ const ImageViewPage = ({
           <div className="image-view-page__main-like-button-text">
             {imgInfo.likedBy.length}
           </div>
+        </button>
+      );
+    }
+
+    // if image.uploadedBy == imageauthorname, show edit and delete buttons
+    if (imgInfo.uploadedBy == curUser_real) {
+      editBtn = (
+        <button className="image-view-page__edit-btn">
+          <FontAwesomeIcon icon={faPenToSquare} />
+        </button>
+      );
+      deleteBtn = (
+        <button className="image-view-page__delete-btn">
+          <FontAwesomeIcon icon={faTrash} />
         </button>
       );
     }
@@ -666,6 +686,8 @@ const ImageViewPage = ({
               >
                 Free Download
               </a>
+              {editBtn}
+              {deleteBtn}
             </div>
           </div>
         </div>

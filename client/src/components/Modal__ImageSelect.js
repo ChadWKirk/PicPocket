@@ -6,6 +6,8 @@ import {
   faChevronRight,
   faXmark,
   faHeart,
+  faPenToSquare,
+  faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 
@@ -29,8 +31,6 @@ const Modal__ImageSelect = ({
 }) => {
   //when modal is open, set body overflow to hidden. for some reason classlist.add wasn't working it was glitching on and off
   document.body.style.overflow = "hidden";
-
-  //if image.uploadedBy == imageauthorname, show edit and delete buttons
 
   //amount of pages to jump back when clicking out of modal to get back to previous page before going into modal
   const [amountOfPagesToJumpBack, setAmountOfPagesToJumpBack] = useState(-1);
@@ -100,10 +100,15 @@ const Modal__ImageSelect = ({
       </button>
     );
   }
+
   //for tag list scroll animation
   let tagListIDWidth;
   let scrollByPxAmount;
   const [tagListScrollPosition, setTagListScrollPosition] = useState(0);
+
+  //for if curUser is the selected image's uploader - they can edit or delete it from image modal
+  let editBtn;
+  let deleteBtn;
 
   if (imgInfo) {
     imgSrc =
@@ -176,6 +181,20 @@ const Modal__ImageSelect = ({
     //for tag list scroll animation
     tagListIDWidth = document.querySelector("#tagListID").clientWidth;
     scrollByPxAmount = tagListIDWidth + tagListScrollPosition;
+
+    // if image.uploadedBy == imageauthorname, show edit and delete buttons
+    if (imgInfo.uploadedBy == curUser_real) {
+      editBtn = (
+        <button className="image-select-modal__edit-btn">
+          <FontAwesomeIcon icon={faPenToSquare} />
+        </button>
+      );
+      deleteBtn = (
+        <button className="image-select-modal__delete-btn">
+          <FontAwesomeIcon icon={faTrash} />
+        </button>
+      );
+    }
   }
 
   //tag list scrolling
@@ -499,6 +518,8 @@ const Modal__ImageSelect = ({
             >
               Free Download
             </a>
+            {editBtn}
+            {deleteBtn}
           </div>
         </div>
 
