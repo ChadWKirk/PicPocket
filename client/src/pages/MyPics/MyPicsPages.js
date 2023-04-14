@@ -1109,10 +1109,13 @@ const MyPicsPage = ({
 
   //mass download images
   async function massDownloadImages() {
+    //create array of public ID's from bulkArr
+    //replace / with %2F so Cloudinary will accept it and not break. It will encode the slash in server.js
     let publicIDArr = bulkArr.current.map((a) =>
       a.public_id.replace("/", "%2F")
     );
     console.log(publicIDArr);
+    //send cloudinary the array of public ID's in server.js
     await fetch(`${domain}/massDownloadImages/${publicIDArr}`, {
       method: "GET",
       headers: { "Content-type": "application/json" },
@@ -1121,6 +1124,7 @@ const MyPicsPage = ({
         .json()
         .then((resJSON) => JSON.stringify(resJSON))
         .then((stringJSON) => JSON.parse(stringJSON))
+        //go to .zip download link that is sent as a response from cloudinary in server.js to download the new .zip file containing the image files
         .then((parsedJSON) => (window.location.href = parsedJSON));
       setIsDeletingOrDownloading(!isDeletingOrDownloading);
     });
