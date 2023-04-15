@@ -7,6 +7,8 @@ layout: home
 
 Repo URL - [https://github.com/ChadWKirk/PicPocket](https://github.com/ChadWKirk/PicPocket)
 
+PicPocket URL - [https://PicPoccket.com/](https://picpoccket.com/) (Yes, the URL has 2 C's in pocket.)
+
 ## Hosting and Git workflow:
 
 ### Frontend is hosted on Netlify:
