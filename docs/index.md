@@ -5,7 +5,7 @@ layout: home
 
 # Big Picture Stuff
 
-Repo URL - https://github.com/ChadWKirk/PicPocket
+Repo URL - [https://github.com/ChadWKirk/PicPocket](https://github.com/ChadWKirk/PicPocket)
 
 ## Hosting and Git workflow:
 

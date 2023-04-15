@@ -11,7 +11,9 @@ nav_order: 3
 
 1. Cloudinary has a URL flag (fl_attachment) that can be used to download an image when clicking the link.
 
-Example: https://res.cloudinary.com/dtyg4ctfr/image/upload/q_100/fl_attachment/v1681070037/picpocket/6FA2BB75-6EA1-40F1-9EAE-8C12E0D9BC87-373466
+Example:
+
+https://res.cloudinary.com/dtyg4ctfr/image/upload/q_100/**fl_attachment**/v1681070037/picpocket/6FA2BB75-6EA1-40F1-9EAE-8C12E0D9BC87-373466
 
 2. Doesn’t actually change the window location when clicking link, just downloads the file.
 
