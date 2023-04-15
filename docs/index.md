@@ -7,7 +7,7 @@ layout: home
 
 Repo URL - https://github.com/ChadWKirk/PicPocket
 
-##Hosting and Git workflow:
+##(#header-2)Hosting and Git workflow:
 
 ####Frontend is hosted on Netlify:
 
