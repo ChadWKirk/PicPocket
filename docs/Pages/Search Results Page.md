@@ -5,11 +5,11 @@ parent: Pages
 nav_order: 2
 ---
 
-#Search Results Page
+# Search Results Page
 
 The page that shows when a user searches for something.
 
-##Usage:
+## Usage:
 
 This page shows search results. It uses a navbar, image gallery heading component, image gallery and footer.
 

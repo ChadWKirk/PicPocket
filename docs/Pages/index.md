@@ -5,6 +5,6 @@ nav_order: 2
 has_children: true
 ---
 
-#Pages
+# Pages
 
 This is the pages section..... what more do you want from me

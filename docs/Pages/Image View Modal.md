@@ -5,11 +5,11 @@ parent: Pages
 nav_order: 2
 ---
 
-#Image View Modal
+# Image View Modal
 
 The modal that appears when a user clicks on an image in the Image Gallery component. Displays the image, like button, download button, image info, and image author info.
 
-##Usage:
+## Usage:
 
 This isn't it's own page, but it's kinda like that. It is rendered on first render of Image View Page.
 

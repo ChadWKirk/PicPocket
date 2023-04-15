@@ -5,9 +5,9 @@ parent: Functions
 nav_order: 3
 ---
 
-#How Downloading Images Works
+# How Downloading Images Works
 
-###Single Download:
+### Single Download:
 
 1. Cloudinary has a URL flag (fl_attachment) that can be used to download an image when clicking the link.
 
@@ -15,7 +15,7 @@ Example: https://res.cloudinary.com/dtyg4ctfr/image/upload/q_100/fl_attachment/v
 
 2. Doesn’t actually change the window location when clicking link, just downloads the file.
 
-###Multi Image Download:
+### Multi Image Download:
 
 1. In My Pics page, user can download multiple images at one time when they check off multiple images.
 

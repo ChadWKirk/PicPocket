@@ -5,11 +5,11 @@ parent: Pages
 nav_order: 2
 ---
 
-#Image View Page
+# Image View Page
 
 The page that shows the image when an image is clicked on from Image Gallery component.
 
-##Usage:
+## Usage:
 
 This page shows one image that is selected from the ImageGallery.
 

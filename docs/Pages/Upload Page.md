@@ -5,11 +5,11 @@ parent: Pages
 nav_order: 2
 ---
 
-#Upload Page
+# Upload Page
 
 The page that allows users to upload images.
 
-##Usage:
+## Usage:
 
 **Verification:**
 
@@ -34,7 +34,7 @@ for example "lady" turns into "lady-245609" or "lady-333400"
 
 when clicking image in gallery > go to /image/<public_id> without the "picpocket/" part > GET request to get image with req.params.public_id as public_id
 
-##Pipeline:
+## Pipeline:
 
 **Upload Page pipeline:**
 

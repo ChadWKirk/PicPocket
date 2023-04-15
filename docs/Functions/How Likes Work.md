@@ -5,7 +5,7 @@ parent: Functions
 nav_order: 3
 ---
 
-#How Likes Work
+# How Likes Work
 
 1. Image gallery renders
 

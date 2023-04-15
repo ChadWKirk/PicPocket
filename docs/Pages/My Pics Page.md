@@ -5,21 +5,21 @@ parent: Pages
 nav_order: 2
 ---
 
-#My Pics Page
+# My Pics Page
 
 The page that shows the user their uploaded pics. The user can delete, download, sort, filter and edit the image’s info here.
 
-##Usage:
+## Usage:
 
 In this page there is a navbar, heading section, image gallery and footer.
 
-###Image gallery:
+### Image gallery:
 
-####Desktop:
+#### Desktop:
 
 The image gallery is divided into 2 parts, the image cards section and the image info editor section. The image cards each contain the image, the image info, and a checkbox. The editor displays the image’s info as well as delete, submit and download buttons when a single image is selected/checked off. There is also a Select All checkbox, delete all button and download all button at the top of the image gallery.
 
-####Mobile:
+#### Mobile:
 
 The width of the window is tracked in React, not CSS for the My Pics Page. When under a certain amount of pixels, a state is turned to true to render a certain view of the Image Gallery.
 
