@@ -3,30 +3,68 @@ title: Home
 layout: home
 ---
 
-This is a _bare-minimum_ template to create a Jekyll site that uses the [Just the Docs] theme. You can easily set the created site to be published on [GitHub Pages] – the [README] file explains how to do that, along with other details.
+#Big Picture Stuff
 
-If [Jekyll] is installed on your computer, you can also build and preview the created site _locally_. This lets you test changes before committing them, and avoids waiting for GitHub Pages.[^1] And you will be able to deploy your local build to a different platform than GitHub Pages.
+Repo URL - https://github.com/ChadWKirk/PicPocket
 
-More specifically, the created site:
+##Hosting and Git workflow:
 
-- uses a gem-based approach, i.e. uses a `Gemfile` and loads the `just-the-docs` gem
-- uses the [GitHub Pages / Actions workflow] to build and publish the site on GitHub Pages
+####Frontend is hosted on Netlify:
 
-Other than that, you're free to customize sites that you create with this template, however you like. You can easily change the versions of `just-the-docs` and Jekyll it uses, as well as adding further plugins.
+1. Install Netlify CLI in client folder - [Get started with Netlify CLI](https://docs.netlify.com/cli/get-started/)
 
-[Browse our documentation][just the docs] to learn more about how to use this theme.
+1. `cd client` > `npm run build`
 
-To get started with creating a site, just click "[use this template]"!
+1. `netlify deploy` `./build`
 
-If you want to maintain your docs in the `docs` directory of an existing project repo, see [Hosting your docs from an existing project repo](https://github.com/just-the-docs/just-the-docs-template/blob/main/README.md#hosting-your-docs-from-an-existing-project-repo) in the template README.
+1. `netlify deploy --prod` `./build`
 
----
+**Important:**
 
-[^1]: [It can take up to 10 minutes for changes to your site to publish after you push the changes to GitHub](https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/creating-a-github-pages-site-with-jekyll#creating-your-site).
+Have domain variable in App.js to toggle between using localhost for fetch routes or heroku domain for fetch routes to make it easier to develop. Use domain - localhost when developing, but switch to domain = heroku when building.
 
-[just the docs]: https://just-the-docs.github.io/just-the-docs/
-[github pages]: https://docs.github.com/en/pages
-[readme]: https://github.com/just-the-docs/just-the-docs-template/blob/main/README.md
-[jekyll]: https://jekyllrb.com
-[github pages / actions workflow]: https://github.blog/changelog/2022-07-27-github-pages-custom-github-actions-workflows-beta/
-[use this template]: https://github.com/just-the-docs/just-the-docs-template/generate
+####Backend is hosted on Heroku:
+
+1. Install Heroku CLI in server folder - [Heroku - Deploying with Git](https://devcenter.heroku.com/articles/git)
+
+1. `cd server`
+
+1. `git add .`
+
+1. `git commit -am "message"`
+
+1. `git push heroku main`
+
+##Email:
+
+Email is done by [Zoho](https://www.zoho.com/index1.html) and is connected to the https://picpoccket.com domain.
+
+##Routing:
+
+####Front End:
+
+1. Uses [react-router-dom](https://reactrouter.com/en/main) `npm i react-router-dom`
+
+1. Surround App in BrowserRouter in index.js
+
+1. Uses Routes and Route from RRD in App.js to decide which JS file (aka page) is shown when browser is in certain route (ex. “/Signup")
+
+1. Footer component is outside of routes because it’s on every page
+
+####Back End:
+
+1. Uses [NodeJS](https://nodejs.org/en/docs) and [Express](https://expressjs.com/en/api.html) `npm i express`
+
+1. To retrieve and/or manipulate data, uses fetch API unless [Axios](https://axios-http.com/docs/intro) is required to use things like [Multer](https://www.npmjs.com/package/multer) for image upload
+
+####App.js states:
+
+The states in App.js are there so one page can change a state and then it will get passed to a completely different page.
+
+For example: User goes to UserSettingsPage > Deletes their account > sets isJustDeleted to true (resides in App.js) > gets navigated to MainPage (navigate doesn't rerender/re-initiate state so it stays true) > if isJustDeleted is true, show account deleted banner.
+
+####How Images Work:
+
+- Uses [Cloudinary](https://cloudinary.com/) CDN to host images and also .zip files when user mass downloads in the My Pics page
+
+[Cloudinary API Documentation](https://cloudinary.com/documentation/image_upload_api_reference)
