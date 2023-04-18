@@ -19,6 +19,35 @@ When user clicks edit in modal, they get redirected to Modal_imageSelectEditable
 
 In modal editable, there will be a “pic workshop” button that brings user to different page with Cloudinary Image editor widget where they can crop, etc.
 
+### Delete in Image Modal:
+
+Image Gallery pipeline:
+
+- ImageGallery is rendered
+- for each image rendered, titleArr.push(element.public_id). Once rendered completely, setTitleArrState(titleArr)
+- image is clicked
+- isShowingModal(true)
+- imgToLoadInFirstModal(image clicked info)
+- imgGalleryScrollPosition(scroll position)
+- prevPageForModal(page image gallery is being rendered on) - for when user clicks out of modal
+- navigate to imageViewPage
+- show modal over imageViewPage
+- let currentImgIndex = imgTitleArrState.indexOf(imgPublic_Id)
+
+Delete in modal feature:
+
+When user clicks on an image from imageGallery component and it belongs to them, they can delete it by clicking the delete button.
+
+Needs - image public id
+
+get public id from url
+
+User clicks button > brings up yes or no modal > no = modal go away > yes = run deleteImage from MyPicsPage and shows next image in gallery
+
+needs to keep - scroll pos, isShowingModal, prevPageForModal
+
+on delete, imgTitleArrState gets filtered to remove element with public id of deleted public id
+
 ## Edit in My Pics:
 
 In My Pics on mobile, there will be a grey pencil icon at the right side end of image title which will show modal editable.
