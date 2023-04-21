@@ -48,6 +48,14 @@ needs to keep - scroll pos, isShowingModal, prevPageForModal
 
 on delete, imgTitleArrState gets filtered to remove element with public id of deleted public id
 
+**Modal:**
+
+On mobile, the modal will be a window.alert or window.confirm, on desktop it will be a modal under the button.
+
+Desktop modal design - Red background, 8px border radius, white text, white background buttons with red text and 4px border radius. Tooltip is pretty big.
+
+Break points for media queries - under 650px show window.alert/confirm. Over 650px show modal.
+
 ### Edit in Image Modal:
 
 Image Gallery pipeline:

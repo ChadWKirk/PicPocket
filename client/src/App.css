@@ -5294,6 +5294,30 @@ button {
   background-color: #ad0000;
   color: #eeeeee;
 }
+.image-select-modal__delete-yes-or-no {
+  background-color: #b20000;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 8px;
+  padding: 1rem;
+  max-width: 240px;
+  position: absolute;
+  top: 80px;
+  right: 24px;
+}
+.image-select-modal__delete-yes-or-no-btns {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+.image-select-modal__delete-yes-or-no-btns button {
+  background-color: #fff;
+  color: #b20000;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+}
 .image-select-modal__img-container {
   /* width: 100%; */
   max-width: 100%;

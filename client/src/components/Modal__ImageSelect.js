@@ -44,6 +44,9 @@ const Modal__ImageSelect = ({
   //refetch img info to update like button to either liked or not liked
   const [isLiked, setIsLiked] = useState();
 
+  //delete Are You Sure? box. On mobile (width < 650px) use window.alert. On desktop (width > 650px) use own modal.
+  const [deleteYesOrNo, setDeleteYesOrNo] = useState();
+
   //assigning user info to variables (user info comes from ImageViewPage)
   let imgAuthorPFP = imgToLoadInFirstModal.imgAuthorPFP;
   let imgAuthorName = imgToLoadInFirstModal.imgAuthorName;
@@ -190,7 +193,10 @@ const Modal__ImageSelect = ({
         </button>
       );
       deleteBtn = (
-        <button className="image-select-modal__delete-btn">
+        <button
+          className="image-select-modal__delete-btn"
+          onClick={() => showDeleteYesOrNo()}
+        >
           <FontAwesomeIcon icon={faTrash} />
         </button>
       );
@@ -418,6 +424,24 @@ const Modal__ImageSelect = ({
   //index of current img in title array to get prev and next links for next and previous arrow links (see html conditional rendering)
   let currentImgIndex = imgTitleArrState.indexOf(`${imgPublic_Id}`);
 
+  //delete Are You Sure? box. On mobile (width < 650px) use window.alert. On desktop (width > 650px) use own modal.
+  function showDeleteYesOrNo() {
+    if (deleteYesOrNo === undefined) {
+      setDeleteYesOrNo(
+        <div className="image-select-modal__delete-yes-or-no">
+          This will permanently delete this pic from your account. Are you sure
+          you want to delete this pic from your account?
+          <div className="image-select-modal__delete-yes-or-no-btns">
+            <button>Yes</button>
+            <button>No</button>
+          </div>
+        </div>
+      );
+    } else {
+      setDeleteYesOrNo();
+    }
+  }
+
   return (
     <div
       className="image-select-modal__container"
@@ -520,6 +544,7 @@ const Modal__ImageSelect = ({
             </a>
             {editBtn}
             {deleteBtn}
+            {deleteYesOrNo}
           </div>
         </div>
 
