@@ -10,6 +10,7 @@ import {
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
+import Toast from "./Toast";
 
 const Modal__ImageSelect = ({
   domain,
@@ -17,6 +18,7 @@ const Modal__ImageSelect = ({
   curUser_hyphenated,
   isLoggedIn,
   imgTitleArrState,
+  setImgTitleArrState,
   isShowingImageSelectModal,
   setIsShowingImageSelectModal,
   imgInfo,
@@ -29,6 +31,9 @@ const Modal__ImageSelect = ({
   setImgGalleryScrollPosition,
   imgToLoadInFirstModal,
 }) => {
+  useEffect(() => {
+    console.log(imgTitleArrState, " img title arr state");
+  });
   //when modal is open, set body overflow to hidden. for some reason classlist.add wasn't working it was glitching on and off
   document.body.style.overflow = "hidden";
 
@@ -67,7 +72,7 @@ const Modal__ImageSelect = ({
     setTimeout(() => {
       setToastStatus("Invisible");
       setToastMessage();
-    }, 3000);
+    }, 1500);
   }
   function closeToast() {
     setToastMessage();
@@ -466,6 +471,16 @@ const Modal__ImageSelect = ({
   //index of current img in title array to get prev and next links for next and previous arrow links (see html conditional rendering)
   let currentImgIndex = imgTitleArrState.indexOf(`${imgPublic_Id}`);
 
+  //when user deletes an image, filter the imgTitleArr to remove the deleted item from the array
+  //so user can no longer go back or forward to land on the deleted image
+  function filterImgTitleArr() {
+    setImgTitleArrState(
+      imgTitleArrState.filter(
+        (imageTitle) => imageTitle !== imgInfo.public_id.slice(10)
+      )
+    );
+  }
+
   //single delete button in editor form function
   async function deleteImageFromBackEnd() {
     await fetch(`${domain}/deleteImage/`, {
@@ -475,15 +490,19 @@ const Modal__ImageSelect = ({
     })
       .then((res) => {
         if (!isScreenMobile) {
-          setToastStatus("Success");
+          setToastStatus("Success-modal");
           setToastMessage("Pic successfully deleted.");
           toastDissappear();
           setDeleteYesOrNo();
+          filterImgTitleArr();
+          navigate(`/image/${imgTitleArrState[currentImgIndex + 1]}`);
         } else if (isScreenMobile) {
-          setToastStatus("Success-mobile");
+          setToastStatus("Success-mobile-modal");
           setToastMessage("Pic successfully deleted.");
           toastDissappear();
           setDeleteYesOrNo();
+          filterImgTitleArr();
+          navigate(`/image/${imgTitleArrState[currentImgIndex + 1]}`);
         }
       })
       .catch((err) => {
@@ -536,6 +555,11 @@ const Modal__ImageSelect = ({
       className="image-select-modal__container"
       onMouseMove={(event) => handleMouseMove(event)}
     >
+      <Toast
+        status={toastStatus}
+        message={toastMessage}
+        closeToast={closeToast}
+      />
       <div
         className="image-select-modal__background"
         onClick={() => {
@@ -547,6 +571,7 @@ const Modal__ImageSelect = ({
           setTimeout(() => {
             document.body.style.overflow = "auto";
           }, 50);
+          //make delete yes or no modal go away if it is open
           setDeleteYesOrNo();
         }}
         style={{ height: `100vh` }} //get height of modal contents container and use that for height of black bg
@@ -564,6 +589,7 @@ const Modal__ImageSelect = ({
             setTimeout(() => {
               document.body.style.overflow = "auto";
             }, 50);
+            //make delete yes or no modal go away if it is open
             setDeleteYesOrNo();
           }}
           style={{ cursor: "pointer" }}
@@ -575,6 +601,7 @@ const Modal__ImageSelect = ({
               setIsPrevOrNextClicked(!isPrevOrNextClicked);
               setIsShowingImageSelectModal(true);
               setAmountOfPagesToJumpBack(amountOfPagesToJumpBack - 1);
+              //make delete yes or no modal go away if it is open
               setDeleteYesOrNo();
             }}
             style={{ cursor: "pointer" }}
@@ -594,6 +621,7 @@ const Modal__ImageSelect = ({
               //subtract from amount of pages to jump back because that's how navigate works
               //to jump back one page it is navigate(-1). to jump back 5 pages it is -5.
               setAmountOfPagesToJumpBack(amountOfPagesToJumpBack - 1);
+              //make delete yes or no modal go away if it is open
               setDeleteYesOrNo();
             }}
             style={{ cursor: "pointer" }}

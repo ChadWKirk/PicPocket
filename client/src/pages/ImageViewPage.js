@@ -24,6 +24,7 @@ const ImageViewPage = ({
   isShowingImageSelectModal,
   setIsShowingImageSelectModal,
   imgTitleArrState,
+  setImgTitleArrState,
   prevPageForModal,
   setPrevPageForModal,
   imgGalleryScrollPosition,
@@ -615,6 +616,7 @@ const ImageViewPage = ({
           curUser_real={curUser_real}
           curUser_hyphenated={curUser_hyphenated}
           imgTitleArrState={imgTitleArrState}
+          setImgTitleArrState={setImgTitleArrState}
           isShowingImageSelectModal={isShowingImageSelectModal}
           setIsShowingImageSelectModal={setIsShowingImageSelectModal}
           mainLikeBtn={mainLikeBtn}
