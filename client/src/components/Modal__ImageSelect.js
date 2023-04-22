@@ -156,6 +156,9 @@ const Modal__ImageSelect = ({
   let scrollByPxAmount;
   const [tagListScrollPosition, setTagListScrollPosition] = useState(0);
 
+  //when edit btn is clicked, set isEditable to !isEditable
+  const [isEditable, setIsEditable] = useState(false);
+
   //for if curUser is the selected image's uploader - they can edit or delete it from image modal
   let editBtn;
   let deleteBtn;
@@ -235,7 +238,10 @@ const Modal__ImageSelect = ({
     // if image.uploadedBy == imageauthorname, show edit and delete buttons
     if (imgInfo.uploadedBy == curUser_real) {
       editBtn = (
-        <button className="image-select-modal__edit-btn">
+        <button
+          className="image-select-modal__edit-btn"
+          onClick={() => setIsEditable(!isEditable)}
+        >
           <FontAwesomeIcon icon={faPenToSquare} />
         </button>
       );
@@ -481,7 +487,7 @@ const Modal__ImageSelect = ({
     );
   }
 
-  //single delete button in editor form function
+  //delete function. happens when user clicks Yes on deleteYesOrNo if they click the delete button in modal
   async function deleteImageFromBackEnd() {
     await fetch(`${domain}/deleteImage/`, {
       method: "POST",
@@ -493,15 +499,21 @@ const Modal__ImageSelect = ({
           setToastStatus("Success-modal");
           setToastMessage("Pic successfully deleted.");
           toastDissappear();
+          //make deleteYesOrNo modal go away
           setDeleteYesOrNo();
+          //take deleted image title out of imgTitleArrState
           filterImgTitleArr();
+          //go to next image in list
           navigate(`/image/${imgTitleArrState[currentImgIndex + 1]}`);
         } else if (isScreenMobile) {
           setToastStatus("Success-mobile-modal");
           setToastMessage("Pic successfully deleted.");
           toastDissappear();
+          //make deleteYesOrNo modal go away
           setDeleteYesOrNo();
+          //take deleted image title out of imgTitleArrState
           filterImgTitleArr();
+          //go to next image in list
           navigate(`/image/${imgTitleArrState[currentImgIndex + 1]}`);
         }
       })
@@ -521,7 +533,7 @@ const Modal__ImageSelect = ({
       });
   }
 
-  //delete Are You Sure? box. On mobile (width < 650px) use window.alert. On desktop (width > 650px) use own modal.
+  //shows delete Are You Sure? box. On mobile (width < 650px) use window.alert. On desktop (width > 650px) use own modal.
   function showDeleteYesOrNo() {
     if (deleteYesOrNo === undefined && !isScreenMobile) {
       setDeleteYesOrNo(
@@ -694,10 +706,28 @@ const Modal__ImageSelect = ({
           ></img>
         </div>
         <div className="image-select-modal__img-info-container">
-          <div className="image-select-modal__img-title">{imgTitle}</div>
-          <div className="image-select-modal__img-description">
-            {imgDescription}
-          </div>
+          {isEditable && (
+            <input
+              placeholder={`${imgTitle}`}
+              className="image-select-modal__img-title-input"
+            ></input>
+          )}
+          {!isEditable && (
+            <div className="image-select-modal__img-title">{imgTitle}</div>
+          )}
+          {isEditable && (
+            <input
+              placeholder={
+                <em>No Description Given</em> && "No Description Given"
+              }
+              className="image-select-modal__img-description-input"
+            ></input>
+          )}
+          {!isEditable && (
+            <div className="image-select-modal__img-description">
+              {imgDescription}
+            </div>
+          )}
         </div>
         <div style={{ width: "100%", position: "relative" }}>
           <div
@@ -728,9 +758,31 @@ const Modal__ImageSelect = ({
               );
             }}
           >
-            <div className="image-select-modal__img-tags-list">
-              <ul>{imgTags}</ul>
-            </div>
+            {isEditable && (
+              <div className="image-select-modal__img-tags-input-container">
+                <p>Tags (Use commas. Ex: tag, tags)</p>
+                <div className="image-select-modal__img-tags-input-and-btns-container">
+                  <input
+                    placeholder={`${imgTags}`}
+                    className="image-select-modal__img-tags-input"
+                  ></input>
+                  <div className="image-select-modal__img-tags-input-container-btns-container">
+                    <button
+                      style={{ color: "#b20000" }}
+                      onClick={() => setIsEditable(false)}
+                    >
+                      Cancel
+                    </button>
+                    <button style={{ color: "blue" }}>Submit</button>
+                  </div>
+                </div>
+              </div>
+            )}
+            {!isEditable && (
+              <div className="image-select-modal__img-tags-list">
+                <ul>{imgTags}</ul>
+              </div>
+            )}
           </div>
         </div>
       </div>
