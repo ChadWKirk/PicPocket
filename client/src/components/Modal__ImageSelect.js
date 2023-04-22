@@ -32,6 +32,48 @@ const Modal__ImageSelect = ({
   //when modal is open, set body overflow to hidden. for some reason classlist.add wasn't working it was glitching on and off
   document.body.style.overflow = "hidden";
 
+  //get screen width. at Xpx setIsScreenMobile(true)
+  const [isScreenMobile, setIsScreenMobile] = useState();
+  // get window size to either show delete yes or no modal / submit modal or just use window.confirm for those
+  const [windowSize, setWindowSize] = useState(getWindowSize());
+  useEffect(() => {
+    function handleWindowResize() {
+      setWindowSize(getWindowSize());
+    }
+
+    window.addEventListener("resize", handleWindowResize);
+
+    return () => {
+      window.removeEventListener("resize", handleWindowResize);
+    };
+  }, []);
+  function getWindowSize() {
+    const { innerWidth, innerHeight } = window;
+    return { innerWidth, innerHeight };
+  }
+  useEffect(() => {
+    if (windowSize.innerWidth < 650) {
+      setIsScreenMobile(true);
+    } else {
+      setIsScreenMobile(false);
+    }
+  }, [windowSize]);
+
+  //toast stuff
+  //set toast to invisible until it is called by either error or success function
+  const [toastMessage, setToastMessage] = useState();
+  const [toastStatus, setToastStatus] = useState("Invisible");
+  function toastDissappear() {
+    setTimeout(() => {
+      setToastStatus("Invisible");
+      setToastMessage();
+    }, 3000);
+  }
+  function closeToast() {
+    setToastMessage();
+    setToastStatus();
+  }
+
   //amount of pages to jump back when clicking out of modal to get back to previous page before going into modal
   const [amountOfPagesToJumpBack, setAmountOfPagesToJumpBack] = useState(-1);
 
@@ -424,9 +466,45 @@ const Modal__ImageSelect = ({
   //index of current img in title array to get prev and next links for next and previous arrow links (see html conditional rendering)
   let currentImgIndex = imgTitleArrState.indexOf(`${imgPublic_Id}`);
 
+  //single delete button in editor form function
+  async function deleteImageFromBackEnd() {
+    await fetch(`${domain}/deleteImage/`, {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify({ public_id: `picpocket/${imgPublic_Id}` }),
+    })
+      .then((res) => {
+        if (!isScreenMobile) {
+          setToastStatus("Success");
+          setToastMessage("Pic successfully deleted.");
+          toastDissappear();
+          setDeleteYesOrNo();
+        } else if (isScreenMobile) {
+          setToastStatus("Success-mobile");
+          setToastMessage("Pic successfully deleted.");
+          toastDissappear();
+          setDeleteYesOrNo();
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        if (!isScreenMobile) {
+          setToastStatus("Error");
+          setToastMessage("Error. Deletion unsuccessful");
+          toastDissappear();
+          setDeleteYesOrNo();
+        } else if (isScreenMobile) {
+          setToastStatus("Error-mobile");
+          setToastMessage("Error. Deletion unsuccessful");
+          toastDissappear();
+          setDeleteYesOrNo();
+        }
+      });
+  }
+
   //delete Are You Sure? box. On mobile (width < 650px) use window.alert. On desktop (width > 650px) use own modal.
   function showDeleteYesOrNo() {
-    if (deleteYesOrNo === undefined) {
+    if (deleteYesOrNo === undefined && !isScreenMobile) {
       setDeleteYesOrNo(
         <div className="image-select-modal__delete-yes-or-no">
           <p>
@@ -435,11 +513,19 @@ const Modal__ImageSelect = ({
           </p>
 
           <div className="image-select-modal__delete-yes-or-no-btns">
-            <button>Yes</button>
+            <button onClick={() => deleteImageFromBackEnd()}>Yes</button>
             <button onClick={() => setDeleteYesOrNo()}>No</button>
           </div>
         </div>
       );
+    } else if (deleteYesOrNo === undefined && isScreenMobile) {
+      if (
+        window.confirm(
+          "This will permanently delete this pic from your account. Are you sure you want to delete this pic from your account?"
+        )
+      ) {
+        deleteImageFromBackEnd();
+      }
     } else {
       setDeleteYesOrNo();
     }
