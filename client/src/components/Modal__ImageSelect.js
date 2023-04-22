@@ -508,12 +508,12 @@ const Modal__ImageSelect = ({
       .catch((err) => {
         console.error(err);
         if (!isScreenMobile) {
-          setToastStatus("Error");
+          setToastStatus("Error-modal");
           setToastMessage("Error. Deletion unsuccessful");
           toastDissappear();
           setDeleteYesOrNo();
         } else if (isScreenMobile) {
-          setToastStatus("Error-mobile");
+          setToastStatus("Error-mobile-modal");
           setToastMessage("Error. Deletion unsuccessful");
           toastDissappear();
           setDeleteYesOrNo();

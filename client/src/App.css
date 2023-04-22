@@ -4180,6 +4180,20 @@ button {
   top: 136px;
   z-index: 100;
 }
+.toastError-mobile-modal {
+  width: 100%;
+  max-height: 58px;
+  padding: 1.15rem 1rem;
+  background-color: rgb(174, 61, 61);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1rem;
+  color: white;
+  position: absolute;
+  top: 136px;
+  z-index: 1000;
+}
 @media (width < 650px) {
   .toastSuccess-mobile,
   .toastError-mobile {
@@ -4202,6 +4216,23 @@ button {
   left: 50%;
   transform: translate(-225px, 0);
   z-index: 100;
+}
+.toastError-modal {
+  width: 400px;
+  max-height: 80px;
+  padding: 1.15rem 1rem;
+  background-color: rgb(174, 61, 61);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1rem;
+  color: white;
+  position: absolute;
+  top: 85vh;
+  left: 50%;
+  transform: translate(-50%, 0);
+  z-index: 100000000000000;
 }
 @media (width < 480px) {
   .toastSuccess,
