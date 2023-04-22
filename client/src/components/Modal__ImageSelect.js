@@ -7,10 +7,13 @@ import {
   faXmark,
   faHeart,
   faPenToSquare,
+  faCheck,
   faTrash,
+  faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 import Toast from "./Toast";
+import ProgressBar from "./ProgressBar";
 
 const Modal__ImageSelect = ({
   domain,
@@ -31,6 +34,10 @@ const Modal__ImageSelect = ({
   setImgGalleryScrollPosition,
   imgToLoadInFirstModal,
 }) => {
+  // BUGS
+  // when no given tags, doesn't work (might be for all fields)
+  // image modal info doesn't update after submit
+  //img title url or imgtitlearrstate doesn't update with the random number given from fetch
   useEffect(() => {
     console.log(imgTitleArrState, " img title arr state");
   });
@@ -63,6 +70,139 @@ const Modal__ImageSelect = ({
       setIsScreenMobile(false);
     }
   }, [windowSize]);
+
+  // progress bar state. gets set to progressbar component when submitform starts
+  const [progressBar, setProgressBar] = useState();
+
+  //submit buttons to change when submitting to add a loading spinner
+  const [submitButton, setSubmitButton] = useState(
+    <button style={{ color: "blue" }}>Submit</button>
+  );
+
+  //submit when editing image info
+  async function submitForm(e) {
+    e.preventDefault();
+    if (
+      titleClass == "my-pics-editor__editor-form-details-sub-containerInputRed"
+    ) {
+      return;
+    }
+    setProgressBar();
+
+    setSubmitButton(
+      <button style={{ pointerEvents: "none", backgroundColor: "#e7e7e7" }}>
+        Submit{" "}
+        <FontAwesomeIcon
+          icon={faSpinner}
+          className="fa-spin"
+          style={{ marginLeft: "0.4rem" }}
+        />
+      </button>
+    );
+    // if (isScreenMobile) {
+    // setMobileSubmitButton(
+    //   <button
+    //     style={{
+    //       backgroundColor: "#e7e7e7",
+    //       border: "none",
+    //       color: "green",
+    //       pointerEvents: "none",
+    //       fontSize: "1.55rem",
+    //       display: "flex",
+    //       justifyContent: "center",
+    //       alignContent: "center",
+    //       paddingTop: "0.25rem",
+    //     }}
+    //   >
+    //     <FontAwesomeIcon icon={faSpinner} className="fa-spin" />
+    //   </button>
+    // );
+    // }
+    //make everything unclickable until submit is finished
+    const allElements = document.querySelectorAll("*");
+    allElements.forEach((element) => {
+      element.classList.add("pointer-events__none");
+    });
+    //start progress bar
+    setProgressBar(<ProgressBar playStatus="play" />);
+    //set up tags to send in fetch POST
+    let sendTags;
+    //if tags actually have something in them upon submit
+    if (tags != "") {
+      sendTags = tags.split(", "); //turn string into array
+    } else if (tags == "") {
+      sendTags = [];
+    }
+
+    // bulkArr.current[0].imageType = imageType.toLowerCase();
+    console.log("submit attempt");
+    await fetch(`${domain}/update/${curUser_real}`, {
+      method: "PUT",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify({
+        title: title,
+        description: description,
+        tags: sendTags,
+        imageType: imgInfo.imageType,
+        colors: imgInfo.colors,
+        likes: imgInfo.likes,
+        likedBy: imgInfo.likedBy,
+        public_id: `picpocket/${imgPublic_Id}`,
+      }),
+    }).then((res) => {
+      //make progress bar finish
+      setProgressBar(<ProgressBar playStatus="finish" />);
+      // //set progress bar to default after it finishes
+      setTimeout(() => {
+        setProgressBar();
+      }, 500);
+      allElements.forEach((element) => {
+        element.classList.remove("pointer-events__none");
+      });
+      if (!isScreenMobile) {
+        setToastStatus("Success-modal");
+        setToastMessage("Your pic was updated successfully.");
+        toastDissappear();
+        //make deleteYesOrNo modal go away if it is open
+        setDeleteYesOrNo();
+        //set img info stuff to new info
+        imgTitle = title;
+        imgDescription = description;
+        imgTags = tags;
+        //set is editable to false to turn inputs back into divs
+        setIsEditable(false);
+        //change current title of current item in imgTitleArrState to new updated title
+        imgTitleArrState[currentImgIndex] = title;
+        //go to new image title url
+        navigate(`/image/${title}`);
+      } else if (isScreenMobile) {
+        setToastStatus("Success-mobile-modal");
+        setToastMessage("Your pic was updated successfully.");
+        toastDissappear();
+        //make deleteYesOrNo modal go away if it is open
+        setDeleteYesOrNo();
+        //set is editable to false to turn inputs back into divs
+        setIsEditable(false);
+        //change current title of current item in imgTitleArrState to new updated title
+        imgTitleArrState[currentImgIndex] = title;
+        //go to new image title url
+        navigate(`/image/${title}`);
+      }
+      setSubmitButton(<button style={{ color: "blue" }}>Submit</button>);
+      // setMobileSubmitButton(
+      //   <button
+      //     style={{
+      //       backgroundColor: "rgb(250, 250, 250)",
+      //       border: "2px solid darkgreen",
+      //       color: "green",
+      //     }}
+      //   >
+      //     <FontAwesomeIcon icon={faCheck} />
+      //   </button>
+      // );
+    });
+    // .catch((err) => notify_edit_failure);
+  }
 
   //toast stuff
   //set toast to invisible until it is called by either error or success function
@@ -159,6 +299,15 @@ const Modal__ImageSelect = ({
   //when edit btn is clicked, set isEditable to !isEditable
   const [isEditable, setIsEditable] = useState(false);
 
+  //set title,description and tags to default if is editable is false
+  useEffect(() => {
+    if (!isEditable) {
+      setTitle(imgTitle);
+      setDescription(imgDescription);
+      setTags(imgTags);
+    }
+  }, [isEditable]);
+
   //for if curUser is the selected image's uploader - they can edit or delete it from image modal
   let editBtn;
   let deleteBtn;
@@ -254,6 +403,39 @@ const Modal__ImageSelect = ({
         </button>
       );
     }
+  }
+
+  //values to set editor form fields to
+  const [title, setTitle] = useState(imgTitle);
+  const [description, setDescription] = useState(imgDescription);
+  const [tags, setTags] = useState(imgTags);
+
+  //don't accept special characters
+  const [titleClass, setTitleClass] = useState(
+    "my-pics-editor__editor-form-details-sub-containerInput"
+  );
+  const [specialMessage, setSpecialMessage] = useState("");
+  if (/[~`!#$%\^&*+=\\[\]\\;,/{}|\\":<>\?]/g.test(title)) {
+    console.log("special");
+    setTimeout(() => {
+      setTitleClass(
+        "my-pics-editor__editor-form-details-sub-containerInputRed"
+      );
+      setSpecialMessage(" No Special Characters");
+    }, 10);
+  } else if (title == "") {
+    setTimeout(() => {
+      setTitleClass(
+        "my-pics-editor__editor-form-details-sub-containerInputRed"
+      );
+      setSpecialMessage(" Must Have Name");
+    }, 10);
+  } else {
+    // console.log("no special");
+    setTimeout(() => {
+      setTitleClass("my-pics-editor__editor-form-details-sub-containerInput");
+      setSpecialMessage("");
+    }, 10);
   }
 
   //tag list scrolling
@@ -567,6 +749,7 @@ const Modal__ImageSelect = ({
       className="image-select-modal__container"
       onMouseMove={(event) => handleMouseMove(event)}
     >
+      {progressBar}
       <Toast
         status={toastStatus}
         message={toastMessage}
@@ -707,64 +890,24 @@ const Modal__ImageSelect = ({
         </div>
         <div className="image-select-modal__img-info-container">
           {isEditable && (
-            <input
-              placeholder={`${imgTitle}`}
-              className="image-select-modal__img-title-input"
-            ></input>
-          )}
-          {!isEditable && (
-            <div className="image-select-modal__img-title">{imgTitle}</div>
-          )}
-          {isEditable && (
-            <input
-              placeholder={
-                <em>No Description Given</em> && "No Description Given"
-              }
-              className="image-select-modal__img-description-input"
-            ></input>
-          )}
-          {!isEditable && (
-            <div className="image-select-modal__img-description">
-              {imgDescription}
-            </div>
-          )}
-        </div>
-        <div style={{ width: "100%", position: "relative" }}>
-          <div
-            className={tagLeftArrowClass}
-            onClick={() => window.requestAnimationFrame(step_left)}
-          >
-            <FontAwesomeIcon
-              icon={faChevronLeft}
-              className="image-select-modal__img-tags-arrowIcon"
-            />
-          </div>
-          <div
-            className={tagRightArrowClass}
-            onClick={() => window.requestAnimationFrame(step)}
-          >
-            <FontAwesomeIcon
-              icon={faChevronRight}
-              className="image-select-modal__img-tags-arrowIcon"
-            />
-          </div>
-          <div
-            id="tagListID"
-            className="image-select-modal__img-tags-container"
-            onScroll={(e) => {
-              setTagListScrollPosition(e.target.scrollLeft);
-              setTagListMaxScroll(
-                e.target.scrollWidth - e.target.clientWidth - 1
-              );
-            }}
-          >
-            {isEditable && (
+            <form onSubmit={(e) => submitForm(e)}>
+              <input
+                placeholder={`${imgTitle}`}
+                className="image-select-modal__img-title-input"
+                onChange={(e) => setTitle(e.target.value)}
+              ></input>
+              <input
+                placeholder={imgDescription}
+                className="image-select-modal__img-description-input"
+                onChange={(e) => setDescription(e.target.value)}
+              ></input>
               <div className="image-select-modal__img-tags-input-container">
                 <p>Tags (Use commas. Ex: tag, tags)</p>
                 <div className="image-select-modal__img-tags-input-and-btns-container">
                   <input
-                    placeholder={`${imgTags}`}
+                    placeholder={imgTags}
                     className="image-select-modal__img-tags-input"
+                    onChange={(e) => setTags(e.target.value)}
                   ></input>
                   <div className="image-select-modal__img-tags-input-container-btns-container">
                     <button
@@ -773,18 +916,57 @@ const Modal__ImageSelect = ({
                     >
                       Cancel
                     </button>
-                    <button style={{ color: "blue" }}>Submit</button>
+                    {submitButton}
                   </div>
                 </div>
               </div>
-            )}
-            {!isEditable && (
+            </form>
+          )}
+          {!isEditable && (
+            <div className="image-select-modal__img-title">{imgTitle}</div>
+          )}
+          {!isEditable && (
+            <div className="image-select-modal__img-description">
+              {imgDescription}
+            </div>
+          )}
+        </div>
+        {!isEditable && (
+          <div style={{ width: "100%", position: "relative" }}>
+            <div
+              className={tagLeftArrowClass}
+              onClick={() => window.requestAnimationFrame(step_left)}
+            >
+              <FontAwesomeIcon
+                icon={faChevronLeft}
+                className="image-select-modal__img-tags-arrowIcon"
+              />
+            </div>
+            <div
+              className={tagRightArrowClass}
+              onClick={() => window.requestAnimationFrame(step)}
+            >
+              <FontAwesomeIcon
+                icon={faChevronRight}
+                className="image-select-modal__img-tags-arrowIcon"
+              />
+            </div>
+            <div
+              id="tagListID"
+              className="image-select-modal__img-tags-container"
+              onScroll={(e) => {
+                setTagListScrollPosition(e.target.scrollLeft);
+                setTagListMaxScroll(
+                  e.target.scrollWidth - e.target.clientWidth - 1
+                );
+              }}
+            >
               <div className="image-select-modal__img-tags-list">
                 <ul>{imgTags}</ul>
               </div>
-            )}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

@@ -1355,8 +1355,10 @@ app.get("/massDownloadImages/:publicIDArr", (req, res) => {
 //update image info
 app.put("/update/:username", async (req, res) => {
   console.log("update test");
+  console.log(req.body);
   //get existing random number from public_id
   let p_id = req.body.public_id;
+  //get existing random number from image being updated
   let existingRandomNumber = req.body.public_id.slice(p_id.length - 6);
   console.log(existingRandomNumber);
   var mongoReplacement;
