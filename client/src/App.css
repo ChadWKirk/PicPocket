@@ -5291,7 +5291,7 @@ button {
   border-radius: 5px;
 }
 .image-select-modal__delete-btn:hover {
-  background-color: #ad0000;
+  background-color: #a30000;
   color: #eeeeee;
 }
 .image-select-modal__delete-yes-or-no {
@@ -5307,6 +5307,15 @@ button {
   top: 80px;
   right: 24px;
 }
+.image-select-modal__delete-yes-or-no::before {
+  border: 17px solid rgba(0, 0, 0, 0);
+  border-top: 27px solid #b20000;
+  content: "";
+  transform: rotate(180deg);
+  top: -32px;
+  right: 12px;
+  position: absolute;
+}
 .image-select-modal__delete-yes-or-no-btns {
   display: flex;
   gap: 0.5rem;
@@ -5317,6 +5326,10 @@ button {
   color: #b20000;
   padding: 0.5rem 1rem;
   border-radius: 4px;
+}
+.image-select-modal__delete-yes-or-no-btns button:hover {
+  background-color: #ececec;
+  color: #a30000;
 }
 .image-select-modal__img-container {
   /* width: 100%; */

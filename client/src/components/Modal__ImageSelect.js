@@ -429,11 +429,14 @@ const Modal__ImageSelect = ({
     if (deleteYesOrNo === undefined) {
       setDeleteYesOrNo(
         <div className="image-select-modal__delete-yes-or-no">
-          This will permanently delete this pic from your account. Are you sure
-          you want to delete this pic from your account?
+          <p>
+            This will <b>permanently</b> delete this pic from your account. Are
+            you sure you want to delete this pic from your account?
+          </p>
+
           <div className="image-select-modal__delete-yes-or-no-btns">
             <button>Yes</button>
-            <button>No</button>
+            <button onClick={() => setDeleteYesOrNo()}>No</button>
           </div>
         </div>
       );
@@ -458,6 +461,7 @@ const Modal__ImageSelect = ({
           setTimeout(() => {
             document.body.style.overflow = "auto";
           }, 50);
+          setDeleteYesOrNo();
         }}
         style={{ height: `100vh` }} //get height of modal contents container and use that for height of black bg
       ></div>
@@ -474,6 +478,7 @@ const Modal__ImageSelect = ({
             setTimeout(() => {
               document.body.style.overflow = "auto";
             }, 50);
+            setDeleteYesOrNo();
           }}
           style={{ cursor: "pointer" }}
         />
@@ -484,6 +489,7 @@ const Modal__ImageSelect = ({
               setIsPrevOrNextClicked(!isPrevOrNextClicked);
               setIsShowingImageSelectModal(true);
               setAmountOfPagesToJumpBack(amountOfPagesToJumpBack - 1);
+              setDeleteYesOrNo();
             }}
             style={{ cursor: "pointer" }}
           >
@@ -502,6 +508,7 @@ const Modal__ImageSelect = ({
               //subtract from amount of pages to jump back because that's how navigate works
               //to jump back one page it is navigate(-1). to jump back 5 pages it is -5.
               setAmountOfPagesToJumpBack(amountOfPagesToJumpBack - 1);
+              setDeleteYesOrNo();
             }}
             style={{ cursor: "pointer" }}
           >
