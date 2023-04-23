@@ -1411,7 +1411,7 @@ app.put("/update/:username", async (req, res) => {
     .collection("picpocket-images")
     .replaceOne(myQuery, mongoReplacement);
 
-  res.json("updated");
+  res.json(mongoReplacement.public_id);
 });
 
 //update likedBy

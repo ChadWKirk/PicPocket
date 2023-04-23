@@ -34,13 +34,11 @@ const Modal__ImageSelect = ({
   setImgGalleryScrollPosition,
   imgToLoadInFirstModal,
 }) => {
-  // BUGS
-  // when editing and not filling in a field, it submits it as undefined instead of the current info
-  // image modal info doesn't update after submit
-  //img title url or imgtitlearrstate doesn't update with the random number given from fetch
   useEffect(() => {
-    console.log(imgTitleArrState, " img title arr state");
-  });
+    if (imgInfo) {
+      console.log(imgInfo.title);
+    }
+  }, [imgInfo]);
   //when modal is open, set body overflow to hidden. for some reason classlist.add wasn't working it was glitching on and off
   document.body.style.overflow = "hidden";
 
@@ -150,58 +148,66 @@ const Modal__ImageSelect = ({
         likedBy: imgInfo.likedBy,
         public_id: `picpocket/${imgPublic_Id}`,
       }),
-    }).then((res) => {
-      //make progress bar finish
-      setProgressBar(<ProgressBar playStatus="finish" />);
-      // //set progress bar to default after it finishes
-      setTimeout(() => {
-        setProgressBar();
-      }, 500);
-      allElements.forEach((element) => {
-        element.classList.remove("pointer-events__none");
-      });
-      if (!isScreenMobile) {
-        setToastStatus("Success-modal");
-        setToastMessage("Your pic was updated successfully.");
-        toastDissappear();
-        //make deleteYesOrNo modal go away if it is open
-        setDeleteYesOrNo();
-        //set img info stuff to new info
-        imgTitle = title;
-        imgDescription = description;
-        imgTags = tags;
-        //set is editable to false to turn inputs back into divs
-        setIsEditable(false);
-        //change current title of current item in imgTitleArrState to new updated title
-        imgTitleArrState[currentImgIndex] = title;
-        //go to new image title url
-        navigate(`/image/${title}`);
-      } else if (isScreenMobile) {
-        setToastStatus("Success-mobile-modal");
-        setToastMessage("Your pic was updated successfully.");
-        toastDissappear();
-        //make deleteYesOrNo modal go away if it is open
-        setDeleteYesOrNo();
-        //set is editable to false to turn inputs back into divs
-        setIsEditable(false);
-        //change current title of current item in imgTitleArrState to new updated title
-        imgTitleArrState[currentImgIndex] = title;
-        //go to new image title url
-        navigate(`/image/${title}`);
-      }
-      setSubmitButton(<button style={{ color: "blue" }}>Submit</button>);
-      // setMobileSubmitButton(
-      //   <button
-      //     style={{
-      //       backgroundColor: "rgb(250, 250, 250)",
-      //       border: "2px solid darkgreen",
-      //       color: "green",
-      //     }}
-      //   >
-      //     <FontAwesomeIcon icon={faCheck} />
-      //   </button>
-      // );
-    });
+    }).then((response) =>
+      response
+        .json()
+        .then((resJSON) => JSON.stringify(resJSON))
+        .then((stringJSON) => JSON.parse(stringJSON))
+        .then((parsedJSON) => {
+          console.log(parsedJSON, " parsedJSON");
+          //make progress bar finish
+          setProgressBar(<ProgressBar playStatus="finish" />);
+          // //set progress bar to default after it finishes
+          setTimeout(() => {
+            setProgressBar();
+          }, 500);
+          allElements.forEach((element) => {
+            element.classList.remove("pointer-events__none");
+          });
+          if (!isScreenMobile) {
+            setToastStatus("Success-modal");
+            setToastMessage("Your pic was updated successfully.");
+            toastDissappear();
+            //make deleteYesOrNo modal go away if it is open
+            setDeleteYesOrNo();
+            //set img info stuff to new info
+            imgTitle = title;
+            imgDescription = description;
+            imgTags = tags;
+            //set is editable to false to turn inputs back into divs
+            setIsEditable(false);
+            //change current title of current item in imgTitleArrState to new updated title
+            imgTitleArrState[currentImgIndex] = parsedJSON.slice(10);
+            //go to new image title url
+            navigate(`/image/${parsedJSON.slice(10)}`);
+            console.log(imgTitleArrState);
+          } else if (isScreenMobile) {
+            setToastStatus("Success-mobile-modal");
+            setToastMessage("Your pic was updated successfully.");
+            toastDissappear();
+            //make deleteYesOrNo modal go away if it is open
+            setDeleteYesOrNo();
+            //set is editable to false to turn inputs back into divs
+            setIsEditable(false);
+            //change current title of current item in imgTitleArrState to new updated title
+            imgTitleArrState[currentImgIndex] = parsedJSON.slice(10);
+            //go to new image title url
+            navigate(`/image/${parsedJSON.slice(10)}`);
+          }
+          setSubmitButton(<button style={{ color: "blue" }}>Submit</button>);
+          // setMobileSubmitButton(
+          //   <button
+          //     style={{
+          //       backgroundColor: "rgb(250, 250, 250)",
+          //       border: "2px solid darkgreen",
+          //       color: "green",
+          //     }}
+          //   >
+          //     <FontAwesomeIcon icon={faCheck} />
+          //   </button>
+          // );
+        })
+    );
     // .catch((err) => notify_edit_failure);
   }
 
