@@ -83,50 +83,50 @@ const Modal__ImageSelect = ({
   async function submitForm(e) {
     e.preventDefault();
     console.log(title, " title ", description, " desc ", tags, " tags ");
-    // if (
-    //   titleClass == "my-pics-editor__editor-form-details-sub-containerInputRed"
-    // ) {
-    //   return;
-    // }
-    // setProgressBar();
+    if (
+      titleClass == "my-pics-editor__editor-form-details-sub-containerInputRed"
+    ) {
+      return;
+    }
+    setProgressBar();
 
-    // setSubmitButton(
-    //   <button style={{ pointerEvents: "none", backgroundColor: "#e7e7e7" }}>
-    //     Submit{" "}
-    //     <FontAwesomeIcon
-    //       icon={faSpinner}
-    //       className="fa-spin"
-    //       style={{ marginLeft: "0.4rem" }}
-    //     />
+    setSubmitButton(
+      <button style={{ pointerEvents: "none", backgroundColor: "#e7e7e7" }}>
+        Submit{" "}
+        <FontAwesomeIcon
+          icon={faSpinner}
+          className="fa-spin"
+          style={{ marginLeft: "0.4rem" }}
+        />
+      </button>
+    );
+    // if (isScreenMobile) {
+    // setMobileSubmitButton(
+    //   <button
+    //     style={{
+    //       backgroundColor: "#e7e7e7",
+    //       border: "none",
+    //       color: "green",
+    //       pointerEvents: "none",
+    //       fontSize: "1.55rem",
+    //       display: "flex",
+    //       justifyContent: "center",
+    //       alignContent: "center",
+    //       paddingTop: "0.25rem",
+    //     }}
+    //   >
+    //     <FontAwesomeIcon icon={faSpinner} className="fa-spin" />
     //   </button>
     // );
-    // // if (isScreenMobile) {
-    // // setMobileSubmitButton(
-    // //   <button
-    // //     style={{
-    // //       backgroundColor: "#e7e7e7",
-    // //       border: "none",
-    // //       color: "green",
-    // //       pointerEvents: "none",
-    // //       fontSize: "1.55rem",
-    // //       display: "flex",
-    // //       justifyContent: "center",
-    // //       alignContent: "center",
-    // //       paddingTop: "0.25rem",
-    // //     }}
-    // //   >
-    // //     <FontAwesomeIcon icon={faSpinner} className="fa-spin" />
-    // //   </button>
-    // // );
-    // // }
-    // //make everything unclickable until submit is finished
-    // const allElements = document.querySelectorAll("*");
-    // allElements.forEach((element) => {
-    //   element.classList.add("pointer-events__none");
-    // });
-    // //start progress bar
-    // setProgressBar(<ProgressBar playStatus="play" />);
-    // //set up tags to send in fetch POST
+    // }
+    //make everything unclickable until submit is finished
+    const allElements = document.querySelectorAll("*");
+    allElements.forEach((element) => {
+      element.classList.add("pointer-events__none");
+    });
+    //start progress bar
+    setProgressBar(<ProgressBar playStatus="play" />);
+    //set up tags to send in fetch POST
     // let sendTags;
     // //if tags actually have something in them upon submit
     // if (tags != "") {
@@ -135,74 +135,74 @@ const Modal__ImageSelect = ({
     //   sendTags = [];
     // }
 
-    // // bulkArr.current[0].imageType = imageType.toLowerCase();
-    // console.log("submit attempt");
-    // await fetch(`${domain}/update/${curUser_real}`, {
-    //   method: "PUT",
-    //   headers: { "Content-type": "application/json" },
-    //   body: JSON.stringify({
-    //     title: title,
-    //     description: description,
-    //     tags: sendTags,
-    //     imageType: imgInfo.imageType,
-    //     colors: imgInfo.colors,
-    //     likes: imgInfo.likes,
-    //     likedBy: imgInfo.likedBy,
-    //     public_id: `picpocket/${imgPublic_Id}`,
-    //   }),
-    // }).then((res) => {
-    //   //make progress bar finish
-    //   setProgressBar(<ProgressBar playStatus="finish" />);
-    //   // //set progress bar to default after it finishes
-    //   setTimeout(() => {
-    //     setProgressBar();
-    //   }, 500);
-    //   allElements.forEach((element) => {
-    //     element.classList.remove("pointer-events__none");
-    //   });
-    //   if (!isScreenMobile) {
-    //     setToastStatus("Success-modal");
-    //     setToastMessage("Your pic was updated successfully.");
-    //     toastDissappear();
-    //     //make deleteYesOrNo modal go away if it is open
-    //     setDeleteYesOrNo();
-    //     //set img info stuff to new info
-    //     imgTitle = title;
-    //     imgDescription = description;
-    //     imgTags = tags;
-    //     //set is editable to false to turn inputs back into divs
-    //     setIsEditable(false);
-    //     //change current title of current item in imgTitleArrState to new updated title
-    //     imgTitleArrState[currentImgIndex] = title;
-    //     //go to new image title url
-    //     navigate(`/image/${title}`);
-    //   } else if (isScreenMobile) {
-    //     setToastStatus("Success-mobile-modal");
-    //     setToastMessage("Your pic was updated successfully.");
-    //     toastDissappear();
-    //     //make deleteYesOrNo modal go away if it is open
-    //     setDeleteYesOrNo();
-    //     //set is editable to false to turn inputs back into divs
-    //     setIsEditable(false);
-    //     //change current title of current item in imgTitleArrState to new updated title
-    //     imgTitleArrState[currentImgIndex] = title;
-    //     //go to new image title url
-    //     navigate(`/image/${title}`);
-    //   }
-    //   setSubmitButton(<button style={{ color: "blue" }}>Submit</button>);
-    //   // setMobileSubmitButton(
-    //   //   <button
-    //   //     style={{
-    //   //       backgroundColor: "rgb(250, 250, 250)",
-    //   //       border: "2px solid darkgreen",
-    //   //       color: "green",
-    //   //     }}
-    //   //   >
-    //   //     <FontAwesomeIcon icon={faCheck} />
-    //   //   </button>
-    //   // );
-    // });
-    // // .catch((err) => notify_edit_failure);
+    // bulkArr.current[0].imageType = imageType.toLowerCase();
+    console.log("submit attempt");
+    await fetch(`${domain}/update/${curUser_real}`, {
+      method: "PUT",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify({
+        title: title,
+        description: description,
+        tags: tags,
+        imageType: imgInfo.imageType,
+        colors: imgInfo.colors,
+        likes: imgInfo.likes,
+        likedBy: imgInfo.likedBy,
+        public_id: `picpocket/${imgPublic_Id}`,
+      }),
+    }).then((res) => {
+      //make progress bar finish
+      setProgressBar(<ProgressBar playStatus="finish" />);
+      // //set progress bar to default after it finishes
+      setTimeout(() => {
+        setProgressBar();
+      }, 500);
+      allElements.forEach((element) => {
+        element.classList.remove("pointer-events__none");
+      });
+      if (!isScreenMobile) {
+        setToastStatus("Success-modal");
+        setToastMessage("Your pic was updated successfully.");
+        toastDissappear();
+        //make deleteYesOrNo modal go away if it is open
+        setDeleteYesOrNo();
+        //set img info stuff to new info
+        imgTitle = title;
+        imgDescription = description;
+        imgTags = tags;
+        //set is editable to false to turn inputs back into divs
+        setIsEditable(false);
+        //change current title of current item in imgTitleArrState to new updated title
+        imgTitleArrState[currentImgIndex] = title;
+        //go to new image title url
+        navigate(`/image/${title}`);
+      } else if (isScreenMobile) {
+        setToastStatus("Success-mobile-modal");
+        setToastMessage("Your pic was updated successfully.");
+        toastDissappear();
+        //make deleteYesOrNo modal go away if it is open
+        setDeleteYesOrNo();
+        //set is editable to false to turn inputs back into divs
+        setIsEditable(false);
+        //change current title of current item in imgTitleArrState to new updated title
+        imgTitleArrState[currentImgIndex] = title;
+        //go to new image title url
+        navigate(`/image/${title}`);
+      }
+      setSubmitButton(<button style={{ color: "blue" }}>Submit</button>);
+      // setMobileSubmitButton(
+      //   <button
+      //     style={{
+      //       backgroundColor: "rgb(250, 250, 250)",
+      //       border: "2px solid darkgreen",
+      //       color: "green",
+      //     }}
+      //   >
+      //     <FontAwesomeIcon icon={faCheck} />
+      //   </button>
+      // );
+    });
+    // .catch((err) => notify_edit_failure);
   }
 
   //toast stuff
@@ -920,7 +920,7 @@ const Modal__ImageSelect = ({
                   <input
                     placeholder={editorTags}
                     className="image-select-modal__img-tags-input"
-                    onChange={(e) => setTags(e.target.value)}
+                    onChange={(e) => setTags(e.target.value.split(", "))}
                   ></input>
                   <div className="image-select-modal__img-tags-input-container-btns-container">
                     <button
