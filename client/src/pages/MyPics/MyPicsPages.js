@@ -61,7 +61,7 @@ const MyPicsPage = ({
   const [imgItemArrState, setImgItemArrState] = useState(imgItemArr);
 
   //if user tries to go to a user's my pics page that they aren't logged in as
-  //change url to url with their curUser name
+  //change url to url with their curUser name so they don't have access to other people's MyPics page
   //if user tries to get to my pics page and they aren't logged in at all, app.js takes cares of it by using Navigate element
   useEffect(() => {
     if (username !== curUser_hyphenated) {

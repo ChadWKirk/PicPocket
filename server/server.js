@@ -1360,7 +1360,6 @@ app.put("/update/:username", async (req, res) => {
   let p_id = req.body.public_id;
   //get existing random number from image being updated
   let existingRandomNumber = req.body.public_id.slice(p_id.length - 6);
-  console.log(existingRandomNumber);
   var mongoReplacement;
   //random 6 digit number to tag onto the public_id to allow images to be named the same thing but have different public_ids
   let randomNumber = Math.floor(100000 + Math.random() * 900000);

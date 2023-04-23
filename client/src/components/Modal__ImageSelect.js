@@ -35,7 +35,7 @@ const Modal__ImageSelect = ({
   imgToLoadInFirstModal,
 }) => {
   // BUGS
-  // when no given tags, doesn't work (might be for all fields)
+  // when editing and not filling in a field, it submits it as undefined instead of the current info
   // image modal info doesn't update after submit
   //img title url or imgtitlearrstate doesn't update with the random number given from fetch
   useEffect(() => {
@@ -82,126 +82,127 @@ const Modal__ImageSelect = ({
   //submit when editing image info
   async function submitForm(e) {
     e.preventDefault();
-    if (
-      titleClass == "my-pics-editor__editor-form-details-sub-containerInputRed"
-    ) {
-      return;
-    }
-    setProgressBar();
+    console.log(title, " title ", description, " desc ", tags, " tags ");
+    // if (
+    //   titleClass == "my-pics-editor__editor-form-details-sub-containerInputRed"
+    // ) {
+    //   return;
+    // }
+    // setProgressBar();
 
-    setSubmitButton(
-      <button style={{ pointerEvents: "none", backgroundColor: "#e7e7e7" }}>
-        Submit{" "}
-        <FontAwesomeIcon
-          icon={faSpinner}
-          className="fa-spin"
-          style={{ marginLeft: "0.4rem" }}
-        />
-      </button>
-    );
-    // if (isScreenMobile) {
-    // setMobileSubmitButton(
-    //   <button
-    //     style={{
-    //       backgroundColor: "#e7e7e7",
-    //       border: "none",
-    //       color: "green",
-    //       pointerEvents: "none",
-    //       fontSize: "1.55rem",
-    //       display: "flex",
-    //       justifyContent: "center",
-    //       alignContent: "center",
-    //       paddingTop: "0.25rem",
-    //     }}
-    //   >
-    //     <FontAwesomeIcon icon={faSpinner} className="fa-spin" />
+    // setSubmitButton(
+    //   <button style={{ pointerEvents: "none", backgroundColor: "#e7e7e7" }}>
+    //     Submit{" "}
+    //     <FontAwesomeIcon
+    //       icon={faSpinner}
+    //       className="fa-spin"
+    //       style={{ marginLeft: "0.4rem" }}
+    //     />
     //   </button>
     // );
+    // // if (isScreenMobile) {
+    // // setMobileSubmitButton(
+    // //   <button
+    // //     style={{
+    // //       backgroundColor: "#e7e7e7",
+    // //       border: "none",
+    // //       color: "green",
+    // //       pointerEvents: "none",
+    // //       fontSize: "1.55rem",
+    // //       display: "flex",
+    // //       justifyContent: "center",
+    // //       alignContent: "center",
+    // //       paddingTop: "0.25rem",
+    // //     }}
+    // //   >
+    // //     <FontAwesomeIcon icon={faSpinner} className="fa-spin" />
+    // //   </button>
+    // // );
+    // // }
+    // //make everything unclickable until submit is finished
+    // const allElements = document.querySelectorAll("*");
+    // allElements.forEach((element) => {
+    //   element.classList.add("pointer-events__none");
+    // });
+    // //start progress bar
+    // setProgressBar(<ProgressBar playStatus="play" />);
+    // //set up tags to send in fetch POST
+    // let sendTags;
+    // //if tags actually have something in them upon submit
+    // if (tags != "") {
+    //   sendTags = tags.split(", "); //turn string into array
+    // } else if (tags == "") {
+    //   sendTags = [];
     // }
-    //make everything unclickable until submit is finished
-    const allElements = document.querySelectorAll("*");
-    allElements.forEach((element) => {
-      element.classList.add("pointer-events__none");
-    });
-    //start progress bar
-    setProgressBar(<ProgressBar playStatus="play" />);
-    //set up tags to send in fetch POST
-    let sendTags;
-    //if tags actually have something in them upon submit
-    if (tags != "") {
-      sendTags = tags.split(", "); //turn string into array
-    } else if (tags == "") {
-      sendTags = [];
-    }
 
-    // bulkArr.current[0].imageType = imageType.toLowerCase();
-    console.log("submit attempt");
-    await fetch(`${domain}/update/${curUser_real}`, {
-      method: "PUT",
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify({
-        title: title,
-        description: description,
-        tags: sendTags,
-        imageType: imgInfo.imageType,
-        colors: imgInfo.colors,
-        likes: imgInfo.likes,
-        likedBy: imgInfo.likedBy,
-        public_id: `picpocket/${imgPublic_Id}`,
-      }),
-    }).then((res) => {
-      //make progress bar finish
-      setProgressBar(<ProgressBar playStatus="finish" />);
-      // //set progress bar to default after it finishes
-      setTimeout(() => {
-        setProgressBar();
-      }, 500);
-      allElements.forEach((element) => {
-        element.classList.remove("pointer-events__none");
-      });
-      if (!isScreenMobile) {
-        setToastStatus("Success-modal");
-        setToastMessage("Your pic was updated successfully.");
-        toastDissappear();
-        //make deleteYesOrNo modal go away if it is open
-        setDeleteYesOrNo();
-        //set img info stuff to new info
-        imgTitle = title;
-        imgDescription = description;
-        imgTags = tags;
-        //set is editable to false to turn inputs back into divs
-        setIsEditable(false);
-        //change current title of current item in imgTitleArrState to new updated title
-        imgTitleArrState[currentImgIndex] = title;
-        //go to new image title url
-        navigate(`/image/${title}`);
-      } else if (isScreenMobile) {
-        setToastStatus("Success-mobile-modal");
-        setToastMessage("Your pic was updated successfully.");
-        toastDissappear();
-        //make deleteYesOrNo modal go away if it is open
-        setDeleteYesOrNo();
-        //set is editable to false to turn inputs back into divs
-        setIsEditable(false);
-        //change current title of current item in imgTitleArrState to new updated title
-        imgTitleArrState[currentImgIndex] = title;
-        //go to new image title url
-        navigate(`/image/${title}`);
-      }
-      setSubmitButton(<button style={{ color: "blue" }}>Submit</button>);
-      // setMobileSubmitButton(
-      //   <button
-      //     style={{
-      //       backgroundColor: "rgb(250, 250, 250)",
-      //       border: "2px solid darkgreen",
-      //       color: "green",
-      //     }}
-      //   >
-      //     <FontAwesomeIcon icon={faCheck} />
-      //   </button>
-      // );
-    });
-    // .catch((err) => notify_edit_failure);
+    // // bulkArr.current[0].imageType = imageType.toLowerCase();
+    // console.log("submit attempt");
+    // await fetch(`${domain}/update/${curUser_real}`, {
+    //   method: "PUT",
+    //   headers: { "Content-type": "application/json" },
+    //   body: JSON.stringify({
+    //     title: title,
+    //     description: description,
+    //     tags: sendTags,
+    //     imageType: imgInfo.imageType,
+    //     colors: imgInfo.colors,
+    //     likes: imgInfo.likes,
+    //     likedBy: imgInfo.likedBy,
+    //     public_id: `picpocket/${imgPublic_Id}`,
+    //   }),
+    // }).then((res) => {
+    //   //make progress bar finish
+    //   setProgressBar(<ProgressBar playStatus="finish" />);
+    //   // //set progress bar to default after it finishes
+    //   setTimeout(() => {
+    //     setProgressBar();
+    //   }, 500);
+    //   allElements.forEach((element) => {
+    //     element.classList.remove("pointer-events__none");
+    //   });
+    //   if (!isScreenMobile) {
+    //     setToastStatus("Success-modal");
+    //     setToastMessage("Your pic was updated successfully.");
+    //     toastDissappear();
+    //     //make deleteYesOrNo modal go away if it is open
+    //     setDeleteYesOrNo();
+    //     //set img info stuff to new info
+    //     imgTitle = title;
+    //     imgDescription = description;
+    //     imgTags = tags;
+    //     //set is editable to false to turn inputs back into divs
+    //     setIsEditable(false);
+    //     //change current title of current item in imgTitleArrState to new updated title
+    //     imgTitleArrState[currentImgIndex] = title;
+    //     //go to new image title url
+    //     navigate(`/image/${title}`);
+    //   } else if (isScreenMobile) {
+    //     setToastStatus("Success-mobile-modal");
+    //     setToastMessage("Your pic was updated successfully.");
+    //     toastDissappear();
+    //     //make deleteYesOrNo modal go away if it is open
+    //     setDeleteYesOrNo();
+    //     //set is editable to false to turn inputs back into divs
+    //     setIsEditable(false);
+    //     //change current title of current item in imgTitleArrState to new updated title
+    //     imgTitleArrState[currentImgIndex] = title;
+    //     //go to new image title url
+    //     navigate(`/image/${title}`);
+    //   }
+    //   setSubmitButton(<button style={{ color: "blue" }}>Submit</button>);
+    //   // setMobileSubmitButton(
+    //   //   <button
+    //   //     style={{
+    //   //       backgroundColor: "rgb(250, 250, 250)",
+    //   //       border: "2px solid darkgreen",
+    //   //       color: "green",
+    //   //     }}
+    //   //   >
+    //   //     <FontAwesomeIcon icon={faCheck} />
+    //   //   </button>
+    //   // );
+    // });
+    // // .catch((err) => notify_edit_failure);
   }
 
   //toast stuff
@@ -255,6 +256,7 @@ const Modal__ImageSelect = ({
   let imgLikes = imgToLoadInFirstModal.likes;
   let imgDownloadURL = imgToLoadInFirstModal.imgDownloadURL;
   let imgTags = imgToLoadInFirstModal.imgTags;
+  let editorTags;
   let imageSelectModalLikeBtn;
   //to load like button before fetch
   if (imgToLoadInFirstModal.isImgLiked) {
@@ -301,10 +303,10 @@ const Modal__ImageSelect = ({
 
   //set title,description and tags to default if is editable is false
   useEffect(() => {
-    if (!isEditable) {
-      setTitle(imgTitle);
-      setDescription(imgDescription);
-      setTags(imgTags);
+    if (!isEditable && imgInfo) {
+      setTitle(imgInfo.title);
+      setDescription(imgInfo.description);
+      setTags(imgInfo.tags);
     }
   }, [isEditable]);
 
@@ -320,7 +322,7 @@ const Modal__ImageSelect = ({
       ".jpg";
     imgTitle = imgInfo.title;
     if (imgInfo.description == "") {
-      imgDescription = <em>No Description Given</em>;
+      imgDescription = "No Description Given";
     } else {
       imgDescription = imgInfo.description;
     }
@@ -344,6 +346,8 @@ const Modal__ImageSelect = ({
         </li>
       );
     }
+    //tags with commas to display while editing
+    editorTags = imgInfo.tags.join(", ");
 
     if (imgInfo.likedBy.includes(curUser_real)) {
       imageSelectModalLikeBtn = (
@@ -406,9 +410,18 @@ const Modal__ImageSelect = ({
   }
 
   //values to set editor form fields to
-  const [title, setTitle] = useState(imgTitle);
-  const [description, setDescription] = useState(imgDescription);
-  const [tags, setTags] = useState(imgTags);
+  const [title, setTitle] = useState();
+  const [description, setDescription] = useState();
+  const [tags, setTags] = useState();
+
+  useEffect(() => {
+    //values to set editor form fields to
+    if (imgInfo) {
+      setTitle(imgInfo.title);
+      setDescription(imgInfo.description);
+      setTags(imgInfo.tags);
+    }
+  }, [imgInfo]);
 
   //don't accept special characters
   const [titleClass, setTitleClass] = useState(
@@ -892,7 +905,7 @@ const Modal__ImageSelect = ({
           {isEditable && (
             <form onSubmit={(e) => submitForm(e)}>
               <input
-                placeholder={`${imgTitle}`}
+                placeholder={imgTitle}
                 className="image-select-modal__img-title-input"
                 onChange={(e) => setTitle(e.target.value)}
               ></input>
@@ -905,7 +918,7 @@ const Modal__ImageSelect = ({
                 <p>Tags (Use commas. Ex: tag, tags)</p>
                 <div className="image-select-modal__img-tags-input-and-btns-container">
                   <input
-                    placeholder={imgTags}
+                    placeholder={editorTags}
                     className="image-select-modal__img-tags-input"
                     onChange={(e) => setTags(e.target.value)}
                   ></input>
@@ -927,7 +940,7 @@ const Modal__ImageSelect = ({
           )}
           {!isEditable && (
             <div className="image-select-modal__img-description">
-              {imgDescription}
+              <em>{imgDescription}</em>
             </div>
           )}
         </div>
