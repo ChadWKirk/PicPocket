@@ -47,6 +47,9 @@ const Modal__ImageSelect = ({
   //when modal is open, set body overflow to hidden. for some reason classlist.add wasn't working it was glitching on and off
   document.body.style.overflow = "hidden";
 
+  //title input max length. if too long cloudinary won't accept it
+  const titleInputMaxLength = 230;
+
   //get screen width. at Xpx setIsScreenMobile(true)
   const [isScreenMobile, setIsScreenMobile] = useState();
   // get window size to either show delete yes or no modal / submit modal or just use window.confirm for those
@@ -86,9 +89,7 @@ const Modal__ImageSelect = ({
   async function submitForm(e) {
     e.preventDefault();
     console.log(title, " title ", description, " desc ", tags, " tags ");
-    if (
-      titleClass == "my-pics-editor__editor-form-details-sub-containerInputRed"
-    ) {
+    if (titleClass == "image-select-modal__img-title-input-red") {
       return;
     }
     setProgressBar();
@@ -436,28 +437,25 @@ const Modal__ImageSelect = ({
 
   //don't accept special characters
   const [titleClass, setTitleClass] = useState(
-    "my-pics-editor__editor-form-details-sub-containerInput"
+    "image-select-modal__img-title-input"
   );
   const [specialMessage, setSpecialMessage] = useState("");
   if (/[~`!#$%\^&*+=\\[\]\\;,/{}|\\":<>\?]/g.test(title)) {
-    console.log("special");
     setTimeout(() => {
-      setTitleClass(
-        "my-pics-editor__editor-form-details-sub-containerInputRed"
-      );
+      setTitleClass("image-select-modal__img-title-input-red");
       setSpecialMessage(" No Special Characters");
     }, 10);
-  } else if (title == "") {
-    setTimeout(() => {
-      setTitleClass(
-        "my-pics-editor__editor-form-details-sub-containerInputRed"
-      );
-      setSpecialMessage(" Must Have Name");
-    }, 10);
-  } else {
+  }
+  // else if (title == "") {
+  //   setTimeout(() => {
+  //     setTitleClass("image-select-modal__img-title-input-red");
+  //     setSpecialMessage(" Must Have Name");
+  //   }, 10);
+  // }
+  else {
     // console.log("no special");
     setTimeout(() => {
-      setTitleClass("my-pics-editor__editor-form-details-sub-containerInput");
+      setTitleClass("image-select-modal__img-title-input");
       setSpecialMessage("");
     }, 10);
   }
@@ -915,15 +913,18 @@ const Modal__ImageSelect = ({
         <div className="image-select-modal__img-info-container">
           {isEditable && (
             <form onSubmit={(e) => submitForm(e)}>
+              <p style={{ lineHeight: "0", color: "red" }}>{specialMessage}</p>
               <input
                 placeholder={imgTitle}
-                className="image-select-modal__img-title-input"
+                className={titleClass}
                 onChange={(e) => setTitle(e.target.value)}
+                maxLength={titleInputMaxLength}
               ></input>
               <input
                 placeholder={imgDescription}
                 className="image-select-modal__img-description-input"
                 onChange={(e) => setDescription(e.target.value)}
+                maxLength={70}
               ></input>
               <div className="image-select-modal__img-tags-input-container">
                 <p>Tags (Use commas. Ex: tag, tags)</p>

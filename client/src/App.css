@@ -5483,6 +5483,22 @@ button {
   line-height: 1.65;
   /* max-width: 48%; */
 }
+.image-select-modal__img-title-input-red {
+  border-radius: 2px;
+  border: 2px solid rgb(151, 0, 0) !important;
+  color: #000;
+  width: 100%;
+  font-size: 2.25rem;
+  font-weight: 500;
+  padding: 0.25rem 1rem;
+  word-wrap: break-word;
+  line-height: 1.65;
+  /* max-width: 48%; */
+}
+.image-select-modal__img-title-input-red:focus {
+  border: 2px solid rgb(151, 0, 0) !important;
+  outline: none;
+}
 .image-select-modal__img-description {
   color: var(--dark4);
   font-weight: 500;
