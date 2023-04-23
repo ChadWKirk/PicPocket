@@ -5475,7 +5475,7 @@ button {
   /* max-width: 48%; */
 }
 .image-select-modal__img-title-input::placeholder {
-  color: #000;
+  color: var(--dark4);
   width: 100%;
   font-size: 2.25rem;
   font-weight: 500;
@@ -5539,6 +5539,16 @@ button {
 }
 .image-select-modal__img-tags-input {
   border-radius: 2px;
+  padding: 0.25rem 1rem;
+}
+.image-select-modal__img-tags-input-red {
+  border-radius: 2px;
+  border: 2px solid rgb(151, 0, 0);
+  padding: 0.25rem 1rem;
+}
+.image-select-modal__img-tags-input-red:focus {
+  border: 2px solid rgb(151, 0, 0);
+  outline: none;
   padding: 0.25rem 1rem;
 }
 .image-select-modal__img-tags-input-container-btns-container {

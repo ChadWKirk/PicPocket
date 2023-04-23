@@ -37,8 +37,7 @@ const Modal__ImageSelect = ({
   // BUGS
   //if user does not update title, new info doesn't appear
   //NEED TO DO
-  //special characters thing for title etc.
-  //char limit for title and description
+  //
   useEffect(() => {
     if (imgInfo) {
       console.log(imgInfo.title);
@@ -89,7 +88,10 @@ const Modal__ImageSelect = ({
   async function submitForm(e) {
     e.preventDefault();
     console.log(title, " title ", description, " desc ", tags, " tags ");
-    if (titleClass == "image-select-modal__img-title-input-red") {
+    if (
+      titleClass == "image-select-modal__img-title-input-red" ||
+      tagClass == "image-select-modal__img-tags-input-red"
+    ) {
       return;
     }
     setProgressBar();
@@ -131,13 +133,14 @@ const Modal__ImageSelect = ({
     //start progress bar
     setProgressBar(<ProgressBar playStatus="play" />);
     //set up tags to send in fetch POST
-    // let sendTags;
-    // //if tags actually have something in them upon submit
-    // if (tags != "") {
-    //   sendTags = tags.split(", "); //turn string into array
-    // } else if (tags == "") {
-    //   sendTags = [];
-    // }
+    let sendTags;
+    //if user edits tag field to be empty, change value from "" to an empty array
+    //so a blank box doesn't show in tags section on modal
+    if (tags != "") {
+      sendTags = tags; //turn string into array
+    } else if (tags == "") {
+      sendTags = [];
+    }
 
     // bulkArr.current[0].imageType = imageType.toLowerCase();
     console.log("submit attempt");
@@ -147,7 +150,7 @@ const Modal__ImageSelect = ({
       body: JSON.stringify({
         title: title,
         description: description,
-        tags: tags,
+        tags: sendTags,
         imageType: imgInfo.imageType,
         colors: imgInfo.colors,
         likes: imgInfo.likes,
@@ -322,6 +325,22 @@ const Modal__ImageSelect = ({
     }
   }, [isEditable]);
 
+  //set title, description and tag input fields values to current img info
+  //so user doesn't have to rewrite the entire title/desc/tags list and they can just edit it
+  function displayEditorInfo() {
+    setTimeout(() => {
+      document.querySelector("#titleInputID").value = imgTitle;
+      // setTitle(bulkArr.current[0].title);
+      document.querySelector("#tagsInputID").value = editorTags; //makes the tags array display with ", " separating items instead of just a comma. To play nice with split to create array on submit
+      // setTags(bulkArr.current[0].tags.join(", "));
+      if (!imgInfo.description == "") {
+        document.querySelector("#descriptionInputID").value = imgDescription;
+      }
+      // document.querySelector("#descriptionInputID").value = imgDescription;
+      // setDescription(bulkArr.current[0].description);
+    }, 100);
+  }
+
   //for if curUser is the selected image's uploader - they can edit or delete it from image modal
   let editBtn;
   let deleteBtn;
@@ -405,7 +424,10 @@ const Modal__ImageSelect = ({
       editBtn = (
         <button
           className="image-select-modal__edit-btn"
-          onClick={() => setIsEditable(!isEditable)}
+          onClick={() => {
+            setIsEditable(!isEditable);
+            displayEditorInfo();
+          }}
         >
           <FontAwesomeIcon icon={faPenToSquare} />
         </button>
@@ -435,28 +457,37 @@ const Modal__ImageSelect = ({
     }
   }, [imgInfo]);
 
-  //don't accept special characters
+  //don't accept special characters in title or tags
   const [titleClass, setTitleClass] = useState(
     "image-select-modal__img-title-input"
   );
-  const [specialMessage, setSpecialMessage] = useState("");
+  const [tagClass, setTagClass] = useState(
+    "image-select-modal__img-tags-input"
+  );
+  const [tagSpecialMessage, setTagSpecialMessage] = useState("");
+  const [titleSpecialMessage, setTitleSpecialMessage] = useState("");
   if (/[~`!#$%\^&*+=\\[\]\\;,/{}|\\":<>\?]/g.test(title)) {
     setTimeout(() => {
       setTitleClass("image-select-modal__img-title-input-red");
-      setSpecialMessage(" No Special Characters");
+      setTitleSpecialMessage(" No Special Characters");
     }, 10);
-  }
-  // else if (title == "") {
-  //   setTimeout(() => {
-  //     setTitleClass("image-select-modal__img-title-input-red");
-  //     setSpecialMessage(" Must Have Name");
-  //   }, 10);
-  // }
-  else {
+  } else if (!/[~`!#$%\^&*+=\\[\]\\;,/{}|\\":<>\?]/g.test(title)) {
     // console.log("no special");
     setTimeout(() => {
       setTitleClass("image-select-modal__img-title-input");
-      setSpecialMessage("");
+      setTitleSpecialMessage("");
+    }, 10);
+  }
+  if (/[~`!#$%\^&*+=\\[\]\\;,/{}|\\":<>\?]/g.test(tags)) {
+    setTimeout(() => {
+      setTagClass("image-select-modal__img-tags-input-red");
+      setTagSpecialMessage(" No Special Characters");
+    }, 10);
+  } else {
+    // console.log("no special");
+    setTimeout(() => {
+      setTagClass("image-select-modal__img-tags-input");
+      setTagSpecialMessage("");
     }, 10);
   }
 
@@ -913,25 +944,36 @@ const Modal__ImageSelect = ({
         <div className="image-select-modal__img-info-container">
           {isEditable && (
             <form onSubmit={(e) => submitForm(e)}>
-              <p style={{ lineHeight: "0", color: "red" }}>{specialMessage}</p>
+              <p style={{ lineHeight: "0", color: "red" }}>
+                {titleSpecialMessage}
+              </p>
               <input
+                id="titleInputID"
                 placeholder={imgTitle}
                 className={titleClass}
                 onChange={(e) => setTitle(e.target.value)}
                 maxLength={titleInputMaxLength}
               ></input>
               <input
+                id="descriptionInputID"
                 placeholder={imgDescription}
                 className="image-select-modal__img-description-input"
                 onChange={(e) => setDescription(e.target.value)}
                 maxLength={70}
               ></input>
+              <p className="my-pics-editor__description-char-count-mobile">
+                {description.length}/{70}
+              </p>
               <div className="image-select-modal__img-tags-input-container">
                 <p>Tags (Use commas. Ex: tag, tags)</p>
+                <p style={{ lineHeight: "0", color: "red", display: "block" }}>
+                  {tagSpecialMessage}
+                </p>
                 <div className="image-select-modal__img-tags-input-and-btns-container">
                   <input
+                    id="tagsInputID"
                     placeholder={editorTags}
-                    className="image-select-modal__img-tags-input"
+                    className={tagClass}
                     onChange={(e) => setTags(e.target.value.split(", "))}
                   ></input>
                   <div className="image-select-modal__img-tags-input-container-btns-container">
