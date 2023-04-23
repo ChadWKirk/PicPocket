@@ -1411,6 +1411,7 @@ app.put("/update/:username", async (req, res) => {
     .collection("picpocket-images")
     .replaceOne(myQuery, mongoReplacement);
 
+  //respond with new public id so modal in edit mode navigates to it after edit submit
   res.json(mongoReplacement.public_id);
 });
 

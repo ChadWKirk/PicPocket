@@ -34,6 +34,11 @@ const Modal__ImageSelect = ({
   setImgGalleryScrollPosition,
   imgToLoadInFirstModal,
 }) => {
+  // BUGS
+  //if user does not update title, new info doesn't appear
+  //NEED TO DO
+  //special characters thing for title etc.
+  //char limit for title and description
   useEffect(() => {
     if (imgInfo) {
       console.log(imgInfo.title);
