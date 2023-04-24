@@ -196,6 +196,10 @@ const Modal__ImageSelect = ({
             toastDissappear();
             //make deleteYesOrNo modal go away if it is open
             setDeleteYesOrNo();
+            //set img info stuff to new info
+            imgTitle = title;
+            imgDescription = description;
+            imgTags = tags;
             //set is editable to false to turn inputs back into divs
             setIsEditable(false);
             //change current title of current item in imgTitleArrState to new updated title
@@ -478,7 +482,7 @@ const Modal__ImageSelect = ({
       setTitleSpecialMessage("");
     }, 10);
   }
-  if (/[~`!#$%\^&*+=\\[\]\\;,/{}|\\":<>\?]/g.test(tags)) {
+  if (/[~`!#$%\^&*+=\\[\]\\;/{}|\\":<>\?]/g.test(tags)) {
     setTimeout(() => {
       setTagClass("image-select-modal__img-tags-input-red");
       setTagSpecialMessage(" No Special Characters");
@@ -504,10 +508,10 @@ const Modal__ImageSelect = ({
     );
   }, [tagListScrollPosition]);
 
-  const [tagLeftArrowClass, setTagLeftArrowClass] = useState("opacity0");
-  const [tagRightArrowClass, setTagRightArrowClass] = useState("opacity0");
+  const [tagLeftArrowClass, setTagLeftArrowClass] = useState("tagArrowGone");
+  const [tagRightArrowClass, setTagRightArrowClass] = useState("tagArrowGone");
 
-  //if tag list is scrollable, show right arrow. by default right arrow is opacity0.
+  //if tag list is scrollable, show right arrow. by default right arrow is tagArrowGone (display none).
   //fires once imgInfo is done fetching, therefore tag list actually exists
   useEffect(() => {
     const tagListID = document.querySelector("#tagListID");
@@ -515,7 +519,7 @@ const Modal__ImageSelect = ({
     if (tagListID.clientWidth < tagListID.scrollWidth) {
       setTagRightArrowClass("image-select-modal__img-tags-overflowArrowRight");
     } else {
-      setTagRightArrowClass("opacity0");
+      setTagRightArrowClass("tagArrowGone");
     }
   }, [imgInfo]);
 
@@ -526,14 +530,14 @@ const Modal__ImageSelect = ({
     //set to < 1 rather than == 0 because when using the left arrow button it would sit at 0.6666777 for some reason
     if (tagListScrollPosition < 1) {
       setTagLeftArrowClass(
-        "image-select-modal__img-tags-overflowArrowLeft opacity0"
+        "image-select-modal__img-tags-overflowArrowLeft tagArrowGone"
       );
     } else {
       setTagLeftArrowClass("image-select-modal__img-tags-overflowArrowLeft");
     }
     if (tagListScrollPosition > tagListMaxScroll) {
       setTagRightArrowClass(
-        "image-select-modal__img-tags-overflowArrowRight opacity0"
+        "image-select-modal__img-tags-overflowArrowRight tagArrowGone"
       );
     } else {
       setTagRightArrowClass("image-select-modal__img-tags-overflowArrowRight");
