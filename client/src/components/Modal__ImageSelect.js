@@ -707,10 +707,11 @@ const Modal__ImageSelect = ({
     // console.log(event.target.clientWidth);
   }
 
-  //reset zoom stuff when prev or next arrow is clicked to go to a different image
+  //reset zoom stuff and isEditable when prev or next arrow is clicked to go to a different image
   useEffect(() => {
     setIsImgZoomedIn(false);
     setTransformOriginState();
+    setIsEditable(false);
   }, [isPrevOrNextClicked]);
 
   //index of current img in title array to get prev and next links for next and previous arrow links (see html conditional rendering)

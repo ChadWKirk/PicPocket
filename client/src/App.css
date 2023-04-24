@@ -5448,6 +5448,20 @@ button {
   gap: 1rem;
   width: 100%;
 }
+.image-select-modal__img-info-container form {
+  /* background-color: red; */
+  margin: 0;
+  margin-top: -0.15rem;
+  padding: 0;
+}
+.image-select-modal__img-info-container form input {
+  border: 1px solid var(--dark5);
+  border-radius: 4px;
+  background-color: #ecf7ff;
+}
+.image-select-modal__img-info-container form input:focus {
+  background-color: #ffffff;
+}
 @media (width < 650px) {
   .image-select-modal__img-info-container {
     flex-direction: column;
