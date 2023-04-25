@@ -966,11 +966,16 @@ const Modal__ImageSelect = ({
                 onChange={(e) => setDescription(e.target.value)}
                 maxLength={70}
               ></input>
-              <p className="my-pics-editor__description-char-count-mobile">
+              <p
+                className="my-pics-editor__description-char-count-mobile"
+                style={{ marginTop: "0.45rem", marginLeft: "0.15rem" }}
+              >
                 {description.length}/{70}
               </p>
               <div className="image-select-modal__img-tags-input-container">
-                <p>Tags (Use commas. Ex: tag, tags)</p>
+                <p style={{ marginTop: "2.5rem", marginBottom: "0" }}>
+                  Tags (Use commas. Ex: tag, tags)
+                </p>
                 <p style={{ lineHeight: "0", color: "red", display: "block" }}>
                   {tagSpecialMessage}
                 </p>
