@@ -5091,11 +5091,16 @@ button {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  /* min-height: 100vh; */
+  min-height: 90vh;
 }
 @media (width < 1920px) {
   .image-select-modal__contents-container {
     margin: auto;
+  }
+}
+@media (width < 650px) {
+  .image-select-modal__contents-container {
+    min-height: 0;
   }
 }
 
