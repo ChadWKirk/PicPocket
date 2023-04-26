@@ -6,7 +6,11 @@ const Toast = ({ status, message, closeToast }) => {
   let toastClass = "toast" + status;
   let icon;
   let btn;
-  if (status == "Success") {
+  if (
+    status == "Success" ||
+    status == "Success-modal" ||
+    status == "Success-mobile-modal"
+  ) {
     icon = <FontAwesomeIcon icon={faCheck} />;
     btn = (
       <button
@@ -16,7 +20,11 @@ const Toast = ({ status, message, closeToast }) => {
         Close
       </button>
     );
-  } else if (status == "Error") {
+  } else if (
+    status == "Error" ||
+    status == "Error-modal" ||
+    status == "Error-mobile-modal"
+  ) {
     icon = <FontAwesomeIcon icon={faXmark} />;
     btn = (
       <button

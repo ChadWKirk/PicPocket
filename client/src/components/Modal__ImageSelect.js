@@ -349,6 +349,19 @@ const Modal__ImageSelect = ({
   let editBtn;
   let deleteBtn;
 
+  //edit button class to toggle when isEditable is true or not
+  const [editBtnClass, setEditBtnClass] = useState(
+    "image-select-modal__edit-btn"
+  );
+
+  useEffect(() => {
+    if (isEditable) {
+      setEditBtnClass("image-select-modal__edit-btn-active");
+    } else {
+      setEditBtnClass("image-select-modal__edit-btn");
+    }
+  }, [isEditable]);
+
   if (imgInfo) {
     imgSrc =
       imgInfo.secure_url.slice(0, 50) +
@@ -427,7 +440,7 @@ const Modal__ImageSelect = ({
     if (imgInfo.uploadedBy == curUser_real) {
       editBtn = (
         <button
-          className="image-select-modal__edit-btn"
+          className={editBtnClass}
           onClick={() => {
             setIsEditable(!isEditable);
             displayEditorInfo();
@@ -485,7 +498,19 @@ const Modal__ImageSelect = ({
   if (/[~`!#$%\^&*+=\\[\]\\;/{}|\\":<>\?]/g.test(tags)) {
     setTimeout(() => {
       setTagClass("image-select-modal__img-tags-input-red");
-      setTagSpecialMessage(" No Special Characters");
+      setTagSpecialMessage(
+        <p
+          style={{
+            lineHeight: "2.75",
+            color: "red",
+            display: "block",
+            marginBottom: "0",
+            marginTop: "-1rem",
+          }}
+        >
+          No Special Messages
+        </p>
+      );
     }, 10);
   } else {
     // console.log("no special");
@@ -808,11 +833,6 @@ const Modal__ImageSelect = ({
       onMouseMove={(event) => handleMouseMove(event)}
     >
       {progressBar}
-      <Toast
-        status={toastStatus}
-        message={toastMessage}
-        closeToast={closeToast}
-      />
       <div
         className="image-select-modal__background"
         onClick={() => {
@@ -830,6 +850,11 @@ const Modal__ImageSelect = ({
         style={{ height: `100vh` }} //get height of modal contents container and use that for height of black bg
       ></div>
       <div className="image-select-modal__contents-container" id="modal">
+        <Toast
+          status={toastStatus}
+          message={toastMessage}
+          closeToast={closeToast}
+        />
         <FontAwesomeIcon
           icon={faXmark}
           className="image-select-modal__x-icon"
@@ -966,19 +991,21 @@ const Modal__ImageSelect = ({
                 onChange={(e) => setDescription(e.target.value)}
                 maxLength={70}
               ></input>
-              <p
-                className="my-pics-editor__description-char-count-mobile"
-                style={{ marginTop: "0.45rem", marginLeft: "0.15rem" }}
-              >
+              <p className="image-select-modal__description-char-count">
                 {description.length}/{70}
               </p>
               <div className="image-select-modal__img-tags-input-container">
-                <p style={{ marginTop: "2.5rem", marginBottom: "0" }}>
+                <p
+                  style={{
+                    marginTop: "4rem",
+                    lineHeight: "1",
+                    marginBottom: "0.95rem",
+                    fontWeight: "300",
+                  }}
+                >
                   Tags (Use commas. Ex: tag, tags)
                 </p>
-                <p style={{ lineHeight: "0", color: "red", display: "block" }}>
-                  {tagSpecialMessage}
-                </p>
+                {tagSpecialMessage}
                 <div className="image-select-modal__img-tags-input-and-btns-container">
                   <input
                     id="tagsInputID"
