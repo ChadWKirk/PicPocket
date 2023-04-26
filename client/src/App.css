@@ -5727,16 +5727,16 @@ button {
 .image-view-page__top-bar-container {
   background-color: #ffffff;
   display: flex;
-  height: 80px;
+  height: 88px;
   justify-content: center;
   position: fixed;
-  top: 79px;
+  top: 80px;
   width: 100vw;
   z-index: 10;
   margin: auto;
 }
 .image-view-page__top-bar-height-margin {
-  height: 80px;
+  height: 88px;
   color: #fff;
 }
 .image-view-page__top-bar-contents {
@@ -5852,7 +5852,7 @@ button {
 .image-view-page__top-bar-buttons-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
+  gap: 1rem;
 }
 .image-view-page__main-like-button {
   display: flex;
@@ -5860,9 +5860,10 @@ button {
   justify-content: center;
   align-items: center;
   border-radius: 5px;
+  height: 40px;
   padding: 0.5rem 1rem;
   gap: 0.5rem;
-  font-size: 1.2rem;
+  font-size: 1rem;
   transition: outline 0.2s;
 }
 .image-view-page__main-like-button:hover {
@@ -5908,10 +5909,12 @@ button {
   background-color: rgb(13, 149, 127);
   color: white;
   justify-content: center;
+  align-items: center;
   border-radius: 5px;
+  height: 40px;
   padding: 0.5rem 1rem;
   gap: 0.2rem;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 500;
   transition: background-color 0.1s;
 }
@@ -5926,6 +5929,7 @@ button {
   font-size: 1.3rem;
   padding: 0.5rem 1rem;
   display: flex;
+  height: 40px;
   justify-content: center;
   align-items: center;
   border-radius: 5px;
@@ -5934,20 +5938,69 @@ button {
   background-color: #d2d2d2;
   color: #272e35;
 }
+.image-view-page__edit-btn-active {
+  background-color: #3c3e42;
+  color: #dcdcdc;
+  font-size: 1.3rem;
+  padding: 0.5rem 1rem;
+  display: flex;
+  height: 40px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+}
 .image-view-page__delete-btn {
   background-color: #b20000;
   color: #f6f6f6;
   font-size: 1.3rem;
   padding: 0.5rem 1rem;
   display: flex;
-  /* height: 44.79px; */
+  height: 44.79px;
   justify-content: center;
+  height: 40px;
   align-items: center;
   border-radius: 5px;
 }
 .image-view-page__delete-btn:hover {
   background-color: #ad0000;
   color: #eeeeee;
+}
+.image-view-page__delete-yes-or-no {
+  background-color: #b20000;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 8px;
+  padding: 1rem;
+  max-width: 240px;
+  position: absolute;
+  top: 90px;
+  right: 24px;
+}
+.image-view-page__delete-yes-or-no::before {
+  border: 17px solid rgba(0, 0, 0, 0);
+  border-top: 27px solid #b20000;
+  content: "";
+  transform: rotate(180deg);
+  top: -32px;
+  right: 12px;
+  position: absolute;
+}
+.image-view-page__delete-yes-or-no-btns {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+.image-view-page__delete-yes-or-no-btns button {
+  background-color: #fff;
+  color: #b20000;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+}
+.image-view-page__delete-yes-or-no-btns button:hover {
+  background-color: #ececec;
+  color: #a30000;
 }
 @media (width < 650px) {
   .image-view-page__main-like-button {
@@ -5975,8 +6028,6 @@ button {
   height: 500px;
   max-height: 500px;
   margin: auto;
-  margin-top: 1rem;
-  margin-bottom: 2rem;
   display: flex;
   overflow: hidden;
 }
@@ -6014,8 +6065,11 @@ button {
 .image-view-page__img-info-container {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
   width: 100%;
+  margin-top: 1rem;
   max-width: var(--siteContentsMidWidth);
   padding: 0 var(--imgGalleryMarginBetweenImages);
 }
@@ -6031,18 +6085,94 @@ button {
     gap: 1rem;
   }
 }
+.image-view-page__img-info-container form {
+  /* background-color: red; */
+  margin: 0;
+  margin-top: 2.8rem;
+  padding: 0;
+}
+.image-view-page__img-info-container form input {
+  border: 1px solid var(--dark5);
+  border-radius: 4px;
+  background-color: #ecf7ff;
+}
+.image-view-page__img-info-container form input:focus {
+  background-color: #ffffff;
+}
 .image-view-page__img-title {
   width: 100%;
-  font-size: 2.25rem;
+  font-size: 2rem;
   font-weight: 500;
   word-wrap: break-word;
   max-width: 50%;
+  line-height: 1.5;
+}
+.image-view-page__img-title-input {
+  border-radius: 2px;
+  color: #000;
+  width: 100%;
+  font-size: 2rem;
+  font-weight: 500;
+  padding: 0.25rem 0.5rem;
+  word-wrap: break-word;
+  line-height: 1.5;
+}
+.image-view-page__img-title-input::placeholder {
+  color: var(--dark4);
+  width: 100%;
+  font-size: 2rem;
+  font-weight: 500;
+  word-wrap: break-word;
+  line-height: 1.5;
+}
+.image-view-page__img-title-input-red {
+  border-radius: 2px;
+  outline: 2px solid rgb(151, 0, 0) !important;
+  color: #000;
+  width: 100%;
+  font-size: 2rem;
+  font-weight: 500;
+  padding: 0.25rem 0.5rem;
+  word-wrap: break-word;
+  line-height: 1.5;
+}
+.image-view-page__img-title-input-red:focus {
+  outline: 2px solid rgb(151, 0, 0) !important;
+  /* outline: none; */
 }
 .image-view-page__img-description {
   color: var(--dark4);
   font-weight: 500;
   font-style: italic;
-  max-width: 50%;
+  margin-top: 0.25rem;
+  margin-bottom: 2rem;
+  line-height: 1;
+  font-size: 1rem;
+  width: 100%;
+  word-wrap: break-word;
+}
+.image-view-page__img-description-input {
+  border-radius: 2px;
+  color: var(--dark4);
+  font-weight: 500;
+  font-style: italic;
+  margin-top: 2rem;
+  padding: 0.25rem 0.5rem;
+  width: 100%;
+  word-wrap: break-word;
+}
+.image-view-page__img-description-input::placeholder {
+  color: var(--dark4);
+  font-weight: 500;
+  font-style: italic;
+  width: 100%;
+  word-wrap: break-word;
+}
+.image-view-page__description-char-count {
+  font-size: 0.5rem;
+  line-height: 1;
+  margin-top: 0.25rem;
+  margin-left: 0.4rem;
 }
 @media (width < 650px) {
   .image-view-page__img-title,
@@ -6050,6 +6180,42 @@ button {
     max-width: 100%;
     word-wrap: break-word;
   }
+}
+.image-view-page__img-tags-input-container {
+}
+.image-view-page__img-tags-input-and-btns-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+.image-view-page__img-tags-input {
+  border-radius: 2px;
+  padding: 0.25rem 0.5rem;
+}
+.image-view-page__img-tags-input-red {
+  border-radius: 2px;
+  outline: 2px solid rgb(151, 0, 0) !important;
+  padding: 0.25rem 0.5rem;
+}
+.image-view-page__img-tags-input-red:focus {
+  outline: 2px solid rgb(151, 0, 0);
+  /* outline: none; */
+  padding: 0.25rem 0.5rem;
+}
+.image-view-page__img-tags-input-container-btns-container {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.image-view-page__img-tags-input-container-btns-container button {
+  border: 1px solid #000;
+  border-radius: 4px;
+  font-size: 1rem;
+  line-height: 1;
+  padding: 0.25rem 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .image-view-page__img-tags-container {
   width: var(--siteContentsMidWidth);
@@ -6062,7 +6228,7 @@ button {
   gap: 0.45rem;
   overflow-x: auto;
   z-index: 1;
-  height: 60px;
+  max-height: 80px;
 }
 .image-view-page__img-tags-container::-webkit-scrollbar {
   display: none;
@@ -6091,22 +6257,27 @@ button {
   width: 100%;
   display: flex;
   justify-content: flex-start;
-  gap: 0.45rem;
+  gap: 0.5rem;
 }
 .image-view-page__img-tags-list a {
   color: #000;
+  padding: 1.45rem 1.5rem;
 }
 .image-view-page__img-tags-list ul li {
-  border: 1px solid var(--greyBorder1);
+  border: 2px solid var(--greyBorder1);
   font-weight: 500;
   font-size: 1.25rem;
-  border-radius: 5px;
-  padding: 0.45rem 1.5rem;
+  border-radius: 4px;
+  height: 48px;
+  /* padding: 0.45rem 1.5rem; */
   cursor: pointer;
   white-space: nowrap;
+  display: flex;
+  align-items: center;
 }
 .image-view-page__img-tags-list ul li:hover {
   background-color: var(--ctaYellow);
+  border: 2px solid var(--ctaYellow);
   transition: 0.2s;
 }
 @media (width < 650px) {
@@ -6117,6 +6288,7 @@ button {
 .image-view-page__img-tags-overflowArrowLeft {
   z-index: 1;
   display: flex;
+  cursor: pointer;
   justify-content: center;
   align-items: center;
   position: absolute;
@@ -6139,6 +6311,7 @@ button {
   justify-content: center;
   align-items: center;
   position: absolute;
+  cursor: pointer;
   top: -13%;
   right: 11px;
   padding: 0.5rem;
