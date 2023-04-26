@@ -5960,6 +5960,7 @@ button {
   height: 40px;
   align-items: center;
   border-radius: 5px;
+  position: relative;
 }
 .image-view-page__delete-btn:hover {
   background-color: #ad0000;
@@ -5974,9 +5975,12 @@ button {
   border-radius: 8px;
   padding: 1rem;
   max-width: 240px;
+  width: 240px;
+  text-align: left;
   position: absolute;
-  top: 90px;
-  right: 24px;
+  top: 60px;
+  right: 0px;
+  font-size: 1rem;
 }
 .image-view-page__delete-yes-or-no::before {
   border: 17px solid rgba(0, 0, 0, 0);
@@ -6088,8 +6092,9 @@ button {
 .image-view-page__img-info-container form {
   /* background-color: red; */
   margin: 0;
-  margin-top: 2.8rem;
+  margin-top: -1.3rem;
   padding: 0;
+  margin-bottom: 7rem;
 }
 .image-view-page__img-info-container form input {
   border: 1px solid var(--dark5);
@@ -6222,7 +6227,7 @@ button {
   padding: 0 var(--imgGalleryMarginBetweenImages);
   width: 100%;
   margin-top: 2.3rem;
-  margin-bottom: 2rem;
+  margin-bottom: 7rem;
   display: flex;
   justify-content: flex-start;
   gap: 0.45rem;

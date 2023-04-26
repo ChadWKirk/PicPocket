@@ -387,7 +387,7 @@ const Modal__ImageSelect = ({
       imgTags.push(
         <li>
           <a
-            href={`/search/${imgInfo.tags[i]}?sort=most-recent&filter=all-types`}
+            href={`/search/${imgInfo.tags[i]}/?sort=most-recent&filter=all-types`}
           >
             {imgInfo.tags[i]}
           </a>

@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import Toast from "../components/Toast";
+import ProgressBar from "../components/ProgressBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronLeft,
@@ -7,6 +9,7 @@ import {
   faPenToSquare,
   faQuestionCircle,
   faTrash,
+  faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
@@ -44,6 +47,195 @@ const ImageViewPage = ({
     console.log(url, " url");
   });
 
+  //title input max length. if too long cloudinary won't accept it
+  const titleInputMaxLength = 230;
+
+  //get screen width. at Xpx setIsScreenMobile(true)
+  const [isScreenMobile, setIsScreenMobile] = useState();
+  // get window size to either show delete yes or no modal / submit modal or just use window.confirm for those
+  const [windowSize, setWindowSize] = useState(getWindowSize());
+  useEffect(() => {
+    function handleWindowResize() {
+      setWindowSize(getWindowSize());
+    }
+
+    window.addEventListener("resize", handleWindowResize);
+
+    return () => {
+      window.removeEventListener("resize", handleWindowResize);
+    };
+  }, []);
+  function getWindowSize() {
+    const { innerWidth, innerHeight } = window;
+    return { innerWidth, innerHeight };
+  }
+  useEffect(() => {
+    if (windowSize.innerWidth < 650) {
+      setIsScreenMobile(true);
+    } else {
+      setIsScreenMobile(false);
+    }
+  }, [windowSize]);
+
+  // progress bar state. gets set to progressbar component when submitform starts
+  const [progressBar, setProgressBar] = useState();
+
+  //submit buttons to change when submitting to add a loading spinner
+  const [submitButton, setSubmitButton] = useState(
+    <button style={{ color: "blue" }}>Submit</button>
+  );
+
+  //submit when editing image info
+  async function submitForm(e) {
+    e.preventDefault();
+    console.log(title, " title ", description, " desc ", tags, " tags ");
+    if (
+      titleClass == "image-view-page__img-title-input-red" ||
+      tagClass == "image-view-page__img-tags-input-red"
+    ) {
+      return;
+    }
+    setProgressBar();
+
+    setSubmitButton(
+      <button style={{ pointerEvents: "none", backgroundColor: "#e7e7e7" }}>
+        Submit{" "}
+        <FontAwesomeIcon
+          icon={faSpinner}
+          className="fa-spin"
+          style={{ marginLeft: "0.4rem" }}
+        />
+      </button>
+    );
+    // if (isScreenMobile) {
+    // setMobileSubmitButton(
+    //   <button
+    //     style={{
+    //       backgroundColor: "#e7e7e7",
+    //       border: "none",
+    //       color: "green",
+    //       pointerEvents: "none",
+    //       fontSize: "1.55rem",
+    //       display: "flex",
+    //       justifyContent: "center",
+    //       alignContent: "center",
+    //       paddingTop: "0.25rem",
+    //     }}
+    //   >
+    //     <FontAwesomeIcon icon={faSpinner} className="fa-spin" />
+    //   </button>
+    // );
+    // }
+    //make everything unclickable until submit is finished
+    const allElements = document.querySelectorAll("*");
+    allElements.forEach((element) => {
+      element.classList.add("pointer-events__none");
+    });
+    //start progress bar
+    setProgressBar(<ProgressBar playStatus="play" />);
+    //set up tags to send in fetch POST
+    let sendTags;
+    //if user edits tag field to be empty, change value from "" to an empty array
+    //so a blank box doesn't show in tags section on modal
+    if (tags != "") {
+      sendTags = tags; //turn string into array
+    } else if (tags == "") {
+      sendTags = [];
+    }
+
+    // bulkArr.current[0].imageType = imageType.toLowerCase();
+    console.log("submit attempt");
+    await fetch(`${domain}/update/${curUser_real}`, {
+      method: "PUT",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify({
+        title: title,
+        description: description,
+        tags: sendTags,
+        imageType: imgInfo.imageType,
+        colors: imgInfo.colors,
+        likes: imgInfo.likes,
+        likedBy: imgInfo.likedBy,
+        public_id: `picpocket/${imgPublic_Id}`,
+      }),
+    }).then((response) =>
+      response
+        .json()
+        .then((resJSON) => JSON.stringify(resJSON))
+        .then((stringJSON) => JSON.parse(stringJSON))
+        .then((parsedJSON) => {
+          console.log(parsedJSON, " parsedJSON");
+          //make progress bar finish
+          setProgressBar(<ProgressBar playStatus="finish" />);
+          // //set progress bar to default after it finishes
+          setTimeout(() => {
+            setProgressBar();
+          }, 500);
+          allElements.forEach((element) => {
+            element.classList.remove("pointer-events__none");
+          });
+          if (!isScreenMobile) {
+            setToastStatus("Success-modal");
+            setToastMessage("Your pic was updated successfully.");
+            toastDissappear();
+            //make deleteYesOrNo modal go away if it is open
+            setDeleteYesOrNo();
+            //set img info stuff to new info
+            imgTitle = title;
+            imgDescription = description;
+            imgTags = tags;
+            //set is editable to false to turn inputs back into divs
+            setIsEditable(false);
+            //go to new image title url
+            navigate(`/image/${parsedJSON.slice(10)}`);
+            console.log(imgTitleArrState);
+          } else if (isScreenMobile) {
+            setToastStatus("Success-mobile-modal");
+            setToastMessage("Your pic was updated successfully.");
+            toastDissappear();
+            //make deleteYesOrNo modal go away if it is open
+            setDeleteYesOrNo();
+            //set img info stuff to new info
+            imgTitle = title;
+            imgDescription = description;
+            imgTags = tags;
+            //set is editable to false to turn inputs back into divs
+            setIsEditable(false);
+            //go to new image title url
+            navigate(`/image/${parsedJSON.slice(10)}`);
+          }
+          setSubmitButton(<button style={{ color: "blue" }}>Submit</button>);
+          // setMobileSubmitButton(
+          //   <button
+          //     style={{
+          //       backgroundColor: "rgb(250, 250, 250)",
+          //       border: "2px solid darkgreen",
+          //       color: "green",
+          //     }}
+          //   >
+          //     <FontAwesomeIcon icon={faCheck} />
+          //   </button>
+          // );
+        })
+    );
+    // .catch((err) => notify_edit_failure);
+  }
+
+  //toast stuff
+  //set toast to invisible until it is called by either error or success function
+  const [toastMessage, setToastMessage] = useState();
+  const [toastStatus, setToastStatus] = useState("Invisible");
+  function toastDissappear() {
+    setTimeout(() => {
+      setToastStatus("Invisible");
+      setToastMessage();
+    }, 1500);
+  }
+  function closeToast() {
+    setToastMessage();
+    setToastStatus();
+  }
+
   //img info
   const { imgPublic_Id } = useParams();
   const [imgInfo, setImgInfo] = useState();
@@ -53,6 +245,9 @@ const ImageViewPage = ({
 
   //refetch img info to update like button to either liked or not liked
   const [isLiked, setIsLiked] = useState();
+
+  //delete Are You Sure? box. On mobile (width < 650px) use window.alert. On desktop (width > 650px) use own modal.
+  const [deleteYesOrNo, setDeleteYesOrNo] = useState();
 
   //img array to display
   const [imgGallery, setImgGallery] = useState([]);
@@ -139,6 +334,49 @@ const ImageViewPage = ({
     imgAuthorName_hyphenated = userInfo.username.split(" ").join("-");
   }
 
+  //when edit btn is clicked, set isEditable to !isEditable
+  const [isEditable, setIsEditable] = useState(false);
+
+  //set title,description and tags to default if is editable is false
+  useEffect(() => {
+    if (!isEditable && imgInfo) {
+      setTitle(imgInfo.title);
+      setDescription(imgInfo.description);
+      setTags(imgInfo.tags);
+    }
+  }, [isEditable]);
+
+  //set title, description and tag input fields values to current img info
+  //so user doesn't have to rewrite the entire title/desc/tags list and they can just edit it
+  function displayEditorInfo() {
+    setTimeout(() => {
+      document.querySelector("#titleInputID").value = imgTitle;
+      // setTitle(bulkArr.current[0].title);
+      document.querySelector("#tagsInputID").value = editorTags; //makes the tags array display with ", " separating items instead of just a comma. To play nice with split to create array on submit
+      // setTags(bulkArr.current[0].tags.join(", "));
+      if (!imgInfo.description == "") {
+        document.querySelector("#descriptionInputID").value = imgDescription;
+      }
+      // document.querySelector("#descriptionInputID").value = imgDescription;
+      // setDescription(bulkArr.current[0].description);
+    }, 100);
+  }
+
+  //for if curUser is the selected image's uploader - they can edit or delete it from image modal
+  let editBtn;
+  let deleteBtn;
+
+  //edit button class to toggle when isEditable is true or not
+  const [editBtnClass, setEditBtnClass] = useState("image-view-page__edit-btn");
+
+  useEffect(() => {
+    if (isEditable) {
+      setEditBtnClass("image-view-page__edit-btn-active");
+    } else {
+      setEditBtnClass("image-view-page__edit-btn");
+    }
+  }, [isEditable]);
+
   //assigning img info to variables
   let imgSrc;
   // use this for paddingTop of skeleton loading div to get aspect ratio
@@ -150,13 +388,11 @@ const ImageViewPage = ({
   let imgLikes;
   let imgDownloadURL;
   let imgTags = [];
+  let editorTags;
   let mainImgLikeBtn;
   //for tag list scroll animation
   let tagListIDWidth;
   let scrollByPxAmount;
-  // if image.uploadedBy == imageauthorname, show edit and delete buttons
-  let editBtn;
-  let deleteBtn;
 
   const [tagListScrollPosition, setTagListScrollPosition] = useState(0);
   if (imgInfo) {
@@ -186,12 +422,16 @@ const ImageViewPage = ({
     for (let i = 0; i < imgInfo.tags.length; i++) {
       imgTags.push(
         <li>
-          <a href={`/search/${imgInfo.tags[i]}/most-recent/all-types`}>
+          <a
+            href={`/search/${imgInfo.tags[i]}/?sort=most-recent&filter=all-types`}
+          >
             {imgInfo.tags[i]}
           </a>
         </li>
       );
     }
+    //tags with commas to display while editing
+    editorTags = imgInfo.tags.join(", ");
 
     // searchQuery = imageTags.join(" ") + " " + imgPublic_Ide;
 
@@ -232,20 +472,164 @@ const ImageViewPage = ({
     // if image.uploadedBy == imageauthorname, show edit and delete buttons
     if (imgInfo.uploadedBy == curUser_real) {
       editBtn = (
-        <button className="image-view-page__edit-btn">
+        <button
+          className={editBtnClass}
+          onClick={() => {
+            setIsEditable(!isEditable);
+            displayEditorInfo();
+          }}
+        >
           <FontAwesomeIcon icon={faPenToSquare} />
         </button>
       );
       deleteBtn = (
-        <button className="image-view-page__delete-btn">
+        <button
+          className="image-view-page__delete-btn"
+          onClick={() => showDeleteYesOrNo()}
+        >
           <FontAwesomeIcon icon={faTrash} />
+          {deleteYesOrNo}
         </button>
       );
     }
+  }
 
-    //for tag list scroll animation
-    tagListIDWidth = document.querySelector("#tagListID").clientWidth;
-    scrollByPxAmount = tagListIDWidth + tagListScrollPosition;
+  //for tag list scroll animation
+  useEffect(() => {
+    if (!isEditable) {
+      tagListIDWidth = document.querySelector("#tagListID").clientWidth;
+      scrollByPxAmount = tagListIDWidth + tagListScrollPosition;
+    }
+  });
+
+  //values to set editor form fields to
+  const [title, setTitle] = useState();
+  const [description, setDescription] = useState();
+  const [tags, setTags] = useState();
+
+  useEffect(() => {
+    //values to set editor form fields to
+    if (imgInfo) {
+      setTitle(imgInfo.title);
+      setDescription(imgInfo.description);
+      setTags(imgInfo.tags);
+    }
+  }, [imgInfo]);
+
+  //don't accept special characters in title or tags
+  const [titleClass, setTitleClass] = useState(
+    "image-view-page__img-title-input"
+  );
+  const [tagClass, setTagClass] = useState("image-view-page__img-tags-input");
+  const [tagSpecialMessage, setTagSpecialMessage] = useState("");
+  const [titleSpecialMessage, setTitleSpecialMessage] = useState("");
+  if (/[~`!#$%\^&*+=\\[\]\\;,/{}|\\":<>\?]/g.test(title)) {
+    setTimeout(() => {
+      setTitleClass("image-view-page__img-title-input-red");
+      setTitleSpecialMessage(" No Special Characters");
+    }, 10);
+  } else if (!/[~`!#$%\^&*+=\\[\]\\;,/{}|\\":<>\?]/g.test(title)) {
+    // console.log("no special");
+    setTimeout(() => {
+      setTitleClass("image-view-page__img-title-input");
+      setTitleSpecialMessage("");
+    }, 10);
+  }
+  if (/[~`!#$%\^&*+=\\[\]\\;/{}|\\":<>\?]/g.test(tags)) {
+    setTimeout(() => {
+      setTagClass("image-view-page__img-tags-input-red");
+      setTagSpecialMessage(
+        <p
+          style={{
+            lineHeight: "2.75",
+            color: "red",
+            display: "block",
+            marginBottom: "0",
+            marginTop: "-1rem",
+          }}
+        >
+          No Special Messages
+        </p>
+      );
+    }, 10);
+  } else {
+    // console.log("no special");
+    setTimeout(() => {
+      setTagClass("image-view-page__img-tags-input");
+      setTagSpecialMessage("");
+    }, 10);
+  }
+
+  //delete function. happens when user clicks Yes on deleteYesOrNo if they click the delete button in modal
+  async function deleteImageFromBackEnd() {
+    await fetch(`${domain}/deleteImage/`, {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify({ public_id: `picpocket/${imgPublic_Id}` }),
+    })
+      .then((res) => {
+        if (!isScreenMobile) {
+          setToastStatus("Success-modal");
+          setToastMessage("Pic successfully deleted.");
+          toastDissappear();
+          //make deleteYesOrNo modal go away
+          setDeleteYesOrNo();
+          //go to home
+          navigate(`/`);
+        } else if (isScreenMobile) {
+          setToastStatus("Success-mobile-modal");
+          setToastMessage("Pic successfully deleted.");
+          toastDissappear();
+          //make deleteYesOrNo modal go away
+          setDeleteYesOrNo();
+          //go to home
+          navigate(`/`);
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        if (!isScreenMobile) {
+          setToastStatus("Error-modal");
+          setToastMessage("Error. Deletion unsuccessful");
+          toastDissappear();
+          setDeleteYesOrNo();
+        } else if (isScreenMobile) {
+          setToastStatus("Error-mobile-modal");
+          setToastMessage("Error. Deletion unsuccessful");
+          toastDissappear();
+          setDeleteYesOrNo();
+        }
+      });
+  }
+
+  //shows delete Are You Sure? box. On mobile (width < 650px) use window.alert. On desktop (width > 650px) use own modal.
+  //asking if undefined to see if modal is up already or not. if it is not up, it is undefined.
+  function showDeleteYesOrNo() {
+    if (deleteYesOrNo === undefined && !isScreenMobile) {
+      setDeleteYesOrNo(
+        <div className="image-view-page__delete-yes-or-no">
+          <p>
+            This will <b>permanently</b> delete this pic from your account. Are
+            you sure you want to delete this pic from your account?
+          </p>
+
+          <div className="image-view-page__delete-yes-or-no-btns">
+            <button onClick={() => deleteImageFromBackEnd()}>Yes</button>
+            <button onClick={() => setDeleteYesOrNo()}>No</button>
+          </div>
+        </div>
+      );
+    } else if (deleteYesOrNo === undefined && isScreenMobile) {
+      if (
+        window.confirm(
+          "This will permanently delete this pic from your account. Are you sure you want to delete this pic from your account?"
+        )
+      ) {
+        deleteImageFromBackEnd();
+      }
+    } else {
+      setDeleteYesOrNo();
+    }
   }
 
   //handle like for main image
@@ -608,6 +992,14 @@ const ImageViewPage = ({
 
   return (
     <div onMouseMove={(event) => handleMouseMove(event)}>
+      {!isShowingImageSelectModal && progressBar}
+      {!isShowingImageSelectModal && (
+        <Toast
+          status={toastStatus}
+          message={toastMessage}
+          closeToast={closeToast}
+        />
+      )}
       {/* conditionally render modal based on state of isShowingImageSelectModal in app.js */}
       {isShowingImageSelectModal && (
         <Modal__ImageSelect
@@ -733,52 +1125,105 @@ const ImageViewPage = ({
           {/* </div> */}
         </div>
         <div className="image-view-page__img-info-container">
-          <div className="image-view-page__img-title">{imgTitle}</div>
-          <div className="image-view-page__img-description">
-            {imgDescription}
-          </div>
-          {/* <div className="imgViewPageLikes">
-            <div className="likeCounter">♥ {imgLikes} Likes</div>
-          </div> */}
+          {isEditable && (
+            <form onSubmit={(e) => submitForm(e)}>
+              <p style={{ lineHeight: "0", color: "red" }}>
+                {titleSpecialMessage}
+              </p>
+              <input
+                id="titleInputID"
+                placeholder={imgTitle}
+                className={titleClass}
+                onChange={(e) => setTitle(e.target.value)}
+                maxLength={titleInputMaxLength}
+              ></input>
+              <input
+                id="descriptionInputID"
+                placeholder={imgDescription}
+                className="image-view-page__img-description-input"
+                onChange={(e) => setDescription(e.target.value)}
+                maxLength={70}
+              ></input>
+              <p className="image-view-page__description-char-count">
+                {description.length}/{70}
+              </p>
+              <div className="image-view-page__img-tags-input-container">
+                <p
+                  style={{
+                    marginTop: "4rem",
+                    lineHeight: "1",
+                    marginBottom: "0.95rem",
+                    fontWeight: "300",
+                  }}
+                >
+                  Tags (Use commas. Ex: tag, tags)
+                </p>
+                {tagSpecialMessage}
+                <div className="image-view-page__img-tags-input-and-btns-container">
+                  <input
+                    id="tagsInputID"
+                    placeholder={editorTags}
+                    className={tagClass}
+                    onChange={(e) => setTags(e.target.value.split(", "))}
+                  ></input>
+                  <div className="image-view-page__img-tags-input-container-btns-container">
+                    <button
+                      style={{ color: "#b20000" }}
+                      onClick={() => setIsEditable(false)}
+                    >
+                      Cancel
+                    </button>
+                    {submitButton}
+                  </div>
+                </div>
+              </div>
+            </form>
+          )}
+          {!isEditable && (
+            <div className="image-view-page__img-title">{imgTitle}</div>
+          )}
+          {!isEditable && (
+            <div className="image-view-page__img-description">
+              {imgDescription}
+            </div>
+          )}
         </div>
-        <div className={`image-view-page__tag-arrow-bounds padding-left-0`}>
-          <div
-            className={tagLeftArrowClass}
-            onClick={() => window.requestAnimationFrame(step_left)}
-          >
-            <FontAwesomeIcon
-              icon={faChevronLeft}
-              className="image-view-page__img-tags-arrowIcon"
-            />
-          </div>
-          <div
-            className={tagRightArrowClass}
-            onClick={() => window.requestAnimationFrame(step)}
-          >
-            <FontAwesomeIcon
-              icon={faChevronRight}
-              className="image-view-page__img-tags-arrowIcon"
-            />
-          </div>
-          <div
-            id="tagListID"
-            className="image-view-page__img-tags-container"
-            onScroll={(e) => {
-              setTagListScrollPosition(e.target.scrollLeft);
-              setTagListMaxScroll(
-                e.target.scrollWidth - e.target.clientWidth - 1
-              );
-            }}
-          >
-            <div className="image-view-page__img-tags-list">
-              <ul>{imgTags}</ul>
+        {!isEditable && (
+          <div className={`image-view-page__tag-arrow-bounds padding-left-0`}>
+            <div
+              className={tagLeftArrowClass}
+              onClick={() => window.requestAnimationFrame(step_left)}
+            >
+              <FontAwesomeIcon
+                icon={faChevronLeft}
+                className="image-view-page__img-tags-arrowIcon"
+              />
+            </div>
+            <div
+              className={tagRightArrowClass}
+              onClick={() => window.requestAnimationFrame(step)}
+            >
+              <FontAwesomeIcon
+                icon={faChevronRight}
+                className="image-view-page__img-tags-arrowIcon"
+              />
+            </div>
+            <div
+              id="tagListID"
+              className="image-view-page__img-tags-container"
+              onScroll={(e) => {
+                setTagListScrollPosition(e.target.scrollLeft);
+                setTagListMaxScroll(
+                  e.target.scrollWidth - e.target.clientWidth - 1
+                );
+              }}
+            >
+              <div className="image-view-page__img-tags-list">
+                <ul>{imgTags}</ul>
+              </div>
             </div>
           </div>
-        </div>
-        {/* <div className="relatedImagesContainer">
-          <div className="relatedImagesTitle">Related Images</div>
-          <div className="imgGalleryCont1">{resultsMap}</div>
-        </div> */}
+        )}
       </div>
     </div>
   );
