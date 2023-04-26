@@ -5392,7 +5392,7 @@ button {
   padding: 1rem;
   max-width: 240px;
   position: absolute;
-  top: 80px;
+  top: 90px;
   right: 24px;
 }
 .image-select-modal__delete-yes-or-no::before {

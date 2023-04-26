@@ -799,6 +799,7 @@ const Modal__ImageSelect = ({
   }
 
   //shows delete Are You Sure? box. On mobile (width < 650px) use window.alert. On desktop (width > 650px) use own modal.
+  //asking if undefined to see if modal is up already or not. if it is not up, it is undefined.
   function showDeleteYesOrNo() {
     if (deleteYesOrNo === undefined && !isScreenMobile) {
       setDeleteYesOrNo(
