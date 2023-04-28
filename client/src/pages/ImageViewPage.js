@@ -1069,9 +1069,9 @@ const ImageViewPage = ({
           </div>
         </div>
       )}
-      {!isLoading && isImgFound && (
+      {/* {!isLoading && isImgFound && (
         <div className="image-view-page__top-bar-height-margin">margin</div>
-      )}
+      )} */}
       {!isLoading && isImgFound && (
         <div className="image-view-page__top-bar-container">
           <div className="image-view-page__top-bar-contents">
