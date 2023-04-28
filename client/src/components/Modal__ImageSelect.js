@@ -29,6 +29,8 @@ const Modal__ImageSelect = ({
   setIsPrevOrNextClicked,
   isPrevOrNextClicked,
   prevPageForModal,
+  successfulEdit,
+  setSuccessfulEdit,
   setPrevPageForModal,
   imgGalleryScrollPosition,
   setImgGalleryScrollPosition,
@@ -81,7 +83,12 @@ const Modal__ImageSelect = ({
 
   //submit buttons to change when submitting to add a loading spinner
   const [submitButton, setSubmitButton] = useState(
-    <button style={{ color: "blue" }}>Submit</button>
+    <button
+      type="submit"
+      className="image-view-page__img-tags-input-container-btns-container-submit-btn"
+    >
+      Submit
+    </button>
   );
 
   //submit when editing image info
@@ -97,7 +104,10 @@ const Modal__ImageSelect = ({
     setProgressBar();
 
     setSubmitButton(
-      <button style={{ pointerEvents: "none", backgroundColor: "#e7e7e7" }}>
+      <button
+        style={{ pointerEvents: "none" }}
+        className="image-view-page__img-tags-input-container-btns-container-submit-btn"
+      >
         Submit{" "}
         <FontAwesomeIcon
           icon={faSpinner}
@@ -189,6 +199,8 @@ const Modal__ImageSelect = ({
             imgTitleArrState[currentImgIndex] = parsedJSON.slice(10);
             //go to new image title url
             navigate(`/image/${parsedJSON.slice(10)}`);
+            //triggers refetch of imgInfo (useEffect)
+            setSuccessfulEdit(!successfulEdit);
             console.log(imgTitleArrState);
           } else if (isScreenMobile) {
             setToastStatus("Success-mobile-modal");
@@ -206,8 +218,17 @@ const Modal__ImageSelect = ({
             imgTitleArrState[currentImgIndex] = parsedJSON.slice(10);
             //go to new image title url
             navigate(`/image/${parsedJSON.slice(10)}`);
+            //triggers refetch of imgInfo (useEffect)
+            setSuccessfulEdit(!successfulEdit);
           }
-          setSubmitButton(<button style={{ color: "blue" }}>Submit</button>);
+          setSubmitButton(
+            <button
+              type="submit"
+              className="image-view-page__img-tags-input-container-btns-container-submit-btn"
+            >
+              Submit
+            </button>
+          );
           // setMobileSubmitButton(
           //   <button
           //     style={{
@@ -508,7 +529,7 @@ const Modal__ImageSelect = ({
             marginTop: "-1rem",
           }}
         >
-          No Special Messages
+          No Special Characters
         </p>
       );
     }, 10);
@@ -1016,7 +1037,8 @@ const Modal__ImageSelect = ({
                   ></input>
                   <div className="image-select-modal__img-tags-input-container-btns-container">
                     <button
-                      style={{ color: "#b20000" }}
+                      type="button"
+                      className="image-view-page__img-tags-input-container-btns-container-cancel-btn"
                       onClick={() => setIsEditable(false)}
                     >
                       Cancel

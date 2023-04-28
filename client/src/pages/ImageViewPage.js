@@ -40,6 +40,9 @@ const ImageViewPage = ({
   let imageURL;
   const [imageFetchID, setImageFetchID] = useState();
 
+  //set this after a successful edit to refetch imgInfo (useEffect)
+  const [successfulEdit, setSuccessfulEdit] = useState(false);
+
   //get first url and when url changes (from back button or arrows) change url state which runs imgInfo useEffect
   const [url, setUrl] = useState(window.location.href);
   useEffect(() => {
@@ -82,7 +85,12 @@ const ImageViewPage = ({
 
   //submit buttons to change when submitting to add a loading spinner
   const [submitButton, setSubmitButton] = useState(
-    <button style={{ color: "blue" }}>Submit</button>
+    <button
+      type="submit"
+      className="image-view-page__img-tags-input-container-btns-container-submit-btn"
+    >
+      Submit
+    </button>
   );
 
   //submit when editing image info
@@ -98,7 +106,10 @@ const ImageViewPage = ({
     setProgressBar();
 
     setSubmitButton(
-      <button style={{ pointerEvents: "none", backgroundColor: "#e7e7e7" }}>
+      <button
+        style={{ pointerEvents: "none" }}
+        className="image-view-page__img-tags-input-container-btns-container-submit-btn"
+      >
         Submit{" "}
         <FontAwesomeIcon
           icon={faSpinner}
@@ -175,7 +186,7 @@ const ImageViewPage = ({
             element.classList.remove("pointer-events__none");
           });
           if (!isScreenMobile) {
-            setToastStatus("Success-modal");
+            setToastStatus("Success");
             setToastMessage("Your pic was updated successfully.");
             toastDissappear();
             //make deleteYesOrNo modal go away if it is open
@@ -188,9 +199,11 @@ const ImageViewPage = ({
             setIsEditable(false);
             //go to new image title url
             navigate(`/image/${parsedJSON.slice(10)}`);
+            //triggers refetch of imgInfo (useEffect)
+            setSuccessfulEdit(!successfulEdit);
             console.log(imgTitleArrState);
           } else if (isScreenMobile) {
-            setToastStatus("Success-mobile-modal");
+            setToastStatus("Success-mobile");
             setToastMessage("Your pic was updated successfully.");
             toastDissappear();
             //make deleteYesOrNo modal go away if it is open
@@ -203,8 +216,17 @@ const ImageViewPage = ({
             setIsEditable(false);
             //go to new image title url
             navigate(`/image/${parsedJSON.slice(10)}`);
+            //triggers refetch of imgInfo (useEffect)
+            setSuccessfulEdit(!successfulEdit);
           }
-          setSubmitButton(<button style={{ color: "blue" }}>Submit</button>);
+          setSubmitButton(
+            <button
+              type="submit"
+              className="image-view-page__img-tags-input-container-btns-container-submit-btn"
+            >
+              Submit
+            </button>
+          );
           // setMobileSubmitButton(
           //   <button
           //     style={{
@@ -297,7 +319,7 @@ const ImageViewPage = ({
       );
     }
     fetchImgInfo();
-  }, [isLiked, isPrevOrNextClicked, url]);
+  }, [isLiked, isPrevOrNextClicked, url, successfulEdit]);
 
   //fetch user info for pfp and author name
   useEffect(() => {
@@ -548,7 +570,7 @@ const ImageViewPage = ({
             marginTop: "-1rem",
           }}
         >
-          No Special Messages
+          No Special Characters
         </p>
       );
     }, 10);
@@ -1015,6 +1037,8 @@ const ImageViewPage = ({
           imageURL={imageURL}
           imgInfo={imgInfo}
           userInfo={userInfo}
+          successfulEdit={successfulEdit}
+          setSuccessfulEdit={setSuccessfulEdit}
           isPrevOrNextClicked={isPrevOrNextClicked}
           setIsPrevOrNextClicked={setIsPrevOrNextClicked}
           prevPageForModal={prevPageForModal}
@@ -1168,7 +1192,8 @@ const ImageViewPage = ({
                   ></input>
                   <div className="image-view-page__img-tags-input-container-btns-container">
                     <button
-                      style={{ color: "#b20000" }}
+                      type="button"
+                      className="image-view-page__img-tags-input-container-btns-container-cancel-btn"
                       onClick={() => setIsEditable(false)}
                     >
                       Cancel

@@ -6222,6 +6222,22 @@ button {
   align-items: center;
   justify-content: center;
 }
+.image-view-page__img-tags-input-container-btns-container-cancel-btn {
+  background-color: #b20000;
+  border: none !important;
+  color: #fff;
+}
+.image-view-page__img-tags-input-container-btns-container-submit-btn {
+  background-color: green;
+  border: none !important;
+  color: #fff;
+}
+.image-view-page__img-tags-input-container-btns-container-cancel-btn:hover {
+  background-color: darkred;
+}
+.image-view-page__img-tags-input-container-btns-container-submit-btn:hover {
+  background-color: darkgreen;
+}
 .image-view-page__img-tags-container {
   width: var(--siteContentsMidWidth);
   padding: 0 var(--imgGalleryMarginBetweenImages);
