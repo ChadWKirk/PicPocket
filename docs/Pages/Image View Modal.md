@@ -22,3 +22,31 @@ When clicking the black background or the X button of the modal, it brings you b
 When user refreshes in modal, it brings them to ImageViewPage due to isImageSelectModal being reset to false (default in App.js).
 
 When clicking the back or forward buttons for the browser, the Image View Page rerenders when the URL changes, causing a refetch of the imginfo and userInfo.
+
+## Edit Feature:
+
+When user clicks on image in image gallery that is theirs, there is an edit and delete button in the modal top bar.
+
+When user clicks the edit button in the modal, isEditable gets set to true and the divs showing image info get hidden and input forms get shown. When button is clicked again, it returns the divs and hides the input fields by setting isEditable(false).
+
+The default values of the input fields are the image's current info. The tags are the array of tags but turned into a string with commas.
+
+When user clicks the nav arrows on either side of the modal, isEditable(false).
+
+On submit, run updateImage route.
+
+On successful submit, setIsSuccessfulEdit(!isSuccessfulEdit) to trigger a useEffect to refetch imgInfo, and navigate to new url if title is changed. This will update the image info shown in the modal. This piece of state resides in imageViewPage.
+
+For success/error toasts, there are separate css classes for them so they are placed correctly in the modal page.
+
+## Delete Feature:
+
+When user clicks the delete button in the modal, a tooltip asking "do you want to delete" appears under the delete button with a YES and NO button.
+
+On no, just make tooltip go away.
+
+On yes, run deleteImage route which gets the public ID from the url and deletes the image from Cloudinary and mongoDB.
+
+Upon successful deletion, imgTitleArrState is changed to remove the deleted pic from it so it is no longer in the list when user goes back and forth with modal arrows.
+
+After deletion, user is navigated to the next image in the gallery.

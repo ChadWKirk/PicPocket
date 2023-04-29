@@ -5738,7 +5738,7 @@ button {
   padding: 1rem 0;
 }
 .image-view-page__top-bar-height-margin {
-  height: 88px;
+  height: 0px;
   color: #fff;
 }
 .image-view-page__top-bar-contents {
@@ -5755,6 +5755,7 @@ button {
 @media (width < 650px) {
   .image-view-page__top-bar-container {
     min-height: 64px;
+    position: fixed;
     top: 70px;
   }
   .image-view-page__top-bar-height-margin {
