@@ -2,98 +2,59 @@
 
 ![GitHub last commit](https://img.shields.io/github/last-commit/ChadWKirk/PicPocket) ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/ChadWKirk/PicPocket) ![GitHub all releases](https://img.shields.io/github/downloads/ChadWKirk/PicPocket/total?label=Downloads)
 
-PicPocket is an image sharing website made with the MERN stack.
+## PicPocket is an image sharing website made with the MERN stack.
 
-## Description
+This is a website that allows users to:
 
-### This application allows users to:
+- Create accounts
+- Upload images each with their own title, description and tags
+- Edit their image information for each image
+- Delete their images
+- Search for images
+- Sort and filter their search results
+- Download images for free
+- Like images
 
-- create and delete their account with a bio and profile picture
-- like, share, upload and download their own images
+It also includes all of the basic functionality that users have come to expect from a website. Those features include:
 
-### This application features:
+- Secure password encryption
+- An email verification link sent to their email after sign up or email change
+- Changing their email / password
+- Deleting their account
+- Changing their profile picture
+- Adding a bio for their profile so other users can know a little bit about them
 
-- Using cloudinary as image host CDN. Useful for transformations with quality and size etc.
-- Using MongoDB as database for sorting, filtering and searching to display the desired images
-- Host on heroku (server) and netlify (client)
-- Password hashing with bcryptjs
-- Useage of jsonwebtoken to provide users with tokens once they log in to keep track of the session
-- Using React-Router-Dom to handle routes on the front end
-- Lazy load images
-- Skeleton load images. Grabs primary color, width and height from loading image to create a div with img dimensions and primary color for background to be placeholder.
-- Fully responsive design
-- Sticky nav bar
-- Zoom into image when clicking on it
-- The useage of modals
-- Loading screens, button icons, and bar
-- Edit image info (title, description, tags)
-- Drag and drop image upload
-- Multiple image upload
-- Check for accepted file type when uploading
-- Page Not Found page for any route that is undefined
-- Send confirmation and change password emails to user using zoho mail service and nodemailer
-- Google OAuth and Facebook OAuth
-- Sort and Filter options for image gallery results
-- Conditionally rendering elements in DOM depending on if user is logged in or not
-- Useage of toast alerts to handle success or errors
-- Useage of tooltips to handle empty fields (tells user to fill in field)
+Link to live site - [https://picpoccket.com](https://picpoccket.com)
 
-## Tech Used
+## How This Thing Works
 
-This is a MERN stack application, meaning I used MongoDB, Express, React and NodeJS. Other services I use include Cloudinary (for image hosting), Zoho (for email service), Heroku (to host back end) and Netlify (to host front end).
+Developer Documentation - [https://chadwkirk.github.io/PicPocket/](https://chadwkirk.github.io/PicPocket/)
 
-### MongoDB
+### The Quick And Dirty:
 
-MongoDB is used for storing, receiving and manipulating data that resides in a database.
+Technology Stack:
 
-Upload pipeline:
+1. Client side is hosted on Netlify
+1. Server side is hosted on Heroku
+1. Email is done by Zoho (for email verification links, etc.)
+1. Image hosting is done by [Cloudinary](https://cloudinary.com/)
+1. Database is hosted by MongoDB
+1. Front end is done with React
+1. Server is done with NodeJS
 
-- User submits an upload > the client sends a fetch request to the upload endpoint in nodeJS > image is uploaded to cloudinary using their sdk for NodeJS > Cloudinary spits out a result object with the image's data > add some fields to it > upload to mongoDB database
+Features:
 
-MongoDB is also used for sorting, filtering and searching to display the desired images.
+1. Logging In/Out is done with JSON Web Token in NodeJS and AuthContext in React
+1. Search is done by entering a query into the search bar, submitting and getting redirected to a search URL. The ImageGallery component is rendered in the new page and sends a GET request to the search endpoint in server.js. This endpoint runs a search in MongoDB to find any image with a title field value that contains any word (separated by a space) in the search query, case insensitive using regex options in MongoDB.
+1. Likes are done with MongoDB. Each image is uploaded with a "Likes" and a "LikedBy" field. When a user likes an image, that image's "Likes" field goes up by 1 by using a post request, and that user's username gets added to the image's "LikedBy" field so the liked button will render as already liked the next time the same user sees the image. That also makes sure that image is rendered in that user's Likes page.
+1. Uploading images is done by sending multi-part formData in a post request to an endpoint in server.js. The server uses Multer to handle the multipart-formData. The image gets sent to the images folder inside of the server folder, then gets uploaded to cloudinary. Cloudinary returns a result containing all of the uploaded image's information which then gets sent to MonogDB along with some extra fields like "Likes", etc. After it is uploaded, the image is deleted from the images folder in the server folder.
+1. Downloading images is done by using Cloudinary's fl_attachment URL flag inside of the image URL to be used as a download link.
+1. Password encryption is done with BCrypt (npm package).
+1. Email verification links and password reset links are created by generating JWT's and using them in URL's
+1. Deleting accounts is done by removing the user from MongoDB
+1. Changing profile pictures is done in the same way as uploading images (see above)
+1. Adding a bio for a profile is done by setting the "bio" field for that user to whatever they want their bio to be.
 
-### Express
+## How To Run
 
-Express is a framework that is used in NodeJS to make it easier to set up routes and handle HTTP requests. A simple route would look like: app.get("/get-users", (req, res) => {console.log("test this route")});. You could then perform a fetch request on the front end to that route using the GET method and it would log "test this route" on the server side. This is how the client communicates with the server to access the database from MongoDB.
-
-### React
-
-React is a front end framework based in Javascript. It was built by several Facebook (now Meta) engineers and is the most popular front end framework in the world. Rather than manipulating the DOM directly as in Javascript, React creates a virtual DOM and it uses State to keep track of all of the individual elements within the virtual DOM. Whenever the State of anything changes, the virtual DOM rerenders therefore changing what you see in the real DOM.
-
-React also allows you to create reuseable components, making it easier and more efficient in building the UI. These components behave sort of like regular javascript functions, except they combine javascript and html together, which is called JSX. You can pass properties to these components, like you would pass parameters to a Javascript function. This is very useful for allowing a change of one property's state to make a change to multiple components.
-
-Some of the cool things I did with React in this project are:
-
-- Use React-Router-Dom to navigate between pages on the front end. Also to get URL parameters from the URL
-- use an event listener to get the width of the window. When the window gets below a certain width, change the state of another const to true in order to conditionally render an element only when screen is mobile sized
-- Have an isLoading const that only turns false once fetch request is finished. This allowed me to conditionally render elements only when loading is done, so all elements can load in at the same time
-- plenty more
-
-### NodeJS
-
-NodeJS is a Javascript runtime that allows you to execute Javascript code outside of a browser. It runs on the V8 Javascript engine, making it very fast. NodeJS also allows you to use the NPM package manager, which gives you access to thousands of packages to help you build anything you want. Express (above) is an NPM package that makes it easier to handle HTTP requests in NodeJS.
-
-Some of the packages I used in this project include:
-
-- Express
-- BcryptJS (for password hashing)
-- Nodemailer (to send email confirmation emails and reset password emails)
-- Validator (to check if an email is a real email or a password is strong enough)
-- jsonwebtoken (to create a token for when user logs in so they stay logged in even after they close their browser and open it back up)
-
-# How To Run:
-
-## Requirements
-
-- Install NodeJS
-- Install MongoDB
-- Create Cloudinary Account (free)
-
-### To Host:
-
-- Create Heroku Account
-- Create Netlify Account (free)
-
-## Instructions
-
--
+This isn't an open source operation. You can't.
