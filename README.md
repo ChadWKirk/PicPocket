@@ -57,4 +57,6 @@ Features:
 
 ## How To Run
 
-This isn't an open source operation. You can't.
+This isn't an open source operation, so I won't be giving out the Cloudinary info or MongoDB info or taking Pull Requests, but if you want to use this as a template and play around with it, be my guest.
+
+All you need to do is clone the repo and in the client directory AND the server directory, run ```npm i```.
