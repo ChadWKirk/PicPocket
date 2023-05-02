@@ -34,13 +34,13 @@ Developer Documentation - [https://chadwkirk.github.io/PicPocket/](https://chadw
 
 Technology Stack:
 
-1. Client side is hosted on Netlify
-1. Server side is hosted on Heroku
-1. Email is done by Zoho (for email verification links, etc.)
+1. Client side is hosted on [Netlify](https://www.netlify.com/with/react/?utm_source=google&utm_medium=paid_search&utm_campaign=12755510784&adgroup=143221562618&utm_term=netlify%20react&utm_content=kwd-1290909035486&creative=645259053288&device=c&matchtype=e&location=9025161&gad=1&gclid=Cj0KCQjw6cKiBhD5ARIsAKXUdyZ2ZLzYqh4NXy2NO2l07HKtzoBMcJ9_GbRxP6uqMA2_r9pQn3J-pyMaAiHmEALw_wcB)
+1. Server side is hosted on [Heroku](https://www.heroku.com)
+1. Email is done by [Zoho](https://www.zoho.com/index1.html) (for email verification links, etc.)
 1. Image hosting is done by [Cloudinary](https://cloudinary.com/)
-1. Database is hosted by MongoDB
-1. Front end is done with React
-1. Server is done with NodeJS
+1. Database is hosted by [MongoDB](https://www.mongodb.com/)
+1. Front end is done with [React](https://react.dev/)
+1. Server is done with [NodeJS](https://nodejs.org/en)
 
 Features:
 
