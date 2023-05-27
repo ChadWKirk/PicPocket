@@ -97,7 +97,6 @@ app.use("/upload", upload.array("files", 200), async (req, res) => {
         .replace(".jpeg", "")
         .replace(".JPEG", "")}-${randomNumber}`,
       colors: true,
-      quality: 60,
     })
     .then((result) => {
       //upload to mongoDB
