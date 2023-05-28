@@ -48,6 +48,7 @@ app.use(express.urlencoded({ extended: false }));
 
 const dbo = require("./db/conn");
 const { ObjectId } = require("mongodb");
+const { error } = require("console");
 
 app.get("/", (req, res) => {
   res.send("ok");
@@ -72,7 +73,11 @@ app.listen(port, () => {
 });
 
 //upload image(s) post
+//upload.array is for multer
 app.use("/upload", upload.array("files", 200), async (req, res) => {
+  //use npm compress-images to shrink image before hitting Cloudinary, to get under 10MB limit
+  // https://www.npmjs.com/package/compress-images
+  //https://www.youtube.com/watch?v=wgCKqKwhCRg
   let db_connect = dbo.getDb();
   let uploadToMongoBody;
   //random 6 digit number to tag onto the public_id to allow images to be named the same thing but have different public_ids

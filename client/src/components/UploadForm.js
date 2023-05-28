@@ -53,10 +53,7 @@ const UploadForm = ({
         setImagesToUpload((imagesToUpload) => [...imagesToUpload, image]);
         console.log(e.target.files);
         //if file type is JPEG, JPG or PNG, or file is under 10 megabytes
-        if (
-          (image.type == "image/jpeg" && image.size / mbMultiplier <= 10) ||
-          (image.type == "image/png" && image.size / mbMultiplier <= 10)
-        ) {
+        if (image.type == "image/jpeg" || image.type == "image/png") {
           //to send in fetch
           const formData = new FormData();
           formData.append("files", image);
