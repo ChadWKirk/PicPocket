@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 //images
 import uploadFormGalleryIcon from "../images/upload-page__image-gallery-icon.png";
+//image resizing
+import imageCompression from "browser-image-compression";
 
 const UploadForm = ({
   domain,
@@ -32,6 +34,23 @@ const UploadForm = ({
       });
     }
   }, [isUploadingForRef]);
+
+  // React compress image component (browser-image-compression https://www.npmjs.com/package/browser-image-compression)
+  // run this function on upload but add .then(uploadHandlerClick(compressedFile)) since it is async
+  async function handleImageUpload(event) {
+    const imageFile = event.target.files[0];
+
+    const options = {
+      maxSizeMB: 9,
+      maxWidthOrHeight: 3840,
+    };
+    try {
+      const compressedFile = await imageCompression(imageFile, options);
+      console.log(compressedFile.size / 1024 / 1024);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   async function uploadHandlerClick(e) {
     e.preventDefault();
