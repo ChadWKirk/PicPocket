@@ -85,6 +85,10 @@ handle oauth "account already made with that email" error
 
 put termly env vars in backend
 
+tinker with quality settings in url
+
+catch errors on image upload for new function
+
 ---
 
 How to manage images:

@@ -37,22 +37,62 @@ const UploadForm = ({
 
   // React compress image component (browser-image-compression https://www.npmjs.com/package/browser-image-compression)
   // run this function on upload but add .then(uploadHandlerClick(compressedFile)) since it is async
-  async function handleImageUpload(event) {
-    const imageFile = event.target.files[0];
+  async function handleImageUpload(e, clicked) {
+    if (clicked) {
+      for (let i = 0; i < e.target.files.length; i++) {
+        const imageFile = e.target.files[i];
 
-    const options = {
-      maxSizeMB: 9,
-      maxWidthOrHeight: 3840,
-    };
-    try {
-      const compressedFile = await imageCompression(imageFile, options);
-      console.log(compressedFile.size / 1024 / 1024);
-    } catch (error) {
-      console.log(error);
+        const options = {
+          maxSizeMB: 9,
+          maxWidthOrHeight: 3840,
+        };
+        try {
+          const compressedFile = await imageCompression(
+            imageFile,
+            options
+          ).then((compressedFile) => {
+            uploadHandlerClick(e, compressedFile);
+          });
+          // console.log(compressedFile.size / 1024 / 1024);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    } else {
+      if (verifiedValue === false) {
+        setUploadFormDragStyle();
+        setIsDragActive(false);
+        return;
+      } else {
+        setUploadFormDragStyle();
+        setIsDragActive(false);
+        let dt = e.dataTransfer;
+        let files = dt.files;
+        let count = files.length;
+        for (let i = 0; i < count; i++) {
+          const imageFile = files[i];
+
+          const options = {
+            maxSizeMB: 9,
+            maxWidthOrHeight: 3840,
+          };
+          try {
+            const compressedFile = await imageCompression(
+              imageFile,
+              options
+            ).then((compressedFile) => {
+              uploadHandlerDrag(e, compressedFile);
+            });
+            // console.log(compressedFile.size / 1024 / 1024);
+          } catch (error) {
+            console.log(error);
+          }
+        }
+      }
     }
   }
 
-  async function uploadHandlerClick(e) {
+  async function uploadHandlerClick(e, compressedFile) {
     e.preventDefault();
     if (verifiedValue === false) {
       return;
@@ -60,136 +100,129 @@ const UploadForm = ({
       setUploadFormDragStyle();
       setIsDragActive(false);
 
-      for (let i = 0; i < e.target.files.length; i++) {
-        const image = e.target.files[i];
+      // for (let i = 0; i < e.target.files.length; i++) {
+      const image = compressedFile;
 
-        //how many bytes are in a MB
-        let mbMultiplier = 1048576;
+      console.log(image);
 
-        image.isUploading = true;
-        setIsUploadingForRef(!isUploadingForRef); //switch this every time upload begins to call useEffect
-        targetFilesArray.push(image);
-        setImagesToUpload((imagesToUpload) => [...imagesToUpload, image]);
-        console.log(e.target.files);
-        //if file type is JPEG, JPG or PNG, or file is under 10 megabytes
-        if (image.type == "image/jpeg" || image.type == "image/png") {
-          //to send in fetch
-          const formData = new FormData();
-          formData.append("files", image);
-          formData.append("uploaderName", curUser_real);
+      //how many bytes are in a MB
+      let mbMultiplier = 1048576;
 
-          await fetch(`${domain}/upload`, {
-            method: "POST",
-            body: formData,
-          })
-            .then((response) =>
-              response
-                .json()
-                .then((resJSON) => JSON.stringify(resJSON))
-                .then((stringJSON) => JSON.parse(stringJSON))
-                .then((parsedJSON) => {
-                  if (parsedJSON.public_id) {
-                    console.log(parsedJSON);
-                    image.isUploading = false;
-                    image.secure_url = parsedJSON.secure_url;
-                    image.publicId = parsedJSON.public_id;
-                    image.assetId = parsedJSON.asset_id;
-                    setImagesToUpload((imagesToUpload) => [...imagesToUpload]);
-                    console.log(imagesToUpload);
-                  } else {
-                    image.isError = true;
-                    image.isUploading = false;
-                    setImageError(!imageError);
-                  }
-                })
-            )
-            .catch((err) => {
-              console.log(err);
-              removeImageFromUploadFrontEnd(image.name);
-            });
-        }
-        //if file type is not JPEG, PNG or JPG, or over 10MB
-        else {
-          setTimeout(() => {
-            image.isUploading = false;
-            image.isError = true;
-            setImageError(!imageError);
-            setImagesToUpload((imagesToUpload) => [...imagesToUpload]);
-            return;
-          }, 500);
-        }
+      image.isUploading = true;
+      setIsUploadingForRef(!isUploadingForRef); //switch this every time upload begins to call useEffect
+      targetFilesArray.push(image);
+      setImagesToUpload((imagesToUpload) => [...imagesToUpload, image]);
+      console.log(e.target.files);
+      //if file type is JPEG, JPG or PNG, or file is under 10 megabytes
+      if (image.type == "image/jpeg" || image.type == "image/png") {
+        //to send in fetch
+        const formData = new FormData();
+        //using the optional filename parameter to override the default "blob" filename given to compressedFile since it is a Blob.
+        //giving it the filename of whatever the image's original name is
+        formData.append("files", image, image.name);
+        formData.append("uploaderName", curUser_real);
+
+        await fetch(`${domain}/upload`, {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) =>
+            response
+              .json()
+              .then((resJSON) => JSON.stringify(resJSON))
+              .then((stringJSON) => JSON.parse(stringJSON))
+              .then((parsedJSON) => {
+                if (parsedJSON.public_id) {
+                  console.log(parsedJSON);
+                  image.isUploading = false;
+                  image.secure_url = parsedJSON.secure_url;
+                  image.publicId = parsedJSON.public_id;
+                  image.assetId = parsedJSON.asset_id;
+                  setImagesToUpload((imagesToUpload) => [...imagesToUpload]);
+                  console.log(imagesToUpload);
+                } else {
+                  image.isError = true;
+                  image.isUploading = false;
+                  setImageError(!imageError);
+                }
+              })
+          )
+          .catch((err) => {
+            console.log(err);
+            removeImageFromUploadFrontEnd(image.name);
+          });
       }
+      //if file type is not JPEG, PNG or JPG, or over 10MB
+      else {
+        setTimeout(() => {
+          image.isUploading = false;
+          image.isError = true;
+          setImageError(!imageError);
+          setImagesToUpload((imagesToUpload) => [...imagesToUpload]);
+          return;
+        }, 500);
+      }
+      // }
     }
   }
 
   //upload handler for drag
-  async function uploadHandlerDrag(e) {
+  async function uploadHandlerDrag(e, compressedFile) {
     e.preventDefault();
-    if (verifiedValue === false) {
-      setUploadFormDragStyle();
-      setIsDragActive(false);
-      return;
-    } else {
-      setUploadFormDragStyle();
-      setIsDragActive(false);
-      let dt = e.dataTransfer;
-      let files = dt.files;
-      let count = files.length;
-      for (let i = 0; i < count; i++) {
-        const image = files[i];
-        image.isUploading = true;
-        setIsUploadingForRef(!isUploadingForRef); //switch this every time upload begins to call useEffect
-        // targetFilesArray.push(image);
-        setImagesToUpload((imagesToUpload) => [...imagesToUpload, image]);
-        // console.log(targetFilesArray + " target files");
-        //if file type is JPEG, JPG or PNG
-        if (image.type == "image/jpeg" || image.type == "image/png") {
-          //to send in fetch
-          const formData = new FormData();
-          formData.append("files", image);
-          formData.append("uploaderName", curUser_real);
+    const image = compressedFile;
+    image.isUploading = true;
+    setIsUploadingForRef(!isUploadingForRef); //switch this every time upload begins to call useEffect
+    // targetFilesArray.push(image);
+    setImagesToUpload((imagesToUpload) => [...imagesToUpload, image]);
+    // console.log(targetFilesArray + " target files");
+    //if file type is JPEG, JPG or PNG
+    if (image.type == "image/jpeg" || image.type == "image/png") {
+      //to send in fetch
+      const formData = new FormData();
+      //using the optional filename parameter to override the default "blob" filename given to compressedFile since it is a Blob.
+      //giving it the filename of whatever the image's original name is
+      formData.append("files", image, image.name);
+      formData.append("uploaderName", curUser_real);
 
-          await fetch(`${domain}/upload`, {
-            method: "POST",
-            body: formData,
-          })
-            .then((response) =>
-              response
-                .json()
-                .then((resJSON) => JSON.stringify(resJSON))
-                .then((stringJSON) => JSON.parse(stringJSON))
-                .then((parsedJSON) => {
-                  if (parsedJSON.public_id) {
-                    console.log(parsedJSON);
-                    image.isUploading = false;
-                    image.secure_url = parsedJSON.secure_url;
-                    image.publicId = parsedJSON.public_id;
-                    image.assetId = parsedJSON.asset_id;
-                    setImagesToUpload((imagesToUpload) => [...imagesToUpload]);
-                    console.log(imagesToUpload);
-                  } else {
-                    image.isError = true;
-                    image.isUploading = false;
-                    setImageError(!imageError);
-                  }
-                })
-            )
-            .catch((err) => {
-              console.log(err);
-              removeImageFromUploadFrontEnd(image.name);
-            });
-        }
-        //if file type is not JPEG, PNG or JPG
-        else {
-          setTimeout(() => {
-            image.isUploading = false;
-            image.isError = true;
-            setImageError(!imageError);
-            setImagesToUpload((imagesToUpload) => [...imagesToUpload]);
-            return;
-          }, 500);
-        }
-      }
+      await fetch(`${domain}/upload`, {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) =>
+          response
+            .json()
+            .then((resJSON) => JSON.stringify(resJSON))
+            .then((stringJSON) => JSON.parse(stringJSON))
+            .then((parsedJSON) => {
+              if (parsedJSON.public_id) {
+                console.log(parsedJSON);
+                image.isUploading = false;
+                image.secure_url = parsedJSON.secure_url;
+                image.publicId = parsedJSON.public_id;
+                image.assetId = parsedJSON.asset_id;
+                setImagesToUpload((imagesToUpload) => [...imagesToUpload]);
+                console.log(imagesToUpload);
+              } else {
+                image.isError = true;
+                image.isUploading = false;
+                setImageError(!imageError);
+              }
+            })
+        )
+        .catch((err) => {
+          console.log(err);
+          removeImageFromUploadFrontEnd(image.name);
+        });
+    }
+    //if file type is not JPEG, PNG or JPG
+    else {
+      setTimeout(() => {
+        image.isUploading = false;
+        image.isError = true;
+        setImageError(!imageError);
+        setImagesToUpload((imagesToUpload) => [...imagesToUpload]);
+        return;
+      }, 500);
     }
   }
   //add class to form when dragged over, same styling as when hovering over it
@@ -228,7 +261,7 @@ const UploadForm = ({
             type="file"
             multiple
             onClick={(e) => e.preventDefault()} //this input is only for drag n drop. disable clicking
-            onChange={(e) => uploadHandlerDrag(e)}
+            onChange={(e) => handleImageUpload(e, false)}
             onDragEnter={(e) => (e.target.value = null)}
             className="upload-page__upload-form-contents-input-for-drag"
             title={""}
@@ -264,7 +297,7 @@ const UploadForm = ({
               onDrop={(e) => {
                 e.stopPropagation();
                 e.preventDefault();
-                uploadHandlerDrag(e);
+                handleImageUpload(e, false);
               }}
             >
               fffffff
@@ -282,7 +315,7 @@ const UploadForm = ({
               <input
                 type="file"
                 multiple
-                onChange={(e) => uploadHandlerClick(e)}
+                onChange={(e) => handleImageUpload(e, true)}
                 onClick={(e) => (e.target.value = null)}
                 onDragEnter={(e) => (e.target.value = null)}
                 className="upload-page__upload-form-contents-input-for-click"
@@ -295,7 +328,7 @@ const UploadForm = ({
 
             <div className="upload-page__upload-form-caption">
               Supported Files: JPEG, JPG, PNG{" "}
-              <i style={{ fontSize: "0.85rem" }}>File Limit: 10MB</i>
+              {/* <i style={{ fontSize: "0.85rem" }}>File Limit: 10MB</i> */}
             </div>
           </div>
         </div>
@@ -312,7 +345,7 @@ const UploadForm = ({
             <input
               type="file"
               multiple
-              onChange={(e) => uploadHandlerClick(e)}
+              onChange={(e) => handleImageUpload(e, true)}
               onClick={(e) => (e.target.value = null)}
               onDragEnter={(e) => {
                 e.target.value = null;
