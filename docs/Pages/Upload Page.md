@@ -15,9 +15,13 @@ The page that allows users to upload images.
 
 When user goes to the upload page, it checks if user is verified or not. If they are not verified (in database) then they can't upload and a red banner shows saying they can't upload. When user becomes verified by clicking the email verification link, they are redirected to the upload page and there is a green banner showing saying they can now upload pics. This green banner only shows that first time, after they refresh there is just no banner.
 
+**Image Compression:**
+
+I use [npm browser-image-compression](https://www.npmjs.com/package/browser-image-compression?activeTab=readme) to compress image files before they get sent to cloudinary/mongoDB. This is to get them under the 10MB size limit for Cloudinary's free version.
+
 **Uploading:**
 
-User can upload by drag n drop, or by clicking Browser button. When user submits an image, the upload function checks to see if it is an accepted file type (decided within the upload function) and if it is under 10MB (cloudinary's free user file size limit). If image passes, a new FormData is created with the image's data and the uploader's name, which get sent to the server.
+User can upload by drag n drop, or by clicking Browser button. When user submits an image, the image gets checked by browser-image-compression to see if it is an image file and then gets compressed. If image passes, a new FormData is created with the image's data and the uploader's name, which get sent to the server.
 
 The server uses Multer to handle the multipart-formData. The image gets sent to the images folder inside of the server folder, then gets uploaded to cloudinary and that gets put into mongoDB. After it is uploaded, the image is deleted from the images folder in the server folder.
 
