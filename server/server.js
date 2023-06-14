@@ -33,6 +33,23 @@ const upload = multer({ storage: fileStorageEngine });
 //   cert: fs.readFileSync(`./node_modules/mkcert/src/cert.crt`),
 // };
 
+//sort helper function so you don't have to copy and paste the same thing for every sort route
+function ifSortIsXHelperFunction(sort) {
+  if (sort == "most-recent") {
+    sortBy = { created_at: -1 };
+  } else if (sort == "oldest") {
+    sortBy = { created_at: 1 };
+  } else if (sort == "atoz") {
+    sortBy = { title: 1 };
+  } else if (sort == "ztoa") {
+    sortBy = { title: -1 };
+  } else if (sort == "leastlikes") {
+    sortBy = { likes: 1 };
+  } else if (sort == "mostlikes") {
+    sortBy = { likes: -1 };
+  }
+}
+
 //cloudinary image hosting
 const cloudinary = require("cloudinary").v2;
 
@@ -1483,19 +1500,8 @@ app.get("/:username/:sort/:filter", (req, res) => {
   let sort = req.params.sort;
   let filter = req.params.filter;
   let user = req.params.username;
-  if (sort == "most-recent") {
-    sortBy = { created_at: -1 };
-  } else if (sort == "oldest") {
-    sortBy = { created_at: 1 };
-  } else if (sort == "atoz") {
-    sortBy = { title: 1 };
-  } else if (sort == "ztoa") {
-    sortBy = { title: -1 };
-  } else if (sort == "leastlikes") {
-    sortBy = { likes: 1 };
-  } else if (sort == "mostlikes") {
-    sortBy = { likes: -1 };
-  }
+
+  ifSortIsXHelperFunction(sort);
 
   let db_connect = dbo.getDb();
 
@@ -1564,19 +1570,8 @@ app.get("/:username/:sort/:filter", (req, res) => {
 app.get("/search/:searchQuery/:sort/:filter", (req, res) => {
   let sort = req.params.sort;
   let filter = req.params.filter;
-  if (sort == "most-recent") {
-    sortBy = { created_at: -1 };
-  } else if (sort == "oldest") {
-    sortBy = { created_at: 1 };
-  } else if (sort == "atoz") {
-    sortBy = { title: 1 };
-  } else if (sort == "ztoa") {
-    sortBy = { title: -1 };
-  } else if (sort == "leastlikes") {
-    sortBy = { likes: 1 };
-  } else if (sort == "mostlikes") {
-    sortBy = { likes: -1 };
-  }
+
+  ifSortIsXHelperFunction(sort);
 
   const objectId = ObjectId("63c03bab0ea2381b005e565b");
 
@@ -1667,19 +1662,8 @@ app.get("/search/:searchQuery/:sort/:filter", (req, res) => {
 app.get("/:username/likes/:sort/:filter", (req, res) => {
   let sort = req.params.sort;
   let filter = req.params.filter;
-  if (sort == "most-recent") {
-    sortBy = { created_at: -1 };
-  } else if (sort == "oldest") {
-    sortBy = { created_at: 1 };
-  } else if (sort == "atoz") {
-    sortBy = { title: 1 };
-  } else if (sort == "ztoa") {
-    sortBy = { title: -1 };
-  } else if (sort == "leastlikes") {
-    sortBy = { likes: 1 };
-  } else if (sort == "mostlikes") {
-    sortBy = { likes: -1 };
-  }
+
+  ifSortIsXHelperFunction(sort);
 
   let db_connect = dbo.getDb();
 
